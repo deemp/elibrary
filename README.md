@@ -35,6 +35,12 @@
 
 - Open the address in a browser.
 
+- Run a specific script.
+
+    ```console
+    poetry run python elibrary/service/sqlite_db.py
+    ```
+
 ## Stack
 
 - main package manager: [nix](https://nixos.org/manual/nix/unstable/introduction)
