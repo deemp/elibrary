@@ -10,11 +10,24 @@
 
 ## flake
 
-- Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)).
+- Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
 
-- If you have `direnv`, run `direnv allow`.
+- Clone and enter this repository
 
-- In this repository, run `nix develop`. You'll get `poetry` and `sqlite3` from a `devShell` (see [flake.nix](./flake.nix)).
+    ```console
+    git clone https://gitlab.pg.innopolis.university/elibrary/elibrary
+    cd elibrary
+    ```
+
+- Run `direnv allow`.
+
+- Run `nix develop`. Check that you have `poetry` and `sqlite3` from a `devShell` (see [flake.nix](./flake.nix)).
+
+    ```console
+    poetry --version
+
+    sqlite3 --version
+    ```
 
 - Run [server](#server).
 
