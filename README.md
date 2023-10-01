@@ -53,6 +53,12 @@
 - language: [TypeScript](https://www.typescriptlang.org/)
 - book viewer: [bookreader](https://github.com/internetarchive/bookreader)
 
+## Use case diagram
+
+[diagram link](https://www.plantuml.com/plantuml/uml/PP0_JyCm4CNt-nIdx1tednLLGcnCHDswNEnBQc7VeVC52I6-Ev16LHF6ztxFFza-LYVpiMJ8t3kwegNXuXYJSV2a0XHS3PkNr1bP8ccGAkOvtN3hOsJniwYTfNNgUonSEhPfNgyK_fmaGsPidZC7DvKKyAh-RF0B4CVAWUhluFGUoHaxrJSCv9Hrc5odfuVbB2l5QLPdlhtdhrpqWnTyTyzR9WkN1Tylpw_i1_W6kBqVDvl7wKhhPlklsG7C_p0N-rK-m94bZYN_0000)
+
+![diagram](./README/use_case_diagram.png)
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
