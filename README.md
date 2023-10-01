@@ -59,6 +59,25 @@
 
 ![diagram](./README/use_case_diagram.png)
 
+## Connect by SSH
+
+- Make a pair of `ED25519` SSH keys ([link](https://docs.gitlab.com/ee/user/ssh.html#generate-an-ssh-key-pair)).
+
+- Add the key to your GitLab account ([link](https://docs.gitlab.com/ee/user/ssh.html#add-an-ssh-key-to-your-gitlab-account)).
+
+- Set up an SSH agent ([link](https://docs.gitlab.com/ee/user/ssh.html#configure-ssh-to-point-to-a-different-directory)).
+  - If on `Linux`, add this to your `~/.bashrc`
+
+    ```console
+    eval $(ssh-agent -s)
+    ```
+
+- Clone this repository by SSH.
+
+    ```console
+    git clone git@gitlab.pg.innopolis.university:elibrary/elibrary.git
+    ```
+
 <!-- ## Legacy sections below
 
 ## Getting started
