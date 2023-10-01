@@ -1,14 +1,6 @@
 # Electronic Library of IU
 
-## Server
-
-- Install `poetry`.
-
-- Run `poetry install`.
-
-- Run `poetry run elibrary`
-
-## flake
+## Quick start
 
 - Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
 
@@ -29,7 +21,19 @@
     sqlite3 --version
     ```
 
-- Run [server](#server).
+- Install `python` packages.
+
+    ```console
+    poetry install
+    ```
+
+- Run server.
+
+    ```console
+    poetry run elibrary
+    ```
+
+- Open the address in a browser.
 
 ## Legacy sections below
 
