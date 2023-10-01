@@ -8,6 +8,18 @@
 
 - Run `poetry run elibrary`
 
+## flake
+
+- Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)).
+
+- If you have `direnv`, run `direnv allow`.
+
+- In this repository, run `nix develop`. You'll get `poetry` and `sqlite3` from a `devShell` (see [flake.nix](./flake.nix)).
+
+- Run [server](#server).
+
+## Legacy sections below
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
