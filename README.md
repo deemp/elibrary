@@ -35,7 +35,23 @@
 
 - Open the address in a browser.
 
-## Legacy sections below
+## Stack
+
+- main package manager: [nix](https://nixos.org/manual/nix/unstable/introduction)
+
+### Back
+
+- package manager: [poetry](https://python-poetry.org/docs/)
+- database: [SQLite](https://www.sqlite.org/index.html)
+- language: [Python](https://www.python.org/)
+- libraries:
+  - [flask](https://flask.palletsprojects.com/en/3.0.x/)
+  - [sqlite3](https://docs.python.org/3/library/sqlite3.html)
+
+### Front
+
+- language: [TypeScript](https://www.typescriptlang.org/)
+- book viewer: [bookreader](https://github.com/internetarchive/bookreader)
 
 ## Getting started
 
