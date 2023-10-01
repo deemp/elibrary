@@ -33,13 +33,16 @@ def reset_db(conn, cursor):
     print("removed the table `books` if it exists")
 
 
-def reset_database():
-    conn = sqlite3.connect("test.db")
+def dump_db(
+    backup_sql,
+):
+    def go(conn, cursor):
+        with io.open(backup_sql, "w") as p:
+            for line in conn.iterdump():
+                p.write(f"{line}\n")
+            print("database backupped successfully")
 
-    db_cursor = conn.cursor()
-    db_cursor.execute("drop table if exists books")
-
-    conn.close()
+    return go
 
 
 if __name__ == "__main__":
@@ -47,3 +50,4 @@ if __name__ == "__main__":
     def run(f): with_db(db, f)
     
     run(setup_db)
+    run(dump_db(backup_sql=f"{db}.sql"))
