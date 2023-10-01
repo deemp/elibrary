@@ -6,16 +6,19 @@
       url = "github:edolstra/flake-compat/35bb57c0c8d8b62bbfd284272c928ceb64ddbde9";
       flake = false;
     };
+    devshell.url = "github:numtide/devshell/cd4e2fda3150dd2f689caeac07b7f47df5197c31";
   };
   outputs = inputs: inputs.flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      devShells.default = pkgs.mkShell {
-        buildInputs = [
-          pkgs.curl
-          pkgs.jq
-          pkgs.sqlite
-          pkgs.poetry
+      devshell = inputs.devshell.legacyPackages.${system};
+      devShells.default = devshell.mkShell {
+        commands = [
+          { package = pkgs.curl; }
+          { package = pkgs.jq; }
+          { package = pkgs.sqlite; }
+          { package = pkgs.poetry; }
+          { package = pkgs.nodejs; }
         ];
       };
     in
