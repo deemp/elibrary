@@ -1,4 +1,4 @@
-create table books (
+create table if not exists books (
     id integer primary key autoincrement,
     name varchar(50),
     author varchar(50));
