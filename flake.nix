@@ -13,12 +13,12 @@
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       devshell = inputs.devshell.legacyPackages.${system};
       devShells.default = devshell.mkShell {
-        commands = [
-          { package = pkgs.curl; }
-          { package = pkgs.jq; }
-          { package = pkgs.sqlite; }
-          { package = pkgs.poetry; }
-          { package = pkgs.nodejs; }
+        commands = map (x: { package = x; }) [
+          pkgs.curl
+          pkgs.jq
+          pkgs.sqlite
+          pkgs.poetry
+          pkgs.nodejs
         ];
       };
     in
