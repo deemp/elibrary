@@ -1,5 +1,9 @@
 # Electronic Library of IU
 
+## Technical specification
+
+[link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
+
 ## Quick start
 
 - Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
