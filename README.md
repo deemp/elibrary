@@ -88,6 +88,28 @@
     git clone git@gitlab.pg.innopolis.university:elibrary/elibrary.git
     ```
 
+## Contribute
+
+1. Select/create an issue.
+
+1. In its description, define steps to be completed.
+
+1. Create a new branch:
+    - `fix-<name>` for fixes
+    - `feat-<name>` for features
+
+   `<name>` can be the issue name or some description of the fix/feature.
+
+1. In that branch, complete the steps required in the issue.
+
+1. Create a merge request.
+
+1. Describe the request using default [closing pattern](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically).
+
+1. If necessary, ask for a review.
+
+1. Merge the request.
+
 <!-- ## Legacy sections below
 
 ## Getting started
