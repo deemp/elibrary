@@ -94,21 +94,17 @@
 
 1. In its description, define steps to be completed.
 
-1. Create a new branch:
-    - `fix-<name>` for fixes
-    - `feat-<name>` for features
+1. Create a merge request [from the issue](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html#from-an-issue) agains the `main` branch.
 
-   `<name>` can be the issue name or some description of the fix/feature.
+1. Describe the request using the default [closing pattern](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically).
 
-1. In that branch, complete the steps required in the issue.
+1. Switch to the merge request branch on your machine.
 
-1. Create a merge request.
-
-1. Describe the request using default [closing pattern](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically).
+1. Work in that branch and periodically merge there the `main` branch.
 
 1. If necessary, ask for a review.
 
-1. Merge the request.
+1. Merge the request to the `main` branch.
 
 <!-- ## Legacy sections below
 
