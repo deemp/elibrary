@@ -1,26 +1,23 @@
 from flask import Blueprint, render_template, request
-import sqlite3
+from .models import Book
 
 views = Blueprint('views', __name__)
 
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    return conn
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    conn = get_db_connection()
+    return render_template("home.html")
+
+
+@views.route('/search', methods=['GET', 'POST'])
+def search():
     books = []
 
-    topics = conn.execute('select distinct lc from books').fetchall()
+    topics = Book.query.distinct().all()
 
     if request.method == 'POST':
-        print(request.form.get('topic'))
-        books = conn.execute('select * from books where lc = \'' + request.form.get('topic') + '\'').fetchall()
-    else:
-        books = conn.execute('select * from books').fetchall()
-    
-    conn.close()
+        books = Book.query.filter_by(lc=request.form.get('topic')).all()
+        return render_template("search.html", books=books, topics=topics)
 
-    return render_template("home.html", books=books, topics=topics)
+    books = Book.query.all()
+    return render_template("search.html", books=books, topics=topics)

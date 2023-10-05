@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block title %}Search{% endblock %}
+
+{% block content %}
+
+<div class="mt-5">
+    <div class="md-col-3">
+        <form id="form" method="POST">
+            <select name="topic" class="form-control">
+                {% for row in topics %}
+                <option value="{{ row['lc'] }}" SELECTED>{{ row['lc'] }}</option>"
+                {% endfor %}
+            </select>
+            <button id="button" class="form-control">Search</button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Topic</th>
+            <th>Authors</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in books %}
+        <tr>
+            <td>{{ row['book_id'] }}</td>
+            <td>{{ row['lc' ] }}</td>
+            <td>{{ row['authors'] }}</td>
+            <td>{{ row['title' ] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
