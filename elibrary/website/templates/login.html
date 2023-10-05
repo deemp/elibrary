@@ -1,23 +1,32 @@
-{% extends "base.html" %}
-
-{% block title %}Log in{% endblock %}
+{% extends "base.html" %} {% block title %} Login {% endblock %}
 
 {% block content %}
-<form method="post">
-    <h3 align="center">Login</h3>
-    <div class="form-group">
-        <label for="email">University email</label>
-        <input type="email" class="form-control" name="email" placeholder="Enter email">
+<div align="center" class="mt-5">
+    <div class="col-md-5">
+        <div align="left" class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h3 class="text-center">Login</h3>
+                </div>
+                <form method="post">
+                    <div class="form-group mb-3">
+                        <label for="email">University Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Enter password">
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+                <div>
+                    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" placeholder="Enter password">
-    </div>
-    <div class="form-group">
-        <button type="submit" class="form-control">Login</button>
-    </div>
-</form>
-<div class="message">
-    <p>{{ans}}</p>
 </div>
-{% endblock content %}
+{% endblock %}
