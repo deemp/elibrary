@@ -6,23 +6,34 @@
       url = "github:edolstra/flake-compat/35bb57c0c8d8b62bbfd284272c928ceb64ddbde9";
       flake = false;
     };
-    devshell.url = "github:numtide/devshell/cd4e2fda3150dd2f689caeac07b7f47df5197c31";
+    flakes.url = "github:deemp/flakes/93dacca29b38865b76ef5e8c4c5c81df426cf5e8";
   };
-  outputs = inputs: inputs.flake-utils.lib.eachDefaultSystem (system:
-    let
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
-      devshell = inputs.devshell.legacyPackages.${system};
-      devShells.default = devshell.mkShell {
-        commands = map (x: { package = x; }) [
-          pkgs.curl
-          pkgs.jq
-          pkgs.sqlite
-          pkgs.poetry
-          pkgs.nodejs
-        ];
-      };
-    in
+  outputs = inputs: inputs.flakes.makeFlake
     {
-      inherit devShells;
-    });
+      inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs; };
+      perSystem = { inputs, system }:
+        let
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
+          inherit (inputs.devshell.lib.${system}) mkShell mkRunCommands;
+          packages = mkShellApps {
+            page-images = {
+              text = ''${getExe pkgs.poetry} run page-images -p ${pkgs.poppler_utils}/bin'';
+              description = "Generate images of sample books pages";
+            };
+          };
+          devShells.default = mkShell {
+            commands = (map (x: { package = x; }) [
+              pkgs.curl
+              pkgs.jq
+              pkgs.sqlite
+              pkgs.poetry
+              pkgs.nodejs
+            ]) ++ (mkRunCommands "scripts" { inherit (packages) page-images; });
+          };
+        in
+        {
+          inherit packages devShells;
+        };
+    };
 }
