@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %} Login {% endblock %}
+{% extends "base.html" %} {% block title %} Sign Up {% endblock %}
 
 {% block content %}
 <div align="center" class="mt-5">
@@ -6,7 +6,7 @@
         <div align="left" class="card">
             <div class="card-body">
                 <div class="card-title">
-                    <h3 class="text-center">Login</h3>
+                    <h3 class="text-center">Sign Up</h3>
                 </div>
                 <form method="post">
                     <div class="form-group mb-3">
@@ -14,16 +14,26 @@
                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
                     </div>
                     <div class="form-group mb-3">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name"
+                            placeholder="Enter first name">
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" name="password"
                             placeholder="Enter password">
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                            placeholder="Confirm password">
+                    </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary">Sign up</button>
                     </div>
                 </form>
                 <div>
-                    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Sign Up</a></p>
+                    <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
                 </div>
             </div>
         </div>

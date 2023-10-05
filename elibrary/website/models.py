@@ -1,4 +1,5 @@
 from . import db
+from flask_login import UserMixin
 
 
 class Book(db.Model):
@@ -13,3 +14,11 @@ class Book(db.Model):
     isbn = db.Column(db.Integer)
     esbn = db.Column(db.Integer)
     format = db.Column(db.String(50))
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(150))
+    first_name = db.Column(db.String(150))
+    role = db.Column(db.String(50))

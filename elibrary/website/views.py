@@ -1,13 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Book
 from . import db
+from flask_login import login_required, current_user
 
 views = Blueprint('views', __name__)
 
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template("home.html")
+    return render_template("home.html", user=current_user)
 
 
 @views.route('/search', methods=['GET', 'POST'])
@@ -25,6 +26,7 @@ def search():
 
 
 @views.route('/edit-book/<int:book_id>', methods=['GET', 'POST'])
+@login_required
 def edit_book(book_id: int):
     book = Book.query.filter_by(book_id=book_id).first()
     if request.method == 'POST':
@@ -58,6 +60,7 @@ def edit_book(book_id: int):
 
 
 @views.route('/view-catalog', methods=['GET', 'POST'])
+@login_required
 def view_catalog():
     books = Book.query.all()
 

@@ -12,10 +12,11 @@ page-images = "page-images.main:run"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-flask = "^3.0.0"
+flask = "^2.3.0"
 pdf2image = "^1.16.3"
 flask-sqlalchemy = "^3.1.1"
 flask-login = "^0.6.2"
+werkzeug = "2.3.0"
 
 
 [tool.poetry.group.dev.dependencies]
