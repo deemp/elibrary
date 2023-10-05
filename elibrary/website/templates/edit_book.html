@@ -1,0 +1,77 @@
+{% extends "base.html" %} {% block title %} {{book.title}} {% endblock %}
+
+{% block content %}
+
+{% if book %}
+    <div align="center">
+        <div class="col-md-5">
+            <div align="left" class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h3 class="text-center">{{book.title}}</h3>
+                    </div>
+                    <form method="post">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" required
+                                id="bisac" name="bisac" value="{{ book.bisac }}" placeholder="Enter bisac">
+                            <label for="bisac">BISAC</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" required 
+                                id="lc" name="lc" value="{{ book.lc }}" placeholder="Enter lc">
+                            <label for="lc">LC</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" required 
+                                id="publisher" name="publisher" value="{{ book.publisher }}" placeholder="Enter publisher">
+                            <label for="publisher">Publisher</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" required 
+                                id="year" name="year" value="{{ book.year }}" placeholder="Enter year">
+                            <label for="year">Year</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" required 
+                                id="authors" name="authors" value="{{ book.authors }}" placeholder="Enter authors">
+                            <label for="authors">Authors</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" required 
+                                id="title" name="title" value="{{ book.title }}" placeholder="Enter title">
+                            <label for="title">title</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" required 
+                                id="print_hub" name="print_hub" value="{{ book.print_hub }}" placeholder="Enter print hub">
+                            <label for="print_hub">Print Hub</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" required 
+                                id="isbn" name="isbn" value="{{ book.isbn }}" placeholder="Enter isbn">
+                            <label for="isbn">isbn</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" required 
+                                id="esbn" name="esbn" value="{{ book.esbn }}" placeholder="Enter esbn">
+                            <label for="esbn">esbn</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" required 
+                                id="format" name="format" value="{{ book.format }}" placeholder="Enter format">
+                            <label for="format">format</label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+<div>
+    <p>Invalid book id!</p>
+</div>
+{% endif %}
+{% endblock %}
