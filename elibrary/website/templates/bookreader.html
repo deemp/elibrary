@@ -1,39 +1,23 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-    <head>
-        <title>BookReader fullscreen demo</title>
+{% block title %} BookReader {% endblock %}
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <script
-            src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/webcomponents-bundle.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/jquery-3.js"></script>
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/BookReader.css" />
-        <script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/BookReader.js"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/plugins/plugin.url.js"></script>
-        <style>
-            html,
-            body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-            }
-
-            #BookReader {
-                width: 100%;
-                height: 100%;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div id="BookReader"></div>
-        <script type="text/javascript" src="{{ url_for('static', filename='bookreader.js') }}"> </script>
-        <script>instantiateBookReader("{{ url_for('static', filename='') }}", '#BookReader')</script>
-    </body>
-
-</html>
+{% block container %}
+<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/webcomponents-bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/jquery-3.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/BookReader.css" />
+<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/BookReader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/plugins/plugin.url.js"></script>
+<style>
+    #BookReader {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        position: fixed;
+    }
+</style>
+<div id="BookReader"></div>
+<script type="text/javascript" src="{{ url_for('static', filename='bookreader.js') }}"> </script>
+<script>instantiateBookReader("{{ url_for('static', filename='') }}", '#BookReader')</script>
+{% endblock %}
