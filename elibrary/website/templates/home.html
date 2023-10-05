@@ -1,5 +1,28 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>This is the home page</h1>
+    <h1>Main</h1>
+
+    <form id="form" method="POST" action="/" >
+        <select name="topic" class="form-control">
+        {% for row in topics %}
+            <option value="{{ row['lc'] }}" SELECTED>{{ row['lc'] }}</option>"
+        {% endfor %}  
+        </select> 
+        <button id="button" class="form-control">Search</button>
+    </form>
+
+    <table class="table">
+        <thead><tr><th>Id</th><th>Topic</th><th>Authors</th><th>Title</th></tr></thead>
+        <tbody>
+        {% for row in books %}
+            <tr>
+                <td>{{ row['book_id'] }}</td>
+                <td>{{ row['lc'     ] }}</td>
+                <td>{{ row['authors'] }}</td>
+                <td>{{ row['title'  ] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
