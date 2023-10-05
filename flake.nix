@@ -15,19 +15,21 @@
         let
           pkgs = inputs.nixpkgs.legacyPackages.${system};
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
-          inherit (inputs.devshell.lib.${system}) mkShell;
+          inherit (inputs.devshell.lib.${system}) mkShell mkRunCommands;
           packages = mkShellApps {
-            page-images.text = ''${getExe pkgs.poetry} run page-images -p ${pkgs.poppler_utils}/bin'';
+            page-images = {
+              text = ''${getExe pkgs.poetry} run page-images -p ${pkgs.poppler_utils}/bin'';
+              description = "Generate images of sample books pages";
+            };
           };
           devShells.default = mkShell {
-            commands = map (x: { package = x; }) [
+            commands = (map (x: { package = x; }) [
               pkgs.curl
               pkgs.jq
               pkgs.sqlite
               pkgs.poetry
               pkgs.nodejs
-              pkgs.poppler_utils
-            ];
+            ]) ++ (mkRunCommands "scripts" { inherit (packages) page-images; });
           };
         in
         {
