@@ -17,11 +17,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
-                    <a class="nav-item nav-link" id="home" href="/">Home</a>
-                    <a class="nav-item nav-link" id="bookreader" href="/bookreader">Bookreader</a>
-                    <a class="nav-item nav-link" id="search" href="/search">Search</a>
-                    <a class="nav-item nav-link" id="search" href="/view-catalog">View Book Catalog</a>
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" id="home" href="/">Home</a>
+                        <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                        <a class="nav-item nav-link" id="bookreader" href="/bookreader">Bookreader</a>
+                        <a class="nav-item nav-link" id="search" href="/search">Search</a>
+                        <a class="nav-item nav-link" id="search" href="/view-catalog">View Book Catalog</a>
+                    {% else %}
+                        <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                        <a class="nav-item nav-link" id="register" href="/register">Register</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
