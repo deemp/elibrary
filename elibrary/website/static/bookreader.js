@@ -5,7 +5,7 @@ function instantiateBookReader(url, selector, extraOptions) {
     mkPage = pageNumber => {
         return {
             width: 800, height: 1200,
-            uri: `${bookUrl}/page-0${pageNumber}.jpg`
+            uri: `${bookUrl}/${`${pageNumber}`.padStart(5, '0')}.jpg`
         }
     }
     mkPages = pageNumbers => {
@@ -13,7 +13,7 @@ function instantiateBookReader(url, selector, extraOptions) {
     }
     var options = {
         ppi: 100,
-        data: [[21], [22, 23], [24, 25], [26, 27]].map(ns => { return mkPages(ns) }),
+        data: [[21], [22, 23], [24, 25], [26, 27], [28, 29], [30]].map(ns => { return mkPages(ns) }),
 
         // Book title and the URL used for the book title link
         bookTitle: 'BookReader Demo',
