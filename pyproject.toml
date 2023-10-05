@@ -12,6 +12,8 @@ elibrary = "elibrary.main:run"
 [tool.poetry.dependencies]
 python = "^3.10"
 flask = "^3.0.0"
+flask-sqlalchemy = "^3.1.1"
+flask-login = "^0.6.2"
 
 
 [tool.poetry.group.dev.dependencies]
