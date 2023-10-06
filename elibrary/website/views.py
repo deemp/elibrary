@@ -22,7 +22,7 @@ def search():
         return render_template("search.html", books=books, topics=topics)
 
     books = Book.query.all()
-    return render_template("search.html", books=books, topics=topics)
+    return render_template("search.html", books=books, topics=topics, user=current_user)
 
 
 @views.route('/edit-book/<int:book_id>', methods=['GET', 'POST'])
@@ -64,4 +64,4 @@ def edit_book(book_id: int):
 def view_catalog():
     books = Book.query.all()
 
-    return render_template('view_catalog.html', books=books)
+    return render_template('view_catalog.html', books=books, user=current_user)
