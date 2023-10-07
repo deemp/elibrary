@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="367,198,979,154">The right way to make toast:.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="369,247,878,208">Defining algorithm uses.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,306,1298,279">An algorithm always presents a series of steps and doesn't necessarily perform</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,337,1296,312">these steps to solve a math formula. The scope of algorithms is incredibly large</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,370,1294,343">You can find algorithms that solve problems in science, medicine, finance, indus-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,437,1298,412">all parts of a person's daily life.Anytime a sequence of actions achieving some-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,472,1296,445">thing in our life is finite, well-defined, and effective, you can view it as an algo-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,507,1302,478">rithm.For example, you can turn even something as trivial and simple as making</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,536,1298,515">toast into an algorithm. In fact, the making toast procedure often appears in com-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,572,1296,545">puter science classes, as discussed at http://brianaspinall.com/now-thats-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,605,991,580">how-you-make-toast-using-computer-algorithms/.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,669,1300,644">Unfortunately, the algorithm on the site is flawed.The instructor never removes</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,703,1296,678">the bread from the wrapper and never plugs the toaster in, so the result is dam-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,740,1300,713">aged plain bread still in its wrapper stuffed into a nonfunctional toaster (see the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,771,1296,746">discussion at http://b1og.johnmue11erbooks.com/2013/03/04/procedures-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,806,1300,780">in-technical-writing/ for details).Even so, the idea is the correct one,yet it</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,838,1300,813">requires some slight, but essential, adjustments to make the algorithm finite and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,869,471,848">effective.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,938,1300,912">One of the most common uses of algorithms is as a means of solving formulas. For</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,971,1298,946">example,when working with the GCD of two integer values,you can perform the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1006,1300,979">task manually by listing each of the factors for the two integers and then selecting</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1039,1300,1014">the greatest factor that is common to both.For example, GCD(20,25) is 5 because</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,1071,1294,1044">5 is the largest number that divides evenly into both 20 and 25.However, process-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1106,1296,1079">ing every GCD manually is time consuming and error prone, so the Greek mathe-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,1137,1300,1112">matician Euclid created a better algorithm to perform the task.You can see the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,1170,1296,1145">Euclidean method demonstrated at https://www.khanacademy.org/computing/</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,1206,1298,1177">computer-science/cryptography/modarithmetic/a/the-euclidean-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,1237,497,1216">algorithm.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1303,1300,1278">However, a single formula, which is a presentation of symbols and numbers used</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1339,1300,1312">to express information or ideas, can have multiple solutions, each of which is an</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,1372,1300,1345">algorithm. In the case of GcD, another common algorithm is one created by</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,1405,1298,1380">DerrickHenry Lehmer(https://www.imsc.res.in/~kapil/crypto/notes/</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1440,1300,1413">node11.htm1).Because you can solve any formula multiple ways, people spend a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,1470,1298,1443">great deal of time comparing algorithms to determine which one works best in a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="367,1507,1293,1480">given situation.(See a comparison of Euclid to Lehmer at http://citeseerx.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1538,1258,1513">ist.psu.edu/viewdoc/download?doi=10.1.1.31.693&amp;rep=rep1&amp;type=pdf.)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1605,1298,1578">Because our society and its accompanying technology are changing quickly, we</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="365,1640,1302,1613">needalgorithms that can keep the pace. Scientific achievements such as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="156,1752,192,1727">12</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="229,1754,701,1729">PART 1 GettingStarted with Algorithms</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="212,250,1483,204">this statement in your program, your statement might be something like this..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,293,996,261">display_messages(message1,"Hello",message2,"Hi!");</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,355,497,316">Square Brackets</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,412,1497,374">The general form of some statements or methods (subprograms) may contain</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,461,1437,422">"square brackets" [ ], which indicate that the enclosed section is optional.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,511,998,472">For example, the general form of the statement.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,557,808,527">str.Substring(beginIndex [, endIndex ])</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,619,1129,577">indicates that the section [, endIndex] can be omitted..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,681,1421,637">The following two statements produce different results but they are both.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,729,561,690">syntactically correct.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,774,536,740">a = str.Substring(3);</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,816,575,782">b = str.Substring(3, 9);</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,873,515,841">The Dark Header</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,933,1427,896">Most of this book's examples are shown in a typeface that looks like this.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="663,1001,1049,965">project_29_2_3</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="224,1052,707,1020">static void Main(string[] args){</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="268,1093,404,1061">int a, b;</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="268,1171,358,1139">a=1;</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="266,1210,358,1178">b=2;</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="268,1249,631,1219">Console.WriteLine(a + b);</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="219,1286,238,1260">}</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1348,407,1309">The header</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="441,1352,841,1313"> project_29_2_3</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="855,1350,1483,1311">on top indicates the filename that you</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1402,1481,1364">must open to test the program. All the examples that contain this header can</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1453,864,1409">be found free of charge on my website.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="193,1507,333,1472">Notices</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1567,1481,1531">Very often this book uses notices to help you better understand the meaning</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1616,799,1584">of a concept. Notices look like this.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="231,1705,799,1664"> This typeface designates a note.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="203,1785,1183,1753">Something Already Known or Something to Remember</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1842,1494,1810">Very often this book can help you recall something you have already learned</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1895,1462,1856">(probably in a previous chapter). Other times, it will draw your attention to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,1943,1196,1902">something you should memorize. Reminders look like this.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

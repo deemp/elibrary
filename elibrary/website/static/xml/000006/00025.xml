@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="210,243,1483,206">Luckily, that Golden Age is upon us, and developers are swimming in game</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,293,1483,254">engine options. Developers that want to make a 2D game can use</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,337,1481,305">GameMaker Studio or Pico-8. Unreal, the powerhouse 3D engine that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,438,1483,399">immediate use. There are many options, each with their own strengths and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,481,416,449">weaknesses.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,543,1483,504">If you're looking for unrivaled flexibility, however, the most versatile</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,594,1483,555">option is, by far, the Unity Engine.Supporting 2D games, 3D games, VR</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,642,1481,603">and AR projects, PC, Mac, and Linux development, and even web games,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,738,1483,694">flexible - Unity's object-component system makes development and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,832,1488,793">their engine, releasing fresh updates to give you access to the latest</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,882,1488,839">technology. And the community of Unity developers continues to grow,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,928,1485,889">eager to help other devs, and continuously creating impressive assets that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,974,1016,937">can be downloaded from the Unity Asset Store..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1033,1409,1002">With the Unity Engine, it's never been easier to create your own games.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1095,543,1056">So, let's get started!.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1210,458,1167">Structure</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="270,1290,732,1251">Unity: The Broad Strokes</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,1348,649,1309">Using the Unity Hub</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="263,1405,628,1373">LTE vs Beta Builds</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1469,815,1430">:Exploring Extras and Tutorials.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,1526,591,1487">.The Unity Editor</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,1588,778,1549">.Placing Objects in the Scene.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,1648,700,1609">.Moving Objects around</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1710,688,1671">.The Inspector Window</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,1765,693,1726">.The Hierarchy Window</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="256,1829,735,1785">. Making Something Move</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="263,1888,695,1849">.Installing Visual Studio</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,1943,573,1907">. Visual Scripting</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="1217,460,1335,252">1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="711,555,1346,488">Starting with C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,665,1296,632">Why C++? There will be as many reasons to use C++ as there will be readers of this book.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,727,1324,690">You may have chosen C++ because you have to support a C++ project. Over the 30 years of.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,760,1320,729">its lifetime there have been millions of lines of C++ written, and most popular applications</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,794,1314,767">and operating systems will be mostly written in C++, or will use components and libraries</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,829,1332,798">that are. It is nearly impossible to find a computer that does not contain some code that has</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,862,419,835">been written in C++.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,926,1328,893">Or, you may have chosen C++ to write new code. This may be because your code will use a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,960,1210,929">library written in C++, and there are thousands of libraries available: open source,.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,993,521,966">shareware, and commercial.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,1053,1324,1026">Or it may be because you are attracted to the power and flexibility that C++ offers.Modern</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,1089,1263,1059">high-level languages have been designed to make it easy for programmers to perform</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,1124,1283,1093">actions; while C++ has such facilities, it also allows you to get as close to the machine as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,1163,1294,1130">possible, gives you the (sometimes dangerous) power of direct memory access. Through</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,1197,1296,1165">language features such as classes and overloading, C++ is a flexible language that allows</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="151,1234,985,1197">you to extend how the language works and write reusable code.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,1292,1343,1259">Whatever your reason for deciding on C++, you have made the right choice, and this book is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,1325,445,1298">the right place to start.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

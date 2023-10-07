@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="405,542,580,515">IN THIS PART.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="407,595,826,568">Defining algorithms and their design</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="407,661,912,634">Using Google Colab to work with algorithms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="405,732,878,700">Performing essential data manipulations</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="403,796,826,765">Building a matrix manipulation class</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

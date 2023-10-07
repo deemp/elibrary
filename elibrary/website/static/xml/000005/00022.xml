@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="240,291,497,252">CHAPTER18:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,337,508,296">Deadlocks</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,380,497,341">CHAPTER 19:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,422,788,383">Normalization of Your Data</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,465,871,433">How to Normalize the Database</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,513,601,477">Raw Databases</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,559,582,520">Logical Design</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,603,799,564">The Needs of the End-User</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,646,596,610">Data Repetition</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,692,575,653">Normal Forms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,738,688,699">Naming Conventions</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,781,991,742">Benefits of Normalizing Your Database</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,825,610,786">Denormalization</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,866,749,832">Database Normal Forms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,914,748,875">First Normal Form 1NF</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,958,804,919">Second Normal Form (2NF)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,1004,758,965">Third Normal Form 3NF)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,1047,917,1008">Boyce-Codd Normal Form BCNF</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="321,1093,788,1052">Fourth Normal Form (4NF)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1134,749,1098">Fifth Normal Form (5NF)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1178,499,1144">CHAPTER19:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,1221,617,1189">Real-World Uses</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,1270,700,1231">SQL in an Application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,1313,605,1274">Database Locks</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1357,520,1315">Conclusion</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1402,524,1364">References</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,1496,430,1455">PART3:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1547,474,1508">CHAPTER1:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,1588,931,1556">Data Access with ODBC and JDBC</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,1634,441,1600">ODBC</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1680,857,1641">ODBC Functional Components</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1723,518,1687">Extensions</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

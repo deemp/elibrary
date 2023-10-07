@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="74,119,1619,78">assume that you go to a shop to buy a car and a bicycle. If your friend sees you there and asks</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,167,1619,128">what you are buying, then in general you say buying a car. This is because the cost of the car is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="72,213,1624,170">high compared to the cost of the bicycle (approximating the cost of the bicycle to the cost of the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="72,261,152,218">car).</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="566,357,1130,312">Total Cost = cost of car +cost of_bicycle</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="575,415,1118,376">Total Cost  cost of car (approximation)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="79,509,1619,477">For the above-mentioned example, we can represent the cost of the car and the cost of the bicycle</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,555,1619,522">in terms of function, and for a given function ignore the low order terms that are relatively</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,610,1621,568">insignificant (for large value of input size, n).As an example, in the case below, n4, 2n2, 100n</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="81,658,1619,626">and 500 are the individual costs of some function and approximate to n4 since n4 is the highest</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="72,706,307,667">rate of growth..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="651,807,1046,761">n+2n+100n+500n4</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="79,956,841,917">1.11 Commonly Used Rates of Growth</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="79,1052,1289,1013">The diagram below shows the relationship between different rates of growth.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

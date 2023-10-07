@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="212,248,1427,202">programmer needs to work with, which is Object Oriented Programming</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,293,335,252">(OOP).</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,348,1432,312">This book has a class course structure with questions and exercises at the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,401,1441,362">end of each chapter so you can test what you have learned right away and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,449,1474,410">improve your comprehension. With 250 solved and 450 unsolved exercises,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,493,1437,458">475 True/False, about 150 multiple choice, and 200 review questions and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,541,1402,509">crosswords (the solutions and the answers to which can be found on the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,589,723,552">Internet), this book is ideal for</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="243,658,1083,612"> novices or average programmers, for self-study</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="247,713,635,674">high school students</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="247,775,945,736">first-year college or university students</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="245,834,434,793">teachers</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="245,896,469,852">professors</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="247,953,1478,917"> anyone who wants to start learning or teaching computer programming</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="293,1004,1037,965">using the proper conventions and techniques</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

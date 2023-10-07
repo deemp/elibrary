@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="154,98,177,71">6</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="557,98,893,71">CHAPTER 1What is API design?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,173,1293,146">The mobile application running on a smartphone uses or consumes the API exposed</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="256,212,1291,181">or provided by the server application (often called a backend application or simply back</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,247,1293,220">end) that's hosted on a remote server. The mobile application is therefore called a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,283,1293,256">consumer, and the backend is called a provider.These terms also apply respectively to the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,318,1289,291">companies and the people creating the applications, or consuming or providing APIs.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,355,1293,328">Here that means the developers of the mobile application are consumers and the ones</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,391,718,364">developing the backend are providers.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="292,428,1291,401">To communicate with its backend, the mobile application usually uses a famous</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,462,1291,437">network: the internet.The interesting thing here is not the internet itself such com-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,499,1289,474">munication can also be done over a local networkbut how these two applications com-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,536,1293,509">municate over the network.When a mobile application sends a photo and message to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,572,1294,545">the backend application,it does so using the Hypertext Transfer Protocol (HTTP).If</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,607,1291,578">you've ever opened a web browser on a computer or a smartphone, you have used HTTP</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,642,1293,617">(indirectly).This is the protocol that is used by any website.When you type a website's</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,678,1291,653">address, like http://apihandyman.io or its secured version, https://apihandyman.io,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,715,1293,690">into the address bar and press Enter or click a link in a browser, the browser uses HTTP</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,752,1293,727">to communicate with the remote server hosting the website in order to show you the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,788,1293,761">site's content.Remote APIs, or at least the ones we're talking about in this book, rely on</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,825,1031,798">this protocol just like websites; that's why these are called web APIs.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="290,859,1293,832">So,in this book,APIs are web APIs.They are web interfaces for software.But why are</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="252,898,553,867">such APIs so interesting?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,954,225,927">1.1.2</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,954,726,927">APls turn software into LEGObricks</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1004,1289,977">Thousands, even millions, of mobile applications and their backends have been cre</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1041,1291,1016">ated thanks to web APIs, but there's more to the story.Indeed, web APIs unleash</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1077,1291,1050">creativity and innovation by turning software into reusable bricks that can be easily</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1112,1291,1089">assembled.Let's go back to our example and see what might happen when sharing a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1149,578,1123">photo on a social network.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="290,1185,1291,1158">When a social network backend receives a photo and message, it might store the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1222,1293,1195">photo on the server's filesystem and store the message and the photo identifier (to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1258,1293,1231">retrieve the actual file later) in a database.It could also process the photo using some</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1291,1293,1266">homemade facial recognition algorithm to detect if it contains any friends of yours.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1328,1293,1303">before storing the photo.That's one possibility a single application handling every-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1366,1293,1339">thing for another solitary application.Let's consider something different, as shown in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1403,380,1376">figure 1.4.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="294,1438,1293,1411">The backend API could be used by both a social network mobile application and a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1474,1293,1445">website, and its implementation could be totally different. When the backend receives</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1511,1293,1484">a photo and message to share (whichever application sent it),it could delegate the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1547,1291,1520">photo's storage as a service company through its API.It could also delegate the storage</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,1586,1293,1551">of the message and photo identifier to an in-house timeline software module through</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1619,1293,1592">its API.How could the facial recognition be handled? Well, that could be delegated to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1655,1285,1628">some expert in facial recognition offering their services via ... you guessed it ... an API.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

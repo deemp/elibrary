@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="274,238,459,212">Presentation layer</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="506,238,619,212">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="658,238,769,212">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="810,238,921,212">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="272,369,418,343">Business layer</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="506,371,617,345">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="658,371,767,345">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="808,371,919,345">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="268,502,445,475">Persistence layer</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="506,502,617,476">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="656,502,767,476">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="810,502,921,476">Component</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="274,634,422,608">Database layer</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="202,737,964,712">Figure 3-1. The layered architecture style is a technically partitioned</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,769,338,746">architecture</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,840,999,814">Each layer of the layered architecture style has a specific role and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,876,999,849">responsibility within the application. For example, a presentation</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="195,911,1001,881">layer is responsible for handling all user interface and browser.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,945,999,919">communication logic, whereas a business layer is responsible for</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,981,999,954">executing specific business rules associated with the request. Each</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1014,1001,988">layer in the architecture forms an abstraction around the work</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1050,999,1024">that needs to be done to satisfy a particular business request. For</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1082,997,1057">example, the presentation layer doesn't need to know about how to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="195,1125,1001,1089">get customer data; it only needs to display that information on a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1155,1001,1129">screen in a particular format.Similarly, the business layer doesn't</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1191,999,1164">need to be concerned about how to format customer data for display</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1224,999,1200">on a screen or even where the customer data is coming from; it only</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1260,999,1234">needs to get the data from the persistence layer, perform business</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1299,1001,1268">logic against the data (e.g., calculate values or aggregate data), and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1331,782,1305">pass that information up to the presentation layer.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1382,994,1356">Layers are usually manifested through a namespace, package struc</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1417,997,1391">ture, or directory structure (depending on the implementation lan-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1457,1001,1423">guage used). For example, customer functionality in a business</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1489,999,1464">layer might be represented as app.business.custoner, whereas in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1564,997,1534">presentation.customer.In this example, the second node of the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1598,999,1571">namespace represents the layer, whereas the third node represents</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1686,536,1661">16Chapter3:Layered Architecture</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

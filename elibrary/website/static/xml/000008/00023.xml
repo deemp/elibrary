@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="801,659,1319,601">about the author</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="638,753,1316,727">ARNAUD LAURET is a French software architect with</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="634,792,1318,761">17 years of experience. He spent most of these years in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="632,829,1319,798">the finance sector working on interconnecting systems in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="634,863,1316,836">various ways, especially using web services and APIs.He</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="636,900,1316,873">runs the API Handyman blog and the API Stylebook web</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="638,937,1316,910">site and is a guest lecturer at multiple API conferences</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="636,971,1316,946">around the world.He is passionate about human-cen-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="636,1008,1316,981">tered software design and loves to build and help to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="636,1044,1316,1018">build systems that will provide a wonderful experience</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="632,1081,1319,1050">for all users, from developers and operations teams to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="631,1111,759,1091">end users.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="728,1690,772,1661">xxi</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

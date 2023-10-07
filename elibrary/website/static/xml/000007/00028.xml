@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="201,178,996,152">Because the layered architecture is a technically partitioned archi-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="195,218,1001,184">tecture, it's a good fit if the team structure is also technically.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,251,999,221">partitioned. In other words, if your overall team structure is organ-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,285,997,259">ized as teams of presentation (UI) developers, backend developers,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,317,999,293">shared services teams, database teams, and so on, this aligns wel</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,354,999,328">to the overall partitioning of this architecture style (presentation</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,390,1001,364">layer, business layer, persistence layer, and so on). This alignment is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,426,489,399">known as Conway's Law.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="195,497,656,461">When Not to Consider This Style</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,553,1001,521">While there are good reasons to consider the layered architecture</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,585,1001,559">as described in the prior section, unfortunately there are even more</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,621,759,594">reasons not to consider the layered architecture.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,671,1001,641">The first reason not to consider the layered architecture is if you</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,741,994,716">scalability, elasticity, fault tolerance, and performance. Because lay</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,774,999,750">ered architectures lend themselves toward a monolithic architecture,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,812,998,786">applications built using this architecture style are generally difficult</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,846,994,819">to scale.While the layered architecture can sometimes scale by split</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,883,1001,853">ting the layers into separate physical deployments and/or creating</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="202,917,1001,891">separate instances of the application in multiple virtual machines, it</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,952,994,926">becomes very expensive and inefficient because 1o0% of the applica</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,986,1001,960">tion functionality must scale. In addition, the layered architecture is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1022,999,996">not very fault-tolerant a fatal crash in any part of the application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1058,761,1031">brings down the entire application functionality.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1106,998,1082">Another reason to avoid the layered architecture is when a major-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1144,999,1118">ity of your changes are at a domain level rather than a technical</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1179,999,1153">one.Suppose you are tasked with adding an expiration date to the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1215,1001,1185">customer's "My Movie List within a movie streaming application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1249,999,1222">(movies a customer has queued up to watch later). This new feature</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1282,999,1258">would first require a change to the database schema, then a change</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1318,999,1292">to the SQL in the persistence layer, then a change to the business</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1354,999,1327">rules and contracts in the business layer (such as how long before</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1389,999,1363">expiration, what to do when a movie in your list expires, and so</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1423,999,1397">on), and finally a change to the presentation layer to display the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1459,716,1432">expiration date beside each movie in the list.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1513,999,1479">In analyzing this relatively simple change to the My Movie List</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1547,997,1521">functionality, notice how every layer of the architecture is impacted</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="696,1688,1003,1661">Considerations and Analysis23</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

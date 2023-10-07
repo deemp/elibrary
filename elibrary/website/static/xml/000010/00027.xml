@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="215,254,751,209">1.2.2 Using Code::Blocks</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,346,1427,307">Though I prefer Visual Studio Code, I recommend Code::Blocks if you're</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,399,1421,360">just starting out. Before you build your first program in the Code::Blocks</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,447,1324,408">IDE, confirm that the path to the compiler is correct. For a standard</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,495,596,463">installation, the path is:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="224,594,968,561">C:\Program FiLes (x86)\CodeBlocks\MinGw\bin</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,699,1425,667">Ensure that this address is specified for Code::Blocks to locate the default</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,752,1483,715">compiler, MinGw, which I just mentioned. Or, if you've disobeyed the setup</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,809,1480,758">program's suggestions, set the proper path to your compiler. For example, be</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,852,1481,814">spicy and use LLVM clang as your compiler. If so, set the proper path to that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,903,1432,864">compiler so that Code::Blocks doesn't barf every time you click the Build.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="207,946,334,915">button.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1040,1430,1001">To set the path, heed these directions in Code::Blocks. Don't be lazy! The.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1091,1471,1052">missing compiler error message is one of the most common email complaint</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1141,1483,1100">messages I receive from readers who can't get Code::Blocks to work. Follow</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1189,679,1150">these steps in Code::Blocks:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,1281,769,1242">1. Choose Settings &gt; Compiler.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,1348,1427,1309">2. In the Compiler Settings dialog box, click the Toolchain Executables</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="293,1398,356,1364">tab.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="252,1474,1464,1428">3. Write (or paste) the compiler's address into the Compiler's Installation</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="293,1522,607,1483">Directory text box..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="252,1579,464,1538">4. Click OK.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,1671,1425,1627">The IDE should be happy with the compiler after you work through these</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1726,1060,1680">steps. If not-yep, you guessed it--get some cows.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1806,1476,1774">Once the compiler is set, you use Code::Block's built-in editor to create your</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1861,1478,1822">code. The editor uses color-coding, matches parentheses and other pairs, and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1909,1307,1870">features inline context assistance for C library functions. All good.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

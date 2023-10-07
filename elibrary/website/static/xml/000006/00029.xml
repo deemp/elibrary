@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="212,241,1481,204">There is also a tab for the Community, where you can read up on what the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,293,1483,254">Unity team has planned for upcoming features and releases. You can also</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,341,1481,302">get help directly from the team, or join the forums, where an incredibly</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,390,1485,351">passionate and active community of Unity Developers would be happy to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,438,832,399">help with any problems you run into.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,571,1460,539">Figure 1.8: The Unity Community is very friendly, so don't be afraid to ask questions and look for</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="785,607,915,575">feedback!</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,676,1481,644">And while these tabs have an exciting amount of content to dive into, we're</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,733,1485,683">going to start fresh with our own blank project. Return to the Projects tab</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,775,1194,736">and press the New Project button in the upper right corner.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="492,910,1203,880">Figure 1.9: The New Project'Button will get us started..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1017,652,976">Our First Project</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1102,1481,1063">1. Pressing the New button will bring up the "Create a New Project"</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1153,1485,1112">dialog, giving you several options to choose from, as shown in figure.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="295,1200,382,1161">1.10</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="370,1327,1414,1295">Figure 1.10: There are many templates to choose from when starting a new project</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1398,1483,1359">2. We will return to these templates in later chapters, but for now select</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1446,732,1412">the "3D" template option.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1508,1485,1469">3. This is also where we will set our project name. Select the field that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1556,1483,1515">says New Unity Project and change that to Mastering Unity Demo..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="305,1648,1425,1616">Once you have that folder available, set that as our project location.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="305,1785,1483,1753">Figure 1.11: Your first project is being created.This may take a few minutes, but it's worth the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="859,1820,931,1788">wait.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="256,1893,1485,1847">4. Press next, and Unity will start generating all the files and folders</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1939,1483,1900">needed for your new project. This is a lengthy process, and depending.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

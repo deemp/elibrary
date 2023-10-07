@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="157,152,343,125">Starting with C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,228,1244,202">The installer will check that you have enough disk space for the selected option.The</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,266,1326,239">maximum amount of space Visual Studio will require is 8 GB, although for Visual C++ you</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,301,1316,274">will use a lot less. When you check Desktop development with C++ item, you will see the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,335,1273,308">right side of the dialog change to list the options selected and the disk size required, as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,370,264,343">follows:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="219,449,433,424">VicualStudio</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="196,474,550,447">Installing-Visual Studio Community 2017 (15.0.26228.12</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1306,467,1316,453">X</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="198,509,284,488">Workloads</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="327,507,505,488">Individual components</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="544,507,674,488">Language packs</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="193,541,280,525">Windows 3)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1016,551,1113,529">Summary</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="258,578,445,559">Universal Windows Platform</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="642,578,817,559">.NET desktop development</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1020,586,1244,565">&gt;VisualStudio core editor</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,598,351,578">development</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="638,596,887,577">Build WPF,Windows Forms and console</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,615,492,596">Create applications for the Universal..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="638,615,883,596">applications using the .NET Framework.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1024,623,1296,604">Desktop development with C+</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1040,652,1097,632">Included</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,692,468,667">Desktop development with C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="539,683,556,667">V</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1042,683,1271,663">Visual C++ core desktop features</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="258,708,517,688">Build classic Windows-based applications</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1037,709,1099,693">Optional</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,727,523,708">using the power of the Visual C++ toolse</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1040,746,1277,721">VC++2017v141 toolset (x86,x64</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,763,1185,744">C++ profiling tools</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1040,787,1261,767">Windows 10 SDK(10.0.14393.0</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="192,800,304,781">Web &amp;Cloud (5)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1040,808,1236,789">Visual C++ tools for CMake</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,837,462,818">ASP.NET and web development</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,837,766,818">Azure development</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,831,1214,812">Visual C++ATL support</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,858,499,833">Build web applications using ASP.NET</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,854,850,835">Azure SDK tools,and projects for</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,856,1269,831">Windows 8.1 SDK and UCRT SDK</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="258,875,519,852">ASP.NET CoreHTMLJavaScript and CSS.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,875,870,856">developing cloud apps and creating..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,877,1246,852">Windows XP support for C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1036,898,1287,874">MFC and ATL support (x86 and x64)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,918,1173,899">C++/CLI support</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,945,398,931">Node.js development</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,949,824,929">Data storage and processing</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1040,941,1214,922">Clang/C2 (experimental</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="258,966,517,947">Build scalable network applications using</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="639,968,895,945">Connect develop and test data solutions</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,962,1224,943">Standard Library Modules</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,985,507,966">Node.js,an asynchronous event-driven..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="642,985,864,966">using SQL Server Azure Data Lake</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,983,1142,964">IncrediBuild</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1040,1006,1261,987">Windows 10 SDK(10.0.10586.0</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,1032,1263,1006">Windows 10 SDK (10.0.10240.0</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1038,1049,1285,1030">VC++2015.3v140 toolsetx86,x64</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,1059,464,1039">Office/SharePoint development</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,1076,492,1057">Create Office and SharePoint add-ins,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="258,1093,513,1074">SharePoint solutions and VSTO add-ins.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="196,1170,331,1151">Mobile &amp; Gaming 5)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="258,1203,460,1184">Mobile development with.NET</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,1205,838,1186">Game development with Unity</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="262,1224,513,1205">Build cross-platform applications for iOS,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,1224,877,1205">Create 2D and 3D games with Unity,a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="258,1240,484,1224">Android or Windows using Xamarin.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,1244,885,1224">powerful cross-platform development...</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1022,1228,1281,1215">By continuing,you agree to the license for the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1030,1247,1314,1228">Visual Studio edition you selected.We also offer the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1028,1263,1283,1244">ability to download other software with Visual</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1026,1276,1300,1259">Studio.This software is icensed separatelyas set</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1024,1292,1308,1277">out in the 3rd Party Notices or in its accompanying</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="262,1315,494,1296">Mobile development with JavaScript</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,1315,838,1296">Mobile development with C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1028,1309,1277,1296">license.By continuing.you also agree to thos</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="262,1330,509,1315">Build Android,iOS and UwP apps using</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,1332,893,1313">Build cross-platform applications foriOS,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1027,1324,1072,1314">licenses</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="196,1367,247,1354">Location</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="198,1398,597,1373">CProgram Files x86)\Microsoft Visual Studio\2017\Community</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1177,1394,1249,1375">Install size:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1257,1391,1313,1375">5.43GB</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1240,1429,1289,1408">Install</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1267,1475,1328,1456">1.5.30308</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="708,1719,794,1688">[12]</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

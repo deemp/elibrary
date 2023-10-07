@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="279,243,453,204">2D vs. 3D</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,289,564,252">Our 2D Sandbox</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,346,402,298">Sprites</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,387,499,346">Sprite Sheets</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="274,432,437,402">Tilemaps</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,486,698,442">Studying The Lost Crypt</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,532,735,491">2D Physics and Movement</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,575,522,541">2D Animation</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,626,658,589">Cinemachine Cameras</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,671,656,637">The Power of Parallax</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,719,472,683">Conclusion</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,772,448,731">Questions</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,818,467,782">Key Terms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,914,665,880">16. Mastering the Genres</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,964,435,929">Structure</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1015,462,974">Objectives</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1059,587,1025">Concerning Scope</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1107,772,1070">Sidescrollers and Platformers</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,1157,647,1118">Top-Down Adventure</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1201,744,1167">FPS - First Person Shooters</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1249,631,1215">Third-Person Games</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1297,756,1263">RPGs - Role Playing Games</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1347,545,1311">Strategy Games</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1393,518,1359">Puzzle Games</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1441,654,1407">Creative Juxtaposition</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1492,615,1453">Player Expectations</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1537,472,1501">Conclusion</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1585,449,1550">Questions</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1639,467,1597">Key Terms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1735,730,1696">17. Platforms and Publishing</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1783,437,1747">Structure</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1833,462,1792">Objectives</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1877,693,1840">Your Platform of Choice</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="279,1922,571,1889">PC / Mac / Linux</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1970,527,1937">Mobile Games</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

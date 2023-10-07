@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="79,119,1317,80">curve for f(n). For this reason, we call algorithm analysis asymptotic analysis.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,261,857,222">1.19 Guidelines for Asymptotic Analysis.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="79,358,1374,319">There are some general rules to help us determine the running time of an algorithm.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="187,449,226,417">1)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="268,449,1619,417">Loops: The running time of a loop is, at most, the running time of the statements</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="291,495,1402,463">inside the loop (including tests) multiplied by the number of iterations.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="180,603,448,555">/executes n times</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="176,660,420,612">for (i=1i&lt;=ni++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,717,640,671">m=m+2//constant time,c</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="182,809,855,772">Total time = a constant c  n = c n = O(n)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="182,903,229,866">2)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,901,1619,864">Nested loops: Analyze from the inside out. Total running time is the product of the.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="289,949,628,912">sizes of all the loops.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="180,1054,586,1004">//outer loop executed n times</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="173,1109,444,1062">fori=1i&lt;=ni++{</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="224,1171,638,1123">//inner loop executes n times</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1233,467,1178">for(j=1;j&lt;=nj++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="256,1283,608,1240">k-k+1//constant time</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="185,1441,765,1402">Total time = c  n  n = cn2 = O(n)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="182,1538,229,1499">3)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="270,1531,1393,1499">Consecutive statements: Addthe time complexities of each statement</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

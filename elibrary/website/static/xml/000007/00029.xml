@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="201,178,999,152">teams, this might even involve the coordination of multiple teams</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="202,214,999,188">(the UI team, backend team, database team and so on to make this</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,249,999,223">change. This not only impacts overall agility (the ability to respond</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,285,1001,259">quickly to change), but also impacts the overall time and effort</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="195,321,572,291">involved in making this change.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,373,1001,341">Lastly, if your overall team structure is organized by cross-functional</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,405,999,379">domain-based teams single teams that have UI,backend, and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,441,994,414">database expertise focused on a particular domain within the appli</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,476,999,446">cation), the layered architecture is not a good fit because the tech-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,510,999,484">nically partitioned architecture structure is not aligned with the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,546,609,519">domain partitioned team structure.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,619,592,587">Architecture Characteristics</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,667,994,643">The chart illustrated in Figure 3-5 summarizes the overall capabili</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,705,999,681">ties (architecture characteristics) of the layered architecture in terms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,741,1001,714">of star ratings. One star means the architecture characteristic is not</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,776,1001,750">well supported, whereas five stars means it's well suited for that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,812,628,784">particular architecture characteristic.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,900,456,870">Characteristic</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="616,901,771,869">Star rating</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,971,448,945">Partitioningtype</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="619,973,726,941">Technical</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1041,394,1009">Overall cost</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="626,1046,660,1005">$</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,1106,336,1075">Agility</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="619,1125,669,1065">*</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="621,1189,876,1129">*****</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1176,371,1142">Simplicity</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1237,375,1208">Scalability</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1307,428,1275">Fault tolerance</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="619,1389,774,1328">***</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1370,409,1343">Performance</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="619,1449,668,1393">*</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1438,400,1408">Extensibility</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1549,336,1522">architecture</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1686,536,1661">24Chapter 3:Layered Architecture</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

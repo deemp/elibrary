@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="155,152,233,123">Preface</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="161,251,601,210">Reader feedback</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,305,1269,274">Feedback from our readers is always welcome. Let us know what you think about this.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,341,1332,310">book-what you liked or disliked. Reader feedback is important for us as it helps us develop</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,376,728,349">titles that you will really get the most out of.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,411,1294,384">To send us general feedback, simply e-mail feedback@packtpub.com, and mention the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,443,699,420">book's title in the subject of your message.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,482,1259,455">If there is a topic that you have expertise in and you are interested in either writing or</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,517,1132,490">contributing to a book, see our author guide at www.packtpub.com/authors.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,629,640,582">Customer support</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,681,1340,648">Now that you are the proud owner of a Packt book, we have a number of things to help you</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,715,621,685">to get the most from your purchase.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,812,903,767">Downloading the example code</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,858,1336,831">You can download the example code files for this book from your account at http: / /www .p</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,899,1336,866">acktpub.com.If you purchased this book elsewhere, you can visit http://www.packtpub.c</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,935,999,900">om/support and register to have the files e-mailed directly to you.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,993,905,962">You can download the code files by following these steps:.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="251,1057,1244,1024">1. Log in or register to our website using your e-mail address and password..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="245,1097,1038,1062">2. Hover the mouse pointer on the SUPPORT tab at the top..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="247,1136,762,1105">3.Click on Code Downloads &amp; Errata.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="251,1174,877,1149">4.Enter the name of the book in the Search box.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="251,1217,1161,1190">5.Select the book for which you're looking to download the code files</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="247,1259,1230,1228">6.Choose from the drop-down menu where you purchased this book from..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="247,1300,631,1269">7. Click on Code Download.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,1365,1338,1338">Once the file is downloaded, please make sure that you unzip or extract the folder using the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,1398,370,1373">latest version of:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,1461,680,1433">WinRAR/7-Zip for Windows</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,1506,682,1473">Zipeg/iZip/UnRarX for Mac</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,1546,607,1514">7-Zip/PeaZip for Linux</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="716,1719,788,1686">[4]</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

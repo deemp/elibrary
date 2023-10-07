@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="210,266,1404,211">1.2 The integrated development environment (IDE)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,367,1423,332">Most coders prefer to work in an integrated development environment, or</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,429,1421,385">IDE--this program is software used to create software, like a toaster that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,477,977,445">makes toasters but also makes toast and bread.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,568,1409,532">The IDE combines an editor, a compiler, and a running environment in a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,619,1423,587">single program. Using an IDE is a must for creating GUI programs where</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,671,1427,630">you can build graphical elements like windows and dialog boxes and then</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,724,1349,676">add them to your code without the toil of coding everything by hand..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,770,619,731">Programmers love IDEs.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,885,704,825">1.2.1 Choosing an IDE</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,974,1381,935">You don't need an IDE to craft the programs presented in this course. I</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1024,1407,981">suggest that you use the command prompt, but you're stubborn and love</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1075,1402,1036">your IDEand you're still reading so I'm compelled to write about it.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1162,1453,1123">The IDE I recommend for C programming is Visual Studio Code, available</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1212,1451,1180">at code.visualstudio.com. It comes in Windows, macOs, and Linux flavors</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1309,1263,1270">Visual Studio Code can be overwhelming, so I also recommend.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1361,1455,1325">Code::Blocks, available at codeblocks.org. Its best version is available only.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1416,1448,1380">for Windows. Ensure that you obtain a version of Code::Blocks that comes</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1469,1453,1432">with a compiler. The default is MinGw, which is nice. Better, get clang for</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1529,1462,1490">Windows, which can be obtained at the LLVM website: llvm.org. You must</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1588,1434,1549">manually cajole Code::Blocks into accepting clang as its compiler; details</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1638,714,1602">are offered in the next section.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1735,1483,1696">If you're using Linux, you already have a compiler, gcc, which is the default..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1790,1437,1751">Even so, I recommend obtaining the LLVM clang compiler. It's incredibly</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,1840,1464,1799">sophisticated. It features detailed error messages plus suggestions for fixing</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1891,1464,1847">your code. If I were a robot, I would insist that clang be used to compile my</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1939,1425,1895">brain's software. Use your distro's package manager to obtain this superb</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1985,501,1952">compiler at once!</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

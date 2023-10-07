@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="307,241,1478,209">contain features still being implemented (and the possibility of bugs)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,293,1481,254">Since we're looking for stability, we'll download the latest LTS build.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,339,1483,303">Once you're more comfortable with Unity, you may want to jump into</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,387,1250,348">the Beta builds and help shape the future of the platform.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,449,1485,410">5. After selecting the Unity 2021 LTS release, press the Next button in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,497,674,458">the lower right corner.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,555,1483,516">6. You'll then get a list of optional Modules that you can install. For now,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="296,603,1485,562">let's disable everything except for "Documentation"' and press Done,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,649,1208,612">which will start the download and Installation process.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,788,1483,756">Figure 1.6: You can install Modules at any time, so don't worry about missing something during your</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="766,820,929,793">initial setup.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,894,1483,855">With our build of Unity installed, let's take one last look around the Hub</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,942,737,905">before starting our new project.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1057,1000,1006">Exploring Extras and Tutorials</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1125,1490,1079">While the unity Hub is primarily for managing your projects and builds of</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1171,1162,1132">the unity engine, there are some tabs worth investigating</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1235,1483,1189">The Learn tab, for instance, gives you access to a deep well of knowledge</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1276,1485,1240">directly from the team at Unity. Game-design tutorials, demos, and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1325,1481,1292">templates are all Made available with a click of a button. Each of these is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,1373,1169,1338">highly polished and will always result in new knowledge.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="379,1510,1321,1478">Figure 1.7: Unity provides a wealth of learning content directly in the Hub.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1581,1483,1542">Let's say you want to develop your own first person shooter game. There is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1627,1485,1590">an FPS Creator kit option, designed with beginner developers in mind, that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1675,797,1643">can be completed in under 2 hours.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1739,1478,1700">Or perhaps you're trying to get a younger developer excited about coding.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1788,1481,1749">Unity has teamed up with Lego to make a series of microgame tutorials.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1836,1483,1797">These allow novice developers to play with block building as they learn</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,1881,548,1843">how to code games.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,1943,1485,1902">This tab alone is a deep well of useful knowledge for any aspiring game</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1989,388,1953">developer.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

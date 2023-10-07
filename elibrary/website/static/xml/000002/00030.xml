@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="157,152,343,125">Starting with C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,229,1320,202">For this book, leave the options selected by the installer and then click the Install button in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,268,1308,233">the bottom right hand corner. The installer will download all the code it needs and it will</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,301,1022,274">keep you updated with the progress with the following dialog box:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1279,364,1341,345">X</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,418,427,380">Visual Studio</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="213,493,292,471">Products</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,563,306,536">Installed</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1048,565,1165,544">Welcome!</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1046,590,1289,571">We invite you to go online to hone your</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,607,1296,588">skills and find additional tools to support</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="225,627,556,600">Visual Studio Community 2017</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1042,629,1222,605">your development workflow.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,661,546,642">Acquiring Microsoft.VisualStudio.CoreEditor</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,667,1097,646">Learn</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="266,679,294,663">1%</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,710,601,683">Applying Microsoft.VisualStudio.Setup.Configuration</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1046,704,1265,690">experienced developer,we have you</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,720,289,711">0%</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1046,721,1279,708">covered with our tutorials,videos,and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1048,740,1126,727">sample code</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,775,339,754">Cancel</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1042,781,1150,764">Marketplace</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,804,1267,781">Use Visual Studio extensions to add</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,823,1291,804">support for new technologies, integrate</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,841,1304,821">with other products and services and fine</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="219,860,309,839">Available</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,860,1177,841">tune your experience</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,900,1212,875">Need some help?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="223,926,540,900">Visual Studio Enterprise 2017</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1042,920,1261,897">Check out the Microsoft Developer</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,935,1281,918">Community where developers provide</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="260,954,872,933">Microsoft DevOps solution for productivity and coordination across teams of any size</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1042,952,1279,937">feedback and answers to many comm</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,976,1108,956">problems.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,1005,482,985">License terms  Release notes</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="924,1003,1009,983">15.0.26228.12)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,1008,1291,989">Get help from Microsoft at Visual Studio</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1044,1030,1101,1010">Support</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,1055,339,1033">Install</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="223,1149,560,1124">Visual Studio Professional 2017</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,1178,670,1159">Professional developer tools and services for small teams</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="262,1228,482,1209">License terms | Release notes</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="926,1224,1005,1211">(15.0.26228.12</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,1280,335,1259">Install</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1259,1425,1320,1410">1.5.30308.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="706,1719,796,1688">[13]</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>
