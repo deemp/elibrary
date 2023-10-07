@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="670,98,834,71">What is an API?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1302,94,1319,73">5</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="530,170,599,148">Mobile</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="762,170,835,148">Server</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="496,207,675,167">application's UI</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="731,207,919,167">application's API</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="880,243,905,216">4</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="824,308,899,289">share</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1172,330,1250,303">Mobile</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="305,341,357,320">User</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="849,349,920,330">photo</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1149,361,1267,325">application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="380,368,567,343">Uses UI controls</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="579,371,652,349">Hello</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1020,362,1118,341">Uses API</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="388,395,555,370">to take a photo,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="976,393,1160,368">function to share</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="617,410,686,383">Share</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="398,424,551,393">type a "Hello"</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1014,418,1122,397">a message</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="405,451,545,424">message,and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="647,449,676,422">4</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="876,443,895,426">4</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1004,445,1132,422">and a photo</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="728,461,818,439">Both are</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="413,474,536,453">share them</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="713,489,826,468">interfaces</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,547,1304,522">Figure 1.2 Comparing an application's user interface (Ul) to an application programming interface (API)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="284,603,1316,576">As a user of a mobile application, you interact with it by touching your smartphone's</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="278,640,1318,609">screen, which displays the application's UI. A mobile application's UI can provide ele-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,674,1316,648">ments like buttons, text fields, or labels on the screen.These elements let users inter-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,711,1318,684">act with the application to see or provide information, or to trigger actions such as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="284,748,659,721">sharing a message and a photo.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="311,782,1316,755">Just as we (human beings) use an application's UI to interact with it, that application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="284,819,1318,792">can use another application through its programming interface.Whereas a UI provides</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,854,1318,829">input fields, labels, and buttons to provide some feedback that can evolve as you use</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="284,890,1318,865">them, an API provides functions that may need input data or that may return output</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,925,1316,900">data as feedback.These functions allow other applications to interact with the applica-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,964,1172,937">tion providing the API to retrieve or send information or to trigger actions.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="311,1002,1317,967">Strictly speaking, an API is only an interface exposed by some software. It's an abstrac-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,1039,1318,1006">tion of the underlying implementation (the underlying code- what actually happens</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,1071,1316,1044">inside the software product when the API is used).But note that the term APIis often</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="284,1108,1316,1081">used to name the whole software product, including the API and its implementation.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="284,1143,1316,1116">So APIs are interfaces for software, but the APIs we talk about in this book are more</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="284,1179,943,1152">than just APIs: they are web APIs, as shown in figure 1.3.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="530,1231,714,1206">Consumer uses or</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="910,1229,1124,1205">Provider exposes or</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="496,1262,753,1233">consumes provider's API</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="876,1258,1160,1229">provides API to consumers</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="305,1316,476,1291">Mobile application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="795,1303,882,1283">Network</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="332,1374,444,1339">1/</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1172,1395,1246,1374">Server</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="315,1428,382,1401">Hello!</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1152,1428,1266,1401">application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="636,1438,1033,1413">Consumer communicates with provider</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="353,1464,425,1442">Share</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1110,1455,1205,1438">share</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="689,1468,978,1443">over a network using HTTP,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="620,1493,1045,1468">the same protocol used by web browsers</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1137,1495,1202,1468">photo</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="728,1586,960,1561">https://apihandyman.io</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="631,1653,702,1629">Home</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="768,1649,1022,1621">API Handyman blog</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="633,1689,698,1668">Posts</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="799,1680,991,1655">Sharing is learning</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,1756,1072,1731">Figure 1.3 Web APls are remote APls that can be used with the HTTP protocol.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

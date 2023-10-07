@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="213,248,1409,204">works properly the first time. Still, it happens. Prepare to be delighted or</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,346,1437,307">time, you re-edit the source code file, compile, link, and run again. In fact,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,396,1324,358">the actual C program development cycle looks more like figure 1.2.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1180,545,1215,522">-IX</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1149,597,1239,565">bugs</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="494,662,534,635">Fix</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="471,715,561,681">errors</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="224,852,416,811">1.Create the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="591,852,755,811">2.Compile</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="938,875,1113,834">3.Link with</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1298,873,1458,835">4.Run the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="224,901,416,862">source code</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="598,901,762,862">into object</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="960,920,1096,888">a library</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1314,928,1453,889">program</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,951,353,908">file</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="640,949,721,908">code</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="450,1109,584,1070">warnings</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="949,1228,1259,1196">Improve/add features</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1350,1432,1309">Figure 1.2 The true nature of the program development cycle. (Image</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1398,1240,1359">courtesy of the California Department of Highway Safety.)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1490,1462,1451">For trivia's sake, the original C compiler in Unix was called cc. Guess what</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,1533,428,1499">it stands for?.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1629,1481,1593">The original Unix linker was named ld. It probably stands for "link dis." The</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1691,1409,1652">ld program still exists on today's Linux and other Unix-like systems. It's</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1742,1448,1705">called internally by the compiler-unless the code is riddled with errors, in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1794,1441,1755">which case the compiler calls its friend Betsy to giggle about how horrible</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1840,520,1808">your C code reads.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1939,1370,1898">Okay. The ld program most likely is short for Link eDitor. Please stop</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1989,656,1957">composing that email now.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

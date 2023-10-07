@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="155,152,233,123">Preface</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="161,251,490,210">Conventions</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,305,1314,278">In this book,you will find a number of text styles that distinguish between different kinds</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,339,1340,312">of information. Here are some examples of these styles and an explanation of their meaning.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,401,1218,370">Code words in text, database table names, folder names, filenames, file extensions,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,436,1316,409">pathnames, dummy URLs, user input, and Twitter handles are shown as follows: "We can</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,470,993,443">include other contexts through the use of the include directive.'</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,526,574,503">A block of code is set as follows:.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,584,433,559">class point</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,613,284,592">{</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="263,648,373,615">public:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,674,463,652">int x, y;</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,708,298,681">!{</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,765,1332,738">When we wish to draw your attention to a particular part of a code block, the relevant lines</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,802,458,771">or items are set in bold:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="264,854,433,829">class point</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="266,883,284,864">{</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="263,918,373,887">public:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="329,945,460,924">int x,y;</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,978,911,949">{}xxauxauauod</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="268,1008,298,983">!{</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,1070,889,1037">Any command-line input or output is written as follows:.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="206,1118,535,1095">C:\&gt;c1 /EHsc test.cpp</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,1184,1320,1151">New terms and important words are shown in bold. Words that you see on the screen, for.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,1217,1298,1190">example, in menus or dialog boxes, appear in the text like this:"Clicking the Next button</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,1253,548,1226">moves you to the next screen."</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="337,1319,1036,1280">Warnings or important notes appear in a box like this..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="339,1481,740,1448">Tips and tricks appear like this.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="221,1560,290,1523">TIP</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="719,1724,787,1687">[3]</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

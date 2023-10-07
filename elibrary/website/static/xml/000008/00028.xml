@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="156,94,175,73">4</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="555,96,893,71">CHAPTER 1What is API design?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="292,173,1291,146">But what does designing APIs really mean? And what do you have to learn to design</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,210,1291,183">APIs? To answer these questions, we need to consider what an API is and for whom it's</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,245,1291,222">designed, and we also need to realize that designing an API is more than just designing</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,283,761,256">a programming interface for applications.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,341,207,310">1.1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,341,497,314">What is an API?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,391,1291,364">Billions of people own smartphones and use them to share photos on social networks.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,428,1287,401">This wouldn't be possible without APIs.Sharing photos using a mobile social network</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,466,1216,434">ing application involves the use of different types of APIs, as shown in figure 1.1.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="617,515,728,493">Smartphone</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="787,532,874,505">Network</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="914,518,1110,499">Social network server</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="183,546,307,516">Camera API</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="309,542,334,524">1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="186,568,330,547">to take a photo</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="346,568,513,543">Mobile application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="832,580,857,551">4</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="390,617,474,588">10-/</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="156,632,328,607">Image library API</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="572,630,636,617">share</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="803,634,883,613">Internet</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1185,648,1248,626">Server</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="359,673,421,646">Hello!</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1170,673,1264,651">application</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="597,692,678,663">1(00)/</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="219,705,282,676">1(0-0/</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="401,715,463,686">Share</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1160,723,1233,709">message</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1006,746,1127,727">Remote API</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1160,744,1218,723">photo</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1014,771,1129,750">to share the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1041,798,1102,771">photo</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1006,840,1270,819">About the arrows in figures</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1012,873,1137,852">I am a legend</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1012,906,1150,885">I am a relation</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,925,561,900">Figure 1.1 Three different types of APIs</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1000,1293,973">First, to take a photo, the social networking mobile application uses the smartphone's</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1037,1291,1010">camera via its API.Then, through its API, it can use some image library embedded in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1075,1293,1041">the application to invert the photo's colors.And, eventually, it shares the modified</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1110,1294,1079">photo by sending it to a server application hosted on the social network server using</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1143,1293,1118">a remote API accessible via a network, usually the internet.So,in this scenario,three</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1181,1293,1154">different types of API are involved:respectively, a hardware API, a library, and a remote</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1214,659,1191">API. This book is about the latter.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="290,1256,1293,1224">APIs, whatever their types, simplify the creation of software, but remote APIs, and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1289,1293,1262">especially web ones,have revolutionized the way we create software.Nowadays, anyone</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1326,1293,1299">can easily create anything by assembling remote pieces of software. But before we talk</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1359,1293,1334">about the infinite possibilities offered by such APIs, let's clarify what the term API actu-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1397,534,1370">ally means in this book.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,1455,225,1428">1.1.1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="255,1455,737,1428">An APl is a web interface for software</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1505,1291,1480">In this book,an API is a remote API and, more precisely, a web API-a web interface for</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="257,1544,1293,1517">software.An API, whatever its type, is first and foremost an interface: a point where two</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,1578,1293,1551">systems, subjects, organizations, and so forth meet and interact.The concept of an API might</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="256,1652,649,1623">application's user interface (UI)</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

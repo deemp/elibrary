@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="238,339,1229,307">briefly read about some of the more well-known databases.Many of them</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,378,1229,346">are used professionally and some of them are free to download.For study</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,417,1231,383">purposes, it doesn't really matter which one you choose. You won't be</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,454,871,422">working with enterprise-level databases just yet.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,516,407,477">Flat Files</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,568,1231,536">The most basic type of data structure you can use is the flat file. As the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,607,1233,575">name suggests, it's a simple structure that's essentially just a list of data</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,646,892,614">objects without any metadata.Here's an example:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,697,434,667">John Johnson</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="529,697,774,667">233 S.Rose Lane</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="917,694,1026,669">Anaheim</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="252,726,448,697">Jane Moriarty</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="545,724,785,697">2331 Newton Lane</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="899,724,993,699">Durham</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="249,754,501,724">Philip Masterson</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="513,752,952,727">123 Aberdeen AvenueAberdeen</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,784,432,756">Sam Cromwe11</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="517,779,772,756">2345James Street</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="885,781,977,756">Oxford</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="249,814,434,784">George Smith</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="543,811,774,784">111 Newton Lane</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="931,811,1067,786">Inverness</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="249,838,407,812">Rob Robins</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="556,841,758,811">2358 New Lane</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="959,841,1111,816">Birmingham</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,871,432,843">Julian Crane</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="559,871,801,841">989 Smith's Road</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="942,866,1081,846">Santa Ana</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="245,896,430,873">Mary Jameson</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="504,901,730,871">56 Crane's Road</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="912,898,1070,871">Canterbury</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,956,1231,924">Our flat file is simple and contains only basic information. We do have</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,992,1231,962">control over certain attributes like determining how many characters we</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1031,1231,1001">can input in each field. This means that to read and manipulate the file,we</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1070,1231,1038">need a program that's capable of accessing and manipulating flat files</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1107,1233,1077">because it needs to identify each data field. Take note that here we aren't</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1146,1231,1114">technically dealing with a database.The fields are processed separately and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1185,1231,1153">they're read directly. This means working with flat files doesn't take long</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="233,1224,1233,1187">at all and they can be a useful data storage tool, however, there are some</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="235,1258,541,1228">downsides to consider.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,1313,1229,1283">Flat files are only optimal when it comes to storing small amounts of data.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="233,1354,1233,1318">For instance, if you're familiar with Linux or any other Unix-type</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,1391,1224,1359">operating systemyou'll find flat files such as the passwdandgroup</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,1430,1231,1398">files.So,they are used in real situations.However,when we have a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1467,1231,1432">complex system,a database is needed,even though the processing time will</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1506,1231,1474">be longer.A database is a lot more versatile because it can be as small or as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,1542,448,1512">large as needed.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

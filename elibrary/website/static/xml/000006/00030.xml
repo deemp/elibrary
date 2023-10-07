@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="298,293,446,254">minutes.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,362,1381,330">Once complete, you'll be presented with Unity's main tool: the Editor.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,477,635,436">Editor Overview</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,545,1226,506">Welcome to the heart of game creation in Unity: The Editor.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="661,681,1039,649">Figure 1.12: The Unity Editor</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,749,1481,713">There is a lot to take in here, so let's take a quick walkthrough of its key</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,797,358,765">sections.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="263,869,1476,836">. Views Window: Directly in the center of the screen is the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,919,1483,885">eeenne cnne vaae ene ene tene en rane raanne rnne tinnannee</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,967,1028,935">and levels, as well as test them in real time.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="263,1029,1481,990">.Hierarchy Window: To the left of the Views panel is the Hierarchy</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="296,1075,1326,1038">list window. This contains all the objects in the current scene.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="266,1134,1478,1102">Inspector Window: On the right is the inspector window, which</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,1187,1148,1148">shows all of the data related to any selected object.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="277,1242,1481,1210">Toolbar: The vertical list of buttons in the Scene View is the Toolbar.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1292,1481,1258">This gives you the tools needed to manipulate objects. (move, resize,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="295,1340,495,1307">rotate, etc.)</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="270,1400,1483,1361">Project Window:All the assets related to this project. 3D models, 2D</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1448,1485,1409">textures, sound and music files, code, and anything else required for</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="296,1499,1187,1457">your game to look, sound, and play as you want it to.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="270,1554,1483,1522">Console Tab: Pressing the console tab brings up a debugging window</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1602,1483,1568">called the Console. This window shows output and errors that may</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,1648,601,1616">occur in our code.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="273,1714,1485,1675">Play, Pause, and Step Buttons: Use these to test and debug your</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="299,1765,528,1721">game project.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1833,1483,1794">Now that you know the basics of the editor, let's dive into the centerpiece.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1879,621,1843">the Scene View window.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

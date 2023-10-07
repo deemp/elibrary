@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="1081,318,1285,251">Part 1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="409,489,1318,432">Fundamentals of API design.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="350,733,430,618">E</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="419,728,1316,698"> very journey starts with a first step,and the API design journey is no excep</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="350,763,1318,736">tion.API designers need many skills and need to take many topics into account</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="348,800,1318,773">when creating APIs, but without a solid foundation, all advanced skills and topics</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="350,836,1068,809">are worth nothing.That is what you'll learn in this first part.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="378,873,1316,842">We will first set the scene by explaining what an API is,why it actually must be</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="348,912,1318,879">designed, and what learning to design an API actually means. You will discover that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="348,944,1314,917">although these actually are programming interfaces, APIs are more than"techni</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="346,983,1318,952">cal plumbing" and that you must learn fundamental principles to design any type</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="348,1016,432,989">ofAPI.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="380,1050,1316,1025">Even before thinking about the programming side,you will see that an API</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="350,1089,1316,1062">has to be thought of from its users'perspectives.An API is supposed to let your</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="346,1127,1317,1093">users easily achieve their goals, not the ones of the system exposing the API. Only</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="350,1162,1314,1135">once these goals are known and accurately described can the actual program</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="346,1199,1316,1170">ming interface, such as a REST API, be designed. And like any programming,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="348,1237,1317,1202">describing a programming interface should be done with an adapted tool like the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="351,1270,807,1243">OpenAPI Specification for REST APIs.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

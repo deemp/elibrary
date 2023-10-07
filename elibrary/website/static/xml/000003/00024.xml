@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="203,280,566,241">About the Author</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,339,1388,307">Aristides1 S. Bouras was born in 1973. During his early childhood, he</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,396,1497,351">discovered a love of computer programming. He got his first computer at the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,440,1448,401">age of 12, a Commodore 64, which incorporated a ROM-based version of</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,488,1275,449">the BASIC programming language and 64 kilobytes of RAM!!!</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,548,1351,509">He holds a degree in Computer Engineering from the Technological</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,596,1437,557">Educational Institute of Piraeus, and a Dipl. Eng. degree in Electrical and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,642,1314,610">Computer Engineering from the Democritus University of Thrace.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,701,1344,665">He worked as a software developer at a company that specialized in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,752,1460,713">industrial data flow and labelling of products. His main job was to develop</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,798,1481,759">software applications for data terminals, as well as PC software applications</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,846,1206,809">for collecting and storing data on a Microsoft SQL Server.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,910,1462,871">He has developed many applications such as warehouse managing systems</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,958,1488,919">and websites for companies and other organizations. Nowadays, he works as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,1001,1407,969">a high school teacher. He mainly teaches courses in computer networks</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1054,1206,1013">programming tools for the Internet/intranets, and databases.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1114,1296,1075">He has written a number of books, mainly about algorithmic and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1162,1483,1121">computational thinking through the use of Python, C#, Java, C++, PHP, and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1210,848,1171">Visual Basic programming languages.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1265,852,1233">He is married and he has two children.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="153,156,344,119">Starting with C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,229,1287,202">Of course, if you read this book within one month, you will be able to use Visual Studio</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,270,1324,237">without having to sign in using your Microsoft account; you may view this as an incentive</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,301,658,274">to be diligent about finishing the book!</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,424,948,380">Downloading the installation files</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,470,1334,444">To download the Visual Studio Community 2017 installer go to https ://www.visua1studi</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,509,474,484">o.com/vs/ community/.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,569,1340,542">When you click on the Download Community 2017 button, your browser will download a 1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="151,605,1251,575">MB file called vs_community_1698485341.1480883588.exe.When you run this</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,642,1324,615">application, it will allow you to specify the languages and libraries that you want installed,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,677,995,646">and then it downloads and installs all the necessary components.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,800,707,756">Installing Visual Studio</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,848,1289,818">Visual Studio 2017 treats Visual C++ as an optional component, so you have to explicitly</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,883,1269,856">indicate that you want to install it through custom options.When you first execute the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,920,760,893">installer, you will see the following dialog box:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="352,1051,623,1005">Visual Studio</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="417,1157,1067,1132">To learn more about privacy,see the Microsoft Privacy Statement</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="417,1215,879,1188">By continuing, you agree to the License Terms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1050,1375,1144,1348">Continue</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="709,1724,797,1687">[10 ]</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

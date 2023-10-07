@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="153,156,344,119">Starting with C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,229,1228,202">C, however, is procedural and based on functions, and although it has record types</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,266,1202,239">(st ruct) to encapsulate data,it does not have object-like behaviors to act on that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,303,1255,276">encapsulated state.Clearly there was a need for the power of C but the flexibility and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,337,1314,310">extensibility of object-oriented classes:a language that was C,with classes.In 1983, Bjarne</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,374,1110,343">Stroustrup released C++. The ++ comes from the C increment operator ++.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="337,434,1283,407">Strictly,when postfixed to a variable, the ++ operator means increment the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="339,470,1232,443">variable, but return the variable's value before it was incremented.So the C</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="339,507,1292,480">statements int c =1; int d = c++; will result in variable d having a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="335,544,1275,513">value of 1 and variable c having a value of 2. This does not quite express</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="339,578,834,551">the idea that C++ is an increment on C.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,714,699,663">Installing Visual C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,764,1255,737">Microsoft's Visual Studio Community 2017 contains the Visual C++ compiler, the C++</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,802,1334,767">standard libraries, and a collection of standard tools that you can use to write and maintain</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,833,1302,808">C++ projects.This book is not about how to write Windows code;it is about how to write</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,870,1316,843">standard C++ and how to use the C++ Standard Library.All the examples in this book will</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,904,1338,877">run on the command line.Visual Studio was chosen because it is a free download (although</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,943,1328,908">you do have to register an e-mail address with Microsoft), and it is standards-compliant. If</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,976,1101,949">you already have a C++ compiler installed, then you can skip this section.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="154,1097,402,1059">Setting up</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,1147,1334,1116">Before starting the installation, you should be aware that, as part of the agreement to install</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="159,1182,1271,1155">Visual Studio as part of Microsoft's community program, you should have a Microsoft</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,1221,1343,1188">account. You are given the option to create a Microsoft account the first time you run Visual</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,1253,1261,1221">Studio and if you skip this stage, you will be given a 30-day evaluation period. Visual</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,1290,1345,1257">Studio will be fully featured during this month, but if you want to use Visual Studio beyond</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="155,1323,1279,1292">this time you will have to provide a Microsoft account. The Microsoft account does not</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="153,1359,1345,1325">impose any obligation on you, and when you use Visual C++ after signing in, your code will</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="157,1390,1065,1365">still remain on your machine with no obligation to pass it to Microsoft.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="721,1722,785,1689">[ 9 ]</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

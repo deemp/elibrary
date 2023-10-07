@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="349,241,1490,204">Exercise 34.5-7 The Linear Search Algorithm - Searching in a Two-.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="351,289,1157,257">Dimensional Array that Contains Unique Values</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="349,337,1324,300">Exercise 34.5-8 Checking if a Value Exists in all Columns</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="353,385,1395,353">Exercise 34.5-9 The Binary Search Algorithm - Searching in a.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="349,433,871,399">Sorted One-Dimensional Array</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="351,484,1416,445">Exercise 34.5-10 Display all the Historical Events for a Country</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="349,529,1476,493">Exercise 34.5-11 Searching in Each Column of a Two-Dimensional.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="346,577,449,542">Array</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,623,1088,591">34.6 Exercises of a General Nature with Arrays</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="353,671,1453,639">Exercise 34.6-1 On Which Days was There a Possibility of Snow?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="353,717,1238,685">Exercise 34.6-2 Was There Any Possibility of Snow?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="349,770,1453,729">Exercise 34.6-3 In Which Cities was There a Possibility of Snow?.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="353,816,1481,784">Exercise 34.6-4 Display from Highest to Lowest Grades by Student</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="351,862,781,830">and in Alphabetical Order</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="349,912,1185,875">Exercise 34.6-5 Archery at the Summer Olympics</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,960,889,924">34.7 Review Questions: True/False</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1011,681,972">34.8 Review Exercises</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,1054,806,1022">Review in "Data Structures in C#.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1105,737,1068">Review Crossword Puzzle</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="295,1150,608,1116">Review Questions</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1198,591,1164">Section 7 Subprograms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="249,1249,926,1212">Chapter 35 Introduction to Subprograms.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1297,912,1258">35.1 What Exactly is a Subprogram?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1343,959,1309">35.2 what is Procedural Programming?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1389,922,1357">35.3 What is Modular Programming?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1439,889,1403">35.4 Review Questions: True/False</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="249,1487,906,1451">Chapter 36 User-Defined Subprograms</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1535,929,1501">36.1 Subprograms that Return Values</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,1581,931,1549">36.2 How to Make a Call to a Method.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1632,982,1595">36.3 Subprograms that Return no Values.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,1678,1014,1645">36.4 How to Make a Call to a void Method</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1726,892,1691">36.5 Formal and Actual Arguments.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1774,894,1737">36.6 How Does a Method Execute?.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="351,1824,1381,1785">Exercise 36.6-1 Back to Basics - Calculating the Sum of Two</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="349,1872,504,1833">Numbers</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="346,1918,1481,1881">Exercise 36.6-2 Calculating the Sum of Two Numbers Using Fewer.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="349,1969,601,1930">Lines of Code!</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

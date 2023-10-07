@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="1085,337,1483,287">CHAPTER 1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="910,456,1485,401">The Unity Engine.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="293,642,1488,596">It's amazing that, just 25 years ago, developing games looked.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,687,1483,644">completely different. The 16-bit' era was ending, the 3D era was beginning,.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,733,1485,694">and only large Studios had the money and muscle to create games for the.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,777,340,745">masses.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,841,1485,800">During those early days of 3D, Studios were researching &amp; developing.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,937,1490,898">major game release. Third-person camera controls and analog movement.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,981,1483,949">were the hallmark of Super Mario 64.It was Halo: Combat Evolved that</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1036,1488,990">introduced bump/normal mapping, giving objects unparalleled detail and.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1079,1481,1040">realism. Fable introduced the Bloom effect, giving lit objects a fantasy-like</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1128,1483,1089">appearance. And, more recently, Minecraft introduced the world to the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1176,1488,1137">concept of Voxels - a way to use 3D cubes to create objects, characters, or.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1224,769,1182">even randomly generated worlds..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="275,1361,1418,1325">Figure 1.1: Unity has been used to make blockbuster games such as Ori: Will of the Wisps.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="506,1396,1192,1361">Subnautica, Cuphead, Hearthstone and Pokemon Go!</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1464,1478,1425">Video games, and the code they were built upon, were inseparably bonded.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1512,1483,1476">The concept of a Game Engine - a set of code and tools to build games</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1565,1483,1522">upon, available to all - was only a pipe dream. Of course, if you had the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1613,1485,1574">money, there were early 3D engines that could be licensed, but the upfront.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1657,1485,1625">cost created a steep barrier-to-entry that most developers couldn't</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1710,1485,1666">overcome. If you wanted to make a game, you were coding everything.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1755,612,1714">yourself  from scratch.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="282,1891,1414,1859">Figure 1.2: Minecraft brought the concept of 3DVoxels'to gamers (and game designers)</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="76,124,811,82">Example-2 Find upper bound for f(n) = n2 + 1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,197,638,158">Solution: n2 + 1  2n2, for all n  1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="321,252,931,213">n+1=On)withc=2and n=1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="72,339,972,289">Example-3 Find upper bound for f(n) = n4 + 100n2 + 50</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,408,813,369">Solution: n4 + 100n2 + 50  2n4, for all n  11</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,463,1113,424">n+100n+50=On)withc=2 and no=11</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="72,550,864,499">Example-4 Find upper bound for f(n) = 2n3 - 2n2</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,619,700,580">Solution:2n3-2n 2n3, for all n &gt; 1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="316,671,993,635">2n3-2n2=On3withc=2 and no=1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,749,735,710">Example-5 Find upper bound for f(n) = n</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="79,814,527,781">Solution: n  n, for all n  1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="319,869,845,825">n =O(n)with c =1 and no=1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="72,947,774,898">Example-6 Find upper bound for f(n) = 410</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,1011,617,969">Solution: 410  410, for all n &gt; 1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1059,882,1020">410=O(1)withc=1and no=1</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,1194,393,1155">No Uniqueness?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,1290,1617,1251">There is no unique set of values for no and c in proving the asymptotic bounds. Let us consider.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,1343,1305,1304">100n + 5 = O(n). For this function there are multiple no and c values possible..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,1419,1573,1386">Solution1:100n+ 5 100n +n=101n 101nfor all n  5,no=5 and c = 101 is a solution.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,1496,1624,1458">Solution2:100n + 5  100n + 5n = 105n  105n, for all n &gt; 1,no = 1 and c = 105 is also a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,1551,212,1512">solution.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,1693,1130,1652">1.15 Omega-Q Notation [Lower Bounding Function]</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="79,1792,1621,1753">Similar to the O discussion, this notation gives the tighter lower bound of the given algorithm and.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="74,1840,1624,1799">we represent it as f(n) = Q(g(n)). That means, at larger values of n, the tighter lower bound of</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="76,1893,1143,1847">f(n) is g(n). For example, if f(n) = 100n2 + 10n + 50, g(n) is Q(n2).</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

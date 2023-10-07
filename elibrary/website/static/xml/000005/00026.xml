@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="240,481,501,435">CHAPTER 1:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="236,552,825,509">Understanding Databases</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="238,605,1231,575">Before the age of computers, we used typewriters and various mechanical</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,646,1229,614">calculators to record data and perform mathematical operations with it.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,685,1231,653">That data was then stored in massive rooms packed with cabinets and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="236,724,1233,688">boxes with paperwork.Nowadays,we don't have to rely on limiting</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,761,1231,729">physical space to keep track of information.We have computers and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,800,376,768">databases.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,852,998,820">To keep all of this data safe,however, we need to prepare</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,928,1224,889">A good data storage system has to operate quickly</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="395,974,1229,937">because data is regularly accessed, modified, and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="400,1022,725,990">used in calculations</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="358,1075,1229,1036">Data storage security is key.Without making sure</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="395,1121,1231,1084">that data will be safe and reliable in the future,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="402,1169,1231,1137">there is a huge risk. Data loss is often due to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="397,1221,1231,1182">human or system errors,and can be easily avoided</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="402,1267,1231,1235">by using backups and frequent hardware and</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="395,1318,709,1281">software checkups.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="363,1364,1229,1331">We need to consider our data filtering methods</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="397,1412,1226,1380">and tools because in a professional environment</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="400,1467,1236,1428">we might have hundreds of terabytes worth of</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="397,1512,1224,1476">information and we wouldn't be able to manually</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="397,1563,688,1524">sort through it all.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

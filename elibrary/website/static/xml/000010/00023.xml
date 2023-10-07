@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="256,243,982,211">2. Compile the source code into object code</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="249,321,968,275">3. Link in a library to create a program file..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="254,376,1335,337">4. Finally, run the program for testing, disappointment, or delight.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,468,1467,429">Step 4 is a rather liberal translation on my part. The original reads, "Run the.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,523,1469,472">program and rejoice by consuming a cow." I have also omitted references to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="208,568,439,525">pagan deities.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,653,1421,619">These steps present a simple overview of the process. The steps are more</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,706,1409,667">numerous due to inevitable errors, bugs, booboos, and lack of cows. The</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,756,852,717">following sections describe the details...</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,864,751,818">1.1.1 Editing source code.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,958,1430,919">C language source code is plain text. What makes the file a C source code</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1004,1418,972">file and not a boring ol' text file is the .c filename extension; all C source</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1056,1457,1018">code files use this filename extension. Eyeball code uses the .see extension..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1107,919,1068">Naval code uses .sea. Know the difference.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1194,1407,1157">Use a text editor to craft your source code. Do not use a word processor,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1247,1455,1208">which is like using a helicopter to prune a tree. Don't let the exciting visual</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1295,1451,1256">image dissuade you; your goal is to use the best tool for the job. Any plain-</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1348,1397,1309">text editor works, though the good ones offer features like color-coding,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1393,1451,1354">pattern matching, and other swanky features that make the process easier. I</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1446,1478,1414">prefer the VIM text editor, which is available at vim.org. VIM is available as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1503,1395,1464">a both a text mode (terminal window) program and a GUI or windowed</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1547,344,1515">version.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1639,1335,1602">IDEs feature a built-in text editor, which is the point of the I in IDE:.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="215,1689,1478,1657">integrated. This editor is what you're stuck with unless an option is available</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1742,1333,1703">to change it. For example, in Visual Studio Code, you can obtain an</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="210,1792,1250,1751">extension to bring your favorite editor commands into the IDE..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1879,1386,1843">As a tip, the .c file extension defines a C language source code filetype.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="212,1930,1409,1893">which is often associated by the operating system with your IDE. On my</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="213,1982,1374,1939">system, I associate .c files with my favorite VIM text editor. This trick</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

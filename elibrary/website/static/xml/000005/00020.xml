@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="323,298,432,257">Order</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="321,343,492,301">Group By</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="320,384,417,347">Alias</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,431,474,392">CHAPTER9:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,472,649,440">Stored Procedures</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="328,520,1095,481">The Advantages of Using Stored Procedures</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,564,811,525">Creating Stored Procedures</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,610,832,571">Executing Stored Procedures</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="243,653,494,614">CHAPTER 10:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,697,1233,658">Views,Index,Truncate,Top,Wildcards,and Triggers</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,740,635,701">Encrypting a View</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,786,603,750">Creating a View</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="320,829,428,791">Index</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,875,571,836">Table Indexes</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,921,728,882">Single-Column Indexes</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,965,621,926">Composite Index</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1006,559,970">Implicit Index</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1052,559,1015">Unique Index</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1098,631,1059">Deleting an Index</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1141,559,1107">Indexing Tips</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1187,483,1146">Truncate</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="318,1230,398,1193">Top</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="316,1276,502,1233">Wildcards</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="318,1321,474,1282">Triggers</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1366,582,1325">Trigger Syntax</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,1407,497,1368">CHAPTER11:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,1453,767,1414">Pivoting Tables in MySQL</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="323,1494,922,1455">Create a Products Sales Database</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,1542,497,1503">CHAPTER12:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="326,1586,557,1547">Clone Tables</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="319,1632,760,1588">Why Use a Clone Table?</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="240,1675,497,1636">CHAPTER13:</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="318,1720,472,1681">Security</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

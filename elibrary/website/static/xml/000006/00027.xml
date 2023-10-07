@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="215,243,1481,204">Unity provides a single tool for installing Unity and managing projects</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="217,289,577,257">called the Unity Hub</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="249,424,1448,394">Figure 1.3:The Unity Hub -your one stop for managing projects, installing new Unity updates</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="443,463,1252,433">viewing tutorials, and interacting with the expansive community..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="253,531,426,498">1. Setting</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="610,532,670,497">the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="737,532,815,497">Hub</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="880,534,922,495">is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1352,531,1489,501">visiting</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="490,536,543,502">up</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="979,536,1032,500">as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1097,536,1176,502">easy</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="1238,536,1291,500">as</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,584,1485,545">http://www.unity.com/downloads and scrolling down until you find a.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,626,626,594">Hub download link</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,694,1485,649">Beta vs Non-Beta: While searching, you may be presented with.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="307,738,1485,699">"Beta" options for the newest version of The Hub. For this book, it's</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,791,1485,742">suggested that you download from a non-'Beta' link. It's often</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,832,1483,800">tempting to get the latest and greatest version of a Unity tool,but until</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,887,1487,841">you're more familiar with Unity as a whole, we'd encourage you to.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,930,903,891">use the existing, well-tested options.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="259,990,1483,951">2. Once you download UnityHubSetup.Exe, locate it in your Downloads.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1033,1485,1002">folder, and run it. This will install the Unity Hub to your computer. It</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,1084,845,1047">will also automatically launch it..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,1141,1481,1109">3.Now that we have the Hub,it's time to install Unity itself. Press the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,1189,1483,1157">Installs tab on the left side of the hub, then select the Install Editor</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1240,767,1203">button in the top left corner..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="307,1373,1481,1341">Figure 1.4:Press the Installs tab, then the Install Editor button to bring up the list of versions</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="721,1409,1067,1377">of Unity you can download.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="261,1480,1483,1441">4. This will bring up a list of the available versions of Unity you can.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,1524,1238,1492">download. We will be downloading the 2021 LTS build.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="337,1659,1448,1627">Figure 1.5:You will be presented with several versions of Unity that can be downloaded</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="672,1691,1113,1662">Select the latest 2021 LTS version.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1769,1483,1723">About LTS and Beta Builds: There are two special types of builds</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="298,1813,1481,1774">you'll see listed - LTS and Beta. LTS stands for "Long Term Support"..</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="307,1859,1481,1826">Unity provides two years of support for their releases, so 2021 LTS is</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="303,1907,1483,1875">a stable, feature complete version of the 2021 build. Beta builds, on</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="300,1955,1483,1920">the other hand, are the newest and coolest builds of Unity, but may.</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>

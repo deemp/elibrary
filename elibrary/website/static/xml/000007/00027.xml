@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OBJECT>
+  <HIDDENTEXT>
+    <PAGECOLUMN>
+      <REGION>
+        <PARAGRAPH>
+          <LINE>
+            <WORD coords="202,176,998,150">Every layered architecture will have at least some scenarios that fall</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,214,999,188">into the architecture sinkhole anti-pattern.The key, however, is to</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,249,999,223">analyze the percentage of requests that fall into this category. The</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,285,999,259">80-20 rule is usually a good practice to follow to determine whether</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,319,999,294">or not you are experiencing the architecture sinkhole anti-pattern.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,390,999,364">pass-through processing and 80 percent of the requests having some</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,424,999,398">business logic associated with them.However, if you find that this</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,457,994,435">ratio is reversed and a majority of your requests are simple pass.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,499,1001,467">through processing, you might want to consider making some of the.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="195,533,1001,499">architecture layers open, keeping in mind that while it will be faster,</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,562,997,536">it will be more difficult to control change due to the lack of layer</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,596,306,576">isolation.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,649,999,622">The layered architecture is still just as viable today as it was in the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,684,999,658">old days when it was first introduced.While more modern analysis</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,720,999,694">and design approaches such as domain-driven design have given</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,791,999,765">a domain perspective rather than a technical one, there are still</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,825,999,799">times when technically partitioned architectures (such as the layered</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,861,562,834">architecture) are more suitable.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="195,934,596,898">When to Consider This Style</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,986,999,956">The layered architecture is good to consider if the project or initia-.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1020,999,996">tive has significant budget or time constraints. Because the layered</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1057,997,1031">architecture is generally considered a monolithic architecture style</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1091,999,1065">it does not have the complexities of a distributed architecture in</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1127,996,1101">terms of remote access, contract management, and the complica</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1161,999,1134">tions resulting from the fallacies of distributed computing described</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1196,999,1170">in the previous chapter. Also, most developers and architects are</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1232,999,1202">familiar with the layered architecture, making it easier to under-.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1268,454,1241">stand and implement.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1316,999,1292">Another reason to consider the layered architecture is when a</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1354,999,1327">majority of your changes are isolated to specific layers within the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1389,999,1363">application. For example, changes isolated to only business rules</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1423,999,1397">that don't impact the user interface, changes involving only the user</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="201,1494,999,1468">work, and even migration to a new type of database are all isolated</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="199,1528,999,1502">to a specific layer in the architecture, making it easier to isolate the</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1566,632,1538">components impacted by the change.</WORD>
+          </LINE>
+          <LINE>
+            <WORD coords="197,1688,534,1661">22Chapter3:Layered Architecture</WORD>
+          </LINE>
+        </PARAGRAPH>
+      </REGION>
+    </PAGECOLUMN>
+  </HIDDENTEXT>
+</OBJECT>
