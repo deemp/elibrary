@@ -6,20 +6,36 @@
       url = "github:edolstra/flake-compat/35bb57c0c8d8b62bbfd284272c928ceb64ddbde9";
       flake = false;
     };
-    flakes.url = "github:deemp/flakes/93dacca29b38865b76ef5e8c4c5c81df426cf5e8";
+    flakes.url = "github:deemp/flakes/";
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
       inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs; };
       perSystem = { inputs, system }:
         let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.permittedInsecurePackages = [ pkgs.openssl_1_1.name ];
+          };
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkRunCommands;
           packages = mkShellApps {
             page-images = {
               text = ''${getExe pkgs.poetry} run page-images -p ${pkgs.poppler_utils}/bin'';
               description = "Generate images of sample books pages";
+            };
+            page-ocr = {
+              runtimeInputs = [ pkgs.poetry ];
+              text = ''
+                export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
+                  pkgs.stdenv.cc.cc.lib 
+                  pkgs.zlib 
+                  pkgs.openssl_1_1 
+                  pkgs.libGL 
+                  pkgs.glib
+                ]}
+                poetry run page-ocr
+              '';
             };
           };
           devShells.default = mkShell {
