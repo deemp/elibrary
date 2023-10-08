@@ -1,25 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %} BookReader {% endblock %}
+{% block title %} PDF.js Example {% endblock %}
 
 {% block container %}
-<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/webcomponents-bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/jquery-3.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/BookReader.css" />
-<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/BookReader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@elibrary-inno/bookreader@latest/BookReader/plugins/plugin.url.js"></script>
 <style>
-    #BookReader {
-        top: 55px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-        width: auto;
-        height: auto;
+    body {
+        margin: 0;
+    }
+
+    iframe {
+        display: block;
+        /* iframes are inline by default */
+        background: #000;
+        border: none;
+        /* Reset default border */
+        height: calc(100vh - 56px);
+        /* Viewport-relative units */
+        width: 100vw;
     }
 </style>
-<div id="BookReader"></div>
-<script type="text/javascript" src="{{ url_for('static', filename='bookreader.js') }}"> </script>
-<script>instantiateBookReader("{{ url_for('static', filename='') }}", '#BookReader')</script>
+<iframe
+    src="{{ url_for('static', filename='') }}pdfjs/web/viewer.html?file={{ url_for('static', filename='sample-books/000001.pdf') }}" />
 {% endblock %}
