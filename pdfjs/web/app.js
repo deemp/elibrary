@@ -844,7 +844,7 @@ const PDFViewerApplication = {
   },
 
   get supportsPrinting() {
-    return PDFPrintServiceFactory.instance.supportsPrinting;
+    return false;
   },
 
   get supportsFullscreen() {
@@ -1119,75 +1119,75 @@ const PDFViewerApplication = {
   /**
    * @private
    */
-  _ensureDownloadComplete() {
-    if (this.pdfDocument && this.downloadComplete) {
-      return;
-    }
-    throw new Error("PDF document not downloaded.");
-  },
+  // _ensureDownloadComplete() {
+  //   if (this.pdfDocument && this.downloadComplete) {
+  //     return;
+  //   }
+  //   throw new Error("PDF document not downloaded.");
+  // },
 
-  async download(options = {}) {
-    const url = this._downloadUrl,
-      filename = this._docFilename;
-    try {
-      this._ensureDownloadComplete();
+  // async download(options = {}) {
+  //   const url = this._downloadUrl,
+  //     filename = this._docFilename;
+  //   try {
+  //     this._ensureDownloadComplete();
 
-      const data = await this.pdfDocument.getData();
-      const blob = new Blob([data], { type: "application/pdf" });
+  //     const data = await this.pdfDocument.getData();
+  //     const blob = new Blob([data], { type: "application/pdf" });
 
-      await this.downloadManager.download(blob, url, filename, options);
-    } catch {
-      // When the PDF document isn't ready, or the PDF file is still
-      // downloading, simply download using the URL.
-      await this.downloadManager.downloadUrl(url, filename, options);
-    }
-  },
+  //     await this.downloadManager.download(blob, url, filename, options);
+  //   } catch {
+  //     // When the PDF document isn't ready, or the PDF file is still
+  //     // downloading, simply download using the URL.
+  //     await this.downloadManager.downloadUrl(url, filename, options);
+  //   }
+  // },
 
-  async save(options = {}) {
-    if (this._saveInProgress) {
-      return;
-    }
-    this._saveInProgress = true;
-    await this.pdfScriptingManager.dispatchWillSave();
+  // async save(options = {}) {
+  //   if (this._saveInProgress) {
+  //     return;
+  //   }
+  //   this._saveInProgress = true;
+  //   await this.pdfScriptingManager.dispatchWillSave();
 
-    const url = this._downloadUrl,
-      filename = this._docFilename;
-    try {
-      this._ensureDownloadComplete();
+  //   const url = this._downloadUrl,
+  //     filename = this._docFilename;
+  //   try {
+  //     this._ensureDownloadComplete();
 
-      const data = await this.pdfDocument.saveDocument();
-      const blob = new Blob([data], { type: "application/pdf" });
+  //     const data = await this.pdfDocument.saveDocument();
+  //     const blob = new Blob([data], { type: "application/pdf" });
 
-      await this.downloadManager.download(blob, url, filename, options);
-    } catch (reason) {
-      // When the PDF document isn't ready, or the PDF file is still
-      // downloading, simply fallback to a "regular" download.
-      console.error(`Error when saving the document: ${reason.message}`);
-      await this.download(options);
-    } finally {
-      await this.pdfScriptingManager.dispatchDidSave();
-      this._saveInProgress = false;
-    }
+  //     await this.downloadManager.download(blob, url, filename, options);
+  //   } catch (reason) {
+  //     // When the PDF document isn't ready, or the PDF file is still
+  //     // downloading, simply fallback to a "regular" download.
+  //     console.error(`Error when saving the document: ${reason.message}`);
+  //     await this.download(options);
+  //   } finally {
+  //     await this.pdfScriptingManager.dispatchDidSave();
+  //     this._saveInProgress = false;
+  //   }
 
-    if (this._hasAnnotationEditors) {
-      this.externalServices.reportTelemetry({
-        type: "editing",
-        data: { type: "save" },
-      });
-    }
-  },
+  //   if (this._hasAnnotationEditors) {
+  //     this.externalServices.reportTelemetry({
+  //       type: "editing",
+  //       data: { type: "save" },
+  //     });
+  //   }
+  // },
 
-  downloadOrSave(options = {}) {
-    if (this.pdfDocument?.annotationStorage.size > 0) {
-      this.save(options);
-    } else {
-      this.download(options);
-    }
-  },
+  // downloadOrSave(options = {}) {
+  //   if (this.pdfDocument?.annotationStorage.size > 0) {
+  //     this.save(options);
+  //   } else {
+  //     this.download(options);
+  //   }
+  // },
 
-  openInExternalApp() {
-    this.downloadOrSave({ openInExternalApp: true });
-  },
+  // openInExternalApp() {
+  //   this.downloadOrSave({ openInExternalApp: true });
+  // },
 
   /**
    * Report the error; used for errors affecting loading and/or parsing of
@@ -1957,7 +1957,7 @@ const PDFViewerApplication = {
     );
     eventBus._on("print", webViewerPrint);
     eventBus._on("download", webViewerDownload);
-    eventBus._on("openinexternalapp", webViewerOpenInExternalApp);
+    // eventBus._on("openinexternalapp", webViewerOpenInExternalApp);
     eventBus._on("firstpage", webViewerFirstPage);
     eventBus._on("lastpage", webViewerLastPage);
     eventBus._on("nextpage", webViewerNextPage);
@@ -2093,7 +2093,7 @@ const PDFViewerApplication = {
     eventBus._off("presentationmode", webViewerPresentationMode);
     eventBus._off("print", webViewerPrint);
     eventBus._off("download", webViewerDownload);
-    eventBus._off("openinexternalapp", webViewerOpenInExternalApp);
+    // eventBus._off("openinexternalapp", webViewerOpenInExternalApp);
     eventBus._off("firstpage", webViewerFirstPage);
     eventBus._off("lastpage", webViewerLastPage);
     eventBus._off("nextpage", webViewerNextPage);
@@ -2369,9 +2369,9 @@ function webViewerNamedAction(evt) {
       PDFViewerApplication.triggerPrinting();
       break;
 
-    case "SaveAs":
-      PDFViewerApplication.downloadOrSave();
-      break;
+    // case "SaveAs":
+    //   PDFViewerApplication.downloadOrSave();
+    //   break;
   }
 }
 
@@ -2508,10 +2508,10 @@ function webViewerPrint() {
   PDFViewerApplication.triggerPrinting();
 }
 function webViewerDownload() {
-  PDFViewerApplication.downloadOrSave();
+  // PDFViewerApplication.downloadOrSave();
 }
 function webViewerOpenInExternalApp() {
-  PDFViewerApplication.openInExternalApp();
+  // PDFViewerApplication.openInExternalApp();
 }
 function webViewerFirstPage() {
   PDFViewerApplication.page = 1;

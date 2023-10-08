@@ -34,16 +34,16 @@ class Toolbar {
   constructor(options, eventBus, _l10n, nimbusData) {
     this.#eventBus = eventBus;
     const buttons = [
-      {
-        element: options.download,
-        eventName: "download",
-        nimbusName: "download-button",
-      },
-      {
-        element: options.openInApp,
-        eventName: "openinexternalapp",
-        nimbusName: "open-in-app-button",
-      },
+      // {
+      //   element: options.download,
+      //   eventName: "download",
+      //   nimbusName: "download-button",
+      // },
+      // {
+      //   element: options.openInApp,
+      //   eventName: "openinexternalapp",
+      //   nimbusName: "open-in-app-button",
+      // },
     ];
 
     if (nimbusData) {
