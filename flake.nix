@@ -20,22 +20,15 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkRunCommands;
           packages = mkShellApps {
-            page-images = {
-              text = ''${getExe pkgs.poetry} run page-images -p ${pkgs.poppler_utils}/bin'';
-              description = "Generate images of sample books pages";
-            };
-            page-ocr = {
-              runtimeInputs = [ pkgs.poetry ];
-              text = ''
-                export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
-                  pkgs.stdenv.cc.cc.lib 
-                  pkgs.zlib 
-                  pkgs.openssl_1_1 
-                  pkgs.libGL 
-                  pkgs.glib
-                ]}
-                poetry run page-ocr
-              '';
+            build-pdfjs = {
+              runtimeInputs = [ pkgs.nodePackages.gulp ];
+              text =
+                let pdfjsStatic = "elibrary/website/static/pdfjs"; in
+                ''
+                  (cd pdfjs && gulp generic)
+                  mkdir -p ${pdfjsStatic}
+                  cp -r pdfjs/build/generic/* ${pdfjsStatic}
+                '';
             };
           };
           devShells.default = mkShell {
@@ -45,7 +38,7 @@
               pkgs.sqlite
               pkgs.poetry
               pkgs.nodejs
-            ]) ++ (mkRunCommands "scripts" { inherit (packages) page-images; });
+            ]) ++ (mkRunCommands "scripts" { inherit (packages) build-pdfjs; });
           };
         in
         {
