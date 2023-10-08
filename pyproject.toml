@@ -8,17 +8,13 @@ readme = "README.md"
 
 [tool.poetry.scripts]
 elibrary = "elibrary.main:run"
-page-ocr = "page-ocr.main:run"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 flask = "^2.3.0"
-pdf2image = "^1.16.3"
 flask-sqlalchemy = "^3.1.1"
 flask-login = "^0.6.2"
 werkzeug = "2.3.0"
-paddleocr = "^2.7.0.3"
-paddlepaddle = "^2.5.1"
 
 
 [tool.poetry.group.dev.dependencies]
