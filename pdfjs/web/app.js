@@ -844,7 +844,7 @@ const PDFViewerApplication = {
   },
 
   get supportsPrinting() {
-    return PDFPrintServiceFactory.instance.supportsPrinting;
+    return false;
   },
 
   get supportsFullscreen() {
