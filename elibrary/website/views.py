@@ -72,10 +72,3 @@ def edit_book(book_id: int):
 
     return render_template('edit_book.html', book=book)
 
-
-@views.route('/view-catalog', methods=['GET', 'POST'])
-@login_required
-def view_catalog():
-    books = Book.query.all()
-
-    return render_template('view_catalog.html', books=books, user=current_user)
