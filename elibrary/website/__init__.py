@@ -1,5 +1,6 @@
 from flask import Flask
 from elibrary.website.bookreader import bookreader
+from elibrary.website.book_file import book_file
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from .seed import list_of_seeds, create_table_script
@@ -11,7 +12,7 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = "my secret key"
+    app.config["SECRET_KEY"] = "my secret key"
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
 
     db.init_app(app)
@@ -21,9 +22,10 @@ def create_app():
     from elibrary.website.views import views
     from elibrary.website.auth import auth
 
-    app.register_blueprint(views, url_prefix='/')
-    app.register_blueprint(auth, url_prefix='/')
-    app.register_blueprint(bookreader, url_prefix='/')
+    app.register_blueprint(views, url_prefix="/")
+    app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(bookreader, url_prefix="/")
+    app.register_blueprint(book_file, url_prefix="/")
 
     from .models import User
 
@@ -49,7 +51,7 @@ def create_database(app):
             if count < 1:
                 db.session.execute(create_table_script)
                 for i, sql in enumerate(list_of_seeds):
-                    print("Seeding {} script".format(i+1))
+                    print("Seeding {} script".format(i + 1))
                     db.session.execute(sql)
                 db.session.commit()
             print("Created Database!")
