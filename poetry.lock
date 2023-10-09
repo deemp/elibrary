@@ -105,6 +105,20 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-api"
+version = "3.1"
+description = "Browsable web APIs for Flask."
+optional = false
+python-versions = "*"
+files = [
+    {file = "Flask-API-3.1.tar.gz", hash = "sha256:cb079845f5573eac55c6800a9a142bd7b54fd1227019a21cb2f75dfe5311d44f"},
+    {file = "Flask_API-3.1-py3-none-any.whl", hash = "sha256:08cb377412ff1b6bea47e8a5ffefc592a149f8686045038df6e116d12ab5d4e9"},
+]
+
+[package.dependencies]
+Flask = ">=2.0.0"
+
+[[package]]
 name = "flask-login"
 version = "0.6.2"
 description = "User authentication and session management for Flask."
@@ -118,6 +132,20 @@ files = [
 [package.dependencies]
 Flask = ">=1.0.4"
 Werkzeug = ">=1.0.1"
+
+[[package]]
+name = "flask-rangerequest"
+version = "0.0.2"
+description = "Range Requests for Flask"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "Flask-RangeRequest-0.0.2.tar.gz", hash = "sha256:c27507dcda610c9bf94c9ffd4408afcfae33cd86baa073988a951428a8972b40"},
+    {file = "Flask_RangeRequest-0.0.2-py3-none-any.whl", hash = "sha256:90e0c3d26a494a083b6c87e0b16f2ed21d90719d0c51441ed27cfa922c08db81"},
+]
+
+[package.dependencies]
+Flask = ">=2"
 
 [[package]]
 name = "flask-sqlalchemy"
@@ -464,4 +492,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "791a1b1863c3d8994d7a00dca799413c2c14477242d31f11acee3ce4c2f2e430"
+content-hash = "8fec62c560eb279db4b6d96f8aa76dd9cf84de6a2d3f9afc4988bf9df16db977"
