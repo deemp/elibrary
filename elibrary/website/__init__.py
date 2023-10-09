@@ -1,6 +1,4 @@
 from flask import Flask
-from elibrary.website.bookreader import bookreader
-from elibrary.website.book_file import book_file
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from .seed import list_of_seeds, create_table_script
@@ -21,11 +19,13 @@ def create_app():
 
     from elibrary.website.views import views
     from elibrary.website.auth import auth
+    from elibrary.website.bookreader import bookreader
+    from elibrary.website.book import book
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
     app.register_blueprint(bookreader, url_prefix="/")
-    app.register_blueprint(book_file, url_prefix="/")
+    app.register_blueprint(book, url_prefix="/")
 
     from .models import User
 
