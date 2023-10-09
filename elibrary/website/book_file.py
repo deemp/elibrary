@@ -11,5 +11,5 @@ book_file = Blueprint("book-file", __name__)
 def read(book_id):
     if not (len(book_id) == 6 and book_id.isdigit()):
         return "Record not found", status.HTTP_400_BAD_REQUEST
-    book_path = f"elibrary/books/{book_id:06}.pdf"
+    book_path = f"books/{book_id:06}.pdf"
     return RangeRequest(open(book_path, "rb")).make_response()
