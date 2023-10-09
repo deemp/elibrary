@@ -27,6 +27,15 @@
                   cp -r pdfjs/build/generic/* ${pdfjsStatic}
                 '';
             };
+            convert-xlsx-to-sql = {
+              runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
+              text = ''
+                export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
+                  pkgs.stdenv.cc.cc.lib
+                ]}
+                poetry run convert-xlsx-to-sql
+              '';
+            };
           };
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
