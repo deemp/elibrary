@@ -26,6 +26,7 @@
                   mkdir -p ${pdfjsStatic}
                   cp -r pdfjs/build/generic/* ${pdfjsStatic}
                 '';
+              description = ''build pdf.js for elibrary'';
             };
             convert-xlsx-to-sql = {
               runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
@@ -35,6 +36,8 @@
                 ]}
                 poetry run convert-xlsx-to-sql
               '';
+              description = ''convert books.xlsx to books.sql'';
+            };
             lt = {
               runtimeInputs = [ pkgs.nodePackages.localtunnel pkgs.poetry ];
               text = ''
