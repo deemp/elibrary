@@ -35,6 +35,14 @@
                 ]}
                 poetry run convert-xlsx-to-sql
               '';
+            lt = {
+              runtimeInputs = [ pkgs.nodePackages.localtunnel pkgs.poetry ];
+              text = ''
+                kill -9 $(lsof -t -i:5000)
+                poetry run elibrary &
+                lt -s 'elibrary-itpd' -p '5000'
+              '';
+              description = ''run elibrary and expose it via localtunnel'';
             };
           };
           devShells.default = mkShell {
@@ -44,7 +52,8 @@
               pkgs.sqlite
               pkgs.poetry
               pkgs.nodejs
-            ]) ++ (mkRunCommands "scripts" { inherit (packages) build-pdfjs; });
+              pkgs.nodePackages.localtunnel
+            ]) ++ (mkRunCommands "scripts" packages);
           };
         in
         {
