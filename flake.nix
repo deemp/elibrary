@@ -13,10 +13,7 @@
       inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs; };
       perSystem = { inputs, system }:
         let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            config.permittedInsecurePackages = [ pkgs.openssl_1_1.name ];
-          };
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkRunCommands;
           packages = mkShellApps {
