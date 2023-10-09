@@ -18,6 +18,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>Id</th>
             <th>Topic</th>
             <th>Authors</th>
@@ -27,6 +28,11 @@
     <tbody>
         {% for row in books %}
         <tr>
+            <td>
+                <form id="form" method="POST">
+                    <button id="button" class="form-control" name="book_id" value="{{ row['book_id'] }}">Open</button>
+                </form>
+            </td>
             <td>{{ row['book_id'] }}</td>
             <td>{{ row['lc' ] }}</td>
             <td>{{ row['authors'] }}</td>

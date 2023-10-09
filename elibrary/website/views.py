@@ -18,12 +18,26 @@ def search():
     topics = Book.query.distinct().all()
 
     if request.method == 'POST':
-        books = Book.query.filter_by(lc=request.form.get('topic')).all()
-        return render_template("search.html", books=books, topics=topics)
+        if request.form.get('topic'):
+            books = Book.query.filter_by(lc=request.form.get('topic')).all()
+            return render_template("search.html", books=books, topics=topics, user=current_user)
+        elif request.form.get('book_id'):
+            book = Book.query.filter_by(book_id=request.form.get('book_id')).all()[0]
+            return redirect('/book/' + str(book.book_id))
 
     books = Book.query.all()
     return render_template("search.html", books=books, topics=topics, user=current_user)
 
+@views.route('/book/<int:book_id>', methods=['GET', 'POST'])
+def book(book_id: int):
+    book = Book.query.filter_by(book_id=book_id).all()[0]
+
+    if request.method == 'POST':
+        if request.form.get('book_id'):
+            book = Book.query.filter_by(book_id=request.form.get('book_id')).all()[0]
+            return redirect('/bookreader/' + str(book.book_id))
+
+    return render_template("book.html", book=book, user=current_user)
 
 @views.route('/edit-book/<int:book_id>', methods=['GET', 'POST'])
 @login_required
