@@ -15,7 +15,7 @@
         let
           pkgs = inputs.nixpkgs.legacyPackages.${system};
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
-          inherit (inputs.devshell.lib.${system}) mkShell mkRunCommands;
+          inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           packages = mkShellApps {
             build-pdfjs = {
               runtimeInputs = [ pkgs.nodePackages.gulp ];
@@ -41,16 +41,20 @@
             elibrary = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
-                kill -9 $(lsof -t -i:5000) || true
+                kill -15 $(lsof -t -i:5000) || true
                 poetry run elibrary
               '';
               description = ''run elibrary'';
             };
-            lt = {
+            stop = {
+              text = ''kill -9 $(lsof -t -i:5000) || true'';
+              description = ''stop elibrary server'';
+            };
+            expose = {
               runtimeInputs = [ pkgs.nodePackages.localtunnel pkgs.poetry ];
               text = ''
                 ${getExe packages.elibrary} &
-                lt -s 'elibrary-itpd' -p '5000'
+                lt -s 'elibrary-itpd' -p '5000' &
               '';
               description = ''run elibrary and expose it via localtunnel'';
             };
@@ -63,7 +67,10 @@
               pkgs.poetry
               pkgs.nodejs
               pkgs.nodePackages.localtunnel
-            ]) ++ (mkRunCommands "scripts" packages);
+            ]) ++ mkCommands "scripts" [
+              packages.stop
+              packages.expose
+            ] ++ (mkRunCommands "nix-run" packages);
           };
         in
         {
