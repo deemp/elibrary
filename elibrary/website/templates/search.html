@@ -3,14 +3,23 @@
 {% block content %}
 
 <div class="mt-5">
-    <div class="md-col-3">
-        <form id="form" method="POST">
-            <select name="topic" class="form-control">
-                {% for row in topics %}
-                <option value="{{ row['lc'] }}" SELECTED>{{ row['lc'] }}</option>"
-                {% endfor %}
-            </select>
-            <button id="button" class="form-control">Search</button>
+    <div class="md-col-5">
+        <form id="form" method="GET">
+            <div class="form-floating">
+                <input type="search" id="search-input" name="search-input" class="form-control mb-3" placeholder="Enter your search" />
+                <label for="search-input">Enter Search</label>
+            </div>
+            <div>
+                <label for="filter">Filter by</label>
+                <select id="filter" name="filter" class="form-select mb-3">
+                    {% for filt in filters %}
+                        <option value="{{ filt }}">{{ filt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="d-grid">
+                <button id="button" class="btn btn-primary">Search</button>
+            </div>
         </form>
     </div>
 </div>
@@ -20,23 +29,29 @@
         <tr>
             <th></th>
             <th>Id</th>
-            <th>Topic</th>
-            <th>Authors</th>
             <th>Title</th>
+            <th>Year</th>
+            <th>Authors</th>
+            <th>Publisher</th>
+            <th>ISBN</th>
+            <th>Format</th>
         </tr>
     </thead>
     <tbody>
-        {% for row in books %}
+        {% for book in books %}
         <tr>
             <td>
                 <form id="form" method="POST">
-                    <button id="button" class="form-control" name="book_id" value="{{ row['book_id'] }}">Open</button>
+                    <button id="button" class="form-control" name="book_id" value="{{ book.book_id }}">Open</button>
                 </form>
             </td>
-            <td>{{ row['book_id'] }}</td>
-            <td>{{ row['lc' ] }}</td>
-            <td>{{ row['authors'] }}</td>
-            <td>{{ row['title' ] }}</td>
+            <td>{{ book.book_id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.authors }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.format }}</td>
         </tr>
         {% endfor %}
     </tbody>
