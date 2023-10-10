@@ -38,11 +38,18 @@
               '';
               description = ''convert books.xlsx to books.sql'';
             };
+            elibrary = {
+              runtimeInputs = [ pkgs.poetry ];
+              text = ''
+                kill -9 $(lsof -t -i:5000) || true
+                poetry run elibrary
+              '';
+              description = ''run elibrary'';
+            };
             lt = {
               runtimeInputs = [ pkgs.nodePackages.localtunnel pkgs.poetry ];
               text = ''
-                kill -9 $(lsof -t -i:5000)
-                poetry run elibrary &
+                ${getExe packages.elibrary} &
                 lt -s 'elibrary-itpd' -p '5000'
               '';
               description = ''run elibrary and expose it via localtunnel'';
