@@ -13,19 +13,45 @@ def home():
 @views.route("/search", methods=["GET", "POST"])
 @login_required
 def search():
-    books = []
+    filters = ['title', 'year', 'authors', 'publisher', 'isbn', 'format']
 
-    topics = Book.query.distinct().all()
+    if request.method == "GET":
+        search_input = request.args.get('search-input')
+        filter = request.args.get('filter')
 
-    if request.method == "POST":
-        if request.form.get("topic"):
-            books = Book.query.filter_by(lc=request.form.get("topic")).all()
-            return render_template(
-                "search.html", books=books, topics=topics, user=current_user
-            )
-        elif request.form.get("book_id"):
-            book = Book.query.filter_by(book_id=request.form.get("book_id")).all()[0]
-            return redirect(f"/book/{book.book_id}")
+        if filter == filters[0]:
+            search_input = "%{}%".format(search_input)
+            books = Book.query.filter(Book.title.like(search_input)).all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
+        elif filter == filters[1]:
+            search_input = "%{}%".format(search_input)
+            books = Book.query.filter(Book.year.like(search_input)).all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
+        elif filter == filters[2]:
+            search_input = "%{}%".format(search_input)
+            books = Book.query.filter(Book.authors.like(search_input)).all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
+        elif filter == filters[3]:
+            search_input = "%{}%".format(search_input)
+            books = Book.query.filter(Book.publisher.like(search_input)).all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
+        elif filter == filters[4]:
+            search_input = "%{}%".format(search_input)
+            books = Book.query.filter(Book.isbn.like(search_input)).all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
+        elif filter == filters[5]:
+            search_input = "%{}%".format(search_input)
+            books = Book.query.filter(Book.format.like(search_input)).all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
+        else:
+            books = Book.query.all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
+    else:
+        book_id = request.form.get('book_id')
 
-    books = Book.query.all()
-    return render_template("search.html", books=books, topics=topics, user=current_user)
+        if book_id:
+            books = Book.query.all()
+            return redirect(url_for('book.book_by_id', book_id=book_id))
+        else:
+            books = Book.query.all()
+            return render_template("search.html", books=books, filters=filters, user=current_user)
