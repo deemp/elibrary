@@ -58,6 +58,13 @@
               '';
               description = ''run elibrary and expose it via localtunnel'';
             };
+            build-front = {
+              runtimeInputs = [ pkgs.nodejs ];
+              text = ''
+                (cd front && npm run build)
+                cp -r front/dist elibrary/website/static/front
+              '';
+            };
           };
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
