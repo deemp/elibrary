@@ -20,5 +20,5 @@
     }
 </style>
 <iframe
-    src="{{ url_for('static', filename='') }}pdfjs/web/viewer.html?file=/book/000001/file" />
+    src="{{ url_for('static', filename='') }}pdfjs/web/viewer.html?file=/book/{{ book_id }}/file" />
 {% endblock %}
