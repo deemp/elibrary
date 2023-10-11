@@ -13,45 +13,39 @@ def home():
 @views.route("/search", methods=["GET", "POST"])
 @login_required
 def search():
-    filters = ['title', 'year', 'authors', 'publisher', 'isbn', 'format']
+    filters = [f for f in Book.__dict__.keys() if not f.startswith("_")]
 
     if request.method == "GET":
-        search_input = request.args.get('search-input')
-        filter = request.args.get('filter')
+        if arg_search_input := request.args.get("search-input"):
+            filter = request.args.get("filter")
+            search_input = f"%{arg_search_input}%"
 
-        if filter == filters[0]:
-            search_input = "%{}%".format(search_input)
-            books = Book.query.filter(Book.title.like(search_input)).all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
-        elif filter == filters[1]:
-            search_input = "%{}%".format(search_input)
-            books = Book.query.filter(Book.year.like(search_input)).all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
-        elif filter == filters[2]:
-            search_input = "%{}%".format(search_input)
-            books = Book.query.filter(Book.authors.like(search_input)).all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
-        elif filter == filters[3]:
-            search_input = "%{}%".format(search_input)
-            books = Book.query.filter(Book.publisher.like(search_input)).all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
-        elif filter == filters[4]:
-            search_input = "%{}%".format(search_input)
-            books = Book.query.filter(Book.isbn.like(search_input)).all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
-        elif filter == filters[5]:
-            search_input = "%{}%".format(search_input)
-            books = Book.query.filter(Book.format.like(search_input)).all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
+            def get_books(filter):
+                if filter in filters:
+                    filter_attr = Book.__dict__[filter]
+                    print(filter_attr)
+                    return Book.query.filter(filter_attr.like(search_input)).all()
+                else:
+                    return Book.query.all()
+
+            books = get_books(filter)
+
+            return render_template(
+                "search.html",
+                books=books,
+                filters=filters,
+                user=current_user,
+            )
+
+        elif book_id := request.form.get("book_id"):
+            books = Book.query.all()
+            return redirect(url_for("book.book_by_id", book_id=book_id))
+
         else:
             books = Book.query.all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
-    else:
-        book_id = request.form.get('book_id')
-
-        if book_id:
-            books = Book.query.all()
-            return redirect(url_for('book.book_by_id', book_id=book_id))
-        else:
-            books = Book.query.all()
-            return render_template("search.html", books=books, filters=filters, user=current_user)
+            return render_template(
+                "search.html",
+                books=books,
+                filters=filters,
+                user=current_user,
+            )
