@@ -2,7 +2,14 @@ from flask import Blueprint, request, jsonify, render_template
 from .models import Book
 from flask_jwt_extended import jwt_required
 
-views = Blueprint("views", __name__)
+views = Blueprint(
+    "views",
+    __name__,
+    static_url_path="",
+    template_folder="../../front/dist",
+    static_folder="../../front/dist",
+)
+
 
 # FIXME set up hot reload for both back and front
 @views.route("/", methods=["GET"])
@@ -10,6 +17,7 @@ views = Blueprint("views", __name__)
 # @jwt_required
 def home():
     return render_template("index.html")
+
 
 # FIXME use pagination
 @views.route("/search", methods=["POST"])
@@ -42,4 +50,4 @@ def search():
         else:
             books = Book.query.all()
         print(books)
-        return jsonify([book.toJSON() for book in books])
+        return jsonify(books)

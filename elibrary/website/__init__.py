@@ -10,12 +10,7 @@ DB_NAME = "database.db"
 
 
 def create_app():
-    app = Flask(
-        __name__,
-        static_url_path="",
-        template_folder="../../front/dist",
-        static_folder="../../front/dist",
-    )
+    app = Flask(__name__)
     app.config["SECRET_KEY"] = "my secret key"
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
@@ -27,14 +22,11 @@ def create_app():
 
     from elibrary.website.auth import auth
     from elibrary.website.views import views
-
-    # from elibrary.website.bookreader import bookreader
-    # from elibrary.website.book import book
+    from elibrary.website.book import book
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
-    # app.register_blueprint(bookreader, url_prefix="/")
-    # app.register_blueprint(book, url_prefix="/")
+    app.register_blueprint(book, url_prefix="/")
 
     # from .models import User
 
