@@ -6,8 +6,8 @@ views = Blueprint(
     "views",
     __name__,
     static_url_path="",
-    template_folder="../../front/dist",
-    static_folder="../../front/dist",
+    template_folder="static/front/",
+    static_folder="static/front/",
 )
 
 
