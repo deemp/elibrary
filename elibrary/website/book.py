@@ -20,14 +20,5 @@ def book_page(book_id: int):
 # FIXME require JWT
 # @jwt_required
 def file(book_id):
-    book_path = f"../books/{book_id:06}.pdf"
+    book_path = f"books/{book_id:06}.pdf"
     return RangeRequest(open(book_path, "rb")).make_response()
-
-
-@book.route("/book/<int:book_id>/iframe")
-# FIXME require JWT
-# @jwt_required
-def read(book_id: int):
-    return render_template(
-        "bookreader.html", book_id=f"{book_id:06}"
-    )

@@ -61,9 +61,6 @@
     "wintersmith": "^2.5.0",
     "yargs": "^17.7.2"
   },
-  "scripts": {
-    "postinstall": "cross-env PUPPETEER_PRODUCT=firefox node node_modules/puppeteer/install.mjs"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/mozilla/pdf.js.git"

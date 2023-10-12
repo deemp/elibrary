@@ -159,11 +159,7 @@ function SearchPage() {
 
 
 function Book({ bookId }: { bookId: number, }) {
-  return (
-    <>
-      <iframe src={`/book/${bookId}/iframe`} id='book'></iframe>
-    </>
-  )
+  return <iframe id="reader" src={`/pdfjs/web/viewer.html?file=/api/book/${bookId}/file`} />
 }
 
 function BookPage() {

@@ -20,7 +20,7 @@
             build-pdfjs = {
               runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
-                let pdfjsStatic = "elibrary/website/static/pdfjs"; in
+                let pdfjsStatic = "front/public/pdfjs"; in
                 ''
                   (cd pdfjs && gulp generic)
                   mkdir -p ${pdfjsStatic}
