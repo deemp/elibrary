@@ -35,12 +35,8 @@ def search():
                 books=books,
                 filters=filters,
                 user=current_user,
+                search_input=arg_search_input
             )
-
-        elif book_id := request.form.get("book_id"):
-            books = Book.query.all()
-            return redirect(url_for("book.book_by_id", book_id=book_id))
-
         else:
             books = Book.query.all()
             return render_template(
@@ -48,4 +44,9 @@ def search():
                 books=books,
                 filters=filters,
                 user=current_user,
+                search_input=""
             )
+    else:
+        book_id = request.form.get("book_id")
+        books = Book.query.all()
+        return redirect(url_for("book.book_by_id", book_id=book_id))
