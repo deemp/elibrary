@@ -1,9 +1,23 @@
 from . import db
 from flask_login import UserMixin
 import json
+from dataclasses import dataclass
 
 
+@dataclass
 class Book(db.Model):
+    bisac: str
+    lc: str
+    publisher: str
+    year: int
+    book_id: int
+    authors: str
+    title: str
+    print_hub: str
+    isbn: int
+    esbn: int
+    format: str
+
     bisac = db.Column(db.String(50))
     lc = db.Column(db.String(50))
     publisher = db.Column(db.String(50))
@@ -15,10 +29,6 @@ class Book(db.Model):
     isbn = db.Column(db.Integer)
     esbn = db.Column(db.Integer)
     format = db.Column(db.String(50))
-
-    def toJSON(self):
-        attrs = self.__dict__
-        return {k: attrs[k] for k in attrs.keys() if not k.startswith("_")}
 
 
 class User(db.Model, UserMixin):
