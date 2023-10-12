@@ -1,51 +1,39 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, request, jsonify
 from .models import Book
-from flask_login import login_required, current_user
+from flask_jwt_extended import jwt_required
 
 views = Blueprint("views", __name__)
 
 
-@views.route("/", methods=["GET", "POST"])
-def home():
-    return render_template("home.html", user=current_user)
-
-
-@views.route("/search", methods=["GET", "POST"])
-@login_required
+# FIXME use pagination
+@views.route("/search", methods=["POST"])
+# FIXME enable JWT authentication
+# @jwt_required
 def search():
     filters = [f for f in Book.__dict__.keys() if not f.startswith("_")]
 
     if request.method == "GET":
-        if arg_search_input := request.args.get("search-input"):
-            filter = request.args.get("filter")
-            search_input = f"%{arg_search_input}%"
+        return filters
 
-            def get_books(filter):
-                if filter in filters:
-                    filter_attr = Book.__dict__[filter]
-                    print(filter_attr)
-                    return Book.query.filter(filter_attr.like(search_input)).all()
-                else:
-                    return Book.query.all()
+    if request.method == "POST":
+        # TODO set query parameters on typing in react
+        books = []
+        if arg_search_input := request.json.get("filter_input"):
+            if arg_search_input:
+                filter = request.json.get("filter")
 
-            books = get_books(filter)
+                # FIXME SQL injection
+                search_input = f"%{arg_search_input}%"
 
-            return render_template(
-                "search.html",
-                books=books,
-                filters=filters,
-                user=current_user,
-            )
+                def get_books(filter):
+                    if filter in filters:
+                        filter_attr = Book.__dict__[filter]
+                        return Book.query.filter(filter_attr.like(search_input)).all()
+                    else:
+                        return Book.query.all()
 
-        elif book_id := request.form.get("book_id"):
-            books = Book.query.all()
-            return redirect(url_for("book.book_by_id", book_id=book_id))
-
+                books = get_books(filter)
         else:
             books = Book.query.all()
-            return render_template(
-                "search.html",
-                books=books,
-                filters=filters,
-                user=current_user,
-            )
+        print(books)
+        return jsonify([book.toJSON() for book in books])
