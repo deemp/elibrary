@@ -1,9 +1,15 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from .models import Book
 from flask_jwt_extended import jwt_required
 
 views = Blueprint("views", __name__)
 
+# FIXME set up hot reload for both back and front
+@views.route("/", methods=["GET"])
+# FIXME enable JWT authentication
+# @jwt_required
+def home():
+    return render_template("index.html")
 
 # FIXME use pagination
 @views.route("/search", methods=["POST"])

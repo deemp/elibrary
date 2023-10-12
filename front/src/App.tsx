@@ -1,8 +1,6 @@
-import { Component, ReactElement, useEffect } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import { ReactElement, useEffect } from 'react'
 import './App.css'
-import { DropdownButton, DropdownItem, Form, FormLabel } from 'react-bootstrap'
+import { DropdownButton, DropdownItem, Form } from 'react-bootstrap'
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Autocomplete, TextField } from '@mui/material';
 
