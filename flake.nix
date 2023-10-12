@@ -58,6 +58,13 @@
               '';
               description = ''run elibrary and expose it via localtunnel'';
             };
+            front = {
+              runtimeInputs = [ pkgs.nodejs ];
+              text = ''
+                cd front
+                npm run dev
+              '';
+            };
             build-front = {
               runtimeInputs = [ pkgs.nodejs ];
               text = ''
