@@ -1,77 +1,65 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
 auth = Blueprint("auth", __name__)
 
 
-@auth.route("/login", methods=['GET', 'POST'])
+# assume a user doesn't have a valid JWT when trying to log in
+@auth.route("/login", methods=["POST"])
 def login():
-    if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(email=email).first()
 
-        if len(email) < 4:
-            flash("Email must be greater than 3 characters", category="error")
-        elif len(password) < 7:
-            flash("Password must be greater than 6 characters", category="error")
+    if user:
+        if not user.password:
+            return jsonify({"msg": "No user with such password exists"}), 401
+        if check_password_hash(user.password, password):
+            access_token = create_access_token(identity=email)
+            return jsonify(access_token=access_token)
         else:
-            user = User.query.filter_by(email=email).first()
-
-            if user:
-                if not user.password:
-                    flash("You do not have a password!", category="error")
-                    flash("Click Sign in with Google to continue",
-                          category="error")
-                    return render_template("login.html", user=current_user)
-                if check_password_hash(user.password, password):
-                    flash("Logged in successfully!", category="success")
-                    login_user(user, remember=True)
-                    return redirect(url_for("views.home"))
-                else:
-                    flash("Invalid email or password!", category="error")
-            else:
-                flash("User does not exist!", category="error")
-    return render_template("login.html", user=current_user)
+            return jsonify({"msg": "Invalid password"}), 401
+    else:
+        return jsonify({"msg": "No user with such email exists"}), 401
 
 
-@auth.route("/register", methods=['GET', 'POST'])
+# assume a user doesn't have a valid JWT when trying to log in
+@auth.route("/register", methods=["POST"])
 def register():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-        confirm_password = request.form.get('confirm_password')
-        first_name = request.form.get('first_name')
+    email = request.json.get("email") or ""
+    password = request.json.get("password") or ""
+    confirm_password = request.json.get("confirm_password") or ""
+    first_name = request.json.get("first_name") or ""
 
-        user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).first()
 
-        if user:
-            flash("User already exist!", category="error")
-        elif len(email) < 4:
-            flash("Email must be greater than 3 characters", category="error")
-        elif len(first_name) < 2:
-            flash("First name must be greater than 1 character", category="error")
-        elif len(password) < 7:
-            flash("Password must be greater than 6 characters", category="error")
-        elif password != confirm_password:
-            flash("Password and Confirm Password must match", category="error")
-        else:
-            password_hash = generate_password_hash(password)
+    if user:
+        return jsonify({"msg": "User already exists"}), 401
+    elif len(email) < 4:
+        return jsonify({"msg": "Email must be longer than 3 characters!"}), 401
+    elif len(first_name) < 1:
+        return jsonify({"msg": "Enter your first name"}), 401
+    elif len(password) < 7:
+        return jsonify({"msg": "Password must be longer than 6 characters"}), 401
+    elif password != confirm_password:
+        return jsonify({"msg": "Password and Confirm Password must be the same"}), 401
+    else:
+        password_hash = generate_password_hash(password)
 
-            new_user = User(email=email, first_name=first_name,
-                            password=password_hash)
-            db.session.add(new_user)
-            db.session.commit()
-            flash("Account created successfully", category="success")
-            login_user(new_user)
-            return redirect(url_for("views.home"))
-    return render_template('register.html', user=current_user)
+        new_user = User(email=email, first_name=first_name, password=password_hash)
+        db.session.add(new_user)
+        db.session.commit()
+        
+        access_token = create_access_token(identity=email)
+        return jsonify(access_token=access_token)
 
 
 @auth.route("/logout")
-@login_required
+@jwt_required
 def logout():
-    logout_user()
-    return redirect(url_for("auth.login"))
+    # TODO revoke JWT https://flask-jwt-extended.readthedocs.io/en/stable/blocklist_and_token_revoking.html#database
+    pass

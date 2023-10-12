@@ -1,8 +1,23 @@
 from . import db
 from flask_login import UserMixin
+import json
+from dataclasses import dataclass
 
 
+@dataclass
 class Book(db.Model):
+    bisac: str
+    lc: str
+    publisher: str
+    year: int
+    book_id: int
+    authors: str
+    title: str
+    print_hub: str
+    isbn: int
+    esbn: int
+    format: str
+
     bisac = db.Column(db.String(50))
     lc = db.Column(db.String(50))
     publisher = db.Column(db.String(50))

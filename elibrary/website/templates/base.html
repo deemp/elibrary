@@ -9,7 +9,6 @@
         <title>{% block title %}Home{% endblock %}</title>
         {% block head %} {% endblock %}
     </head>
-
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
@@ -28,27 +27,6 @@
                 </div>
             </div>
         </nav>
-
-        <div class="container">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        {% if category == "error" %}
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{ message}}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% else %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ message}}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
-
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://kit.fontawesome.com/a93f01c655.js" crossorigin="anonymous"></script>
