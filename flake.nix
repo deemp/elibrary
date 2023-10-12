@@ -17,17 +17,51 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           packages = mkShellApps {
-            build-pdfjs = {
+            dev-build-pdfjs = {
               runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
-                let pdfjsStatic = "front/public/pdfjs"; in
+                let dist = "front/public/pdfjs"; in
                 ''
                   (cd pdfjs && gulp generic)
-                  mkdir -p ${pdfjsStatic}
-                  cp -r pdfjs/build/generic/* ${pdfjsStatic}
+                  mkdir -p ${dist}
+                  cp -r pdfjs/build/generic/* ${dist}
                 '';
-              description = ''build pdf.js for elibrary'';
+              description = ''dev build of pdf.js'';
             };
+            prod-build-pdfjs = {
+              runtimeInputs = [ pkgs.nodePackages.gulp ];
+              text =
+                let dist = "elibrary/website/static/front/assets/pdfjs"; in
+                ''
+                  (cd pdfjs && gulp generic)
+                  mkdir -p ${dist}
+                  cp -r pdfjs/build/generic/* ${dist}
+                '';
+              description = ''prod build of pdf.js'';
+            };
+            dev-build-front = {
+              runtimeInputs = [ pkgs.nodejs ];
+              text =
+                let dist = "front/public/pdfjs"; in
+                ''
+                  ${packages.dev-build-pdfjs}
+                  (cd front && npm run build)
+                '';
+              description = ''dev build of front'';
+            };
+            prod-build-front = {
+              runtimeInputs = [ pkgs.nodejs ];
+              text =
+                let dist = "elibrary/website/static/front"; in
+                ''
+                  ${getExe packages.dev-build-pdfjs}
+                  (cd front && npm run build)
+                  mkdir -p ${dist}
+                  cp -r front/dist/* ${dist}
+                '';
+              description = ''prod build of front'';
+            };
+
             convert-xlsx-to-sql = {
               runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
               text = ''
@@ -38,39 +72,40 @@
               '';
               description = ''convert books.xlsx to books.sql'';
             };
-            elibrary = {
+
+            prod = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
-                kill -15 $(lsof -t -i:5000) || true
+                ${getExe packages.prod-build-front}
+                ${getExe packages.stop}
                 poetry run elibrary
               '';
-              description = ''run elibrary'';
+              description = ''run prod site at localhost:5000'';
             };
-            stop = {
-              text = ''kill -9 $(lsof -t -i:5000) || true'';
-              description = ''stop elibrary server'';
-            };
-            expose = {
-              runtimeInputs = [ pkgs.nodePackages.localtunnel pkgs.poetry ];
+            dev = {
               text = ''
-                ${getExe packages.elibrary} &
+                ${getExe packages.stop}
+                poetry run elibrary &
+                (cd front && npm run dev)
+              '';
+              description = "run dev site at localhost:5001";
+            };
+            release = {
+              runtimeInputs = [ pkgs.nodePackages.localtunnel ];
+              text = ''
+                ${getExe packages.stop}
+                ${getExe packages.prod} &
                 lt -s 'elibrary-itpd' -p '5000' &
               '';
-              description = ''run elibrary and expose it via localtunnel'';
+              description = ''run and expose site'';
             };
-            front = {
-              runtimeInputs = [ pkgs.nodejs ];
+
+            stop = {
               text = ''
-                cd front
-                npm run dev
+                kill -9 $(lsof -t -i:5000) || true
+                kill -9 $(lsof -t -i:5001) || true
               '';
-            };
-            build-front = {
-              runtimeInputs = [ pkgs.nodejs ];
-              text = ''
-                cd front
-                npm run build
-              '';
+              description = ''stop dev servers'';
             };
           };
           devShells.default = mkShell {
@@ -83,7 +118,6 @@
               pkgs.nodePackages.localtunnel
             ]) ++ mkCommands "scripts" [
               packages.stop
-              packages.expose
             ] ++ (mkRunCommands "nix-run" packages);
           };
         in
