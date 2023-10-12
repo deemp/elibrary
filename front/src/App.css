@@ -43,3 +43,11 @@
 .read-the-docs {
   color: #888;
 }
+
+#book {
+  display: block;
+  background: #000;
+  border: none;
+  height: calc(100vh - 56px);
+  width: 100vw;
+}

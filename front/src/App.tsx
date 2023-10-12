@@ -1,39 +1,40 @@
 import { ReactElement, useEffect } from 'react'
 import './App.css'
-import { DropdownButton, DropdownItem, Form } from 'react-bootstrap'
+import { DropdownButton, DropdownItem, Form, Button, Navbar } from 'react-bootstrap'
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Autocomplete, TextField } from '@mui/material';
+import { Link, useParams } from 'react-router-dom';
 
 interface User {
-  is_authenticated: boolean
+  isAuthenticated: boolean
 }
 
-function Base({ title, user, content }: { title: string, user: User, content: ReactElement }) {
+function Base({ title, user, content, nav }: { title: string, user: User, content: ReactElement, nav: ReactElement }) {
   useEffect(() => {
     document.title = title;
   });
 
+  // TODO show error pages
   return (
     <>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossOrigin="anonymous" />
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+      <Navbar className="navbar-expand-lg navbar-dark bg-dark">
+        <Button className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
           <span className="navbar-toggler-icon"></span>
-        </button>
+        </Button>
         <div className="collapse navbar-collapse" id="navbar">
           <div className="navbar-nav">
             {
-              user.is_authenticated ?
+              user.isAuthenticated ?
                 <>
-                  <a className="nav-item nav-link" id="logout" href="/logout">Logout</a>
-                  <a className="nav-item nav-link" id="search" href="/search">Search</a>
+                  {nav}
                 </> :
                 <>
-                  <a className="nav-item nav-link" id="login" href="/login">Login</a>
-                  <a className="nav-item nav-link" id="register" href="/register">Register</a>
+                  <Link className="nav-item nav-link" id="login" to="/login">Login</Link>
+                  <Link className="nav-item nav-link" id="register" to="/register">Register</Link>
                 </>
             }
           </div>
@@ -64,14 +65,10 @@ interface Book {
   format: string
 }
 
-function Search({ title, filters, books }: { title: string, filters: string[], books: Book[] }) {
-  useEffect(() => {
-    document.title = title;
-  });
+function Search({ filters, books }: { filters: string[], books: Book[] }) {
   return (
     <>
       <div className='container'>
-
         <div className="mt-5">
           <div className="md-col-5">
             <InputGroup className="mb-3">
@@ -113,20 +110,18 @@ function Search({ title, filters, books }: { title: string, filters: string[], b
           </thead>
           <tbody>
             {books.map(book =>
-            (<tr>
-              <td>
-                <form id="form" method="POST">
-                  <button id="button" className="form-control" name="book_id" value="{{ book.book_id }}">Open</button>
-                </form>
-              </td>
-              <td>{book.book_id}</td>
-              <td>{book.title}</td>
-              <td>{book.year}</td>
-              <td>{book.authors}</td>
-              <td>{book.publisher}</td>
-              <td>{book.isbn}</td>
-              <td>{book.format}</td>
-            </tr>)
+              <tr>
+                <td>
+                  <Link to={`book/${book.book_id}/read`}>Open</Link>
+                </td>
+                <td>{book.book_id}</td>
+                <td>{book.title}</td>
+                <td>{book.year}</td>
+                <td>{book.authors}</td>
+                <td>{book.publisher}</td>
+                <td>{book.isbn}</td>
+                <td>{book.format}</td>
+              </tr>
             )}
           </tbody>
         </table>
@@ -135,7 +130,7 @@ function Search({ title, filters, books }: { title: string, filters: string[], b
   )
 }
 
-function App() {
+function SearchPage() {
   const books = [{
     book_id: 3,
     title: "aba",
@@ -154,9 +149,35 @@ function App() {
     isbn: 102020330,
     format: "pdf"
   }]
-  const search = <Search title='Search' filters={['isbn', 'year']} books={books} />
-  const base = <Base user={{ is_authenticated: true }} title={"Home"} content={search} />
+  const search = <Search filters={['isbn', 'year']} books={books} />
+  const base = <Base title='Search' user={{ isAuthenticated: true }} content={search} nav={
+    <Link className="nav-item nav-link" id="logout" to="/">Log out</Link>
+  } />
   return base
 }
 
-export default App
+
+
+function Book({ bookId }: { bookId: number, }) {
+  return (
+    <>
+      <iframe src={`/book/${bookId}/iframe`} id='book'></iframe>
+    </>
+  )
+}
+
+function BookPage() {
+  const { id } = useParams()
+  if (id) {
+    const bookId = Number.parseInt(id)
+    const book = <Book bookId={bookId}></Book>
+    const base = <Base title='Book' user={{ isAuthenticated: true }} content={book} nav={
+      <Link className="nav-item nav-link" id="search" to="/">Search</Link>
+    }></Base>
+    return base
+  } else {
+    return <></>
+  }
+}
+
+export { SearchPage, BookPage }

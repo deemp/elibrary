@@ -10,24 +10,24 @@ book = Blueprint("book", __name__, template_folder="/website/templates")
 # FIXME require JWT
 # @jwt_required
 def book_page(book_id: int):
-    books = Book.query.filter_by(book_id=book_id).first()
-    if len(books) == 0:
+    book = Book.query.filter_by(book_id=book_id).first()
+    if not book:
         return jsonify({"msg": f"No book with id '{book_id}' found"}), 404
-    return jsonify(books)
+    return jsonify(book)
 
 
 @book.route("/book/<int:book_id>/file")
 # FIXME require JWT
 # @jwt_required
 def file(book_id):
-    book_path = f"books/{book_id:06}.pdf"
+    book_path = f"../books/{book_id:06}.pdf"
     return RangeRequest(open(book_path, "rb")).make_response()
 
 
-@book.route("/book/<int:book_id>/read")
+@book.route("/book/<int:book_id>/iframe")
 # FIXME require JWT
 # @jwt_required
 def read(book_id: int):
     return render_template(
-        "bookreader.html", book_id=f"{book_id:06}", user={"is_authenticated": True}
+        "bookreader.html", book_id=f"{book_id:06}"
     )

@@ -1,24 +1,19 @@
-{% extends "base.html" %}
-
-{% block title %} PDF.js Example {% endblock %}
-
-{% block container %}
-<style>
+<div>
+  <style>
     body {
-        margin: 0;
+      margin: 0;
     }
 
     iframe {
-        display: block;
-        /* iframes are inline by default */
-        background: #000;
-        border: none;
-        /* Reset default border */
-        height: calc(100vh - 56px);
-        /* Viewport-relative units */
-        width: 100vw;
+      display: block;
+      background: #000;
+      border: none;
+      height: 100vh;
+      width: 100vw;
     }
-</style>
-<iframe
-    src="{{ url_for('static', filename='') }}pdfjs/web/viewer.html?file=/book/{{ book_id }}/file" />
-{% endblock %}
+  </style>
+  <iframe
+    id="reader"
+    src="{{ url_for('static', filename='') }}pdfjs/web/viewer.html?file=/book/{{ book_id }}/file"
+  />
+</div>
