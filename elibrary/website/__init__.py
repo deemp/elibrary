@@ -1,18 +1,27 @@
+import json
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from datetime import timedelta
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from dotenv import dotenv_values
+
+
+class obj(object):
+    def __init__(self, dict_):
+        self.__dict__.update(dict_)
+
+
+config = obj(dotenv_values(".env"))
 
 db = SQLAlchemy()
-DB_NAME = "database.db"
 
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "my secret key"
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
+    app.config["SECRET_KEY"] = config.SECRET_KEY
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{config.DB_NAME}"
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
     jwt = JWTManager(app)
 
@@ -44,7 +53,8 @@ def create_app():
 
 
 def create_database(app):
-    if not path.exists("website/" + DB_NAME):
+    if not path.exists("website/" + config.DB_NAME):
         with app.app_context():
             db.create_all()
         print("Created Database!")
+dotenv_values
