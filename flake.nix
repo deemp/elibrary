@@ -108,6 +108,16 @@
               '';
               description = ''stop dev servers'';
             };
+
+            install = {
+              runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
+              text = ''
+                poetry install
+                (cd front && npm i)
+                (cd pdfjs && npm i)
+              '';
+              description = ''install dependencies'';
+            };
           };
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
