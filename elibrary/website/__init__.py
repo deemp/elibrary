@@ -4,6 +4,7 @@ from os import path
 from .seed import list_of_seeds, create_table_script
 from datetime import timedelta
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -37,6 +38,8 @@ def create_app():
     # @login_manager.user_loader
     # def load_user(id):
     #     return User.query.get((int(id)))
+
+    CORS(app, origins=["http://localhost:5001", "http://localhost:5000"])
 
     return app
 

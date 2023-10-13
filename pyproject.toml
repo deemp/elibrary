@@ -20,6 +20,7 @@ flask-api = "^3.1"
 flask-rangerequest = "^0.0.2"
 pandas = "^2.1.1"
 flask-jwt-extended = "^4.5.3"
+flask-cors = "^4.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
