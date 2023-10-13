@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
-from .seed import list_of_seeds, create_table_script
 from datetime import timedelta
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
@@ -45,17 +44,7 @@ def create_app():
 
 
 def create_database(app):
-    from .models import Book
-
     if not path.exists("website/" + DB_NAME):
         with app.app_context():
             db.create_all()
-
-            count = db.session.query(Book).count()
-            if count < 1:
-                db.session.execute(create_table_script)
-                for i, sql in enumerate(list_of_seeds):
-                    print("Seeding {} script".format(i + 1))
-                    db.session.execute(sql)
-                db.session.commit()
-            print("Created Database!")
+        print("Created Database!")
