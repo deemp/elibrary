@@ -101,6 +101,7 @@
             };
 
             stop = {
+              runtimeInputs = [ pkgs.lsof ];
               text = ''
                 kill -9 $(lsof -t -i:5000) || true
                 kill -9 $(lsof -t -i:5001) || true
