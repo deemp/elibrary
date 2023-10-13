@@ -62,15 +62,15 @@
               description = ''prod build of front'';
             };
 
-            convert-xlsx-to-sql = {
+            import-catalog = {
               runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
               text = ''
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                   pkgs.stdenv.cc.cc.lib
                 ]}
-                poetry run convert-xlsx-to-sql
+                poetry run import-catalog
               '';
-              description = ''convert books.xlsx to books.sql'';
+              description = ''import books catalog into database + save sql'';
             };
 
             prod = {
