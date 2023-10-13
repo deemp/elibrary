@@ -49,5 +49,4 @@ def search():
                 books = get_books(filter)
         else:
             books = Book.query.all()
-        print(books)
         return jsonify(books)
