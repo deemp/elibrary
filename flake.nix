@@ -17,66 +17,44 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           packages = mkShellApps {
-            dev-build-pdfjs = {
-              runtimeInputs = [ pkgs.nodePackages.gulp ];
-              text =
-                let dist = "front/public/pdfjs"; in
-                ''
-                  (cd pdfjs && gulp generic)
-                  mkdir -p ${dist}
-                  cp -r pdfjs/build/generic/* ${dist}
-                '';
-              description = ''dev build of pdf.js'';
-            };
-            prod-build-pdfjs = {
-              runtimeInputs = [ pkgs.nodePackages.gulp ];
-              text =
-                let dist = "elibrary/website/static/front/assets/pdfjs"; in
-                ''
-                  (cd pdfjs && gulp generic)
-                  mkdir -p ${dist}
-                  cp -r pdfjs/build/generic/* ${dist}
-                '';
-              description = ''prod build of pdf.js'';
-            };
-            dev-build-front = {
-              runtimeInputs = [ pkgs.nodejs ];
-              text =
-                let dist = "front/public/pdfjs"; in
-                ''
-                  ${packages.dev-build-pdfjs}
-                  (cd front && npm run build)
-                '';
-              description = ''dev build of front'';
-            };
             prod-build-front = {
-              runtimeInputs = [ pkgs.nodejs ];
+              runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
               text =
-                let dist = "elibrary/website/static/front"; in
-                ''
-                  ${getExe packages.dev-build-pdfjs}
-                  (cd front && npm run build)
-                  mkdir -p ${dist}
-                  cp -r front/dist/* ${dist}
-                '';
+                (
+                  let dist = "front/public/pdfjs"; in
+                  ''
+                    (cd pdfjs && gulp generic)
+                    mkdir -p ${dist}
+                    cp -r pdfjs/build/generic/* ${dist}
+                  ''
+                ) +
+                (
+                  let dist = "elibrary/website/static/front"; in
+                  ''
+                    (cd front && npm run build)
+                    mkdir -p ${dist}
+                    cp -r front/dist/* ${dist}
+                  ''
+                );
               description = ''prod build of front'';
             };
 
-            convert-xlsx-to-sql = {
+            import-catalog = {
               runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
               text = ''
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                   pkgs.stdenv.cc.cc.lib
                 ]}
-                poetry run convert-xlsx-to-sql
+                poetry run import-catalog
               '';
-              description = ''convert books.xlsx to books.sql'';
+              description = ''import books catalog into database + save sql'';
             };
 
             prod = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.prod-build-front}
+                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 poetry run elibrary
               '';
@@ -84,6 +62,7 @@
             };
             dev = {
               text = ''
+                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 poetry run elibrary &
                 (cd front && npm run dev)

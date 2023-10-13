@@ -13,7 +13,6 @@ class Book(db.Model):
     book_id: int
     authors: str
     title: str
-    print_hub: str
     isbn: int
     esbn: int
     format: str
@@ -25,7 +24,6 @@ class Book(db.Model):
     book_id = db.Column(db.Integer, primary_key=True)
     authors = db.Column(db.String(50))
     title = db.Column(db.String(300))
-    print_hub = db.Column(db.String(50))
     isbn = db.Column(db.Integer)
     esbn = db.Column(db.Integer)
     format = db.Column(db.String(50))
