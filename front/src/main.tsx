@@ -1,9 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { SearchPage, BookPage } from './App.tsx'
-import './index.css'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { ErrorPage } from './error-page.tsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { SearchPage } from "./components/SearchPage.tsx";
+import { BookPage } from "./components/BookPage.tsx";
+import "./index.css";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ErrorPage } from "./error-page.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,11 @@ const router = createBrowserRouter([
     path: "/book/:id/read",
     element: <BookPage />,
     errorElement: <ErrorPage />,
-  }
+  },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
