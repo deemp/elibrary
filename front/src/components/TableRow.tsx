@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Book } from "../models/book";
 
 interface RowData {
@@ -8,6 +9,9 @@ interface RowData {
 export const TableRow = ({ content, key }: RowData) => {
   return (
     <tr key={key}>
+      <td>
+        <Link to={`book/${content.book_id}/read`}>Open</Link>
+      </td>
       <td key={key}>{content.book_id}</td>
       <td key={key}>{content.title}</td>
       <td key={key}>{content.year}</td>

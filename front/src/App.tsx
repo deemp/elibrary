@@ -13,6 +13,7 @@ export function Search({
   books: Book[];
 }) {
   const heading = [
+    "Action",
     "Id",
     "Title",
     "Year",
