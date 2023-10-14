@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Book } from "../models/book";
+import { Button } from "@mui/material";
 
 interface Props {
   setBooks: React.Dispatch<React.SetStateAction<Book[]>>;
@@ -7,7 +8,7 @@ interface Props {
   handleOnClick: (e: React.FormEvent) => void;
 }
 
-export const SearchBotton = ({ setBooks, url, handleOnClick }: Props) => {
+export const SearchButton = ({ setBooks, url, handleOnClick }: Props) => {
   useEffect(() => {
     fetch(url, {
       method: "POST",
@@ -18,17 +19,11 @@ export const SearchBotton = ({ setBooks, url, handleOnClick }: Props) => {
       .then((r: Book[]) => {
         setBooks([...r]);
       });
-  }, []);
+  }, [setBooks, url]);
 
   return (
     <>
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={(e) => handleOnClick(e)}
-      >
-        Search
-      </button>
+      <Button variant="outlined" onClick={(e) => handleOnClick(e)}>Search</Button>
     </>
   );
 };

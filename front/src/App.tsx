@@ -5,7 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Autocomplete, TextField } from "@mui/material";
 import { Table } from "./components/Table";
 import React, { useState, useEffect } from "react";
-import { SearchBotton } from "./components/SearchButton";
+import { SearchButton } from "./components/SearchButton";
 
 export interface Filter {
   filter: string;
