@@ -3,7 +3,7 @@ import { Base } from "./Base";
 import { Search } from "../App";
 
 export function SearchPage() {
-  const search = <Search /*filters={["isbn", "year"]}*/ />;
+  const search = <Search />;
   const base = (
     <Base
       title="Search"

@@ -11,6 +11,7 @@ export interface Filter {
 }
 
 export function Search() {
+  
   const heading = [
     "Action",
     "Id",
