@@ -6,8 +6,5 @@ export interface Book {
   publisher: string;
   isbn: number;
   format: string;
-  // esbn: number;
-  // print_hub: string;
-  // bisac: string;
-  // lc: string;
+  esbn: number;
 }

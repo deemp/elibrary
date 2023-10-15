@@ -1,6 +1,7 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Base } from "./Base";
 import { Book } from "./Book";
+import { NavLink } from "./NavLink";
 
 export function BookPage() {
   const { id } = useParams();
@@ -12,11 +13,7 @@ export function BookPage() {
         title="Book"
         user={{ isAuthenticated: true }}
         content={book}
-        nav={
-          <Link className="nav-item nav-link" id="search" to="/">
-            Search
-          </Link>
-        }
+        nav={<NavLink text={"Search"} to={'/'} id={"search"} />}
       ></Base>
     );
     return base;

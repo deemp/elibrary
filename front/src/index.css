@@ -14,16 +14,16 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
+/* a {
   font-weight: 500;
-  color: #646cff;
+  color: #ffffff;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
-}
+  color: rgb(223, 223, 223);
+} */
 
-body {
+/* body {
   margin: 0;
   display: flex;
   place-items: center;
@@ -53,17 +53,17 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
+  /* a:hover {
     color: #747bff;
-  }
-  button {
+  } */
+  /* button {
     background-color: #f9f9f9;
-  }
+  } */
 }

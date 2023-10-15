@@ -1,27 +1,16 @@
-import { Book } from "./models/book";
-import "./App.css";
-import { Col, Row } from "react-bootstrap";
-import { Autocomplete, TextField } from "@mui/material";
-import { Table } from "./components/Table";
+import { Book } from "../models/book";
+import "../App.css";
+import { Autocomplete, Grid, TextField } from "@mui/material";
+import { BookTable } from "./Table";
 import React, { useState, useEffect } from "react";
-import { SearchButton } from "./components/SearchButton";
+import { SearchButton } from "./SearchButton";
 
 export interface Filter {
   filter: string;
 }
 
 export function Search() {
-  
-  const heading = [
-    "Action",
-    "Id",
-    "Title",
-    "Year",
-    "Authors",
-    "Publisher",
-    "ISBN",
-    "Format",
-  ];
+
   const [books, setBooks] = useState<Book[]>([]);
   const [filters, setFilters] = useState<Filter[]>([]);
   const [filter, setFilter] = useState<string>("");
@@ -72,7 +61,7 @@ export function Search() {
     isLeft: boolean, label: string, id: string, options: string[], colWidth?: number
   }) {
     return (
-      <Col className={`p${isLeft ? 'e' : 's'}-0 ${colWidth ? `col-${colWidth}` : ""}`}>
+      <Grid item xs={colWidth}>
         <Autocomplete
           disablePortal
           id={id}
@@ -86,9 +75,8 @@ export function Search() {
               }}
             />
           }
-          className="mb-3"
         />
-      </Col>
+      </Grid>
     )
   }
 
@@ -99,32 +87,40 @@ export function Search() {
 
   return (
     <>
-      <Row className="justify-content-center">
-        <Col className="col-10">
-          <Row className="mt-5">
-            <SearchField isLeft={true} label={"bisac"} id={"bisac"} options={bisac}></SearchField>
-            <SearchField isLeft={false} label={"lc"} id={"lc"} options={lc}></SearchField>
-          </Row>
-          <Row>
-            <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filtersStrings} colWidth={3}></SearchField>
-            <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filtersInputs}></SearchField>
-          </Row>
-          <Row className="mb-3">
-            <Col>
-              <SearchButton
-                setBooks={setBooks}
-                url={url}
-                handleOnClick={handleSearch}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Table heading={heading} body={books} />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <Grid container rowSpacing={2} paddingTop={2}>
+        <Grid item xs={12}>
+          <Grid container spacing={0}>
+            <Grid item xs={6}>
+              <SearchField isLeft={true} label={"bisac"} id={"bisac"} options={bisac}></SearchField>
+            </Grid>
+            <Grid item xs={6}>
+              <SearchField isLeft={false} label={"lc"} id={"lc"} options={lc}></SearchField>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={0}>
+            <Grid item xs={3}>
+              <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filtersStrings}></SearchField>
+            </Grid>
+            <Grid item xs={9}>
+              <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filtersInputs}></SearchField>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container justifyContent={'center'}>
+            <SearchButton
+              setBooks={setBooks}
+              url={url}
+              handleOnClick={handleSearch}
+            />
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <BookTable rows={books} />
+        </Grid>
+      </Grid>
     </>
   );
 }
