@@ -25,37 +25,26 @@ def home():
 # FIXME enable JWT authentication
 # @jwt_required
 def search():
-    filters = [f for f in Book.__dict__.keys() if not f.startswith("_")]
+    filters = ["publisher", "year", "authors", "title", "isbn", "esbn", "format"]
 
     if request.method == "GET":
         bisac = {}
-        other = [
-            "publisher",
-            "year",
-            "authors",
-            "title",
-            "isbn",
-            "esbn",
-            "format"
-        ]
+        other = filters
         for book in Book.query.all():
             if book.bisac not in bisac.keys():
                 bisac[book.bisac] = set()
             bisac[book.bisac].add(book.lc)
-        
+
         for key in bisac:
             bisac[key] = list(bisac[key])
-        
-        result = {
-            "bisac": bisac,
-            "other": other
-        }
-               
+
+        result = {"bisac": bisac, "other": other}
+
         return result
 
     if request.method == "POST":
-        # TODO set query parameters on typing in react
         books = []
+        filters_all = filters + ["bisac" "lc"]
         if arg_search_input := request.json.get("filter_input"):
             if arg_search_input:
                 filter = request.json.get("filter")
@@ -63,14 +52,11 @@ def search():
                 # FIXME SQL injection
                 search_input = f"%{arg_search_input}%"
 
-                def get_books(filter):
-                    if filter in filters:
-                        filter_attr = Book.__dict__[filter]
-                        return Book.query.filter(filter_attr.like(search_input)).all()
-                    else:
-                        return Book.query.all()
-
-                books = get_books(filter)
+                if filter in filters_all:
+                    filter_attr = Book.__dict__[filter]
+                    books = Book.query.filter(filter_attr.like(search_input)).all()
+                else:
+                    books = Book.query.all()
         else:
             books = Book.query.all()
         return jsonify(books)
