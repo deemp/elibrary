@@ -108,6 +108,8 @@
               pkgs.poetry
               pkgs.nodejs
               pkgs.nodePackages.localtunnel
+              pkgs.rnix-lsp
+              pkgs.nixpkgs-fmt
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
