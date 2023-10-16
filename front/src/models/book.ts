@@ -1,4 +1,6 @@
 export interface Book {
+  bisac: string;
+  lc: string
   book_id: number;
   title: string;
   authors: string;
