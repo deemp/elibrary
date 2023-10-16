@@ -19,25 +19,27 @@
           portElibrary = "5000";
           portFront = "5001";
           packages = mkShellApps {
+            prod-build-pdfjs = {
+              runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
+              text =
+                let dist = "front/public/pdfjs"; in
+                ''
+                  (cd pdfjs && gulp generic)
+                  mkdir -p ${dist}
+                  cp -r pdfjs/build/generic/* ${dist}
+                '';
+              description = ''build pdfjs for front'';
+            };
             prod-build-front = {
               runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
               text =
-                (
-                  let dist = "front/public/pdfjs"; in
-                  ''
-                    (cd pdfjs && gulp generic)
-                    mkdir -p ${dist}
-                    cp -r pdfjs/build/generic/* ${dist}
-                  ''
-                ) +
-                (
-                  let dist = "elibrary/website/static/front"; in
-                  ''
-                    (cd front && npm run build)
-                    mkdir -p ${dist}
-                    cp -r front/dist/* ${dist}
-                  ''
-                );
+                let dist = "elibrary/website/static/front"; in
+                ''
+                  ${getExe packages.prod-build-pdfjs}
+                  (cd front && npm run build)
+                  mkdir -p ${dist}
+                  cp -r front/dist/* ${dist}
+                '';
               description = ''prod build of front'';
             };
 
