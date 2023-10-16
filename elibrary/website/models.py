@@ -13,8 +13,12 @@ class Book(db.Model):
     book_id: int
     authors: str
     title: str
+    imprint_publisher: str
     isbn: int
     esbn: int
+    oclc: int
+    lcc: str
+    dewey: float
     format: str
 
     bisac = db.Column(db.String(50))
@@ -24,8 +28,12 @@ class Book(db.Model):
     book_id = db.Column(db.Integer, primary_key=True)
     authors = db.Column(db.String(50))
     title = db.Column(db.String(300))
+    imprint_publisher = db.Column(db.String(300))
     isbn = db.Column(db.Integer)
     esbn = db.Column(db.Integer)
+    oclc = db.Column(db.Integer)
+    lcc = db.Column(db.String(50))
+    dewey = db.Column(db.Float(50))
     format = db.Column(db.String(50))
 
 
