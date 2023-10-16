@@ -63,6 +63,7 @@
               description = ''run prod site at localhost:${portElibrary}'';
             };
             dev = {
+              runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
               text = ''
                 ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
