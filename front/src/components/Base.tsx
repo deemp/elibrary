@@ -1,7 +1,7 @@
 import { ReactElement, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { User } from "../models/User";
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import { NavLink } from "./NavLink";
 
 export function Base({
   title,
@@ -25,22 +25,9 @@ export function Base({
         <Toolbar variant='dense' disableGutters sx={{ minHeight: 60, height: 60 }}>
           <Typography variant="h6" component="div">
             {user.isAuthenticated ? (
-              <>{nav}</>
+              nav
             ) : (
-              <>
-                <Button color='secondary'>
-                  <Link id="login" to="/login" color="inherit">
-                    Login
-                  </Link>
-                </Button>
-                <Link
-                  id="register"
-                  to="/register"
-                  color="inherit"
-                >
-                  Register
-                </Link>
-              </>
+              <NavLink text={'Log in'} to='/login' id={'login'} />
             )}
           </Typography>
         </Toolbar>
