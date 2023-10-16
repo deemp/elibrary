@@ -25,24 +25,33 @@
     sqlite3 --version
     ```
 
-- Install `python` packages.
+- Install packages.
 
     ```console
-    poetry install
+    nix run .#install
     ```
 
-- Run server.
+- Build `pdfjs`.
 
     ```console
-    poetry run elibrary
+    nix run .#prod-build-pdfjs
     ```
 
-- Open the address in a browser.
-
-- Run a specific script.
+- Run dev servers.
 
     ```console
-    poetry run python elibrary/service/sqlite_db.py
+    nix run .#dev
+    ```
+
+- Open http://localhost:5001 in a browser.
+
+
+- Edit files in [elibrary](./elibrary/) and in [front](./front/).
+
+- Stop servers.
+
+    ```
+    nix run .#stop
     ```
 
 ## Stack
