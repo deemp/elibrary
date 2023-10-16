@@ -4,6 +4,7 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import { BookTable } from "./Table";
 import React, { useState, useEffect } from "react";
 import { SearchButton } from "./SearchButton";
+import * as appbar from '../models/appbar'
 
 export interface Filter {
   bisac: Map<string, string[]>
@@ -87,7 +88,7 @@ export function Search() {
 
   return (
     <>
-      <Grid container rowSpacing={2} paddingTop={2}>
+      <Grid container rowSpacing={2} marginTop={appbar.height}>
         <Grid item xs={12}>
           <Grid container spacing={0}>
             <Grid item xs={6}>

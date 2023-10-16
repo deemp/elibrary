@@ -1,7 +1,8 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
 import { NavLink } from "./NavLink";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
+import * as appbar from '../models/appbar'
 
 export function SearchPage() {
   const base = (
@@ -9,8 +10,9 @@ export function SearchPage() {
       title="Search"
       user={{ isAuthenticated: true }}
       content={
-        <Container sx={{ height: 'calc(100vh - 60px)' }} maxWidth='xl'>
+          <Box height={`calc(100vh - ${appbar.height})`}>
           <Search />
+          </Box>
         </Container>
       }
       nav={<NavLink text={"Log out"} id={"logout"} to={"/"} />}

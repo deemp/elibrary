@@ -2,6 +2,7 @@ import { ReactElement, useEffect } from "react";
 import { User } from "../models/User";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "./NavLink";
+import * as appbar from '../models/appbar'
 
 export function Base({
   title,
@@ -21,7 +22,7 @@ export function Base({
   // TODO show error pages
   return (
     <>
-      <AppBar elevation={0} sx={{ height: '60px', color: 'white' }}>
+      <AppBar elevation={0} sx={{ height: appbar.height, color: 'white' }}>
         <Toolbar variant='dense' disableGutters sx={{ minHeight: 60, height: 60 }}>
           <Typography variant="h6" component="div">
             {user.isAuthenticated ? (
