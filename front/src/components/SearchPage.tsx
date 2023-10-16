@@ -1,7 +1,7 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
 import { NavLink } from "./NavLink";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import * as appbar from '../models/appbar'
 
 export function SearchPage() {
