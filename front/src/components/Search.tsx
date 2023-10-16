@@ -86,39 +86,44 @@ export function Search() {
   const lc = ["OOP", "FP", "PP", "TDD"]
   const filtersInputs = ["input1", "input2"]
 
+  const filtersHeight = 180
   return (
     <>
-      <Grid container rowSpacing={2} marginTop={appbar.height}>
-        <Grid item xs={12}>
-          <Grid container spacing={0}>
-            <Grid item xs={6}>
-              <SearchField isLeft={true} label={"bisac"} id={"bisac"} options={bisac}></SearchField>
+      <Grid container rowSpacing={1} marginTop={appbar.height} height={'100%'} paddingTop={1}>
+        <Grid item xs={12} height={filtersHeight}>
+          <Grid container rowSpacing={1}>
+            <Grid item xs={12}>
+              <Grid container spacing={0}>
+                <Grid item xs={6}>
+                  <SearchField isLeft={true} label={"bisac"} id={"bisac"} options={bisac}></SearchField>
+                </Grid>
+                <Grid item xs={6}>
+                  <SearchField isLeft={false} label={"lc"} id={"lc"} options={lc}></SearchField>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <SearchField isLeft={false} label={"lc"} id={"lc"} options={lc}></SearchField>
+            <Grid item xs={12}>
+              <Grid container spacing={0}>
+                <Grid item xs={3}>
+                  <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filters}></SearchField>
+                </Grid>
+                <Grid item xs={9}>
+                  <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filtersInputs}></SearchField>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container justifyContent={'center'}>
+                <SearchButton
+                  setBooks={setBooks}
+                  url={url}
+                  handleOnClick={handleSearch}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={0}>
-            <Grid item xs={3}>
-              <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filters}></SearchField>
-            </Grid>
-            <Grid item xs={9}>
-              <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filtersInputs}></SearchField>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container justifyContent={'center'}>
-            <SearchButton
-              setBooks={setBooks}
-              url={url}
-              handleOnClick={handleSearch}
-            />
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`}>
           <BookTable rows={books} />
         </Grid>
       </Grid>

@@ -147,7 +147,7 @@ function rowContent(_index: number, row: BookRow) {
 
 export function BookTable({ rows }: { rows: Book[] }) {
   return (
-    <Paper style={{  width: '100.%', height: '60vh' }}>
+    <Paper variant='outlined' style={{ height: '98%' }}>
       <TableVirtuoso
         data={rows.map(bookToBookRow)}
         components={VirtuosoTableComponents}
