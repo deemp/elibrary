@@ -6,13 +6,14 @@ import React, { useState, useEffect } from "react";
 import { SearchButton } from "./SearchButton";
 
 export interface Filter {
-  filter: string;
+  bisac: Map<string, string[]>
+  other: string[]
 }
 
 export function Search() {
 
   const [books, setBooks] = useState<Book[]>([]);
-  const [filters, setFilters] = useState<Filter[]>([]);
+  const [filters, setFilters] = useState<string[]>([]);
   const [filter, setFilter] = useState<string>("");
   const [searchInput, setSearchInput] = useState<string>("");
 
@@ -24,10 +25,10 @@ export function Search() {
       headers: new Headers({ "content-type": "application/json" }),
     })
       .then((r) => r.json())
-      .then((r: Filter[]) => {
-        setFilters([...r]);
+      .then((r: Filter) => {
+        setFilters(r.other);
       });
-  }, [setFilters, url]);
+  }, [setFilters]);
 
   useEffect(() => {
     fetch(url, {
@@ -82,7 +83,6 @@ export function Search() {
 
   const bisac = ["Python", "C++", "Pascal", "Java", "C#"]
   const lc = ["OOP", "FP", "PP", "TDD"]
-  const filtersStrings = filters.map(toString)
   const filtersInputs = ["input1", "input2"]
 
   return (
@@ -101,7 +101,7 @@ export function Search() {
         <Grid item xs={12}>
           <Grid container spacing={0}>
             <Grid item xs={3}>
-              <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filtersStrings}></SearchField>
+              <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filters}></SearchField>
             </Grid>
             <Grid item xs={9}>
               <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filtersInputs}></SearchField>
