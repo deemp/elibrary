@@ -16,6 +16,8 @@
           pkgs = inputs.nixpkgs.legacyPackages.${system};
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
+          portElibrary = "5000";
+          portFront = "5001";
           packages = mkShellApps {
             prod-build-front = {
               runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
@@ -58,7 +60,7 @@
                 ${getExe packages.stop}
                 poetry run elibrary
               '';
-              description = ''run prod site at localhost:5000'';
+              description = ''run prod site at localhost:${portElibrary}'';
             };
             dev = {
               text = ''
@@ -67,14 +69,14 @@
                 poetry run elibrary &
                 (cd front && npm run dev)
               '';
-              description = "run dev site at localhost:5001";
+              description = "run dev site at localhost:${portFront}";
             };
             release = {
               runtimeInputs = [ pkgs.nodePackages.localtunnel ];
               text = ''
                 ${getExe packages.stop}
                 ${getExe packages.prod} &
-                lt -s 'elibrary-itpd' -p '5000' &
+                lt -s 'elibrary-itpd' -p ${portElibrary} &
               '';
               description = ''run and expose site'';
             };
@@ -82,8 +84,8 @@
             stop = {
               runtimeInputs = [ pkgs.lsof ];
               text = ''
-                kill -9 $(lsof -t -i:5000) || true
-                kill -9 $(lsof -t -i:5001) || true
+                kill -9 $(lsof -t -i:${portElibrary}) || true
+                kill -9 $(lsof -t -i:${portFront}) || true
               '';
               description = ''stop dev servers'';
             };
