@@ -6,6 +6,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ErrorPage } from "./error-page.tsx";
 import CssBaseline from '@mui/material/CssBaseline';
+import { BookInfoPage } from "./components/BookInfoPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
   {
     path: "/book/:id/read",
     element: <BookPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/book/:id",
+    element: <BookInfoPage />,
     errorElement: <ErrorPage />,
   },
 ]);
