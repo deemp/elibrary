@@ -6,21 +6,25 @@ import { useEffect, useState } from "react";
 import { Book } from "../models/book";
 import cover_url from "../assets/book_cover.png";
 
-function Row({ title, content }: { title: string | undefined, content: string | undefined }) {
+function Row({
+  title,
+  content,
+}: {
+  title: string | undefined;
+  content: string | undefined;
+}) {
   return (
     <>
-      <Grid item xs={2}>
-        <Typography variant="h6" component="div">
-          {title}
+      <Grid item xs={4} md={2}>
+        <Typography sx={{ fontWeight: "bold" }} variant="h6" component="div">
+          {title}:
         </Typography>
       </Grid>
-      <Grid item xs={10}>
-        <Typography component="div">
-          {content}
-        </Typography>
+      <Grid item xs={8} md={10}>
+        <Typography component="div">{content}</Typography>
       </Grid>
     </>
-  )
+  );
 }
 
 export function BookInfoPage() {
@@ -34,38 +38,18 @@ export function BookInfoPage() {
       fetch(url, {
         method: "POST",
         headers: new Headers({ "content-type": "application/json" }),
-        body: JSON.stringify({ bisac: "", lc: "", filter: "id", filter_input: `${bookId}` }),
+        body: JSON.stringify({
+          bisac: "",
+          lc: "",
+          filter: "id",
+          filter_input: `${bookId}`,
+        }),
       })
         .then((r) => r.json())
-        .then((r: {books: Book[]}) => {
+        .then((r: { books: Book[] }) => {
           setBook(r.books[0]);
         });
-    }, [setBook, url]);
-
-    function Row({
-      title,
-      content,
-    }: {
-      title: string | undefined;
-      content: string | undefined;
-    }) {
-      return (
-        <>
-          <Grid item xs={4} md={2}>
-            <Typography
-              sx={{ fontWeight: "bold" }}
-              variant="h6"
-              component="div"
-            >
-              {title}:
-            </Typography>
-          </Grid>
-          <Grid item xs={8} md={10}>
-            <Typography component="div">{content}</Typography>
-          </Grid>
-        </>
-      );
-    }
+    }, [setBook, url, bookId]);
 
     const base = (
       <Base
