@@ -35,7 +35,7 @@ export function BookInfoPage() {
       return (
         <>
           <Grid item xs={4} md={2}>
-            <Typography variant="p" component="div">
+            <Typography sx={{ fontWeight: "bold" }} variant="p" component="div">
               {title}:
             </Typography>
           </Grid>
