@@ -64,7 +64,7 @@ export function Search() {
 
   const url = `${import.meta.env.VITE_API_PREFIX}/search`;
 
-  const setBisacLc = useCallback((r: { bisac: Map<string, string[]>, lc: Map<string, string[]> }) => {
+  const setBisacLcOptions = useCallback((r: { bisac: Map<string, string[]>, lc: Map<string, string[]> }) => {
     if (bisac != "" && lc == "") {
       setBisacOptions(Array.from(r.bisac.keys()));
       setLcOptions(r.bisac.get(bisac) || [])
@@ -94,9 +94,9 @@ export function Search() {
       })
       .then((r: GETResponse) => {
         setFiltersOptions(r.filters);
-        setBisacLc({ bisac: r.bisac, lc: r.lc })
+        setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
       });
-  }, [url, setFiltersOptions, bisac, lc, setBisacOptions, setLcOptions, setBisacLc]);
+  }, [url, setFiltersOptions, bisac, lc, setBisacOptions, setLcOptions, setBisacLcOptions]);
 
   const search = useCallback(() => {
     fetch(url, {
@@ -114,9 +114,16 @@ export function Search() {
       })
       .then((r: POSTResponse) => {
         setBooks(r.books);
-        setBisacLc({ bisac: r.bisac, lc: r.lc })
+        setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
+        setFilterInputOptions(r.books.map(book => {
+          if (filter in book) {
+            return `${book[filter as keyof typeof book]}`
+          } else {
+            return ""
+          }
+        }))
       });
-  }, [url, setBooks, lc, bisac, filterInput, filter, setBisacLc])
+  }, [url, setBooks, lc, bisac, filterInput, filter, setBisacLcOptions])
 
   useEffect(() => {
     search()
