@@ -1,16 +1,16 @@
 export interface Book {
   bisac: string;
-  lc: string
+  lc: string;
   publisher: string;
   year: number;
   book_id: number;
   authors: string;
   title: string;
-  imprint_publisher: string
+  imprint_publisher: string;
   isbn: number;
   esbn: number;
   oclc: number;
-  lcc: string
-  dewey: number
+  lcc: string;
+  dewey: number;
   format: string;
 }
