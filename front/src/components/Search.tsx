@@ -129,27 +129,12 @@ export function Search() {
     search()
   }, [url, setFiltersOptions, setBooks, lc, bisac, filterInput, filter, search]);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    fetch(url, {
-      method: "POST",
-      headers: new Headers({ "content-type": "application/json" }),
-      body: JSON.stringify({ filter, filter_input: filterInput, bisac, lc }),
-    })
-      .then((r) => r.json())
-      .then((r: Book[]) => {
-        setBooks([...r]);
-      });
-  };
-
-
-  const filtersHeight = 180
+  const filtersHeight = 150
   return (
     <>
       <Grid container rowSpacing={1} marginTop={appbar.height} height={'100%'} paddingTop={1}>
         <Grid item xs={12} height={filtersHeight}>
-          <Grid container rowSpacing={1}>
+          <Grid container rowSpacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={0}>
                 <Grid item xs={6}>
@@ -168,15 +153,6 @@ export function Search() {
                 <Grid item xs={9}>
                   <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filterInputOptions} setter={setFilterInput}></SearchField>
                 </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container justifyContent={'center'}>
-                <SearchButton
-                  setBooks={setBooks}
-                  url={url}
-                  handleOnClick={handleSearch}
-                />
               </Grid>
             </Grid>
           </Grid>
