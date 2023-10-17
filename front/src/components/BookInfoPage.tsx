@@ -35,7 +35,11 @@ export function BookInfoPage() {
       return (
         <>
           <Grid item xs={4} md={2}>
-            <Typography sx={{ fontWeight: "bold" }} variant="p" component="div">
+            <Typography
+              sx={{ fontWeight: "bold" }}
+              variant="h6"
+              component="div"
+            >
               {title}:
             </Typography>
           </Grid>
@@ -51,8 +55,13 @@ export function BookInfoPage() {
         title="Info"
         user={{ isAuthenticated: true }}
         content={
-          <Container maxWidth="lg">
-            <Box sx={{ display: "flex" }}>
+          <Container>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
               <img
                 style={{ height: "calc(100vh * 3/4)", margin: "1.5rem" }}
                 src={cover_url}
