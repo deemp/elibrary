@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from flask import Blueprint, request, jsonify, render_template
 from .models import Book
 from . import db
@@ -18,6 +19,14 @@ views = Blueprint(
 # @jwt_required
 def home():
     return render_template("index.html")
+
+
+@dataclass
+class SearchPostRequest(object):
+    bisac: str
+    lc: str
+    filter: str
+    filter_input: str
 
 
 # FIXME use pagination
@@ -44,19 +53,15 @@ def search():
 
     if request.method == "POST":
         books = []
-        filters_all = filters + ["bisac" "lc"]
-        if arg_search_input := request.json.get("filter_input"):
-            if arg_search_input:
-                filter = request.json.get("filter")
+        req = SearchPostRequest(**request.json)
+        if req.filter in filters:
+            filter_attr = Book.__dict__[req.filter]
 
-                # FIXME SQL injection
-                search_input = f"%{arg_search_input}%"
-
-                if filter in filters_all:
-                    filter_attr = Book.__dict__[filter]
-                    books = Book.query.filter(filter_attr.like(search_input)).all()
-                else:
-                    books = Book.query.all()
+            books = Book.query.filter(
+                filter_attr.like(f"%{req.filter_input}%"),
+                Book.bisac.like(f"%{req.bisac}%"),
+                Book.lc.like(f"%{req.lc}%"),
+            ).all()
         else:
             books = Book.query.all()
         return jsonify(books)
