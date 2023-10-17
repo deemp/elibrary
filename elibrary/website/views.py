@@ -36,20 +36,23 @@ class SearchPostRequest(object):
 def search():
     filters = ["publisher", "year", "authors", "title", "isbn", "esbn", "format"]
 
+    def getDict(books, attr1, attr2):
+        ret = {}
+        for book in books:
+            if (attr := book.__dict__[attr1]) not in ret.keys():
+                ret[attr] = set()
+            ret[attr].add(book.__dict__[attr2])
+
+        for key in ret:
+            ret[key] = list(ret[key])
+        return ret
+
     if request.method == "GET":
-        bisac = {}
-        other = filters
-        for book in Book.query.all():
-            if book.bisac not in bisac.keys():
-                bisac[book.bisac] = set()
-            bisac[book.bisac].add(book.lc)
+        books = Book.query.all()
+        bisac = getDict(books, "bisac", "lc")
+        lc = getDict(books, "lc", "bisac")
 
-        for key in bisac:
-            bisac[key] = list(bisac[key])
-
-        result = {"bisac": bisac, "other": other}
-
-        return result
+        return {"bisac": bisac, "lc": lc, "filters": filters}
 
     if request.method == "POST":
         books = []
@@ -64,4 +67,7 @@ def search():
             ).all()
         else:
             books = Book.query.all()
-        return jsonify(books)
+
+        bisac = getDict(books, "bisac", "lc")
+        lc = getDict(books, "lc", "bisac")
+        return jsonify({"books": books, "bisac": bisac, "lc": lc})
