@@ -31,25 +31,19 @@ export function BookInfoPage() {
   const { id } = useParams();
   if (id) {
     const bookId = Number.parseInt(id);
-    const url = `${import.meta.env.VITE_API_PREFIX}/search`;
+    const url = `${import.meta.env.VITE_API_PREFIX}/search/${bookId}`;
     const [book, setBook] = useState<Book | undefined>();
 
     useEffect(() => {
       fetch(url, {
-        method: "POST",
+        method: "GET",
         headers: new Headers({ "content-type": "application/json" }),
-        body: JSON.stringify({
-          bisac: "",
-          lc: "",
-          filter: "id",
-          filter_input: `${bookId}`,
-        }),
       })
         .then((r) => r.json())
-        .then((r: { books: Book[] }) => {
-          setBook(r.books[0]);
+        .then((r: Book | undefined) => {
+          setBook(r);
         });
-    }, [setBook, url, bookId]);
+    }, [setBook, url]);
 
     const base = (
       <Base
