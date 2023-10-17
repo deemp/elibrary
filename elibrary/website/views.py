@@ -71,3 +71,11 @@ def search():
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")
         return jsonify({"books": books, "bisac": bisac, "lc": lc})
+
+
+# FIXME use pagination
+@views.route("/search/<int:book_id>", methods=["GET"])
+# FIXME enable JWT authentication
+# @jwt_required
+def search_by_id(book_id):
+    return jsonify(Book.query.filter(Book.book_id == book_id).first())

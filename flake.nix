@@ -1,11 +1,5 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/bd9b686c0168041aea600222be0805a0de6e6ab8";
-    flake-utils.url = "github:numtide/flake-utils/ff7b65b44d01cf9ba6a71320833626af21126384";
-    flake-compat = {
-      url = "github:edolstra/flake-compat/35bb57c0c8d8b62bbfd284272c928ceb64ddbde9";
-      flake = false;
-    };
     flakes.url = "github:deemp/flakes/";
   };
   outputs = inputs: inputs.flakes.makeFlake
