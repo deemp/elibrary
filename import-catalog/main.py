@@ -6,6 +6,7 @@ from contextlib import closing
 import argparse
 from dotenv import dotenv_values
 import tempfile
+from pathlib import Path
 
 
 class obj(object):
@@ -58,10 +59,12 @@ def run():
         with open(args.sql, "w") as f:
             for line in conn.iterdump():
                 f.write(f"{line}\n")
-
+    
+    # create a directory for the database if it doesn't exist
+    Path("instance").mkdir(exist_ok=True, parents=True)
     # import data from xlsx into a database
     with closing(sqlite3.connect(f"instance/{config.DB_NAME}")) as conn:
         wb = pd.read_excel(args.xlsx, sheet_name=args.sheet)
-        conn.execute('drop table if exists book;')
+        conn.execute("drop table if exists book;")
         wb.to_sql(name=args.table, con=conn, index=True)
         conn.commit()
