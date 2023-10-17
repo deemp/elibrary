@@ -3,7 +3,6 @@ import "../App.css";
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { BookTable } from "./Table";
 import React, { useCallback, useEffect, useState } from "react";
-import { SearchButton } from "./SearchButton";
 import * as appbar from '../models/appbar'
 
 export interface GETResponse {
@@ -38,7 +37,7 @@ function SearchField({ isLeft, label, id, options, colWidth, setter }: {
               },
             }}
           />}
-        onInputChange={(event, value) => {
+        onInputChange={(_event, value) => {
           setter(value || "")
         }}
       />
