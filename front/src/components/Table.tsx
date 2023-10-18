@@ -83,13 +83,13 @@ const columns: ColumnData[] = [
     numeric: false,
   },
   {
-    width: 100,
+    width: 150,
     label: 'ISBN',
     dataKey: 'isbn',
     numeric: true,
   },
   {
-    width: 60,
+    width: 100,
     label: 'Format',
     dataKey: 'format',
     numeric: false,
