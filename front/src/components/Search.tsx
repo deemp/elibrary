@@ -35,6 +35,7 @@ function SearchField({ isLeft, label, id, options, colWidth, setter }: {
                 borderRadius: isLeft ? "6px 0px 0px 6px" : "0px 6px 6px 0px",
               },
             }}
+            size="small"
           />}
         onInputChange={(_event, value) => {
           setter(value || "")
@@ -127,11 +128,11 @@ export function Search() {
     search()
   }, [url, setFilterOptions, setBooks, lc, bisac, filterInput, filter, search]);
 
-  const filtersHeight = 150
+  const filtersHeight = 104
   return (
     <>
-      <Grid container rowSpacing={1} marginTop={appbar.height} height={'100%'} paddingTop={1}>
-        <Grid item xs={12} height={filtersHeight}>
+      <Grid container rowSpacing={0} marginTop={appbar.height} height={'100%'} paddingTop={1}>
+        <Grid item xs={12} height={filtersHeight} paddingTop={1}>
           <Grid container rowSpacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={0}>
@@ -155,7 +156,7 @@ export function Search() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`}>
+        <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`} paddingTop={2}>
           <BookTable rows={books} />
         </Grid>
       </Grid>
