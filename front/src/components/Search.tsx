@@ -26,7 +26,6 @@ function SearchField({ isLeft, label, id, options, colWidth, setter }: {
     <Grid item xs={colWidth}>
       <Autocomplete
         disablePortal
-        freeSolo
         id={id}
         options={options}
         renderInput={(params) =>
