@@ -65,6 +65,11 @@ def search():
                 Book.bisac.like(f"%{req.bisac}%"),
                 Book.lc.like(f"%{req.lc}%"),
             ).all()
+        elif not req.filter:
+            books = Book.query.filter(
+                Book.bisac.like(f"%{req.bisac}%"),
+                Book.lc.like(f"%{req.lc}%"),
+            ).all()
         else:
             books = Book.query.all()
 
