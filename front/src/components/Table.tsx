@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { TableVirtuoso, TableComponents } from 'react-virtuoso';
-import { Book } from '../models/book';
+import { Book, bookPretty } from '../models/book';
 import { Link } from 'react-router-dom';
 
 export interface BookRow {
@@ -51,50 +51,48 @@ interface ColumnData {
   width: number;
 }
 
+const columnPretty = new Map([
+  ...bookPretty.entries(),
+  ...(new Map([['read', 'Read'], ['info', 'Info']]))
+])
+
 const columns: ColumnData[] = [
   {
     width: 50,
-    label: 'Read',
     dataKey: 'read',
     numeric: false,
   },
   {
     width: 50,
-    label: 'Info',
     dataKey: 'info',
     numeric: false,
   },
   {
     width: 100,
-    label: 'Publisher',
     dataKey: 'publisher',
     numeric: false,
   },
   {
     width: 50,
-    label: 'Year',
     dataKey: 'year',
     numeric: true,
   },
   {
     width: 200,
-    label: 'Title',
     dataKey: 'title',
     numeric: false,
   },
   {
     width: 150,
-    label: 'ISBN',
     dataKey: 'isbn',
     numeric: true,
   },
   {
     width: 100,
-    label: 'Format',
     dataKey: 'format',
     numeric: false,
   },
-];
+].map(x => { return { ...x, label: columnPretty.get(x.dataKey) || '' } as ColumnData });
 
 const VirtuosoTableComponents: TableComponents<BookRow> = {
   Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
