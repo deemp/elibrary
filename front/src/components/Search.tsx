@@ -1,4 +1,4 @@
-import { Book } from "../models/book";
+import { Book, bookPretty, bookPrettyInverse } from "../models/book";
 import "../App.css";
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { BookTable } from "./Table";
@@ -49,7 +49,7 @@ export function Search() {
 
   const [books, setBooks] = useState<Book[]>([]);
 
-  const [filtersOptions, setFiltersOptions] = useState<string[]>([]);
+  const [filtersOptions, setFilterOptions] = useState<string[]>([]);
   const [filter, setFilter] = useState<string>("");
 
   const [filterInputOptions, setFilterInputOptions] = useState<string[]>([]);
@@ -92,10 +92,10 @@ export function Search() {
         }
       })
       .then((r: GETResponse) => {
-        setFiltersOptions(r.filters);
+        setFilterOptions(r.filters.map(filter => bookPretty.get(filter) || ''))
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
       });
-  }, [url, setFiltersOptions, bisac, lc, setBisacOptions, setLcOptions, setBisacLcOptions]);
+  }, [url, setFilterOptions, bisac, lc, setBisacOptions, setLcOptions, setBisacLcOptions]);
 
   const search = useCallback(() => {
     fetch(url, {
@@ -120,13 +120,13 @@ export function Search() {
           } else {
             return ""
           }
-        }))
+        }).filter(x => x !== ""))
       });
   }, [url, setBooks, lc, bisac, filterInput, filter, setBisacLcOptions])
 
   useEffect(() => {
     search()
-  }, [url, setFiltersOptions, setBooks, lc, bisac, filterInput, filter, search]);
+  }, [url, setFilterOptions, setBooks, lc, bisac, filterInput, filter, search]);
 
   const filtersHeight = 150
   return (
@@ -137,17 +137,17 @@ export function Search() {
             <Grid item xs={12}>
               <Grid container spacing={0}>
                 <Grid item xs={6}>
-                  <SearchField isLeft={true} label={"bisac"} id={"bisac"} options={bisacOptions} setter={setBisac}></SearchField>
+                  <SearchField isLeft={true} label={bookPretty.get('bisac') || ''} id={"bisac"} options={bisacOptions} setter={setBisac}></SearchField>
                 </Grid>
                 <Grid item xs={6}>
-                  <SearchField isLeft={false} label={"lc"} id={"lc"} options={lcOptions} setter={setLc}></SearchField>
+                  <SearchField isLeft={false} label={bookPretty.get('lc') || ''} id={"lc"} options={lcOptions} setter={setLc}></SearchField>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={0}>
                 <Grid item xs={3}>
-                  <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filtersOptions} setter={setFilter}></SearchField>
+                  <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filtersOptions} setter={x => setFilter(bookPrettyInverse.get(x as string) || '')}></SearchField>
                 </Grid>
                 <Grid item xs={9}>
                   <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filterInputOptions} setter={setFilterInput}></SearchField>
