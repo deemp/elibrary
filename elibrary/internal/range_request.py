@@ -1,3 +1,6 @@
+# Adopted from
+# https://stackoverflow.com/a/71309270/11790403
+
 import os
 from typing import BinaryIO
 
