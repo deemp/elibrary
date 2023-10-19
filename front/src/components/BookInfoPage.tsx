@@ -1,10 +1,19 @@
 import { Link, useParams } from "react-router-dom";
 import { Base } from "./Base";
 import { NavLink } from "./NavLink";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { Book } from "../models/book";
 import cover_url from "../assets/book_cover.png";
+import * as appbar from "../models/appbar";
 
 function Row({
   title,
@@ -15,12 +24,12 @@ function Row({
 }) {
   return (
     <>
-      <Grid item xs={4} md={2}>
+      <Grid item xs={4} sm={6}>
         <Typography sx={{ fontWeight: "bold" }} variant="h6" component="div">
           {title}:
         </Typography>
       </Grid>
-      <Grid item xs={8} md={10}>
+      <Grid item xs={8} sm={6}>
         <Typography component="div">{content}</Typography>
       </Grid>
     </>
@@ -50,20 +59,27 @@ export function BookInfoPage() {
         title="Info"
         user={{ isAuthenticated: true }}
         content={
-          <Container>
+          <Container fixed>
             <Box
               sx={{
+                backgroundColor: "white",
                 display: "flex",
-                flexDirection: { xs: "column", md: "row" },
+                flexDirection: { xs: "column", sm: "row" },
               }}
+              marginTop={appbar.height}
             >
-              <img
-                style={{ height: "calc(100vh * 3/4)", margin: "1.5rem" }}
-                src={cover_url}
-                alt={`Image of ${book?.title}`}
-                loading="lazy"
-              />
-              <Grid container spacing={2} paddingTop={2}>
+              <Card
+                sx={{
+                  width: { sm: "700px" },
+                  height: "auto",
+                  marginTop: { sm: "3rem" },
+                  marginRight: { sm: "2rem" },
+                }}
+              >
+                {/* TODO replace with cover url from book object */}
+                <CardMedia component="img" src={cover_url} />
+              </Card>
+              <Grid container spacing={2} paddingTop={6}>
                 <Grid item xs={12}>
                   <Link to={`/book/${bookId}/read`}>
                     <Button variant="outlined">READ</Button>
