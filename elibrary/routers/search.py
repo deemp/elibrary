@@ -65,7 +65,7 @@ def search_post(request: SearchPOSTRequest) -> SearchPostResponse:
                 select(Book).where(
                     filter_attr.contains(request.filter_input),
                     Book.bisac.contains(request.bisac),
-                    Book.lc.like(request.lc),
+                    Book.lc.contains(request.lc),
                 )
             ).all()
         elif not request.filter:
