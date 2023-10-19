@@ -40,7 +40,7 @@ export function BookInfoPage() {
   const { id } = useParams();
   if (id) {
     const bookId = Number.parseInt(id);
-    const url = `${import.meta.env.VITE_API_PREFIX}/search/${bookId}`;
+    const url = `${import.meta.env.VITE_API_PREFIX}/book/${bookId}`;
     const [book, setBook] = useState<Book | undefined>();
 
     useEffect(() => {
