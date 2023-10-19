@@ -12,21 +12,17 @@ import-catalog = "import-catalog.main:run"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
-flask = "^2.3.0"
-flask-sqlalchemy = "^3.1.1"
-flask-login = "^0.6.2"
-werkzeug = "2.3.0"
-flask-api = "^3.1"
-flask-rangerequest = "^0.0.2"
 pandas = "^2.1.1"
-flask-jwt-extended = "^4.5.3"
-flask-cors = "^4.0.0"
 python-dotenv = "^1.0.0"
 openpyxl = "^3.1.2"
+fastapi = "^0.104.0"
+sqlmodel = "^0.0.8"
+baize = "^0.20.5"
 
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.9.1"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
 
 [build-system]
 requires = ["poetry-core"]
