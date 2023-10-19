@@ -12,6 +12,7 @@
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           portElibrary = "5000";
           portFront = "5001";
+          runElibrary = "poetry run uvicorn --port ${portElibrary} elibrary.main:app --reload";
           packages = mkShellApps {
             prod-build-pdfjs = {
               runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
@@ -27,7 +28,7 @@
             prod-build-front = {
               runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
               text =
-                let dist = "elibrary/website/static/front"; in
+                let dist = "elibrary/static/front"; in
                 ''
                   ${getExe packages.prod-build-pdfjs}
                   (cd front && npm run build)
@@ -54,7 +55,7 @@
                 ${getExe packages.prod-build-front}
                 ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
-                poetry run elibrary
+                ${runElibrary}
               '';
               description = ''run prod site at localhost:${portElibrary}'';
             };
@@ -63,7 +64,7 @@
               text = ''
                 ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
-                poetry run elibrary &
+                ${runElibrary} &
                 (cd front && npm run dev)
               '';
               description = "run dev site at localhost:${portFront}";
