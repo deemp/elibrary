@@ -7,7 +7,7 @@
       inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs; };
       perSystem = { inputs, system }:
         let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          pkgs = import inputs.nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           portElibrary = "5000";
@@ -76,7 +76,17 @@
                 ${getExe packages.prod} &
                 lt -s 'elibrary-itpd' -p ${portElibrary} &
               '';
-              description = ''run and expose site'';
+              description = ''run and expose site via localtunnel'';
+            };
+            release-ngrok = {
+              runtimeInputs = [ pkgs.nodePackages.localtunnel ];
+              text = ''
+                ${getExe packages.stop}
+                sops -d elibrary/enc.auth.env > elibrary/auth.env
+                ${getExe packages.prod} &
+                ngrok http --domain recently-wanted-elf.ngrok-free.app ${portElibrary} &
+              '';
+              description = ''run and expose site via ngrok'';
             };
 
             stop = {
@@ -101,13 +111,16 @@
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
               pkgs.curl
-              pkgs.jq
               pkgs.sqlite
               pkgs.poetry
               pkgs.nodejs
               pkgs.nodePackages.localtunnel
               pkgs.rnix-lsp
               pkgs.nixpkgs-fmt
+              pkgs.openssl
+              pkgs.gnupg
+              pkgs.sops
+              pkgs.ngrok
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
