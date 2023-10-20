@@ -4,3 +4,4 @@ __pycache__/
 elibrary/website/static/pdfjs
 elibrary/website/static/front
 **/*.tmp.env
+auth.env
