@@ -101,13 +101,15 @@
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
               pkgs.curl
-              pkgs.jq
               pkgs.sqlite
               pkgs.poetry
               pkgs.nodejs
               pkgs.nodePackages.localtunnel
               pkgs.rnix-lsp
               pkgs.nixpkgs-fmt
+              pkgs.openssl
+              pkgs.gnupg
+              pkgs.sops
               pkgs.ngrok
             ]) ++ mkCommands "scripts" [
               packages.stop
