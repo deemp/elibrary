@@ -7,7 +7,7 @@
       inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs; };
       perSystem = { inputs, system }:
         let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          pkgs = import inputs.nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           portElibrary = "5000";
@@ -108,6 +108,7 @@
               pkgs.nodePackages.localtunnel
               pkgs.rnix-lsp
               pkgs.nixpkgs-fmt
+              pkgs.ngrok
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
