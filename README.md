@@ -58,6 +58,28 @@
 
 - main package manager: [nix](https://nixos.org/manual/nix/unstable/introduction)
 
+### Security
+
+- [sops](https://github.com/getsops/sops)
+- [gnupg](https://www.gnupg.org/index.html)
+
+1. Get both tools in a `devshell`:
+
+    ```console
+    nix develop
+    sops --version
+    gpg --version
+    ```
+
+1. The [elibrary/enc.auth.env](elibrary/enc.auth.env) file is encrypted via `sops`.
+    
+    - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` are for [Google Open ID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
+    - `SECRET_KEY` is for sessions
+
+1. The `sops` config is in [.sops.yaml](.sops.yaml).
+1. Access to the encoded file can be granted to other people ([link](https://dev.to/stack-labs/manage-your-secrets-in-git-with-sops-common-operations-118g)) by adding keys to `.sops.yaml`.
+1. Keys can be generated via `gnupg` ([link](https://blog.gitguardian.com/a-comprehensive-guide-to-sops/#2-sops-with-pgp-keys)).
+
 ### Back
 
 - package manager: [poetry](https://python-poetry.org/docs/)
