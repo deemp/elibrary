@@ -76,7 +76,16 @@
                 ${getExe packages.prod} &
                 lt -s 'elibrary-itpd' -p ${portElibrary} &
               '';
-              description = ''run and expose site'';
+              description = ''run and expose site via localtunnel'';
+            };
+            release-ngrok = {
+              runtimeInputs = [ pkgs.nodePackages.localtunnel ];
+              text = ''
+                ${getExe packages.stop}
+                ${getExe packages.prod} &
+                ngrok http --domain recently-wanted-elf.ngrok-free.app ${portElibrary} &
+              '';
+              description = ''run and expose site via ngrok'';
             };
 
             stop = {
