@@ -8,6 +8,7 @@ import {
   CardMedia,
   Container,
   Grid,
+  Stack,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -24,13 +25,15 @@ function Row({
 }) {
   return (
     <>
-      <Grid item xs={4} sm={6}>
-        <Typography sx={{ fontWeight: "bold" }} variant="h6" component="div">
-          {title}:
-        </Typography>
-      </Grid>
-      <Grid item xs={8} sm={6}>
-        <Typography component="div">{content}</Typography>
+      <Grid container>
+        <Grid item xs={4} sm={6}>
+          <Typography sx={{ fontWeight: "bold" }} variant="h6" component="div">
+            {title}:
+          </Typography>
+        </Grid>
+        <Grid item xs={8} sm={6}>
+          <Typography component="div">{content}</Typography>
+        </Grid>
       </Grid>
     </>
   );
@@ -59,32 +62,36 @@ export function BookInfoPage() {
         title="Info"
         user={{ isAuthenticated: true }}
         content={
-          <Container fixed>
+          <Container sx={{}} maxWidth="lg">
             <Box
               sx={{
                 backgroundColor: "white",
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row" },
+                minHeight: "100vh",
               }}
               marginTop={appbar.height}
+              paddingTop={"0.5rem"}
             >
               <Card
                 sx={{
-                  width: { sm: "700px" },
-                  height: "auto",
-                  marginTop: { sm: "3rem" },
-                  marginRight: { sm: "2rem" },
+                  height: "fit-content",
+                  margin: { sm: "3rem", md: "0" },
+                  marginRight: { md: "2rem" },
                 }}
               >
                 {/* TODO replace with cover url from book object */}
                 <CardMedia component="img" src={cover_url} />
               </Card>
-              <Grid container spacing={2} paddingTop={6}>
-                <Grid item xs={12}>
-                  <Link to={`/book/${bookId}/read`}>
-                    <Button variant="outlined">READ</Button>
-                  </Link>
-                </Grid>
+              <Stack spacing={3}>
+                <Link to={`/book/${bookId}/read`}>
+                  <Button
+                    sx={{ marginTop: { xs: "2rem", md: "0" } }}
+                    variant="outlined"
+                  >
+                    READ
+                  </Button>
+                </Link>
                 <Row title="BISAC" content={`${book?.bisac}`}></Row>
                 <Row title="LC" content={`${book?.lc}`}></Row>
                 <Row title="Publisher" content={`${book?.publisher}`}></Row>
@@ -100,7 +107,7 @@ export function BookInfoPage() {
                 <Row title="OCLC" content={`${book?.oclc}`}></Row>
                 <Row title="LCC" content={`${book?.lcc}`}></Row>
                 <Row title="Dewey" content={`${book?.dewey}`}></Row>
-              </Grid>
+              </Stack>
             </Box>
           </Container>
         }
