@@ -7,6 +7,7 @@ from .routers import auth
 from starlette.middleware.sessions import SessionMiddleware
 from . import env
 
+
 # https://fastapi.tiangolo.com/advanced/events/
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -17,8 +18,9 @@ async def lifespan(_: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 if env.ENABLE_AUTH:
+    from . import auth_secrets
     # https://stackoverflow.com/a/73924330/11790403
-    app.add_middleware(SessionMiddleware, secret_key=env.SECRET_KEY)
+    app.add_middleware(SessionMiddleware, secret_key=auth_secrets.SECRET_KEY)
     app.include_router(auth.router)
 
 # https://fastapi.tiangolo.com/tutorial/static-files/
