@@ -2,20 +2,26 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from .internal.db import create_db_and_tables
 from contextlib import asynccontextmanager
-from .routers import book, root, search
+from .routers import book, root, search, auth
+from .routers import auth
+from starlette.middleware.sessions import SessionMiddleware
+from . import env
 
 # https://fastapi.tiangolo.com/advanced/events/
-
-
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     create_db_and_tables()
     yield
 
 
-# https://fastapi.tiangolo.com/tutorial/static-files/
-
 app = FastAPI(lifespan=lifespan)
+
+if env.ENABLE_AUTH:
+    # https://stackoverflow.com/a/73924330/11790403
+    app.add_middleware(SessionMiddleware, secret_key=env.SECRET_KEY)
+    app.include_router(auth.router)
+
+# https://fastapi.tiangolo.com/tutorial/static-files/
 app.mount("/static", StaticFiles(directory="elibrary/static/front/"), name="static")
 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
