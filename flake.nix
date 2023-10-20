@@ -82,6 +82,7 @@
               runtimeInputs = [ pkgs.nodePackages.localtunnel ];
               text = ''
                 ${getExe packages.stop}
+                sops -d elibrary/enc.auth.env > elibrary/auth.env
                 ${getExe packages.prod} &
                 ngrok http --domain recently-wanted-elf.ngrok-free.app ${portElibrary} &
               '';
