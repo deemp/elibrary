@@ -62,53 +62,64 @@ export function BookInfoPage() {
         title="Info"
         user={{ isAuthenticated: true }}
         content={
-          <Container sx={{}} maxWidth="lg">
-            <Box
-              sx={{
-                backgroundColor: "white",
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                minHeight: "100vh",
-              }}
+          <Container maxWidth="lg">
+            <Stack
+              alignItems={"center"}
               marginTop={appbar.height}
               paddingTop={"0.5rem"}
             >
-              <Card
+              <Link to={`/book/${bookId}/read`}>
+                <Button
+                  sx={{
+                    marginTop: { xs: "1rem", md: "0" },
+                    padding: "1rem 5rem",
+                  }}
+                  variant="outlined"
+                >
+                  READ
+                </Button>
+              </Link>
+              <Box
                 sx={{
-                  height: "fit-content",
-                  margin: { sm: "3rem", md: "0" },
-                  marginRight: { md: "2rem" },
+                  backgroundColor: "white",
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  minHeight: `calc(100vh - calc(${appbar.height} * 2.15))`,
                 }}
+                paddingTop={"1rem"}
               >
-                {/* TODO replace with cover url from book object */}
-                <CardMedia component="img" src={cover_url} />
-              </Card>
-              <Stack spacing={3}>
-                <Link to={`/book/${bookId}/read`}>
-                  <Button
-                    sx={{ marginTop: { xs: "2rem", md: "0" } }}
-                    variant="outlined"
-                  >
-                    READ
-                  </Button>
-                </Link>
-                <Row title="BISAC" content={`${book?.bisac}`}></Row>
-                <Row title="LC" content={`${book?.lc}`}></Row>
-                <Row title="Publisher" content={`${book?.publisher}`}></Row>
-                <Row title="Year" content={`${book?.year}`}></Row>
-                <Row title="Author(s)" content={`${book?.authors}`}></Row>
-                <Row title="Title" content={`${book?.title}`}></Row>
-                <Row
-                  title="Imprint publisher"
-                  content={`${book?.imprint_publisher}`}
-                ></Row>
-                <Row title="ISBN" content={`${book?.isbn}`}></Row>
-                <Row title="ESBN" content={`${book?.esbn}`}></Row>
-                <Row title="OCLC" content={`${book?.oclc}`}></Row>
-                <Row title="LCC" content={`${book?.lcc}`}></Row>
-                <Row title="Dewey" content={`${book?.dewey}`}></Row>
-              </Stack>
-            </Box>
+                <Card
+                  sx={{
+                    height: "fit-content",
+                    margin: { sm: "3rem", md: "0" },
+                    marginRight: { md: "2rem" },
+                  }}
+                >
+                  {/* TODO replace with cover url from book object */}
+                  <CardMedia component="img" src={cover_url} />
+                </Card>
+                <Stack
+                  sx={{ marginTop: { xs: "1.5rem", sm: "0" } }}
+                  spacing={3}
+                >
+                  <Row title="Title" content={`${book?.title}`}></Row>
+                  <Row title="Author(s)" content={`${book?.authors}`}></Row>
+                  <Row title="Publisher" content={`${book?.publisher}`}></Row>
+                  <Row title="Year" content={`${book?.year}`}></Row>
+                  <Row title="ISBN" content={`${book?.isbn}`}></Row>
+                  <Row title="ESBN" content={`${book?.esbn}`}></Row>
+                  <Row title="BISAC" content={`${book?.bisac}`}></Row>
+                  <Row title="LC" content={`${book?.lc}`}></Row>
+                  <Row
+                    title="Imprint publisher"
+                    content={`${book?.imprint_publisher}`}
+                  ></Row>
+                  <Row title="OCLC" content={`${book?.oclc}`}></Row>
+                  <Row title="LCC" content={`${book?.lcc}`}></Row>
+                  <Row title="Dewey" content={`${book?.dewey}`}></Row>
+                </Stack>
+              </Box>
+            </Stack>
           </Container>
         }
         nav={<NavLink text={"Search"} to={"/"} id={"search"} />}
