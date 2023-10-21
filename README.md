@@ -99,7 +99,7 @@
 1. Set the flag in [elibrary/.env](./elibrary/.env). 
     
     ```console
-    ENABLE_AUTH=true
+    ENABLE_AUTH="true"
     ```
 
 1. Expose via `localtunnel`.
