@@ -8,6 +8,7 @@ import {
   CardMedia,
   Container,
   Grid,
+  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -15,6 +16,8 @@ import { useEffect, useState } from "react";
 import { Book } from "../models/book";
 import cover_url from "../assets/book_cover.png";
 import * as appbar from "../models/appbar";
+import copy from "copy-to-clipboard";
+import { toast } from "react-toastify";
 
 function Row({
   title,
@@ -45,6 +48,7 @@ export function BookInfoPage() {
     const bookId = Number.parseInt(id);
     const url = `${import.meta.env.VITE_API_PREFIX}/book/${bookId}`;
     const [book, setBook] = useState<Book | undefined>();
+    const [reference, setReference] = useState<string>("");
 
     useEffect(() => {
       fetch(url, {
@@ -54,8 +58,17 @@ export function BookInfoPage() {
         .then((r) => r.json())
         .then((r: Book | undefined) => {
           setBook(r);
+          setReference(
+            `${r?.authors}.${r?.title}//${r?.authors}//${r?.publisher}.-${r?.year}.${r?.isbn}`
+          );
         });
     }, [setBook, url]);
+
+    const copyToClipboard = () => {
+      if (copy(reference)) {
+        toast.success("Copied to Clipboard");
+      }
+    };
 
     const base = (
       <Base
@@ -67,6 +80,9 @@ export function BookInfoPage() {
               alignItems={"center"}
               marginTop={appbar.height}
               paddingTop={"0.5rem"}
+              sx={{
+                minHeight: `calc(100vh - ${appbar.height})`,
+              }}
             >
               <Link to={`/book/${bookId}/read`}>
                 <Button
@@ -84,7 +100,6 @@ export function BookInfoPage() {
                   backgroundColor: "white",
                   display: "flex",
                   flexDirection: { xs: "column", sm: "row" },
-                  minHeight: `calc(100vh - calc(${appbar.height} * 2.15))`,
                 }}
                 paddingTop={"1rem"}
               >
@@ -92,7 +107,7 @@ export function BookInfoPage() {
                   sx={{
                     height: "fit-content",
                     margin: { sm: "3rem", md: "0" },
-                    marginRight: { md: "2rem" },
+                    marginRight: { md: "10rem" },
                   }}
                 >
                   {/* TODO replace with cover url from book object */}
@@ -118,6 +133,23 @@ export function BookInfoPage() {
                   <Row title="LCC" content={`${book?.lcc}`}></Row>
                   <Row title="Dewey" content={`${book?.dewey}`}></Row>
                 </Stack>
+              </Box>
+              <Box marginTop={3} alignSelf={"start"}>
+                <Paper elevation={24} sx={{ padding: "1rem" }}>
+                  <Stack direction={"row"} alignItems={"center"}>
+                    <Typography variant="body1">{reference}</Typography>
+                    <Button
+                      sx={{
+                        marginLeft: { xs: "1rem" },
+                        padding: "0.5rem 3rem",
+                      }}
+                      variant="outlined"
+                      onClick={copyToClipboard}
+                    >
+                      Copy Reference
+                    </Button>
+                  </Stack>
+                </Paper>
               </Box>
             </Stack>
           </Container>
