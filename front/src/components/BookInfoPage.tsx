@@ -2,14 +2,12 @@ import { Link, useParams } from "react-router-dom";
 import { Base } from "./Base";
 import { NavLink } from "./NavLink";
 import {
-  Box,
   Button,
   Card,
   CardMedia,
   Container,
   Grid,
   Paper,
-  Stack,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -27,18 +25,16 @@ function Row({
   content: string | undefined;
 }) {
   return (
-    <>
+    <Grid item xs={12}>
       <Grid container>
-        <Grid item xs={4} sm={6}>
-          <Typography sx={{ fontWeight: "bold" }} variant="h6" component="div">
-            {title}:
+        <Grid item xs={4} sm={2}><Typography>{title}</Typography></Grid>
+        <Grid item xs={8} sm={10}>
+          <Typography sx={{ fontWeight: 'bold' }}>
+            {content}
           </Typography>
         </Grid>
-        <Grid item xs={8} sm={6}>
-          <Typography component="div">{content}</Typography>
-        </Grid>
       </Grid>
-    </>
+    </Grid>
   );
 }
 
@@ -70,80 +66,62 @@ export function BookInfoPage() {
       }
     };
 
+    const elevation = 5
+
     const base = (
       <Base
         title="Info"
         user={{ isAuthenticated: true }}
         content={
           <Container maxWidth="lg">
-            <Stack
-              alignItems={"center"}
-              marginTop={appbar.height}
-              paddingTop={"0.5rem"}
-              sx={{
-                minHeight: `calc(100vh - ${appbar.height})`,
-              }}
-            >
-              <Link to={`/book/${bookId}/read`}>
-                <Button
-                  sx={{
-                    marginTop: { xs: "1rem", md: "0" },
-                    padding: "1rem 5rem",
-                  }}
-                  variant="outlined"
-                >
-                  READ
-                </Button>
-              </Link>
-              <Box
-                sx={{
-                  backgroundColor: "white",
-                  display: "flex",
-                  flexDirection: { xs: "column", sm: "row" },
-                }}
-                paddingTop={"1rem"}
-              >
-                <Card
-                  sx={{
-                    height: "fit-content",
-                    margin: { sm: "3rem", md: "0" },
-                    marginRight: { md: "10rem" },
-                  }}
-                >
-                  {/* TODO replace with cover url from book object */}
-                  <CardMedia component="img" src={cover_url} />
-                </Card>
-                <Stack
-                  sx={{ marginTop: { xs: "1.5rem", sm: "0" } }}
-                  spacing={3}
-                >
-                  {['title', 'authors', 'publisher', 'year', 'isbn', 'esbn', 'bisac', 'lc', 'imprint_publisher', 'oclc', 'lcc', 'dewey'].map(
-                    x => {
-                      if (book && x in book) {
-                        return <Row title={bookPretty.get(x)} content={`${book[x as keyof typeof book]}`} key={x}></Row>
-                      } else { return <></> }
-                    }
-                  )}
-                </Stack>
-              </Box>
-              <Box marginTop={3} alignSelf={"start"}>
-                <Paper elevation={24} sx={{ padding: "1rem" }}>
-                  <Stack direction={"row"} alignItems={"center"}>
-                    <Typography variant="body1">{reference}</Typography>
-                    <Button
-                      sx={{
-                        marginLeft: { xs: "1rem" },
-                        padding: "0.5rem 3rem",
-                      }}
-                      variant="outlined"
-                      onClick={copyToClipboard}
+            <Grid container rowSpacing={2} minHeight={`calc(100vh - ${appbar.height})`} marginTop={appbar.height}>
+              <Grid item xs={12} textAlign={'center'}>
+                <Link to={`/book/${bookId}/read`}>
+                  <Button variant="outlined" size='medium'>READ</Button>
+                </Link>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={8} md={9} lg={9}>
+                    <Grid container rowSpacing={1}>
+                      {['title', 'authors', 'publisher', 'year', 'isbn', 'esbn', 'bisac', 'lc', 'imprint_publisher', 'oclc', 'lcc', 'dewey'].map(
+                        x => {
+                          if (book && x in book) {
+                            return <Row title={bookPretty.get(x)} content={`${book[x as keyof typeof book]}`} key={x}></Row>
+                          } else { return <></> }
+                        }
+                      )}
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={3} lg={3}>
+                    <Card
+                      elevation={elevation}
                     >
-                      Copy Reference
-                    </Button>
-                  </Stack>
+                      {/* TODO replace with cover url from book object */}
+                      <CardMedia component="img" src={cover_url} />
+                    </Card>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper variant="outlined">
+                  <Grid container spacing={2} padding={'1rem'}>
+                    <Grid item xs={12} md={10}>
+                      <Typography variant="body1">{reference}</Typography>
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                      <Button
+                        size="medium"
+                        variant="outlined"
+                        onClick={copyToClipboard}
+                      >
+                        Copy Reference
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Paper>
-              </Box>
-            </Stack>
+              </Grid>
+            </Grid>
           </Container>
         }
         nav={<NavLink text={"Search"} to={"/"} id={"search"} />}
