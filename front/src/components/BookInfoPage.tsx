@@ -27,8 +27,8 @@ function Row({
   return (
     <Grid item xs={12}>
       <Grid container>
-        <Grid item xs={4} sm={2}><Typography>{title}</Typography></Grid>
-        <Grid item xs={8} sm={10}>
+        <Grid item xs={3} sm={3} md={2}><Typography>{title}</Typography></Grid>
+        <Grid item xs={9} sm={9} md={10}>
           <Typography sx={{ fontWeight: 'bold' }}>
             {content}
           </Typography>
@@ -82,6 +82,18 @@ export function BookInfoPage() {
               </Grid>
               <Grid item xs={12}>
                 <Grid container spacing={3}>
+                  <Grid item sm={4} md={3} lg={3}>
+                    <Grid container justifyContent={'center'}>
+                      <Grid item xs={8} sm={12}>
+                        <Card
+                          elevation={elevation}
+                        >
+                          {/* TODO replace with cover url from book object */}
+                          <CardMedia component="img" src={cover_url} />
+                        </Card>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                   <Grid item xs={12} sm={8} md={9} lg={9}>
                     <Grid container rowSpacing={1}>
                       {['title', 'authors', 'publisher', 'year', 'isbn', 'esbn', 'bisac', 'lc', 'imprint_publisher', 'oclc', 'lcc', 'dewey'].map(
@@ -92,14 +104,6 @@ export function BookInfoPage() {
                         }
                       )}
                     </Grid>
-                  </Grid>
-                  <Grid item xs={12} sm={4} md={3} lg={3}>
-                    <Card
-                      elevation={elevation}
-                    >
-                      {/* TODO replace with cover url from book object */}
-                      <CardMedia component="img" src={cover_url} />
-                    </Card>
                   </Grid>
                 </Grid>
               </Grid>
