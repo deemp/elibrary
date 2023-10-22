@@ -126,7 +126,7 @@ export function useElements() {
         <Grid container padding={1}>
           {terms.map((x) => {
             return (
-              <Grid item xs={12}>
+              <Grid item xs={12} key={x.name}>
                 <Grid container>
                   <Grid item xs={12}>
                     <Link href={x.link}>
