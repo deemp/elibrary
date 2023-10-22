@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Book } from "../models/book";
+import { Book, bookPretty } from "../models/book";
 import cover_url from "../assets/book_cover.png";
 import * as appbar from "../models/appbar";
 import copy from "copy-to-clipboard";
@@ -117,21 +117,13 @@ export function BookInfoPage() {
                   sx={{ marginTop: { xs: "1.5rem", sm: "0" } }}
                   spacing={3}
                 >
-                  <Row title="Title" content={`${book?.title}`}></Row>
-                  <Row title="Author(s)" content={`${book?.authors}`}></Row>
-                  <Row title="Publisher" content={`${book?.publisher}`}></Row>
-                  <Row title="Year" content={`${book?.year}`}></Row>
-                  <Row title="ISBN" content={`${book?.isbn}`}></Row>
-                  <Row title="ESBN" content={`${book?.esbn}`}></Row>
-                  <Row title="BISAC" content={`${book?.bisac}`}></Row>
-                  <Row title="LC" content={`${book?.lc}`}></Row>
-                  <Row
-                    title="Imprint publisher"
-                    content={`${book?.imprint_publisher}`}
-                  ></Row>
-                  <Row title="OCLC" content={`${book?.oclc}`}></Row>
-                  <Row title="LCC" content={`${book?.lcc}`}></Row>
-                  <Row title="Dewey" content={`${book?.dewey}`}></Row>
+                  {['title', 'authors', 'publisher', 'year', 'isbn', 'esbn', 'bisac', 'lc', 'imprint_publisher', 'oclc', 'lcc', 'dewey'].map(
+                    x => {
+                      if (book && x in book) {
+                        return <Row title={bookPretty.get(x)} content={`${book[x as keyof typeof book]}`} key={x}></Row>
+                      } else { return <></> }
+                    }
+                  )}
                 </Stack>
               </Box>
               <Box marginTop={3} alignSelf={"start"}>
