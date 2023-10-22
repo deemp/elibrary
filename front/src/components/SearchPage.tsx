@@ -1,7 +1,7 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
 import { NavLink } from "./NavLink";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import * as appbar from "../models/appbar";
 import { useElements } from "./FAQ";
 
@@ -26,10 +26,28 @@ export function SearchPage() {
       }
       nav={
         <>
-          <Box sx={{ display: "flex" }}>
-            <NavLink text={"Log out"} id={"logout"} to={"/"} />
-            {faqButton}
-          </Box>
+          <Container maxWidth={"xl"}>
+            <Grid container>
+              <Grid item xs={2}>
+                <Box>
+                  <NavLink text={"Log out"} id={"logout"} to={"/"} />
+                  {faqButton}
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={10}
+                paddingTop={appbar.padding}
+                paddingBottom={appbar.padding}
+                textAlign={"right"}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'end'}
+              >
+                EBSCO EBOOK ARCHIVE
+              </Grid>
+            </Grid>
+          </Container>
           {faqDrawer}
         </>
       }
