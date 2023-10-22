@@ -10,6 +10,7 @@ router = APIRouter()
 Strings: TypeAlias = list[str]
 DictOptions: TypeAlias = dict[str, Strings]
 
+
 def getDict(books, attr1, attr2) -> DictOptions:
     ret = {}
     for book in books:
@@ -40,11 +41,15 @@ def search_get() -> SearchGETResponse:
         return SearchGETResponse(bisac=bisac, lc=lc, filters=filters)
 
 
+class FilterRow(BaseModel):
+    filter: str
+    filter_input: str
+
+
 class SearchPOSTRequest(BaseModel):
     bisac: str
     lc: str
-    filter: str
-    filter_input: str
+    filter_rows: list[FilterRow]
 
 
 class SearchPostResponse(BaseModel):
@@ -52,31 +57,24 @@ class SearchPostResponse(BaseModel):
     lc: DictOptions
     books: list[Book]
 
-# https://fastapi.tiangolo.com/tutorial/body/
 
+# https://fastapi.tiangolo.com/tutorial/body/
 @router.post("/search")
 def search_post(request: SearchPOSTRequest) -> SearchPostResponse:
     with Session(engine) as session:
         books = []
-        if request.filter in filters:
-            filter_attr = Book.__dict__[request.filter]
 
-            books = session.exec(
-                select(Book).where(
-                    filter_attr.contains(request.filter_input),
-                    Book.bisac.contains(request.bisac),
-                    Book.lc.contains(request.lc),
-                )
-            ).all()
-        elif not request.filter:
-            books = session.exec(
-                select(Book).where(
-                    Book.bisac.contains(request.bisac),
-                    Book.lc.contains(request.lc),
-                )
-            ).all()
-        else:
-            books = Book.query.all()
+        conditions = [
+            Book.bisac.contains(request.bisac),
+            Book.lc.contains(request.lc),
+        ]
+
+        for r in request.filter_rows:
+            if r.filter in filters:
+                filter_attr = Book.__dict__[r.filter]
+                conditions.append(filter_attr.contains(r.filter_input))
+
+        books = session.exec(select(Book).where(*conditions)).all()
 
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")

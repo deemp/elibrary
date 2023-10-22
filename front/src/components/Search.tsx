@@ -4,30 +4,31 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import { BookTable } from "./Table";
 import React, { useCallback, useEffect, useState } from "react";
 import * as appbar from '../models/appbar'
+// import Immutable from 'immutable'
+import { Map, List } from 'immutable'
 
 export interface GETResponse {
-  bisac: Map<string, string[]>
-  lc: Map<string, string[]>
-  filters: string[]
+  bisac: MapStrings
+  lc: MapStrings
+  filters: Strings
 }
 
 export interface POSTResponse {
-  bisac: Map<string, string[]>
-  lc: Map<string, string[]>
-  books: Book[]
+  bisac: MapStrings
+  lc: MapStrings
+  books: List<Book>
 }
 
 type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 
-function SearchField({ isLeft, label, id, options, colWidth, setter }: {
-  isLeft: boolean, label: string, id: string, options: string[], colWidth?: number, setter: Setter<string>
+function SearchField({ isLeft, label, options, colWidth, setter }: {
+  isLeft: boolean, label: string, options: Strings, colWidth?: number, setter: Setter<string>
 }) {
   return (
     <Grid item xs={colWidth}>
       <Autocomplete
         disablePortal
-        id={id}
-        options={options}
+        options={Array.from(options)}
         renderInput={(params) =>
           <TextField {...params} label={label}
             sx={{
@@ -45,38 +46,48 @@ function SearchField({ isLeft, label, id, options, colWidth, setter }: {
   )
 }
 
-export function Search() {
+interface FilterRow {
+  filter: string
+  filterInput: string
+  id: number
+}
 
-  const [books, setBooks] = useState<Book[]>([]);
+type Strings = List<string>
+type MapStrings = Map<string, Strings>
 
-  const [filtersOptions, setFilterOptions] = useState<string[]>([]);
-  const [filter, setFilter] = useState<string>("");
+export function Search({ filterCounter, setFilterCounter }: { filterCounter: number, setFilterCounter: React.Dispatch<React.SetStateAction<number>> }) {
 
-  const [filterInputOptions, setFilterInputOptions] = useState<string[]>([]);
-  const [filterInput, setFilterInput] = useState<string>("");
+  const [books, setBooks] = useState<List<Book>>(List([]));
+
+  const [filterOptions, setFilterOptions] = useState<Strings>(List([]));
+
+  // filter and filter input
+  const [filterRow, setFilterRow] = useState<List<FilterRow>>(List([]));
+  const [filterInputOptionsRows, setFilterInputOptionsRow] = useState<List<Strings>>(List([]));
 
   const [bisac, setBisac] = useState<string>("")
-  const [bisacOptions, setBisacOptions] = useState<string[]>([]);
+  const [bisacOptions, setBisacOptions] = useState<Strings>(List([]));
 
   const [lc, setLc] = useState<string>("")
-  const [lcOptions, setLcOptions] = useState<string[]>([]);
+  const [lcOptions, setLcOptions] = useState<Strings>(List([]));
+
 
   const url = `${import.meta.env.VITE_API_PREFIX}/search`;
 
-  const setBisacLcOptions = useCallback((r: { bisac: Map<string, string[]>, lc: Map<string, string[]> }) => {
+  const setBisacLcOptions = useCallback((r: { bisac: MapStrings, lc: MapStrings }) => {
     if (bisac != "" && lc == "") {
-      setBisacOptions(Array.from(r.bisac.keys()));
-      setLcOptions(r.bisac.get(bisac) || [])
+      setBisacOptions(List(r.bisac.keys()));
+      setLcOptions(List(r.bisac.get(bisac) || []))
     }
     else if (lc != "" && bisac == "") {
-      setBisacOptions(r.lc.get(lc) || [])
-      setLcOptions(Array.from(r.lc.keys()));
+      setBisacOptions(List(r.lc.get(lc) || []))
+      setLcOptions(List(r.lc.keys()));
     }
     else {
-      setBisacOptions(Array.from(r.bisac.keys()))
-      setLcOptions(Array.from(r.lc.keys()))
+      setBisacOptions(List(r.bisac.keys()))
+      setLcOptions(List(r.lc.keys()))
     }
-  }, [bisac, lc, setBisacOptions, setLcOptions])
+  }, [bisac, lc])
 
   useEffect(() => {
     fetch(url, {
@@ -86,49 +97,77 @@ export function Search() {
       .then((r) => r.json())
       .then((r) => {
         return {
-          filters: r.filters as string[],
-          lc: new Map(Object.entries(r.lc)) as Map<string, string[]>,
-          bisac: new Map(Object.entries(r.bisac)) as Map<string, string[]>
+          filters: r.filters as Strings,
+          lc: Map(r.lc) as MapStrings,
+          bisac: Map(r.bisac) as MapStrings
         }
       })
       .then((r: GETResponse) => {
         setFilterOptions(r.filters.map(filter => bookPretty.get(filter) || ''))
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
+        setFilterRow(List([
+          {
+            filter: "",
+            filterInput: "",
+            id: 0
+          },
+          {
+            filter: "",
+            filterInput: "",
+            id: 1
+          }
+        ]))
       });
-  }, [url, setFilterOptions, bisac, lc, setBisacOptions, setLcOptions, setBisacLcOptions]);
+  // run once
+  }, []);
 
   const search = useCallback(() => {
     fetch(url, {
       method: "POST",
       headers: new Headers({ "content-type": "application/json" }),
-      body: JSON.stringify({ filter, filter_input: filterInput, lc, bisac }),
+      body: JSON.stringify({
+        filter_rows: filterRow
+          .filter(x => x.filterInput !== '')
+          .map(x => {
+            return {
+              filter: x.filter,
+              filter_input: x.filterInput
+            }
+          }), lc, bisac
+      }),
     })
       .then((r) => r.json())
       .then((r) => {
         return {
           books: r.books,
-          lc: new Map(Object.entries(r.lc)) as Map<string, string[]>,
-          bisac: new Map(Object.entries(r.bisac)) as Map<string, string[]>
+          lc: Map(r.lc) as MapStrings,
+          bisac: Map(r.bisac) as MapStrings
         }
       })
       .then((r: POSTResponse) => {
         setBooks(r.books);
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
-        setFilterInputOptions(r.books.map(book => {
-          if (filter in book) {
-            return `${book[filter as keyof typeof book]}`
-          } else {
-            return ""
-          }
-        }).filter(x => x !== ""))
-      });
-  }, [url, setBooks, lc, bisac, filterInput, filter, setBisacLcOptions])
+        const f = filterRow.map(row => {
+          const filterInputOptions = r.books.map(book => {
+            if (row.filter in book) {
+              return `${book[row.filter as keyof typeof book]}`
+            } else {
+              return ""
+            }
+          })
+            .filter(x => x !== "")
+          return filterInputOptions
+        })
+        setFilterInputOptionsRow(f)
+        console.log(filterRow.get(0))
+      })
+  }, [url, lc, bisac, setBisacLcOptions, filterRow])
 
   useEffect(() => {
     search()
-  }, [url, setFilterOptions, setBooks, lc, bisac, filterInput, filter, search]);
+  }, [search]);
 
-  const filtersHeight = 104
+  const filtersHeight = 160
   return (
     <>
       <Grid container rowSpacing={0} marginTop={appbar.height} height={'100%'} paddingTop={1}>
@@ -137,23 +176,41 @@ export function Search() {
             <Grid item xs={12}>
               <Grid container spacing={0}>
                 <Grid item xs={6}>
-                  <SearchField isLeft={true} label={bookPretty.get('bisac') || ''} id={"bisac"} options={bisacOptions} setter={setBisac}></SearchField>
+                  <SearchField isLeft={true} label={bookPretty.get('bisac') || ''} options={bisacOptions} setter={setBisac}></SearchField>
                 </Grid>
                 <Grid item xs={6}>
-                  <SearchField isLeft={false} label={bookPretty.get('lc') || ''} id={"lc"} options={lcOptions} setter={setLc}></SearchField>
+                  <SearchField isLeft={false} label={bookPretty.get('lc') || ''} options={lcOptions} setter={setLc}></SearchField>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Grid container spacing={0}>
-                <Grid item xs={3}>
-                  <SearchField isLeft={true} label={"Filter"} id={"filter"} options={filtersOptions} setter={x => setFilter(bookPrettyInverse.get(x as string) || '')}></SearchField>
+            {filterRow.map((i, idx) => {
+              return (
+                <Grid item xs={12} key={i.id}>
+                  <Grid container spacing={0}>
+                    <Grid item xs={4}>
+                      <SearchField isLeft={true} label={"Filter"} options={filterOptions} setter={x => {
+                        const f = filterRow.update(idx, v => {
+                          if (v) {
+                            return { ...v, filter: bookPrettyInverse.get(x as string) || '', }
+                          }
+                        })
+                        setFilterRow(f)
+                      }}></SearchField>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <SearchField isLeft={false} label={"Filter input"} options={filterInputOptionsRows.get(idx) || List([])} setter={x => {
+                        const f = filterRow.update(idx, v => {
+                          if (v) {
+                            return { ...v, filterInput: x as string }
+                          }
+                        })
+                        setFilterRow(f)
+                      }}></SearchField>
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item xs={9}>
-                  <SearchField isLeft={false} label={"Filter input"} id={"filter-input"} options={filterInputOptions} setter={setFilterInput}></SearchField>
-                </Grid>
-              </Grid>
-            </Grid>
+              )
+            })}
           </Grid>
         </Grid>
         <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`} paddingTop={2}>
