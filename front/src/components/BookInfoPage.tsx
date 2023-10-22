@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { Base } from "./Base";
 import { NavLink } from "./NavLink";
 import {
+  Box,
   Button,
   Card,
   CardMedia,
@@ -74,58 +75,56 @@ export function BookInfoPage() {
         user={{ isAuthenticated: true }}
         content={
           <Container maxWidth="lg">
-            <Grid container rowSpacing={2} minHeight={`calc(100vh - ${appbar.height})`} marginTop={appbar.height}>
-              <Grid item xs={12} textAlign={'center'}>
-                <Link to={`/book/${bookId}/read`}>
-                  <Button variant="outlined" size='medium'>READ</Button>
-                </Link>
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={3}>
-                  <Grid item sm={4} md={3} lg={3}>
-                    <Grid container justifyContent={'center'}>
-                      <Grid item xs={8} sm={12}>
-                        <Card
-                          elevation={elevation}
-                        >
-                          {/* TODO replace with cover url from book object */}
-                          <CardMedia component="img" src={cover_url} />
-                        </Card>
+            <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
+              <Grid container rowSpacing={2} marginTop={appbar.height}>
+                <Grid item xs={12} textAlign={'center'}>
+                  <Link to={`/book/${bookId}/read`}>
+                    <Button variant="outlined" size='medium'>READ</Button>
+                  </Link>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container spacing={3} justifyContent={'center'}>
+                    <Grid item xs={7} sm={4} md={3} lg={3}>
+                      <Card
+                        elevation={elevation}
+                      >
+                        {/* TODO replace with cover url from book object */}
+                        <CardMedia component="img" src={cover_url} />
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={8} md={9} lg={9}>
+                      <Grid container rowSpacing={1}>
+                        {['title', 'authors', 'publisher', 'year', 'isbn', 'esbn', 'bisac', 'lc', 'imprint_publisher', 'oclc', 'lcc', 'dewey'].map(
+                          x => {
+                            if (book && x in book) {
+                              return <Row title={bookPretty.get(x)} content={`${book[x as keyof typeof book]}`} key={x}></Row>
+                            } else { return <></> }
+                          }
+                        )}
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={8} md={9} lg={9}>
-                    <Grid container rowSpacing={1}>
-                      {['title', 'authors', 'publisher', 'year', 'isbn', 'esbn', 'bisac', 'lc', 'imprint_publisher', 'oclc', 'lcc', 'dewey'].map(
-                        x => {
-                          if (book && x in book) {
-                            return <Row title={bookPretty.get(x)} content={`${book[x as keyof typeof book]}`} key={x}></Row>
-                          } else { return <></> }
-                        }
-                      )}
+                </Grid>
+                <Grid item xs={12} marginBottom={3}>
+                  <Paper variant="outlined">
+                    <Grid container spacing={2} padding={'1rem'}>
+                      <Grid item xs={12} md={10}>
+                        <Typography variant="body1">{reference}</Typography>
+                      </Grid>
+                      <Grid item xs={12} md={2}>
+                        <Button
+                          size="medium"
+                          variant="outlined"
+                          onClick={copyToClipboard}
+                        >
+                          Copy Reference
+                        </Button>
+                      </Grid>
                     </Grid>
-                  </Grid>
+                  </Paper>
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Paper variant="outlined">
-                  <Grid container spacing={2} padding={'1rem'}>
-                    <Grid item xs={12} md={10}>
-                      <Typography variant="body1">{reference}</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                      <Button
-                        size="medium"
-                        variant="outlined"
-                        onClick={copyToClipboard}
-                      >
-                        Copy Reference
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-            </Grid>
+            </Box>
           </Container>
         }
         nav={<NavLink text={"Search"} to={"/"} id={"search"} />}
