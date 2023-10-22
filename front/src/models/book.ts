@@ -27,7 +27,8 @@ const rename: [string, string][] = [
   ['imprint_publisher', 'Imprint'],
   ['isbn', 'ISBN'],
   ['esbn', 'ESBN'],
-  ['oclc', 'OCLC'],
+  // OCLC Control Number - https://www.wikidata.org/wiki/Property:P243
+  ['oclc', 'OCN'],
   ['lcc', 'LCC'],
   ['dewey', 'Dewey'],
   ['format', 'Format'],
