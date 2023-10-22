@@ -17,6 +17,7 @@ import cover_url from "../assets/book_cover.png";
 import * as appbar from "../models/appbar";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
+import { useElements as useFAQ } from "./FAQ";
 
 function Row({
   title,
@@ -28,11 +29,11 @@ function Row({
   return (
     <Grid item xs={12}>
       <Grid container>
-        <Grid item xs={3} sm={3} md={2}><Typography>{title}</Typography></Grid>
+        <Grid item xs={3} sm={3} md={2}>
+          <Typography>{title}</Typography>
+        </Grid>
         <Grid item xs={9} sm={9} md={10}>
-          <Typography sx={{ fontWeight: 'bold' }}>
-            {content}
-          </Typography>
+          <Typography sx={{ fontWeight: "bold" }}>{content}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -67,7 +68,9 @@ export function BookInfoPage() {
       }
     };
 
-    const elevation = 5
+    const elevation = 5;
+
+    const { faqButton, faqDrawer } = useFAQ();
 
     const base = (
       <Base
@@ -77,37 +80,56 @@ export function BookInfoPage() {
           <Container maxWidth="lg">
             <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
               <Grid container rowSpacing={2} marginTop={appbar.height}>
-                <Grid item xs={12} textAlign={'center'}>
+                <Grid item xs={12} textAlign={"center"}>
                   <Link to={`/book/${bookId}/read`}>
-                    <Button variant="outlined" size='medium'>READ</Button>
+                    <Button variant="outlined" size="medium">
+                      READ
+                    </Button>
                   </Link>
                 </Grid>
                 <Grid item xs={12}>
-                  <Grid container spacing={3} justifyContent={'center'}>
+                  <Grid container spacing={3} justifyContent={"center"}>
                     <Grid item xs={7} sm={4} md={3} lg={3}>
-                      <Card
-                        elevation={elevation}
-                      >
+                      <Card elevation={elevation}>
                         {/* TODO replace with cover url from book object */}
                         <CardMedia component="img" src={cover_url} />
                       </Card>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} lg={9}>
                       <Grid container rowSpacing={1}>
-                        {['title', 'authors', 'publisher', 'year', 'isbn', 'esbn', 'bisac', 'lc', 'imprint_publisher', 'oclc', 'lcc', 'dewey'].map(
-                          x => {
-                            if (book && x in book) {
-                              return <Row title={bookPretty.get(x)} content={`${book[x as keyof typeof book]}`} key={x}></Row>
-                            } else { return <></> }
+                        {[
+                          "title",
+                          "authors",
+                          "publisher",
+                          "year",
+                          "isbn",
+                          "esbn",
+                          "bisac",
+                          "lc",
+                          "imprint_publisher",
+                          "oclc",
+                          "lcc",
+                          "dewey",
+                        ].map((x) => {
+                          if (book && x in book) {
+                            return (
+                              <Row
+                                title={bookPretty.get(x)}
+                                content={`${book[x as keyof typeof book]}`}
+                                key={x}
+                              ></Row>
+                            );
+                          } else {
+                            return <></>;
                           }
-                        )}
+                        })}
                       </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
                 <Grid item xs={12} marginBottom={3}>
                   <Paper variant="outlined">
-                    <Grid container spacing={2} padding={'1rem'}>
+                    <Grid container spacing={2} padding={"1rem"}>
                       <Grid item xs={12} md={10}>
                         <Typography variant="body1">{reference}</Typography>
                       </Grid>
@@ -127,7 +149,15 @@ export function BookInfoPage() {
             </Box>
           </Container>
         }
-        nav={<NavLink text={"Search"} to={"/"} id={"search"} />}
+        nav={
+          <>
+            <Box sx={{ display: "flex" }}>
+              <NavLink text={"Search"} to={"/"} id={"search"} />
+              {faqButton}
+            </Box>
+            {faqDrawer}
+          </>
+        }
       ></Base>
     );
     return base;

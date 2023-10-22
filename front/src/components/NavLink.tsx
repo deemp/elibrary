@@ -6,7 +6,8 @@ export function NavLink({ text, id, to }: { text: string, id: string, to: string
         <Link id={id} to={to}>
             <Button sx={{
                 "color": "#ffffff",
-                padding: "20px"
+                padding: "20px",
+                fontWeight: 'bold'
             }}>
                 {text}
             </Button>
