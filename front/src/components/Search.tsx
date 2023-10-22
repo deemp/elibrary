@@ -6,6 +6,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import * as appbar from '../models/appbar'
 // import Immutable from 'immutable'
 import { Map, List } from 'immutable'
+import parse from 'autosuggest-highlight/parse';
+import match from 'autosuggest-highlight/match';
 
 export interface GETResponse {
   bisac: MapStrings
@@ -21,8 +23,9 @@ export interface POSTResponse {
 
 type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 
-function SearchField({ isLeft, label, options, colWidth, setter }: {
-  isLeft: boolean, label: string, options: Strings, colWidth?: number, setter: Setter<string>
+
+function SearchField({ isLeft, label, options, xs: colWidth, setter }: {
+  isLeft?: boolean, label: string, options: Strings, xs?: number, setter: Setter<string>
 }) {
   return (
     <Grid item xs={colWidth}>
@@ -31,13 +34,35 @@ function SearchField({ isLeft, label, options, colWidth, setter }: {
         options={Array.from(options)}
         renderInput={(params) =>
           <TextField {...params} label={label}
-            sx={{
+            sx={isLeft !== undefined ? {
               "& .MuiOutlinedInput-root": {
                 borderRadius: isLeft ? "6px 0px 0px 6px" : "0px 6px 6px 0px",
               },
-            }}
+            } : {}}
             size="small"
           />}
+        renderOption={(props, option, { inputValue }) => {
+          const matches = match(option, inputValue, { insideWords: true });
+          const parts = parse(option, matches);
+
+          return (
+            <li {...props}>
+              <div>
+                {parts.map((part, index) => (
+                  <span
+                    key={index}
+                    style={{
+                      fontWeight: part.highlight ? 700 : 400,
+                    }}
+                  >
+                    {part.text}
+                  </span>
+                ))}
+              </div>
+            </li>
+          );
+        }}
+        freeSolo
         onInputChange={(_event, value) => {
           setter(value || "")
         }}
@@ -46,24 +71,30 @@ function SearchField({ isLeft, label, options, colWidth, setter }: {
   )
 }
 
-interface FilterRow {
+interface RowFilter {
   filter: string
   filterInput: string
-  id: number
 }
 
 type Strings = List<string>
 type MapStrings = Map<string, Strings>
 
-export function Search({ filterCounter, setFilterCounter }: { filterCounter: number, setFilterCounter: React.Dispatch<React.SetStateAction<number>> }) {
+export function Search() {
+  const [filterCounter, setFilterCounter] = useState<number>(1)
 
   const [books, setBooks] = useState<List<Book>>(List([]));
 
   const [filterOptions, setFilterOptions] = useState<Strings>(List([]));
 
+  const maxFilterCounter = 5
+  const minFilterCounter = 1
+
+  const emptyRowFilter = { filter: "", filterInput: "" }
+
   // filter and filter input
-  const [filterRow, setFilterRow] = useState<List<FilterRow>>(List([]));
-  const [filterInputOptionsRows, setFilterInputOptionsRow] = useState<List<Strings>>(List([]));
+  const [rowFilter, setRowFilter] = useState<List<RowFilter>>(List(Array.from({ length: maxFilterCounter }, () => emptyRowFilter)));
+
+  const [rowFilterInputOptions, setRowFilterInputOptions] = useState<List<Strings>>(List([]));
 
   const [bisac, setBisac] = useState<string>("")
   const [bisacOptions, setBisacOptions] = useState<Strings>(List([]));
@@ -105,20 +136,8 @@ export function Search({ filterCounter, setFilterCounter }: { filterCounter: num
       .then((r: GETResponse) => {
         setFilterOptions(r.filters.map(filter => bookPretty.get(filter) || ''))
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
-        setFilterRow(List([
-          {
-            filter: "",
-            filterInput: "",
-            id: 0
-          },
-          {
-            filter: "",
-            filterInput: "",
-            id: 1
-          }
-        ]))
       });
-  // run once
+    // run once
   }, []);
 
   const search = useCallback(() => {
@@ -126,7 +145,7 @@ export function Search({ filterCounter, setFilterCounter }: { filterCounter: num
       method: "POST",
       headers: new Headers({ "content-type": "application/json" }),
       body: JSON.stringify({
-        filter_rows: filterRow
+        filter_rows: rowFilter
           .filter(x => x.filterInput !== '')
           .map(x => {
             return {
@@ -147,7 +166,7 @@ export function Search({ filterCounter, setFilterCounter }: { filterCounter: num
       .then((r: POSTResponse) => {
         setBooks(r.books);
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
-        const f = filterRow.map(row => {
+        const f = rowFilter.map(row => {
           const filterInputOptions = r.books.map(book => {
             if (row.filter in book) {
               return `${book[row.filter as keyof typeof book]}`
@@ -156,67 +175,79 @@ export function Search({ filterCounter, setFilterCounter }: { filterCounter: num
             }
           })
             .filter(x => x !== "")
-          return filterInputOptions
+          return List([... new Set(filterInputOptions)])
         })
-        setFilterInputOptionsRow(f)
-        console.log(filterRow.get(0))
+        setRowFilterInputOptions(f)
       })
-  }, [url, lc, bisac, setBisacLcOptions, filterRow])
+  }, [url, lc, bisac, setBisacLcOptions, rowFilter])
 
   useEffect(() => {
     search()
   }, [search]);
 
-  const filtersHeight = 160
+  const rowHeight = 52
+  const filtersHeight = (filterCounter + 1) * rowHeight
+  const filtersCountOptions = List(Array.from({ length: maxFilterCounter }, (_, idx) => (idx + 1).toString()))
   return (
     <>
-      <Grid container rowSpacing={0} marginTop={appbar.height} height={'100%'} paddingTop={1}>
+      <Grid container rowSpacing={0} marginTop={appbar.height} paddingTop={1} height={'100%'}>
         <Grid item xs={12} height={filtersHeight} paddingTop={1}>
-          <Grid container rowSpacing={2}>
+          <Grid container rowSpacing={1.5}>
             <Grid item xs={12}>
-              <Grid container spacing={0}>
-                <Grid item xs={6}>
-                  <SearchField isLeft={true} label={bookPretty.get('bisac') || ''} options={bisacOptions} setter={setBisac}></SearchField>
-                </Grid>
-                <Grid item xs={6}>
-                  <SearchField isLeft={false} label={bookPretty.get('lc') || ''} options={lcOptions} setter={setLc}></SearchField>
-                </Grid>
-              </Grid>
-            </Grid>
-            {filterRow.map((i, idx) => {
-              return (
-                <Grid item xs={12} key={i.id}>
+              <Grid container spacing={1}>
+                <Grid item xs={10}>
                   <Grid container spacing={0}>
-                    <Grid item xs={4}>
-                      <SearchField isLeft={true} label={"Filter"} options={filterOptions} setter={x => {
-                        const f = filterRow.update(idx, v => {
-                          if (v) {
-                            return { ...v, filter: bookPrettyInverse.get(x as string) || '', }
-                          }
-                        })
-                        setFilterRow(f)
-                      }}></SearchField>
-                    </Grid>
-                    <Grid item xs={8}>
-                      <SearchField isLeft={false} label={"Filter input"} options={filterInputOptionsRows.get(idx) || List([])} setter={x => {
-                        const f = filterRow.update(idx, v => {
-                          if (v) {
-                            return { ...v, filterInput: x as string }
-                          }
-                        })
-                        setFilterRow(f)
-                      }}></SearchField>
-                    </Grid>
+                    <SearchField xs={6} isLeft={true} label={bookPretty.get('bisac') || ''} options={bisacOptions} setter={setBisac} />
+                    <SearchField xs={6} isLeft={false} label={bookPretty.get('lc') || ''} options={lcOptions} setter={setLc} />
                   </Grid>
                 </Grid>
-              )
-            })}
+                <SearchField xs={2} label={'Filters'} options={filtersCountOptions} setter={value => {
+                  const num = Number.parseFloat(value as string)
+                  const filterCounterNew = Math.min(maxFilterCounter, Math.max(minFilterCounter, Number.isNaN(num) ? 0 : num))
+                  setFilterCounter(filterCounterNew)
+                  setRowFilter(rowFilter.map((v, idx) => (idx >= filterCounterNew ? emptyRowFilter : v)))
+                }
+                } />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container rowSpacing={1.5}>
+                {rowFilter.slice(0, filterCounter).map((_i, idx) => {
+                  return (
+                    <Grid item xs={12} key={idx}>
+                      <Grid container spacing={0}>
+                        <Grid item xs={3}>
+                          <SearchField isLeft={true} label={"Filter"} options={filterOptions} setter={x => {
+                            const f = rowFilter.update(idx, v => {
+                              if (v) {
+                                return { ...v, filter: bookPrettyInverse.get(x as string) || '', }
+                              }
+                            })
+                            setRowFilter(f)
+                          }} />
+                        </Grid>
+                        <Grid item xs={9}>
+                          <SearchField isLeft={false} label={"Filter input"} options={rowFilterInputOptions.get(idx) || List([])} setter={x => {
+                            const f = rowFilter.update(idx, v => {
+                              if (v) {
+                                return { ...v, filterInput: x as string }
+                              }
+                            })
+                            setRowFilter(f)
+                          }} />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  )
+                })}
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`} paddingTop={2}>
-          <BookTable rows={books} />
+        <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`} paddingTop={1}>
+          <BookTable rows={Array.from(books)} />
         </Grid>
-      </Grid>
+      </Grid >
     </>
   );
 }

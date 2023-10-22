@@ -3,11 +3,8 @@ import { Search } from "./Search";
 import { NavLink } from "./NavLink";
 import { Box, Container } from "@mui/material";
 import * as appbar from '../models/appbar'
-import { useState } from "react";
 
 export function SearchPage() {
-  let [filterCounter, setFilterCounter] = useState<number>(1)
-  
   const base = (
     <Base
       title="Search"
@@ -20,7 +17,7 @@ export function SearchPage() {
             sx={{ backgroundColor: 'white' }}
             marginTop={appbar.height}
           >
-            <Search filterCounter={filterCounter} setFilterCounter={setFilterCounter}/>
+            <Search />
           </Box>
         </Container>
       }
