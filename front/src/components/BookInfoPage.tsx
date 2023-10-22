@@ -77,7 +77,7 @@ export function BookInfoPage() {
         title="Info"
         user={{ isAuthenticated: true }}
         content={
-          <Container maxWidth="lg">
+          <Container maxWidth="xl">
             <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
               <Grid container rowSpacing={2} marginTop={appbar.height}>
                 <Grid item xs={12} textAlign={"center"}>
@@ -89,7 +89,7 @@ export function BookInfoPage() {
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={3} justifyContent={"center"}>
-                    <Grid item xs={7} sm={4} md={3} lg={3}>
+                    <Grid item xs={7} sm={4} md={3} lg={3} xl={2}>
                       <Card elevation={elevation}>
                         {/* TODO replace with cover url from book object */}
                         <CardMedia component="img" src={cover_url} />
@@ -151,10 +151,12 @@ export function BookInfoPage() {
         }
         nav={
           <>
-            <Box sx={{ display: "flex" }}>
-              <NavLink text={"Search"} to={"/"} id={"search"} />
-              {faqButton}
-            </Box>
+            <Container maxWidth='xl'>
+              <Box sx={{ display: "flex" }}>
+                <NavLink text={"Search"} to={"/"} id={"search"} />
+                {faqButton}
+              </Box>
+            </Container>
             {faqDrawer}
           </>
         }
