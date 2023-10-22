@@ -79,7 +79,7 @@
               description = ''run and expose site via localtunnel'';
             };
             release-ngrok = {
-              runtimeInputs = [ pkgs.nodePackages.localtunnel ];
+              runtimeInputs = [ pkgs.sops pkgs.ngrok ];
               text = ''
                 ${getExe packages.stop}
                 sops -d elibrary/enc.auth.env > elibrary/auth.env
