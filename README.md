@@ -162,7 +162,7 @@ timeline
             Sprint 1: Meeting with customer to clarify requirements.
             Sprint 2: Release MVP 1 and review with customer.
             Sprint 3: Integrate scrum activities and develop acceptance criteria, deliver MVP 2, deploy usable version.
-            Sprint 4: Improve layout of web pages, add ability to copy book reference, enable filter autocomplete.
+            Sprint 4: Improve layout of web pages, add ability to copy book reference, enable filter autocomplete, migrate backend to fastAPI, prepare application to connect with univerversity sso (for now you can login with google).
 ```
 
 ## Connect by SSH
