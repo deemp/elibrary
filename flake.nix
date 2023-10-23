@@ -122,6 +122,8 @@
               pkgs.sops
               pkgs.ngrok
               pkgs.graphviz
+              pkgs.jdk11
+              pkgs.plantuml
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
