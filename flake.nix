@@ -121,6 +121,7 @@
               pkgs.gnupg
               pkgs.sops
               pkgs.ngrok
+              pkgs.graphviz
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
