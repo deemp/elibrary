@@ -1,47 +1,58 @@
 @startuml static
 
-package Clien {
-  object User {
-  
+allow_mixing
+
+package "Front end" as FrontEnd {
+  object "/" as FEIndex {
+    search page
+  }
+  object "/book/:id" as FEBookInfo {
+    book info page
+  }
+  object "/book/:id/read" as FEBookRead {
+    book viewer page
   }
 }
 
-package FrontEnd {
-  object "/search" as Search {
-    bisac : String
-    lc : String
-    additional filter : Optional <String, String>
+package "Back end" as BackEnd {
+  object "/search" as BESearch {
+    list of book data records
   }
-  object "/book" as Book {
-    book : Book
+  object "/book/{book_id}" as BEBookInfo {
+    book information
   }
-  object "/bookreader" as Bookreader {
-    book : Book
-  }
-}
-
-package BackEnd {
-  object Engine {
-    
+  object "/book/{book_id}/file" as BEBookFile {
+    book file in chunks
   }
 }
 
 package SSO {
-
 }
 
 package Database {
-
+  object "Book" as TableBook {
+    title, author, year, etc.
+  }
 }
 
 package Storage {
-
+  object "Book Files" as FileBook {
+    stored at ./books
+  }
 }
 
-Clien -- FrontEnd
-FrontEnd -- BackEnd
-BackEnd -- SSO
-BackEnd -- Database
-BackEnd -- Storage
+actor "User" as u
+
+u --> FEIndex : Search books
+u --> FEBookInfo : Read book info,\ncopy bibliographic record
+u --> FEBookRead : Read book
+u --> SSO : Enter email and password
+
+BackEnd --> SSO : Authenticate a user
+BackEnd --> Database : Get books metadata
+BackEnd --> Storage : Get book file
+FEIndex --> BESearch : Send filters, get books
+FEBookInfo --> BEBookInfo: Get book info
+FEBookRead --> BEBookFile: Get book file in chunks
 
 @enduml
