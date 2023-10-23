@@ -10,49 +10,48 @@
 
 - Clone and enter this repository
 
-    ```console
-    git clone https://gitlab.pg.innopolis.university/elibrary/elibrary
-    cd elibrary
-    ```
+  ```console
+  git clone https://gitlab.pg.innopolis.university/elibrary/elibrary
+  cd elibrary
+  ```
 
 - Run `direnv allow`.
 
 - Run `nix develop`. Check that you have `poetry` and `sqlite3` from a `devShell` (see [flake.nix](./flake.nix)).
 
-    ```console
-    poetry --version
+  ```console
+  poetry --version
 
-    sqlite3 --version
-    ```
+  sqlite3 --version
+  ```
 
 - Install packages.
 
-    ```console
-    nix run .#install
-    ```
+  ```console
+  nix run .#install
+  ```
 
 - Build `pdfjs`.
 
-    ```console
-    nix run .#prod-build-pdfjs
-    ```
+  ```console
+  nix run .#prod-build-pdfjs
+  ```
 
 - Run dev servers.
 
-    ```console
-    nix run .#dev
-    ```
+  ```console
+  nix run .#dev
+  ```
 
 - Open http://localhost:5001 in a browser.
-
 
 - Edit files in [elibrary](./elibrary/) and in [front](./front/).
 
 - Stop servers.
 
-    ```
-    nix run .#stop
-    ```
+  ```
+  nix run .#stop
+  ```
 
 ## Stack
 
@@ -65,16 +64,16 @@
 
 1. Get both tools in a `devshell`:
 
-    ```console
-    nix develop
-    sops --version
-    gpg --version
-    ```
+   ```console
+   nix develop
+   sops --version
+   gpg --version
+   ```
 
 1. The [elibrary/enc.auth.env](elibrary/enc.auth.env) file is encrypted via `sops`.
-    
-    - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` are for [Google Open ID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
-    - `SECRET_KEY` is for sessions
+
+   - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` are for [Google Open ID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
+   - `SECRET_KEY` is for sessions
 
 1. The `sops` config is in [.sops.yaml](.sops.yaml).
 1. Access to the encoded file can be granted to other people ([link](https://dev.to/stack-labs/manage-your-secrets-in-git-with-sops-common-operations-118g)) by adding keys to `.sops.yaml`.
@@ -83,46 +82,46 @@
 ### Expose
 
 - [localtunnel](https://github.com/localtunnel/localtunnel) - default.
-    - exposes at https://elibrary-itpd.loca.lt
+  - exposes at https://elibrary-itpd.loca.lt
 - [ngrok](https://ngrok.com/) - currently used for deployment.
-    - exposes at https://recently-wanted-elf.ngrok-free.app
-    - Provides a single weird static endpoint ([link](https://ngrok.com/blog-post/free-static-domains-ngrok-users)).
+  - exposes at https://recently-wanted-elf.ngrok-free.app
+  - Provides a single weird static endpoint ([link](https://ngrok.com/blog-post/free-static-domains-ngrok-users)).
 
 1. Get both tools in a `devShell`:
 
-    ```console
-    nix develop
-    lt --version
-    ngrok --version
-    ```
+   ```console
+   nix develop
+   lt --version
+   ngrok --version
+   ```
 
-1. Set the flag in [elibrary/.env](./elibrary/.env). 
-    
-    ```console
-    ENABLE_AUTH="true"
-    ```
+1. Set the flag in [elibrary/.env](./elibrary/.env).
+
+   ```console
+   ENABLE_AUTH="true"
+   ```
 
 1. Expose via `localtunnel`.
 
-    ```console
-    nix run .#release
+   ```console
+   nix run .#release
 
-    # stop later
-    nix run .#stop
-    ```
+   # stop later
+   nix run .#stop
+   ```
 
 1. Or, expose via `ngrok`.
 
-    ```console
-    nix run .#prod
-    ngrok http --domain <your domain (without https://)> 5000
+   ```console
+   nix run .#prod
+   ngrok http --domain <your domain (without https://)> 5000
 
-    # or, with default domain
-    nix run .#release-ngrok
+   # or, with default domain
+   nix run .#release-ngrok
 
-    # stop later
-    nix run .#stop
-    ```
+   # stop later
+   nix run .#stop
+   ```
 
 1. It may take long to load a book at `book/<book_id>/read`.
 
@@ -154,6 +153,18 @@
 
 ![static](./diagrams/dynamic.png)
 
+### Product Roadmap
+
+```mermaid
+timeline
+        title E-library Project
+        section Product Timeline
+            Sprint 1: Meeting with customer to clarify requirements.
+            Sprint 2: Release MVP 1 and review with customer.
+            Sprint 3: Integrate scrum activities and develop acceptance criteria, deliver MVP 2, deploy usable version.
+            Sprint 4: Improve layout of web pages, add ability to copy book reference, enable filter autocomplete.
+```
+
 ## Connect by SSH
 
 - Make a pair of `ED25519` SSH keys ([link](https://docs.gitlab.com/ee/user/ssh.html#generate-an-ssh-key-pair)).
@@ -161,6 +172,7 @@
 - Add the key to your GitLab account ([link](https://docs.gitlab.com/ee/user/ssh.html#add-an-ssh-key-to-your-gitlab-account)).
 
 - Set up an SSH agent ([link](https://docs.gitlab.com/ee/user/ssh.html#configure-ssh-to-point-to-a-different-directory)).
+
   - If on `Linux`, add this to your `~/.bashrc`
 
     ```console
@@ -169,9 +181,9 @@
 
 - Clone this repository by SSH.
 
-    ```console
-    git clone git@gitlab.pg.innopolis.university:elibrary/elibrary.git
-    ```
+  ```console
+  git clone git@gitlab.pg.innopolis.university:elibrary/elibrary.git
+  ```
 
 ## Contribute
 
