@@ -1,0 +1,21 @@
+@startuml use_case
+left to right direction
+actor "Librarian" as librarian
+actor "Student\nor\nStaff member" as student
+rectangle "Electronic Library" {
+  usecase "Update book catalog" as UC1
+  usecase "Upload books" as UC2
+  usecase "Remove books" as UC3
+  usecase "Log in" as UC4
+  usecase "Search books" as UC5
+  usecase "Read books" as UC6
+}
+
+librarian --> UC1
+librarian --> UC2
+librarian --> UC3
+
+student --> UC4
+student --> UC5
+student --> UC6
+@enduml

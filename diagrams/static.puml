@@ -1,0 +1,47 @@
+@startuml static
+
+package Clien {
+  object User {
+  
+  }
+}
+
+package FrontEnd {
+  object "/search" as Search {
+    bisac : String
+    lc : String
+    additional filter : Optional <String, String>
+  }
+  object "/book" as Book {
+    book : Book
+  }
+  object "/bookreader" as Bookreader {
+    book : Book
+  }
+}
+
+package BackEnd {
+  object Engine {
+    
+  }
+}
+
+package SSO {
+
+}
+
+package Database {
+
+}
+
+package Storage {
+
+}
+
+Clien -- FrontEnd
+FrontEnd -- BackEnd
+BackEnd -- SSO
+BackEnd -- Database
+BackEnd -- Storage
+
+@enduml

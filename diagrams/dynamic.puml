@@ -1,0 +1,27 @@
+@startuml dynamic
+
+participant Client
+participant FrontEnd
+participant BackEnd
+participant SSO
+participant Database
+
+Client -> FrontEnd : Open /search in browser
+FrontEnd -> BackEnd : Get /search
+BackEnd -> SSO : Login
+SSO -> BackEnd : Successful login
+BackEnd -> Database : Request books
+Database -> BackEnd : Query books
+BackEnd -> FrontEnd : List of book to show
+FrontEnd -> Client : Show list of books
+
+Client -> FrontEnd : Open /bookreader in browser
+FrontEnd -> BackEnd : Get /bookreader
+BackEnd -> SSO : Login
+SSO -> BackEnd : Successful login
+BackEnd -> Storage : Request book file
+Storage -> BackEnd : Return book file
+BackEnd -> FrontEnd : Send book file
+FrontEnd -> Client : Show book in bookreader
+
+@enduml
