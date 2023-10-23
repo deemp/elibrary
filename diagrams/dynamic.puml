@@ -1,17 +1,17 @@
 @startuml dynamic
 
-participant Client
-participant FrontEnd
-participant BackEnd
+participant "User" as Client
+participant "Front end" as FrontEnd
+participant "Back end" as BackEnd
 participant SSO
 participant Database
 
-Client -> FrontEnd : Open search in browser
+Client -> FrontEnd : Open site in browser
 activate Client
 activate FrontEnd
-FrontEnd -> BackEnd : Get /search
+FrontEnd -> BackEnd : Post filters
 activate BackEnd
-BackEnd -> SSO : Login
+BackEnd -> SSO : If no session cookie, redirect
 activate SSO
 SSO -> BackEnd : Successful login
 deactivate SSO
@@ -19,28 +19,22 @@ BackEnd -> Database : Request books
 activate Database
 Database -> BackEnd : Query books
 deactivate Database
-BackEnd -> FrontEnd : List of book to show
+BackEnd -> FrontEnd : Send books info
 deactivate BackEnd
 FrontEnd -> Client : Show list of books
-deactivate FrontEnd
-deactivate Client
 
-Client -> FrontEnd : Open bookreader in browser
-activate Client
-activate FrontEnd
-FrontEnd -> BackEnd : Get /book/{book_id}/file
+Client -> FrontEnd : Open book info
+FrontEnd -> Client : Show book info
+Client -> FrontEnd : Click on Read
+FrontEnd -> BackEnd : Request book file in chunks
 activate BackEnd
-BackEnd -> SSO : Login
-activate SSO
-SSO -> BackEnd : Successful login
-deactivate SSO
 BackEnd -> Storage : Request book file
 activate Storage
-Storage -> BackEnd : Send book file
+Storage -> BackEnd : Stream book file
 deactivate Storage
-BackEnd -> FrontEnd : Send book file
+BackEnd -> FrontEnd : Send book file in chunks
 deactivate BackEnd
-FrontEnd -> Client : Show book in bookreader
+FrontEnd -> Client : Show book in book viewer
 deactivate FrontEnd
 deactivate Client
 
