@@ -1,47 +1,51 @@
 @startuml static
 
-package Clien {
+package Client {
   object User {
-  
   }
 }
 
 package FrontEnd {
-  object "/search" as Search {
-    bisac : String
-    lc : String
-    additional filter : Optional <String, String>
-  }
-  object "/book" as Book {
-    book : Book
-  }
-  object "/bookreader" as Bookreader {
-    book : Book
+  object "/" as FEIndex {
+    context: Context
   }
 }
 
 package BackEnd {
-  object Engine {
-    
+  object "/search" as BESearch {
+    bisac : String
+    lc : String
+    additional-filter : Optional <String, String>
+  }
+  object "/book/{book_id}" as BEBook {
+    book : Book
+  }
+  object "/book/{book_id}/file" as BEBookreader {
+    book : Book
   }
 }
 
 package SSO {
-
+  object SSODatabase {
+  }
 }
 
 package Database {
-
+  object "Book" as TableBook {
+  }
+  object "User" as TableUser {
+  }
 }
 
 package Storage {
-
+  object "Book File" as FileBook {
+  }
 }
 
-Clien -- FrontEnd
-FrontEnd -- BackEnd
-BackEnd -- SSO
-BackEnd -- Database
-BackEnd -- Storage
+Client -- FrontEnd : Connect through browser
+FrontEnd -- BackEnd : Interaction
+BackEnd -- SSO : Authentication
+BackEnd -- Database : Book and User info storage
+BackEnd -- Storage : Book file storage
 
 @enduml
