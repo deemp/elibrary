@@ -140,11 +140,19 @@
 - language: [TypeScript](https://www.typescriptlang.org/)
 - book viewer: [bookreader](https://github.com/internetarchive/bookreader)
 
-## Use case diagram
+## Diagrams
 
-[diagram link](https://www.plantuml.com/plantuml/uml/PP2zRiCm38HtFWNXFKFpax48K7JBL2DR5bgY7Q6IM51qWQBeknTrXC1snxllT2BkL8pKnXGXSczeWXg6cw4Foiw2P21dejYSGwUaWNA3L31MzS2jZPwpNRFeDRT6VO-9KySwnSkTmbydvI4oDg-HdQdauF1U_TNWDo2EXHqLnkRouSaOEv5tT6GKPPYwBYzForWKybEiLBwTypTEyiaBlflpimmOSYNxEMcPrDqMBm_BvjM_H_W1U2o3cytpTEpQsVvpTW1reMhiL_gmqaSuSVPZYhy0)
+### Use case
 
-![diagram](./README/use_case_diagram.png)
+![diagram](./diagrams/use_case.png)
+
+### Static view
+
+![static](./diagrams/static.png)
+
+### Dynamic view
+
+![static](./diagrams/dynamic.png)
 
 ## Connect by SSH
 
