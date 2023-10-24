@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import * as appbar from "../models/appbar";
 
 export function NavLink({
   text,
@@ -16,9 +15,13 @@ export function NavLink({
       <Button
         sx={{
           color: "#ffffff",
-          paddingTop: appbar.padding,
-          paddingBottom: appbar.padding,
+          paddingLeft: '3px',
+          paddingRight: '3px',
           fontWeight: "bold",
+          fontSize: "14px",
+          '&:hover': {
+            backgroundColor: '#4f9ae3'
+          }
         }}
       >
         {text}
