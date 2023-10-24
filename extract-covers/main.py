@@ -13,10 +13,10 @@ def run():
         default="pdftocairo",
     )
     argParser.add_argument(
-        "-f", "--first-page", help="first page, passed to `pdftocairo`", default=20
+        "-f", "--first-page", help="first page, passed to `pdftocairo`", default=20, type=int
     )
     argParser.add_argument(
-        "-l", "--last-page", help="last page, passed to `pdftocairo`", default=30
+        "-l", "--last-page", help="last page, passed to `pdftocairo`", default=30, type=int
     )
     argParser.add_argument(
         "-i",
@@ -41,10 +41,10 @@ def run():
             first_page=args.first_page,
             last_page=args.last_page,
         )
-        pdf_idx = re.search("(\d+)", pdf.name).group(0)
-        (pathlib.Path(args.output_directory) / pdf_idx).mkdir(
+        pdf_idx = pdf.stem
+        pathlib.Path(args.output_directory).mkdir(
             parents=True, exist_ok=True
         )
         for i, img in enumerate(images):
             j = args.first_page + i
-            img.save(f"{args.output_directory}/{pdf_idx}/{j:05d}.jpg", "JPEG")
+            img.save(f"{args.output_directory}/{pdf_idx}.jpg", "JPEG")

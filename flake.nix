@@ -56,6 +56,11 @@
               description = ''import books catalog into database + save sql'';
             };
 
+            extract-covers = {
+              runtimeInputs = [ pkgs.poetry ];
+              text = ''poetry run extract-covers -p ${pkgs.poppler_utils}/bin -f 1 -l 1 -i books -o covers'';
+            };
+
             prod = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
