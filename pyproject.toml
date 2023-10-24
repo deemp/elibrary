@@ -9,6 +9,7 @@ readme = "README.md"
 [tool.poetry.scripts]
 elibrary = "elibrary.main:run"
 import-catalog = "import-catalog.main:run"
+page-images = "page-images.main:run"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
