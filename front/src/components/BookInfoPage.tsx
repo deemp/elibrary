@@ -7,7 +7,6 @@ import {
   Card,
   CardMedia,
   Container,
-  Divider,
   Grid,
   Paper,
   Typography,
