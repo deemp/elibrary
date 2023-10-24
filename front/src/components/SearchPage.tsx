@@ -1,7 +1,7 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
 import { NavLink } from "./NavLink";
-import { Box, Container, Divider, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import * as appbar from "../models/appbar";
 import { useElements } from "./FAQ";
 

@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Divider,
   Grid,
   Link,
   SwipeableDrawer,
@@ -144,7 +143,6 @@ export function useElements() {
                     {x.definition}
                   </Grid>
                 </Grid>
-                <Divider />
               </Grid>
             );
           })}
