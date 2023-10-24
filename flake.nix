@@ -36,6 +36,12 @@
                 '';
               description = ''prod build of front without pdfjs build'';
             };
+            prod-build-front = {
+              text =
+                ''
+                  ${getExe packages.prod-build-pdfjs}
+                  ${getExe packages.prod-build-react}
+                '';
               description = ''prod build of front'';
             };
 
