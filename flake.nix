@@ -25,16 +25,17 @@
                 '';
               description = ''build pdfjs for front'';
             };
-            prod-build-front = {
-              runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
+            prod-build-react = {
+              runtimeInputs = [ pkgs.nodejs ];
               text =
                 let dist = "elibrary/static/front"; in
                 ''
-                  ${getExe packages.prod-build-pdfjs}
                   (cd front && npm run build)
                   mkdir -p ${dist}
                   cp -r front/dist/* ${dist}
                 '';
+              description = ''prod build of front without pdfjs build'';
+            };
               description = ''prod build of front'';
             };
 
