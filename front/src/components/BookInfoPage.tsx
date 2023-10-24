@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
-import cover_url from "../assets/book_cover.png";
 import * as appbar from "../models/appbar";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
@@ -45,6 +44,8 @@ export function BookInfoPage() {
   if (id) {
     const bookId = Number.parseInt(id);
     const url = `${import.meta.env.VITE_API_PREFIX}/book/${bookId}`;
+    const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${bookId}.jpg`;
+
     const [book, setBook] = useState<Book | undefined>();
     const [reference, setReference] = useState<string>("");
 
@@ -92,7 +93,7 @@ export function BookInfoPage() {
                     <Grid item xs={7} sm={4} md={3} lg={3} xl={2}>
                       <Card elevation={elevation}>
                         {/* TODO replace with cover url from book object */}
-                        <CardMedia component="img" src={cover_url} />
+                        <CardMedia component="img" src={coverUrl} />
                       </Card>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} lg={9}>
