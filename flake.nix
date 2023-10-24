@@ -59,6 +59,7 @@
             extract-covers = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''poetry run extract-covers -p ${pkgs.poppler_utils}/bin -f 1 -l 1 -i books -o covers'';
+              description = ''extract book cover images'';
             };
 
             prod = {
