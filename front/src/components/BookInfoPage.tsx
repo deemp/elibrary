@@ -7,6 +7,7 @@ import {
   Card,
   CardMedia,
   Container,
+  Divider,
   Grid,
   Paper,
   Typography,
@@ -151,11 +152,13 @@ export function BookInfoPage() {
         }
         nav={
           <>
-            <Container maxWidth='xl'>
-              <Box sx={{ display: "flex" }}>
-                <NavLink text={"Search"} to={"/"} id={"search"} />
-                {faqButton}
-              </Box>
+            <Container maxWidth="xl">
+              <Grid container spacing={1} alignItems={"center"}>
+                <Grid item>
+                  <NavLink text={"Search"} to={"/"} id={"search"} />
+                </Grid>
+                <Grid item>{faqButton}</Grid>
+              </Grid>
             </Container>
             {faqDrawer}
           </>

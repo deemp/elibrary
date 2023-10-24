@@ -80,8 +80,13 @@ export function useElements() {
     <Button
       sx={{
         color: "#ffffff",
-        padding: "20px",
+        paddingLeft: '3px',
+        paddingRight: '3px',
         fontWeight: "bold",
+        minWidth: '35px',
+        '&:hover': {
+          backgroundColor: '#4f9ae3'
+        }
       }}
       onClick={toggleDrawer(true)}
     >
