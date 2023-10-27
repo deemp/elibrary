@@ -17,8 +17,8 @@ export interface Book {
 }
 
 const rename: [string, string][] = [
-  ['bisac', 'BISAC'],
-  ['lc', 'LC'],
+  ['bisac', 'Category'],
+  ['lc', 'Subject'],
   ['publisher', 'Publisher'],
   ['year', 'Year'],
   ['book_id', 'Book ID'],
