@@ -17,17 +17,20 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+prefix = env.PREFIX
+
 if env.ENABLE_AUTH:
     from . import auth_secrets
     # https://stackoverflow.com/a/73924330/11790403
     app.add_middleware(SessionMiddleware, secret_key=auth_secrets.SECRET_KEY)
-    app.include_router(auth.router)
+    app.include_router(auth.router, prefix=prefix)
 
 # https://fastapi.tiangolo.com/tutorial/static-files/
-app.mount("/static", StaticFiles(directory="elibrary/static/front/"), name="static")
-app.mount("/covers", StaticFiles(directory="covers"), name="covers")
+app.mount(f"{prefix}/static", StaticFiles(directory="elibrary/static/front/"), name="static")
+app.mount(f"{prefix}/covers", StaticFiles(directory="covers"), name="covers")
 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
-app.include_router(root.router)
-app.include_router(book.router)
-app.include_router(search.router)
+app.include_router(root.router, prefix=prefix)
+app.include_router(book.router, prefix=prefix)
+app.include_router(search.router, prefix=prefix)
+
