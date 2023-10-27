@@ -72,6 +72,14 @@
               '';
               description = ''run prod site at localhost:${portElibrary}'';
             };
+            prod-elibrary = {
+              runtimeInputs = [ pkgs.poetry ];
+              text = ''
+                ${getExe packages.stop}
+                ${runElibrary} &
+              '';
+              description = ''run prod server at localhost:${portElibrary}'';
+            };
             dev = {
               runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
               text = ''
