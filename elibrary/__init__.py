@@ -8,6 +8,7 @@ class Env:
     DB_PATH: str
     DB_TABLE_BOOK: str
     ENABLE_AUTH: bool
+    PREFIX: str
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == 'true'
