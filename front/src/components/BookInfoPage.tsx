@@ -39,15 +39,47 @@ function Row({
   );
 }
 
+interface ImageDimensions {
+  height: number;
+  width: number;
+}
+
+const loadImage = (
+  setImageDimensions: React.Dispatch<React.SetStateAction<ImageDimensions>>,
+  imageUrl: string,
+  maxHeight: number
+) => {
+  const img = new Image();
+  img.src = imageUrl;
+
+  const ratio = img.height / img.width;
+
+  img.onload = () => {
+    setImageDimensions({
+      height: maxHeight,
+      width: maxHeight / ratio,
+    });
+  };
+  img.onerror = (err) => {
+    console.log("img error");
+    console.error(err);
+  };
+};
+
 export function BookInfoPage() {
   const { id } = useParams();
   if (id) {
     const bookId = Number.parseInt(id);
     const url = `${import.meta.env.VITE_API_PREFIX}/book/${bookId}`;
     const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${bookId}.jpg`;
+    const maxCoverHeight = 300;
 
     const [book, setBook] = useState<Book | undefined>();
     const [reference, setReference] = useState<string>("");
+    const [imageDimensions, setImageDimensions] = useState({
+      height: 200,
+      width: 200,
+    });
 
     useEffect(() => {
       fetch(url, {
@@ -61,7 +93,10 @@ export function BookInfoPage() {
             `${r?.authors}.${r?.title}//${r?.authors}//${r?.publisher}.-${r?.year}.${r?.isbn}`
           );
         });
-    }, [setBook, url]);
+
+    });
+
+    loadImage(setImageDimensions, coverUrl, maxCoverHeight);
 
     const copyToClipboard = () => {
       if (copy(reference)) {
@@ -89,11 +124,22 @@ export function BookInfoPage() {
                   </Link>
                 </Grid>
                 <Grid item xs={12}>
-                  <Grid container spacing={3} justifyContent={"center"}>
-                    <Grid item xs={7} sm={4} md={3} lg={3} xl={2}>
-                      <Card elevation={elevation}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} sm={4} md={3} lg={3} xl={3}>
+                      <Card
+                        elevation={elevation}
+                        sx={{
+                          height: `${imageDimensions.height}px`,
+                          width: `${imageDimensions.width}px`,
+                        }}
+                      >
                         {/* TODO replace with cover url from book object */}
-                        <CardMedia component="img" src={coverUrl} />
+                        <CardMedia
+                          component="img"
+                          src={coverUrl}
+                          height={`${imageDimensions.height}px`}
+                          width={`${imageDimensions.width}px`}
+                        />
                       </Card>
                     </Grid>
                     <Grid item xs={12} sm={8} md={9} lg={9}>
