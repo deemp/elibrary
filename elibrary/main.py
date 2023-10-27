@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from .internal.db import create_db_and_tables
 from contextlib import asynccontextmanager
@@ -34,3 +35,7 @@ app.include_router(root.router, prefix=prefix)
 app.include_router(book.router, prefix=prefix)
 app.include_router(search.router, prefix=prefix)
 
+
+@app.api_route("/{path:path}", methods=["GET"])
+async def catch_all(path: str):
+    return FileResponse("elibrary/static/front/index.html")
