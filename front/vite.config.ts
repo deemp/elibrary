@@ -10,10 +10,9 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: process.env.VITE_API_BASE_URL,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
         }
       }
     } : {},
-    base: (mode === 'development') ? '' : '/static'
+    base: (mode === 'development') ? '' : `${process.env.VITE_API_PREFIX}/static`
   }
 })
