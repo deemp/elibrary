@@ -186,7 +186,7 @@ export function BookInfoPage() {
                           variant="outlined"
                           onClick={copyToClipboard}
                         >
-                          Copy Reference
+                          Copy bibliographic record
                         </Button>
                       </Grid>
                     </Grid>
