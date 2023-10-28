@@ -88,15 +88,13 @@ export function BookInfoPage() {
       })
         .then((r) => r.json())
         .then((r: Book | undefined) => {
+          loadImage(setImageDimensions, coverUrl, maxCoverHeight);
           setBook(r);
           setReference(
             `${r?.authors}.${r?.title}//${r?.authors}//${r?.publisher}.-${r?.year}.${r?.isbn}`
           );
         });
-
-    });
-
-    loadImage(setImageDimensions, coverUrl, maxCoverHeight);
+    }, [url, coverUrl]);
 
     const copyToClipboard = () => {
       if (copy(reference)) {
