@@ -28,10 +28,10 @@ function Row({
   return (
     <Grid item xs={12}>
       <Grid container>
-        <Grid item xs={3} sm={3} md={2}>
+        <Grid item sx={{width: '80px'}}>
           <Typography>{title}</Typography>
         </Grid>
-        <Grid item xs={9} sm={9} md={10}>
+        <Grid item xs>
           <Typography sx={{ fontWeight: "bold" }}>{content}</Typography>
         </Grid>
       </Grid>
@@ -123,7 +123,7 @@ export function BookInfoPage() {
                 </Grid>
                 <Grid item xs={12}>
                   <Grid container spacing={3}>
-                    <Grid item xs={12} sm={4} md={3} lg={3} xl={3}>
+                    <Grid item sx={{ width: `${imageDimensions.width}` }}>
                       <Card
                         elevation={elevation}
                         sx={{
@@ -140,7 +140,7 @@ export function BookInfoPage() {
                         />
                       </Card>
                     </Grid>
-                    <Grid item xs={12} sm={8} md={9} lg={9}>
+                    <Grid item xs={12} sm>
                       <Grid container rowSpacing={1}>
                         {[
                           "title",
