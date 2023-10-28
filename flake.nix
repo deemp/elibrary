@@ -4,16 +4,19 @@
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
-      inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs; };
+      inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs poetry2nix; };
       perSystem = { inputs, system }:
         let
-          pkgs = import inputs.nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
+          pkgs = import inputs.nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           portElibrary = "5000";
           portFront = "5001";
           runElibrary = "poetry run uvicorn --port ${portElibrary} elibrary.main:app --reload";
-          packages = mkShellApps {
+          packages = (mkShellApps {
             prod-build-pdfjs = {
               runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
               text =
@@ -128,6 +131,31 @@
               '';
               description = ''install dependencies'';
             };
+          }) // {
+            package-python =
+              let
+                poetry2nix = (pkgs.appendOverlays [ inputs.poetry2nix.overlays.default ]).poetry2nix;
+                p2nix = poetry2nix.overrideScope' (self: super: {
+                  defaultPoetryOverrides = super.defaultPoetryOverrides.extend (pyself: pysuper: {
+                    baize = pysuper.baize.overridePythonAttrs
+                      (
+                        old: {
+                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.pdm-pep517 pysuper.setuptools ];
+                        }
+                      );
+                    pandas = pysuper.pandas.overridePythonAttrs
+                      (
+                        old: {
+                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.meson-python ];
+                        }
+                      );
+                  });
+                });
+                app = p2nix.mkPoetryScriptsPackage {
+                  projectDir = ./.;
+                };
+              in
+              app;
           };
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
