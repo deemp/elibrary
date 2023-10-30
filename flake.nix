@@ -1,10 +1,14 @@
 {
   inputs = {
     flakes.url = "github:deemp/flakes/";
+    pdfjs.url = "gitlab:elibrary/pdfjs?host=gitlab.pg.innopolis.university";
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
-      inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs poetry2nix; };
+      inputs = {
+        inherit (inputs.flakes.all) devshell drv-tools nixpkgs poetry2nix;
+        inherit (inputs) pdfjs;
+      };
       perSystem = { inputs, system }:
         let
           pkgs = import inputs.nixpkgs {
@@ -13,19 +17,16 @@
           };
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
+          inherit (inputs) pdfjs;
           portElibrary = "5000";
           portFront = "5001";
           runElibrary = "poetry run uvicorn --port ${portElibrary} elibrary.main:app --reload";
           packages = (mkShellApps {
             prod-build-pdfjs = {
-              runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
+              runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
                 let dist = "front/public/pdfjs"; in
-                ''
-                  (cd pdfjs && gulp generic)
-                  mkdir -p ${dist}
-                  cp -r pdfjs/build/generic/* ${dist}
-                '';
+                ''cp -r ${pdfjs.outPath}/build/generic/* ${dist}'';
               description = ''build pdfjs for front'';
             };
             prod-build-react = {
@@ -127,7 +128,6 @@
               text = ''
                 poetry install
                 (cd front && npm i)
-                (cd pdfjs && npm i)
               '';
               description = ''install dependencies'';
             };
