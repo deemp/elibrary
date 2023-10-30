@@ -45,6 +45,5 @@ def run():
         pathlib.Path(args.output_directory).mkdir(
             parents=True, exist_ok=True
         )
-        for i, img in enumerate(images):
-            j = args.first_page + i
+        for img in images:
             img.save(f"{args.output_directory}/{pdf_idx}.jpg", "JPEG")
