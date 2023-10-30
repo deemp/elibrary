@@ -7,7 +7,6 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.scripts]
-elibrary = "elibrary.main:run"
 import-catalog = "import-catalog.main:run"
 extract-covers = "extract-covers.main:run"
 
