@@ -2,11 +2,11 @@
   "nodes": {
     "flakes": {
       "locked": {
-        "lastModified": 1697830907,
-        "narHash": "sha256-nIPm09UkkR8ayvG2tWz+VS9P0UPNwH1DBnHp93DTCfQ=",
+        "lastModified": 1698662235,
+        "narHash": "sha256-oSZYHVhB4Rb0sDEBDFIRNgHWzF3J0lD8ICdnyh0FIrU=",
         "owner": "deemp",
         "repo": "flakes",
-        "rev": "4bdbf24e75d33162db8bc9b8b420fe7526f570e8",
+        "rev": "b929dd48e07db538fc73fbef963509c70683e545",
         "type": "github"
       },
       "original": {
@@ -15,9 +15,45 @@
         "type": "github"
       }
     },
+    "flakes_2": {
+      "locked": {
+        "lastModified": 1698521752,
+        "narHash": "sha256-pX7tUeojPy45u2EaCnJbkLuf6cnvAN9xsnIDIZ8pqSg=",
+        "owner": "deemp",
+        "repo": "flakes",
+        "rev": "a7f0ed2826a4d4dff4259ae4cc9a3f409e096375",
+        "type": "github"
+      },
+      "original": {
+        "owner": "deemp",
+        "repo": "flakes",
+        "type": "github"
+      }
+    },
+    "pdfjs": {
+      "inputs": {
+        "flakes": "flakes_2"
+      },
+      "locked": {
+        "host": "gitlab.pg.innopolis.university",
+        "lastModified": 1698601564,
+        "narHash": "sha256-q4DFPifZ0+5/i2Ii+6GdzKuSSUYI2gKco9wckg0U4T8=",
+        "owner": "elibrary",
+        "repo": "pdfjs",
+        "rev": "f3c56acc2dd2a7af0a77e0f4e454ca82fc03d33d",
+        "type": "gitlab"
+      },
+      "original": {
+        "host": "gitlab.pg.innopolis.university",
+        "owner": "elibrary",
+        "repo": "pdfjs",
+        "type": "gitlab"
+      }
+    },
     "root": {
       "inputs": {
-        "flakes": "flakes"
+        "flakes": "flakes",
+        "pdfjs": "pdfjs"
       }
     }
   },

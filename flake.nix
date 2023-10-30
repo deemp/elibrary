@@ -1,28 +1,32 @@
 {
   inputs = {
     flakes.url = "github:deemp/flakes/";
+    pdfjs.url = "gitlab:elibrary/pdfjs?host=gitlab.pg.innopolis.university";
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
-      inputs = { inherit (inputs.flakes.all) devshell drv-tools nixpkgs; };
+      inputs = {
+        inherit (inputs.flakes.all) devshell drv-tools nixpkgs poetry2nix nix-filter;
+        inherit (inputs) pdfjs;
+      };
       perSystem = { inputs, system }:
         let
-          pkgs = import inputs.nixpkgs { system = "x86_64-linux"; config.allowUnfree = true; };
+          pkgs = import inputs.nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
+          inherit (inputs) pdfjs;
           portElibrary = "5000";
           portFront = "5001";
-          runElibrary = "poetry run uvicorn --port ${portElibrary} elibrary.main:app --reload";
+          runElibrary = "poetry run uvicorn --port ${portElibrary} --host 0.0.0.0 elibrary.main:app --reload";
           packages = mkShellApps {
             prod-build-pdfjs = {
-              runtimeInputs = [ pkgs.nodejs pkgs.nodePackages.gulp ];
+              runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
                 let dist = "front/public/pdfjs"; in
-                ''
-                  (cd pdfjs && gulp generic)
-                  mkdir -p ${dist}
-                  cp -r pdfjs/build/generic/* ${dist}
-                '';
+                ''cp -r ${pdfjs.outPath}/build/generic/* ${dist}'';
               description = ''build pdfjs for front'';
             };
             prod-build-react = {
@@ -124,9 +128,119 @@
               text = ''
                 poetry install
                 (cd front && npm i)
-                (cd pdfjs && npm i)
               '';
               description = ''install dependencies'';
+            };
+
+            packageBack =
+              let
+                poetry2nix = (pkgs.appendOverlays [ inputs.poetry2nix.overlays.default ]).poetry2nix;
+                p2nix = poetry2nix.overrideScope' (self: super: {
+                  defaultPoetryOverrides = super.defaultPoetryOverrides.extend (pyself: pysuper: {
+                    baize = pysuper.baize.overridePythonAttrs
+                      (
+                        old: {
+                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.pdm-pep517 pysuper.setuptools ];
+                        }
+                      );
+                    pandas = pysuper.pandas.overridePythonAttrs
+                      (
+                        old: {
+                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.meson-python ];
+                        }
+                      );
+                  });
+                });
+                app = p2nix.mkPoetryEnv {
+                  projectDir = ./.;
+                  groups = [ "prod" ];
+                  editablePackageSources = {
+                    elibrary = ./elibrary;
+                    import-catalog = ./import-catalog;
+                    extract-covers = ./extract-covers;
+                  };
+                };
+              in
+              app;
+            
+            packageFront = pkgs.buildNpmPackage {
+              name = "front";
+              buildInputs = [ pkgs.nodejs ];
+              src = ./front;
+              npmBuild = "npm run build";
+
+              installPhase = ''
+                mkdir -p $out
+                cp -r dist/* $out
+                mkdir $out/pdfjs
+                cp -r ${pdfjs.outPath}/build/generic/* $out/pdfjs
+              '';
+
+              npmDepsHash = "sha256-OUAjjv0xZjvh+M8xiH4MYNzF4Sa0ZwokBikseMnWE3M=";
+            };
+
+            packageServer =
+              let
+                source = inputs.nix-filter {
+                  root = ./.;
+                  include = [
+                    "elibrary"
+                    "import-catalog"
+                    "poetry.lock"
+                    "poetry.toml"
+                    "pyproject.toml"
+                  ];
+                };
+              in
+              pkgs.stdenv.mkDerivation {
+                pname = "project";
+                version = "0.0.1";
+                phases = [ "installPhase" ];
+                installPhase = ''
+                  APP=$out/elibrary
+                  mkdir -p $APP
+
+                  VENV=$APP/.venv
+                  mkdir $VENV
+
+                  cp -r ${source}/* $APP
+                  chmod -R +w $APP
+                  cp -r ${packages.packageBack}/* $VENV
+
+                  FRONT=$APP/elibrary/static/front
+                  mkdir -p $FRONT
+
+                  cp -r ${packages.packageFront}/* $FRONT
+                '';
+              };
+
+            # data should be mounted externally
+            # see compose.yaml
+            imageServer = pkgs.dockerTools.streamLayeredImage {
+              name = "elibrary";
+              tag = "latest";
+              contents = [
+                packages.server
+                pkgs.bashInteractive
+                pkgs.coreutils
+                pkgs.poetry
+              ];
+
+              config = {
+                Entrypoint = [ "bash" "-c" ];
+                Cmd = [
+                  ''
+                    cd elibrary
+                    chmod +x .venv/bin/{python,uvicorn}
+                    ${runElibrary}
+                  ''
+                ];
+              };
+            };
+
+            dockerLoadImageServer = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''${packages.imageServer} | docker load'';
             };
           };
           devShells.default = mkShell {
@@ -145,6 +259,7 @@
               pkgs.graphviz
               pkgs.jdk11
               pkgs.plantuml
+              pkgs.docker
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);

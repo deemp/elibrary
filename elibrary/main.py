@@ -27,8 +27,8 @@ if env.ENABLE_AUTH:
     app.include_router(auth.router, prefix=prefix)
 
 # https://fastapi.tiangolo.com/tutorial/static-files/
-app.mount(f"{prefix}/static", StaticFiles(directory="elibrary/static/front/"), name="static")
-app.mount(f"{prefix}/covers", StaticFiles(directory="covers"), name="covers")
+app.mount(f"{prefix}/static", StaticFiles(directory="elibrary/static/front/", follow_symlink=True), name="static")
+app.mount(f"{prefix}/covers", StaticFiles(directory="covers", follow_symlink=True), name="covers")
 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
 app.include_router(root.router, prefix=prefix)
