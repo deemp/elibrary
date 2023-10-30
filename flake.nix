@@ -259,6 +259,7 @@
               pkgs.graphviz
               pkgs.jdk11
               pkgs.plantuml
+              pkgs.docker
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
