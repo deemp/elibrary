@@ -77,7 +77,6 @@
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.prod-build-front}
-                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary}
               '';
@@ -94,7 +93,6 @@
             dev = {
               runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
               text = ''
-                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
                 (cd front && npm run dev)
