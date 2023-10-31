@@ -12,20 +12,18 @@ from .db import create_db_and_tables, engine
 from .. import env
 
 
-def run(
+def import_catalog(
     xlsx=env.XLSX_PATH,
     sheet_name=env.SHEET,
     sql_dump_path=env.SQL_DUMP_PATH,
     db_path=env.DB_PATH,
 ):
-    create_db_and_tables()
-
     Path(db_path).parent.mkdir(exist_ok=True, parents=True)
 
     df_xlsx = pd.read_excel(xlsx, sheet_name)
 
     book_tmp = BookTmp.__tablename__
-    
+
     with Session(engine) as session:
         sql = f"delete from {book_tmp};"
         session.execute(sql)
@@ -43,9 +41,14 @@ def run(
     sql = f"drop table {book_tmp}"
     session.execute(sql)
     session.commit()
-    
+
     with closing(sqlite3.connect(db_path)) as conn:
         # save book data from that database into a sql file
         with open(sql_dump_path, "w") as f:
             for line in conn.iterdump():
                 f.write(f"{line}\n")
+
+
+def run():
+    create_db_and_tables()
+    import_catalog()
