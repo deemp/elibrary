@@ -9,6 +9,11 @@ class Env:
     DB_TABLE_BOOK: str
     ENABLE_AUTH: bool
     PREFIX: str
+    
+    XLSX_PATH: str
+    SHEET: str
+    
+    SQL_DUMP_PATH: str
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == 'true'

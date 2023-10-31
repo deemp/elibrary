@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import Field, SQLModel
 
 from .. import env
 
@@ -9,7 +9,7 @@ class Book(SQLModel, table=True):
     lc: str
     publisher: str
     year: int
-    book_id: int = Field(primary_key=True)
+    book_id: int = Field(primary_key=True, index=True)
     authors: str
     title: str
     imprint_publisher: str
@@ -19,11 +19,22 @@ class Book(SQLModel, table=True):
     lcc: str
     dewey: float
     format: str
+    reads: int = Field(default=0, nullable=False)
 
 
-class User(SQLModel, table=True):
-    id: int = Field(primary_key=True)
-    email: str = Field(unique=True)
-    password: str
-    first_name: str
-    role: str
+class BookTmp(SQLModel, table=True):
+    __tablename__ = "book_tmp"
+    bisac: str
+    lc: str
+    publisher: str
+    year: int
+    book_id: int = Field(primary_key=True, index=True)
+    authors: str
+    title: str
+    imprint_publisher: str
+    isbn: int
+    esbn: int
+    oclc: int
+    lcc: str
+    dewey: float
+    format: str

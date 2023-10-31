@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.scripts]
-import-catalog = "import-catalog.main:run"
+import-catalog = "elibrary.internal.import_catalog:run"
 extract-covers = "extract-covers.main:run"
 
 [tool.poetry.dependencies]
@@ -22,6 +22,7 @@ jinja2 = "^3.1.2"
 authlib = "^1.2.1"
 httpx = "^0.25.0"
 pdf2image = "^1.16.3"
+pandas-stubs = "^2.1.1.230928"
 
 
 [tool.poetry.group.prod.dependencies]
