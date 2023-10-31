@@ -69,7 +69,7 @@
 
             extract-covers = {
               runtimeInputs = [ pkgs.poetry ];
-              text = ''poetry run extract-covers -p ${pkgs.poppler_utils}/bin -f 1 -l 1 -i books -o covers'';
+              text = ''poetry run extract-covers -p ${pkgs.poppler_utils}/bin -i books -o covers'';
               description = ''extract book cover images'';
             };
 
@@ -77,7 +77,6 @@
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.prod-build-front}
-                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary}
               '';
@@ -94,7 +93,6 @@
             dev = {
               runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
               text = ''
-                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
                 (cd front && npm run dev)

@@ -7,13 +7,18 @@ from .routers import book, root, search, auth
 from .routers import auth
 from starlette.middleware.sessions import SessionMiddleware
 from . import env
-from .internal.import_catalog import run
+from .internal.import_catalog import import_catalog
+from .internal.extract_covers import extract_covers
 
 
 # https://fastapi.tiangolo.com/advanced/events/
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    run()
+    create_db_and_tables()
+    if env.DO_IMPORT_CATALOG:
+        import_catalog()
+    if env.DO_EXTRACT_COVERS:
+        extract_covers()
     yield
 
 
