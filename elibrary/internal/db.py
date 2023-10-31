@@ -1,5 +1,4 @@
-from sqlalchemy import create_engine
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel, create_engine
 from .. import env
 
 sqlite_url = f"sqlite:///{env.DB_PATH}"
