@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.scripts]
 import-catalog = "elibrary.internal.import_catalog:run"
-extract-covers = "extract-covers.main:run"
+extract-covers = "elibrary.internal.extract_covers:run"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
