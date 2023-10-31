@@ -250,6 +250,8 @@
               pkgs.jdk11
               pkgs.plantuml
               pkgs.docker
+              pkgs.python311Packages.flake8
+              pkgs.nodePackages_latest.eslint
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
