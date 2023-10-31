@@ -20,8 +20,15 @@
           inherit (inputs) pdfjs;
           portElibrary = "5000";
           portFront = "5001";
-          runElibrary = "poetry run uvicorn --port ${portElibrary} --host 0.0.0.0 elibrary.main:app --reload";
           packages = mkShellApps {
+            runElibrary = {
+              text = ''
+                export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
+                  pkgs.stdenv.cc.cc.lib
+                ]}
+                poetry run uvicorn --port ${portElibrary} --host 0.0.0.0 elibrary.main:app --reload
+              '';
+            };
             prod-build-pdfjs = {
               runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
@@ -72,7 +79,7 @@
                 ${getExe packages.prod-build-front}
                 ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
-                ${runElibrary}
+                ${getExe packages.runElibrary}
               '';
               description = ''run prod site at localhost:${portElibrary}'';
             };
@@ -80,7 +87,7 @@
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.stop}
-                ${runElibrary} &
+                ${getExe packages.runElibrary} &
               '';
               description = ''run prod server at localhost:${portElibrary}'';
             };
@@ -89,7 +96,7 @@
               text = ''
                 ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
-                ${runElibrary} &
+                ${getExe packages.runElibrary} &
                 (cd front && npm run dev)
               '';
               description = "run dev site at localhost:${portFront}";
@@ -162,7 +169,7 @@
                 };
               in
               app;
-            
+
             packageFront = pkgs.buildNpmPackage {
               name = "front";
               buildInputs = [ pkgs.nodejs ];
@@ -232,7 +239,7 @@
                   ''
                     cd elibrary
                     chmod +x .venv/bin/{python,uvicorn}
-                    ${runElibrary}
+                    ${getExe packages.runElibrary}
                   ''
                 ];
               };
