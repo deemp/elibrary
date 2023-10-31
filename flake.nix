@@ -220,7 +220,7 @@
               name = "elibrary";
               tag = "latest";
               contents = [
-                packages.server
+                packages.packageServer
                 pkgs.bashInteractive
                 pkgs.coreutils
                 pkgs.poetry
