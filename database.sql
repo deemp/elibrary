@@ -28,5 +28,22 @@ INSERT INTO "book" VALUES('LANGUAGE ARTS & DISCIPLINES','Linguistics / General',
 INSERT INTO "book" VALUES('LANGUAGE ARTS & DISCIPLINES','Linguistics / General','De Gruyter',2019,2246475,'Verena Schröter','Null Subjects in Englishes : A Comparison of British English and Asian Englishes','De Gruyter Mouton',9783110633436,9783110645354,1121056326,'PE1072 .S35 2019',420.0,'EPUB;PDF',312,0);
 INSERT INTO "book" VALUES('BUSINESS & ECONOMICS','General','Harvard University Press',2021,2894802,'Richard Pomfret','The Economic Integration of Europe','Harvard University Press',9780674244139,9780674259454,1249693975,'HC241 .P663 2021eb',337.142,'PDF',272,0);
 INSERT INTO "book" VALUES('BUSINESS & ECONOMICS','Advertising & Promotion','Rowman & Littlefield Publishing',2022,3241753,'Jef I. Richards','A History of Advertising : The First 300,000 Years','Rowman & Littlefield Publishers',9781538141212,9781538141229,1264176461,'HF5811',659.1,'EPUB;PDF',465,0);
-CREATE INDEX ix_book_book_id ON book (book_id);
+CREATE TABLE book_tmp (
+	bisac VARCHAR NOT NULL, 
+	lc VARCHAR NOT NULL, 
+	publisher VARCHAR NOT NULL, 
+	year INTEGER NOT NULL, 
+	book_id INTEGER NOT NULL, 
+	authors VARCHAR NOT NULL, 
+	title VARCHAR NOT NULL, 
+	imprint_publisher VARCHAR NOT NULL, 
+	isbn INTEGER NOT NULL, 
+	esbn INTEGER NOT NULL, 
+	oclc INTEGER NOT NULL, 
+	lcc VARCHAR NOT NULL, 
+	dewey FLOAT NOT NULL, 
+	format VARCHAR NOT NULL, 
+	pages INTEGER NOT NULL, 
+	PRIMARY KEY (book_id)
+);
 COMMIT;

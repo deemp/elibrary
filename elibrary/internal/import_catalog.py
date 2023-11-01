@@ -49,7 +49,7 @@ def import_catalog(
     session.execute(sql)
     sql = f"delete from {book} where {book}.{book_id} not in (select {book_id} from {book_tmp});"
     session.execute(sql)
-    sql = f"drop table {book_tmp}"
+    sql = f"delete from {book_tmp}"
     session.execute(sql)
     session.commit()
 
