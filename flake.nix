@@ -235,23 +235,18 @@
           };
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
-              pkgs.curl
               pkgs.sqlite
               pkgs.poetry
               pkgs.nodejs
-              pkgs.nodePackages.localtunnel
               pkgs.rnix-lsp
               pkgs.nixpkgs-fmt
               pkgs.openssl
               pkgs.gnupg
               pkgs.sops
-              pkgs.ngrok
               pkgs.graphviz
               pkgs.jdk11
               pkgs.plantuml
               pkgs.docker
-              pkgs.python311Packages.flake8
-              pkgs.nodePackages_latest.eslint
             ]) ++ mkCommands "scripts" [
               packages.stop
             ] ++ (mkRunCommands "nix-run" packages);
