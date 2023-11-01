@@ -269,6 +269,7 @@
                 pkgs.coreutils
                 pkgs.poetry
                 pkgs.nodejs
+                pkgs.gnugrep
               ];
             };
 
