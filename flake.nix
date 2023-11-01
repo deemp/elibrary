@@ -20,13 +20,14 @@
           inherit (inputs) pdfjs;
           portElibrary = "5000";
           portFront = "5001";
+          host = "0.0.0.0";
           packages = mkShellApps {
             runElibrary = {
               text = ''
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                   pkgs.stdenv.cc.cc.lib
                 ]}
-                poetry run uvicorn --port ${portElibrary} --host 0.0.0.0 elibrary.main:app --reload
+                poetry run uvicorn --port ${portElibrary} --host ${host} elibrary.main:app --reload
               '';
             };
             prod-build-pdfjs = {
@@ -81,7 +82,7 @@
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary}
               '';
-              description = ''run prod site at localhost:${portElibrary}'';
+              description = ''run prod site at ${host}:${portElibrary}'';
             };
             prod-elibrary = {
               runtimeInputs = [ pkgs.poetry ];
@@ -90,7 +91,7 @@
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
-              description = ''run prod server at localhost:${portElibrary}'';
+              description = ''run prod server at ${host}:${portElibrary}'';
             };
             dev = {
               runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
@@ -98,9 +99,9 @@
                 ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
-                (cd front && npm run dev)
+                (cd front && npx vite --port ${portFront} --host ${host})
               '';
-              description = "run dev site at localhost:${portFront}";
+              description = "run dev site at ${host}:${portFront}";
             };
 
             stop = {
