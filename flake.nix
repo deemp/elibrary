@@ -241,7 +241,7 @@
                 version = "0.0.1";
                 phases = [ "installPhase" ];
                 installPhase = ''
-                  APP=$out/elibrary
+                  APP=$out/elibrary-ci
                   mkdir -p $APP
 
                   VENV=$APP/.venv
