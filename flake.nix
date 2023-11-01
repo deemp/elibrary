@@ -168,7 +168,6 @@
                   root = ./.;
                   include = [
                     "elibrary"
-                    "import-catalog"
                     "poetry.lock"
                     "poetry.toml"
                     "pyproject.toml"
