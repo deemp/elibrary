@@ -30,6 +30,22 @@
         "type": "github"
       }
     },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1697700926,
+        "narHash": "sha256-4tQvS/t7Dt19L7GwjZ2D2r3M0LKtFxhG6BEGitDyUhQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2bbf67d3c76927b5c3148f32c0e93c14e5dbc2d9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2bbf67d3c76927b5c3148f32c0e93c14e5dbc2d9",
+        "type": "github"
+      }
+    },
     "pdfjs": {
       "inputs": {
         "flakes": "flakes_2"
@@ -53,7 +69,29 @@
     "root": {
       "inputs": {
         "flakes": "flakes",
-        "pdfjs": "pdfjs"
+        "nixpkgs": "nixpkgs",
+        "pdfjs": "pdfjs",
+        "slimlock": "slimlock"
+      }
+    },
+    "slimlock": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1688756706,
+        "narHash": "sha256-xzkkMv3neJJJ89zo3o2ojp7nFeaZc2G0fYwNXNJRFlo=",
+        "owner": "thomashoneyman",
+        "repo": "slimlock",
+        "rev": "cf72723f59e2340d24881fd7bf61cb113b4c407c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thomashoneyman",
+        "repo": "slimlock",
+        "type": "github"
       }
     }
   },
