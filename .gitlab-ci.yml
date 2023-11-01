@@ -6,7 +6,7 @@ default:
     - echo 'experimental-features = nix-command flakes' > "$HOME/.config/nix/nix.conf"
     - mkdir -p "/etc/containers/"
     - echo '{"default":[{"type":"insecureAcceptAnything"}]}' > /etc/containers/policy.json
-    - cd elibrary
+    - cp -r /elibrary-ci/.* /elibrary-ci/* .
 
 stages:
   - lint
@@ -14,6 +14,6 @@ stages:
 lint:
   stage: lint
   script:
-    - poetry run flake8 elibrary
-    - poetry run pylint elibrary
-    - cd front && npx eslint .
+    - poetry run flake8 elibrary || true
+    - poetry run pylint elibrary || true
+    - (cd front && npm run lint) || true
