@@ -25,6 +25,25 @@
           portElibrary = "5000";
           portFront = "5001";
           host = "0.0.0.0";
+
+          packageBack = groups:
+            let
+              inherit (pkgs.appendOverlays [ inputs.poetry2nix.overlays.default ]) poetry2nix;
+              p2nix = poetry2nix.overrideScope' (self: super: {
+                defaultPoetryOverrides = super.defaultPoetryOverrides.extend (pyself: pysuper: {
+                  baize = pysuper.baize.overridePythonAttrs
+                    (old: { buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.pdm-pep517 pysuper.setuptools ]; });
+                  pandas = pysuper.pandas.overridePythonAttrs
+                    (old: { buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.meson-python ]; });
+                });
+              });
+              app = p2nix.mkPoetryEnv {
+                projectDir = ./.;
+                inherit groups;
+              };
+            in
+            app;
+
           packages = mkShellApps {
             runElibrary = {
               text = ''
@@ -126,37 +145,6 @@
               description = ''install dependencies'';
             };
 
-            packageBack =
-              let
-                poetry2nix = (pkgs.appendOverlays [ inputs.poetry2nix.overlays.default ]).poetry2nix;
-                p2nix = poetry2nix.overrideScope' (self: super: {
-                  defaultPoetryOverrides = super.defaultPoetryOverrides.extend (pyself: pysuper: {
-                    baize = pysuper.baize.overridePythonAttrs
-                      (
-                        old: {
-                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.pdm-pep517 pysuper.setuptools ];
-                        }
-                      );
-                    pandas = pysuper.pandas.overridePythonAttrs
-                      (
-                        old: {
-                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.meson-python ];
-                        }
-                      );
-                  });
-                });
-                app = p2nix.mkPoetryEnv {
-                  projectDir = ./.;
-                  groups = [ "prod" ];
-                  editablePackageSources = {
-                    elibrary = ./elibrary;
-                    import-catalog = ./import-catalog;
-                    extract-covers = ./extract-covers;
-                  };
-                };
-              in
-              app;
-
             packageFront = pkgs.buildNpmPackage {
               name = "front";
               buildInputs = [ pkgs.nodejs ];
@@ -199,7 +187,7 @@
 
                   cp -r ${source}/* $APP
                   chmod -R +w $APP
-                  cp -r ${packages.packageBack}/* $VENV
+                  cp -r ${packageBack [ "prod" ]}/* $VENV
 
                   FRONT=$APP/elibrary/static/front
                   mkdir -p $FRONT
