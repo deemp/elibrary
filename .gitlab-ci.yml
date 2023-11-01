@@ -1,19 +1,19 @@
-build-container:
+default:
   image:
-    name: "nixos/nix:2.12.0"
-  variables:
-    CACHIX_CACHE_NAME: scvalex-scvalex-net
-    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    name: "deemp/elibrary-ci:latest"
   before_script:
-    - nix-env --install --attr nixpkgs.cachix
-    - nix-env --install --attr nixpkgs.skopeo
-    - cachix use "$CACHIX_CACHE_NAME"
-  script:
     - mkdir -p "$HOME/.config/nix"
     - echo 'experimental-features = nix-command flakes' > "$HOME/.config/nix/nix.conf"
     - mkdir -p "/etc/containers/"
     - echo '{"default":[{"type":"insecureAcceptAnything"}]}' > /etc/containers/policy.json
-    
-    - nix develop
-    - flake8 elibrary
-    - npx eslint front
+    - cd elibrary
+
+stages:
+  - lint
+
+lint:
+  stage: lint
+  script:
+    - poetry run flake8 elibrary
+    - poetry run pylint elibrary
+    - cd front && npx eslint .
