@@ -230,24 +230,12 @@
                 src = ./front;
                 installPhase = ''
                   mkdir -p $out
-                  cp $src/package.json $out/package.json
                   cp -r ${packageLock}/js/node_modules $out/node_modules
                 '';
               };
 
+            # should provide dependencies, but not the code from this repo
             packageCI =
-              let
-                source = inputs.nix-filter {
-                  root = ./.;
-                  include = [
-                    "elibrary"
-                    "poetry.lock"
-                    "poetry.toml"
-                    "pyproject.toml"
-                    "front"
-                  ];
-                };
-              in
               pkgs.stdenv.mkDerivation {
                 pname = "package-ci";
                 version = "0.0.1";
@@ -255,16 +243,14 @@
                 installPhase = ''
                   APP=$out/elibrary
                   mkdir -p $APP
-                  cp -r ${source}/* $APP
-                  chmod -R +w $APP
 
                   VENV=$APP/.venv
                   mkdir -p $VENV
                   cp -r ${packageBack [ "prod" "lint" ]}/* $VENV
 
-                  FRONT_STATIC=$APP/elibrary/static/front
-                  mkdir -p $FRONT_STATIC
-                  cp -r ${packages.packageFront}/* $FRONT_STATIC
+                  PDFJS=$APP/front/public/pdfjs
+                  mkdir -p $PDFJS
+                  cp -r ${pdfjs.outPath}/build/generic/* $PDFJS
 
                   FRONT=$APP/front
                   mkdir -p $FRONT
