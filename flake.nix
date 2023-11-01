@@ -76,6 +76,7 @@
             prod = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
+                ${getExe packages."import-catalog"}
                 ${getExe packages.prod-build-front}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary}
@@ -85,6 +86,7 @@
             prod-elibrary = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
+                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
@@ -93,30 +95,12 @@
             dev = {
               runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
               text = ''
+                ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
                 (cd front && npm run dev)
               '';
               description = "run dev site at localhost:${portFront}";
-            };
-            release = {
-              runtimeInputs = [ pkgs.nodePackages.localtunnel ];
-              text = ''
-                ${getExe packages.stop}
-                ${getExe packages.prod} &
-                lt -s 'elibrary-itpd' -p ${portElibrary} &
-              '';
-              description = ''run and expose site via localtunnel'';
-            };
-            release-ngrok = {
-              runtimeInputs = [ pkgs.sops pkgs.ngrok ];
-              text = ''
-                ${getExe packages.stop}
-                sops -d elibrary/enc.auth.env > elibrary/auth.env
-                ${getExe packages.prod} &
-                ngrok http --domain recently-wanted-elf.ngrok-free.app ${portElibrary} &
-              '';
-              description = ''run and expose site via ngrok'';
             };
 
             stop = {
