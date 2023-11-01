@@ -282,6 +282,14 @@
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageCI} | docker load'';
             };
+
+            dockerPush = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''
+                docker tag ${imageName} deemp/${imageName}
+                docker push deemp/${imageName}
+              '';
+            };
           };
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
