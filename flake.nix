@@ -45,6 +45,8 @@
             in
             app;
 
+          imageName = "elibrary-ci";
+
           packages = mkShellApps {
             runElibrary = {
               text = ''
@@ -259,7 +261,7 @@
               };
 
             imageCI = pkgs.dockerTools.streamLayeredImage {
-              name = "elibrary-ci";
+              name = imageName;
               tag = "latest";
               contents = [
                 packages.packageCI
