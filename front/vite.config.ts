@@ -13,6 +13,6 @@ export default defineConfig(({ mode }) => {
         }
       }
     } : {},
-    base: (mode === 'development') ? process.env.VITE_API_PREFIX : `${process.env.VITE_API_PREFIX}/static`
+    base: (mode === 'development') ? '' : `${process.env.VITE_API_PREFIX}/static`
   }
 })
