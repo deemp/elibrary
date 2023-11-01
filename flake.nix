@@ -80,7 +80,7 @@
                 ${getExe packages."import-catalog"}
                 ${getExe packages.prod-build-front}
                 ${getExe packages.stop}
-                ${getExe packages.runElibrary}
+                ${getExe packages.runElibrary} &
               '';
               description = ''run prod site at ${host}:${portElibrary}'';
             };
@@ -99,7 +99,7 @@
                 ${getExe packages."import-catalog"}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
-                (cd front && npx vite --port ${portFront} --host ${host})
+                (cd front && npx vite --port ${portFront} --host ${host}) &
               '';
               description = "run dev site at ${host}:${portFront}";
             };
