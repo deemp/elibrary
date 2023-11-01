@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { Base } from "./Base";
 import { Book } from "./Book";
 import { NavLink } from "./NavLink";
+import { Container } from "@mui/material";
 
 export function BookPage() {
   const { id } = useParams();
@@ -13,7 +14,11 @@ export function BookPage() {
         title="Book"
         user={{ isAuthenticated: true }}
         content={book}
-        nav={<NavLink text={"Search"} to={'/'} id={"search"} />}
+        nav={
+          <Container maxWidth="xl">
+            <NavLink text={"Search"} to={'/'} id={"search"} />
+          </Container>
+        }
       ></Base>
     );
     return base;
