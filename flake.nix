@@ -2,6 +2,10 @@
   inputs = {
     flakes.url = "github:deemp/flakes/";
     pdfjs.url = "gitlab:elibrary/pdfjs?host=gitlab.pg.innopolis.university";
+
+    nixpkgs.url = "github:NixOS/nixpkgs/2bbf67d3c76927b5c3148f32c0e93c14e5dbc2d9";
+    slimlock.url = "github:thomashoneyman/slimlock";
+    slimlock.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
