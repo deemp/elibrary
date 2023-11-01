@@ -45,11 +45,11 @@ def import_catalog(
     book = Book.__tablename__
     book_id = "book_id"
 
-    sql = f"insert into {book} select {book_tmp}.*, 0 from {book_tmp} where {book_tmp}.{book_id} not in (select {book_id} from {book})"
-    session.execute(sql)
     sql = f"delete from {book} where {book}.{book_id} not in (select {book_id} from {book_tmp});"
     session.execute(sql)
-    sql = f"drop table {book_tmp}"
+    sql = f"insert into {book} select {book_tmp}.*, 0 from {book_tmp} where {book_tmp}.{book_id} not in (select {book_id} from {book})"
+    session.execute(sql)
+    sql = f"delete from {book_tmp}"
     session.execute(sql)
     session.commit()
 
