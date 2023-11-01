@@ -102,25 +102,6 @@
               '';
               description = "run dev site at localhost:${portFront}";
             };
-            release = {
-              runtimeInputs = [ pkgs.nodePackages.localtunnel ];
-              text = ''
-                ${getExe packages.stop}
-                ${getExe packages.prod} &
-                lt -s 'elibrary-itpd' -p ${portElibrary} &
-              '';
-              description = ''run and expose site via localtunnel'';
-            };
-            release-ngrok = {
-              runtimeInputs = [ pkgs.sops pkgs.ngrok ];
-              text = ''
-                ${getExe packages.stop}
-                sops -d elibrary/enc.auth.env > elibrary/auth.env
-                ${getExe packages.prod} &
-                ngrok http --domain recently-wanted-elf.ngrok-free.app ${portElibrary} &
-              '';
-              description = ''run and expose site via ngrok'';
-            };
 
             stop = {
               runtimeInputs = [ pkgs.lsof ];
