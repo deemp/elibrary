@@ -19,6 +19,7 @@ class Book(SQLModel, table=True):
     lcc: str
     dewey: float
     format: str
+    pages: int
     reads: int = Field(default=0, nullable=False)
 
 
@@ -38,3 +39,4 @@ class BookTmp(SQLModel, table=True):
     lcc: str
     dewey: float
     format: str
+    pages: int
