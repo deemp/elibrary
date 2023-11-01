@@ -11,6 +11,7 @@
     {
       inputs = {
         inherit (inputs.flakes.all) devshell drv-tools nixpkgs poetry2nix nix-filter;
+        inherit (inputs) slimlock;
         inherit (inputs) pdfjs;
       };
       perSystem = { inputs, system }:
@@ -220,9 +221,78 @@
               };
             };
 
+            packageFrontCI =
+              let
+                inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
+                packageLock = slimlock.buildPackageLock { src = ./front; };
+              in
+              pkgs.stdenv.mkDerivation {
+                name = "front-ci";
+                src = ./front;
+                installPhase = ''
+                  mkdir -p $out
+                  cp $src/package.json $out/package.json
+                  cp -r ${packageLock}/js/node_modules $out/node_modules
+                '';
+              };
+
+            packageCI =
+              let
+                source = inputs.nix-filter {
+                  root = ./.;
+                  include = [
+                    "elibrary"
+                    "poetry.lock"
+                    "poetry.toml"
+                    "pyproject.toml"
+                    "front"
+                  ];
+                };
+              in
+              pkgs.stdenv.mkDerivation {
+                pname = "package-ci";
+                version = "0.0.1";
+                phases = [ "installPhase" ];
+                installPhase = ''
+                  APP=$out/elibrary
+                  mkdir -p $APP
+                  cp -r ${source}/* $APP
+                  chmod -R +w $APP
+
+                  VENV=$APP/.venv
+                  mkdir -p $VENV
+                  cp -r ${packageBack [ "prod" "lint" ]}/* $VENV
+
+                  FRONT_STATIC=$APP/elibrary/static/front
+                  mkdir -p $FRONT_STATIC
+                  cp -r ${packages.packageFront}/* $FRONT_STATIC
+
+                  FRONT=$APP/front
+                  mkdir -p $FRONT
+                  cp -r ${packages.packageFrontCI}/* $FRONT
+                '';
+              };
+
+            imageCI = pkgs.dockerTools.streamLayeredImage {
+              name = "elibrary-ci";
+              tag = "latest";
+              contents = [
+                packages.packageCI
+                pkgs.bashInteractive
+                pkgs.coreutils
+                pkgs.poetry
+                pkgs.nodejs
+              ];
+            };
+
             dockerLoadImageServer = {
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageServer} | docker load'';
+            };
+
+            dockerLoadImageCI = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''${packages.imageCI} | docker load'';
             };
           };
           devShells.default = mkShell {
