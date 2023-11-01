@@ -91,7 +91,7 @@ export function BookInfoPage() {
           loadImage(setImageDimensions, coverUrl, maxCoverHeight);
           setBook(r);
           setReference(
-            `${r?.authors}.${r?.title}//${r?.authors}//${r?.publisher}.-${r?.year}.${r?.isbn}`
+            `${r?.authors.split('-')[0]}. ${r?.title}/${r?.authors}/${r?.publisher}.- ${r?.year}.-${r?.pages} p. -${r?.isbn}`
           );
         });
     }, [url, coverUrl]);
