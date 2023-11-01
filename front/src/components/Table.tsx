@@ -68,6 +68,16 @@ const columns: ColumnData[] = [
     numeric: false,
   },
   {
+    width: 200,
+    dataKey: 'title',
+    numeric: false,
+  },
+  {
+    width: 200,
+    dataKey: 'authors',
+    numeric: false,
+  },
+  {
     width: 100,
     dataKey: 'publisher',
     numeric: false,
@@ -76,11 +86,6 @@ const columns: ColumnData[] = [
     width: 50,
     dataKey: 'year',
     numeric: true,
-  },
-  {
-    width: 200,
-    dataKey: 'title',
-    numeric: false,
   },
   {
     width: 150,
