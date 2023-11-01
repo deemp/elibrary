@@ -9,7 +9,7 @@ class Book(SQLModel, table=True):
     lc: str
     publisher: str
     year: int
-    book_id: int = Field(primary_key=True, index=True)
+    book_id: int = Field(primary_key=True)
     authors: str
     title: str
     imprint_publisher: str
@@ -29,7 +29,7 @@ class BookTmp(SQLModel, table=True):
     lc: str
     publisher: str
     year: int
-    book_id: int = Field(primary_key=True, index=True)
+    book_id: int = Field(primary_key=True)
     authors: str
     title: str
     imprint_publisher: str
