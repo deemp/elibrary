@@ -13,6 +13,7 @@ export interface Book {
   lcc: string;
   dewey: number;
   format: string;
+  pages: number;
   cover_url?: string;
 }
 
