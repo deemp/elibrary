@@ -10,6 +10,7 @@ default:
 
 stages:
   - lint
+  - test
 
 lint:
   stage: lint
@@ -17,3 +18,8 @@ lint:
     - poetry run flake8 elibrary || true
     - poetry run pylint elibrary || true
     - (cd front && npm run lint) || true
+
+test:
+  stage: test
+  script:
+    - poetry run pytest
