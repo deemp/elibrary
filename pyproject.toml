@@ -42,7 +42,7 @@ ipykernel = "^6.26.0"
 meson = "^1.2.3"
 
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.group.test.dependencies]
 pytest = "^7.4.3"
 
 [build-system]
