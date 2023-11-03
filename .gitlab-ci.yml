@@ -21,8 +21,7 @@ lint:
 test:
   stage: stage
   script:
-    - importCatalog
-    - runElibrary &
+    - prod
     - sleep 5
     - poetry run pytest
 
