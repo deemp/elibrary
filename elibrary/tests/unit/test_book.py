@@ -1,4 +1,4 @@
-from ..routers.book import *
+from elibrary.routers.book import *
 
 
 def test_book_page_type():

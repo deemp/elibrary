@@ -1,4 +1,4 @@
-from ..routers.search import *
+from elibrary.routers.search import *
 
 
 def test_search_get_type():
@@ -37,7 +37,7 @@ def test_search_get_bisac_value():
 
 def test_search_get_lc_value():
     response = search_get()
-    for key in response.bisac:
+    for key in response.lc:
         response.lc[key].sort()
     assert response.lc == {
         'Sociology / General': ['SOCIAL SCIENCE'], 
@@ -63,7 +63,7 @@ def test_search_post_type():
 def test_search_post_content_empty():
     request = SearchPOSTRequest(bisac="", lc="", filter_rows=[])
     response = search_post(request)
-    #assert response.books == [...]
+    assert len(response.books) == 10
 
 
 def test_search_post_content_bisac():
@@ -71,13 +71,13 @@ def test_search_post_content_bisac():
         bisac="LANGUAGE ARTS & DISCIPLINES", lc="", filter_rows=[]
     )
     response = search_post(request)
-    #assert response.books == [...]
+    assert len(response.books) == 4
 
 
 def test_search_post_content_lc():
     request = SearchPOSTRequest(bisac="", lc="Linguistics / General", filter_rows=[])
     response = search_post(request)
-    #assert response.books == [...]
+    assert len(response.books) == 3
 
 
 def test_search_post_content_filter():
@@ -85,4 +85,4 @@ def test_search_post_content_filter():
         bisac="", lc="", filter_rows=[FilterRow(filter="year", filter_input="2018")]
     )
     response = search_post(request)
-    #assert response.books == [...]
+    assert len(response.books) == 3
