@@ -57,7 +57,7 @@ def test_search_get_filters_value():
 def test_search_post_type():
     request = SearchPOSTRequest('', '', [])
     response = search_post(request)
-    assert type(response) == SearchPostResponse
+    assert type(response) == SearchPOSTResponse
 
 
 def test_search_post_content_empty():
