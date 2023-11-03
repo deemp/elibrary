@@ -291,7 +291,7 @@
               '';
             };
 
-            dockerPush = {
+            dockerPushImageCI = {
               runtimeInputs = [ pkgs.docker ];
               text = ''
                 docker tag ${imageName} deemp/${imageName}
