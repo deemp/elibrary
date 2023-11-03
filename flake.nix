@@ -56,14 +56,14 @@
                 poetry run uvicorn --port ${portElibrary} --host ${host} elibrary.main:app --reload
               '';
             };
-            prod-build-pdfjs = {
+            prodBuildPdfjs = {
               runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
                 let dist = "front/public/pdfjs"; in
                 ''cp -r ${pdfjs.outPath}/build/generic/* ${dist}'';
               description = ''build pdfjs for front'';
             };
-            prod-build-react = {
+            prodBuildReact = {
               runtimeInputs = [ pkgs.nodejs ];
               text =
                 let dist = "elibrary/static/front"; in
@@ -74,16 +74,16 @@
                 '';
               description = ''prod build of front without pdfjs build'';
             };
-            prod-build-front = {
+            prodBuildFront = {
               text =
                 ''
-                  ${getExe packages.prod-build-pdfjs}
-                  ${getExe packages.prod-build-react}
+                  ${getExe packages.prodBuildPdfjs}
+                  ${getExe packages.prodBuildReact}
                 '';
               description = ''prod build of front'';
             };
 
-            import-catalog = {
+            importCatalog = {
               runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
               text = ''
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
@@ -94,7 +94,7 @@
               description = ''import books catalog into database + save sql'';
             };
 
-            extract-covers = {
+            extractCovers = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''poetry run extract-covers -p ${pkgs.poppler_utils}/bin -i books -o covers'';
               description = ''extract book cover images'';
@@ -103,8 +103,8 @@
             prod = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
-                ${getExe packages."import-catalog"}
-                ${getExe packages.prod-build-front}
+                ${getExe packages.importCatalog}
+                ${getExe packages.prodBuildFront}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
@@ -113,7 +113,7 @@
             prod-elibrary = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
-                ${getExe packages."import-catalog"}
+                ${getExe packages.importCatalog}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
@@ -122,7 +122,7 @@
             dev = {
               runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
               text = ''
-                ${getExe packages."import-catalog"}
+                ${getExe packages.importCatalog}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
                 (cd front && npx vite --port ${portFront} --host ${host}) &
@@ -286,7 +286,7 @@
             testCI = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
-                ${getExe packages."import-catalog"}
+                ${getExe packages.importCatalog}
                 poetry run pytest
               '';
             };
