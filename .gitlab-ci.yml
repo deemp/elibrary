@@ -22,5 +22,4 @@ lint:
 test:
   stage: test
   script:
-    - poetry run pytest
     - testCI
