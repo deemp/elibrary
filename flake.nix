@@ -269,7 +269,7 @@
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages."import-catalog"}
-                (${getExe packages.runElibrary} command > /dev/null 2>&1) &
+                sleep 5
                 poetry run pytest
               '';
             };
