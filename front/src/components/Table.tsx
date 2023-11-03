@@ -124,6 +124,7 @@ function fixedHeaderContent() {
           style={{ width: column.width }}
           sx={{
             backgroundColor: 'background.paper',
+            fontWeight: "bold"
           }}
         >
           {column.label}
