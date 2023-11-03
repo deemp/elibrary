@@ -110,7 +110,7 @@
               '';
               description = ''run prod site at ${host}:${portElibrary}'';
             };
-            prod-elibrary = {
+            prodElibrary = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.importCatalog}
