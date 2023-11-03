@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "jnoortheen.nix-ide",
+        "mkhl.direnv",
+        "ms-python.black-formatter",
+        "ms-python.mypy-type-checker",
+        "ms-python.pylint",
+        "ms-python.python",
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+        "usernamehw.errorlens",
+        "davidanson.vscode-markdownlint"
+    ]
+}
