@@ -1,3 +1,4 @@
+import requests
 from elibrary.routers.search import *
 
 
@@ -97,3 +98,23 @@ def test_search_post_content_filter():
     )
     response = search_post(request)
     assert len(response.books) == 3
+
+
+class TestSearchPostContentFilter:
+    request = request = SearchPOSTRequest(
+        bisac="", lc="", filter_rows=[FilterRow(filter="year", filter_input="2018")]
+    )
+
+    def check(self, response: SearchPOSTResponse):
+        assert len(response.books) == 3
+
+    def test_unit(self):
+        response = search_post(self.request)
+        self.check(response)
+
+    def test_api(self):
+        response = requests.post(
+            "http://localhost:5000/api/search",
+            self.request.json(),
+        )
+        self.check(SearchPOSTResponse(**response.json()))
