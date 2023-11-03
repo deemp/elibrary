@@ -279,7 +279,9 @@
               name = imageName;
               tag = "latest";
               contents = [
-                packages.testCI
+                packages.importCatalog
+                packages.runElibrary
+
                 packages.dependenciesCI
                 pkgs.bashInteractive
                 pkgs.coreutils
