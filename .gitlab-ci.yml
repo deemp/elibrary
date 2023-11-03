@@ -9,17 +9,16 @@ default:
     - cp -r /elibrary-ci/.* /elibrary-ci/* .
 
 stages:
-  - lint
-  - test
+  - stage
 
 lint:
-  stage: lint
+  stage: stage
   script:
     - poetry run flake8 elibrary || true
     - poetry run pylint elibrary || true
     - (cd front && npm run lint) || true
 
 test:
-  stage: test
+  stage: stage
   script:
     - testCI
