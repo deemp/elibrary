@@ -222,6 +222,11 @@
               };
             };
 
+            dockerLoadImageServer = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''${packages.imageServer} | docker load'';
+            };
+
             packageFrontCI =
               let
                 inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
@@ -248,7 +253,7 @@
 
                   VENV=$APP/.venv
                   mkdir -p $VENV
-                  cp -r ${packageBack [ "prod" "lint" ]}/* $VENV
+                  cp -r ${packageBack [ "prod" "lint" "test" ]}/* $VENV
 
                   PDFJS=$APP/front/public/pdfjs
                   mkdir -p $PDFJS
@@ -273,17 +278,20 @@
               ];
             };
 
-            dockerLoadImageServer = {
-              runtimeInputs = [ pkgs.docker ];
-              text = ''${packages.imageServer} | docker load'';
-            };
-
             dockerLoadImageCI = {
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageCI} | docker load'';
             };
 
-            dockerPush = {
+            testCI = {
+              runtimeInputs = [ pkgs.poetry ];
+              text = ''
+                ${getExe packages."import-catalog"}
+                poetry run pytest
+              '';
+            };
+
+            dockerPushImageCI = {
               runtimeInputs = [ pkgs.docker ];
               text = ''
                 docker tag ${imageName} deemp/${imageName}
