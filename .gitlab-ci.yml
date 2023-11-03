@@ -23,6 +23,7 @@ test:
   script:
     - prod &> logs
     - sleep 5
-    - poetry run pytest
+    - poetry run pytest &> logs.test
     - cat logs
+    - cat logs.test
 
