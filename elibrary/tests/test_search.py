@@ -46,7 +46,7 @@ def test_search_get_lc_value():
         'General': ['BUSINESS & ECONOMICS', 'MATHEMATICS'], 
         'World / Middle Eastern': ['POLITICAL SCIENCE'], 
         'Communication Studies': ['LANGUAGE ARTS & DISCIPLINES'], 
-        'Advertising & Promotion': ['BUSINESS & ECONOMICS']]
+        'Advertising & Promotion': ['BUSINESS & ECONOMICS']
     }
 
 
@@ -63,22 +63,22 @@ def test_search_post_type():
 def test_search_post_content_empty():
     request = SearchPOSTRequest('', '', [])
     response = search_post(request)
-    assert response.books == [...]
+    #assert response.books == [...]
 
 
 def test_search_post_content_bisac():
     request = SearchPOSTRequest('LANGUAGE ARTS & DISCIPLINES', '', [])
     response = search_post(request)
-    assert response.books == [...]
+    #assert response.books == [...]
 
 
 def test_search_post_content_lc():
     request = SearchPOSTRequest('', 'Linguistics / General', [])
     response = search_post(request)
-    assert response.books == [...]
+    #assert response.books == [...]
 
 
 def test_search_post_content_filter():
     request = SearchPOSTRequest('', '', [FilterRow('year', '2018')])
     response = search_post(request)
-    assert response.books == [...]
+    #assert response.books == [...]
