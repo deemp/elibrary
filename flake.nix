@@ -265,16 +265,6 @@
                 '';
               };
 
-            testCI = {
-              runtimeInputs = [ pkgs.poetry ];
-              text = ''
-                ${getExe packages."import-catalog"}
-                (${getExe packages.runElibrary} > /dev/null 2>&1) &
-                sleep 5
-                poetry run pytest
-              '';
-            };
-
             imageCI = pkgs.dockerTools.streamLayeredImage {
               name = imageName;
               tag = "latest";
@@ -294,14 +284,6 @@
             dockerLoadImageCI = {
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageCI} | docker load'';
-            };
-
-            testCI = {
-              runtimeInputs = [ pkgs.poetry ];
-              text = ''
-                ${getExe packages.importCatalog}
-                poetry run pytest
-              '';
             };
 
             dockerPushImageCI = {
