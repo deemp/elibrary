@@ -28,7 +28,7 @@ function Row({
   return (
     <Grid item xs={12}>
       <Grid container>
-        <Grid item sx={{width: '80px'}}>
+        <Grid item sx={{ width: "80px" }}>
           <Typography>{title}</Typography>
         </Grid>
         <Grid item xs>
@@ -91,7 +91,9 @@ export function BookInfoPage() {
           loadImage(setImageDimensions, coverUrl, maxCoverHeight);
           setBook(r);
           setReference(
-            `${r?.authors.split('-')[0]}. ${r?.title}/${r?.authors}/${r?.publisher}.- ${r?.year}.-${r?.pages} p. -${r?.isbn}`
+            `${r?.authors.split("-")[0]}. ${r?.title}/${r?.authors}/${
+              r?.publisher
+            }.- ${r?.year}.-${r?.pages} p. -${r?.isbn}`
           );
         });
     }, [url, coverUrl]);
@@ -196,12 +198,31 @@ export function BookInfoPage() {
         }
         nav={
           <>
-            <Container maxWidth="xl">
-              <Grid container spacing={1} alignItems={"center"}>
-                <Grid item>
-                  <NavLink text={"Search"} to={"/"} id={"search"} />
+            <Container maxWidth={"xl"}>
+              <Grid container alignItems={"center"}>
+                <Grid item xs={7}>
+                  <Grid container spacing={1}>
+                    <Grid item>
+                      <NavLink text={"Search"} to={"/"} id={"search"} />
+                    </Grid>
+                    <Grid item>{faqButton}</Grid>
+                  </Grid>
                 </Grid>
-                <Grid item>{faqButton}</Grid>
+                <Grid
+                  item
+                  xs={5}
+                  paddingTop={appbar.padding}
+                  paddingBottom={appbar.padding}
+                  textAlign={"right"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"end"}
+                  fontSize={"14px"}
+                >
+                  <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+                    EBSCO EBOOK ARCHIVE
+                  </Typography>
+                </Grid>
               </Grid>
             </Container>
             {faqDrawer}

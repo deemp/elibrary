@@ -1,7 +1,7 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
 import { NavLink } from "./NavLink";
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import * as appbar from "../models/appbar";
 import { useElements } from "./FAQ";
 
@@ -47,7 +47,9 @@ export function SearchPage() {
                 justifyContent={"end"}
                 fontSize={"14px"}
               >
-                EBSCO EBOOK ARCHIVE
+                <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+                  EBSCO EBOOK ARCHIVE
+                </Typography>
               </Grid>
             </Grid>
           </Container>
