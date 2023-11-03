@@ -17,4 +17,21 @@ def test_book_page_fail():
 
 def test_book_page():
     book = book_page(676913)
-    assert book == Book(year=2014, bisac='SOCIAL SCIENCE', authors='Cassandra S. Crawford', imprint_publisher='NYU Press', esbn=9780814764824, lcc='RD553 .C88 2014eb', format='EPUB;PDF', reads=0, lc='Sociology / General', publisher='New York University Press', book_id=676913, title='Phantom Limb : Amputation, Embodiment, and Prosthetic Technology', isbn=9780814789285, oclc=865578900, dewey=617.9, pages=316)
+    assert book == Book(
+        year=2014,
+        bisac="SOCIAL SCIENCE",
+        authors="Cassandra S. Crawford",
+        imprint_publisher="NYU Press",
+        esbn=9780814764824,
+        lcc="RD553 .C88 2014eb",
+        format="EPUB;PDF",
+        reads=0,
+        lc="Sociology / General",
+        publisher="New York University Press",
+        book_id=676913,
+        title="Phantom Limb : Amputation, Embodiment, and Prosthetic Technology",
+        isbn=9780814789285,
+        oclc=865578900,
+        dewey=617.9,
+        pages=316,
+    )

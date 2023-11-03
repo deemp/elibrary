@@ -10,7 +10,7 @@ def test_search_get_bisac_type():
     for key in response.bisac:
         assert type(key) == str
         for value in response.bisac[key]:
-            assert(type(value) == str)
+            assert type(value) == str
 
 
 def test_search_get_lc_type():
@@ -18,7 +18,7 @@ def test_search_get_lc_type():
     for key in response.lc:
         assert type(key) == str
         for value in response.lc[key]:
-            assert(type(value) == str)
+            assert type(value) == str
 
 
 def test_search_get_bisac_value():
@@ -26,12 +26,15 @@ def test_search_get_bisac_value():
     for key in response.bisac:
         response.bisac[key].sort()
     assert response.bisac == {
-        'SOCIAL SCIENCE': ['Sociology / General'], 
-        'SCIENCE': ['Applied Sciences'], 
-        'LANGUAGE ARTS & DISCIPLINES': ['Communication Studies', 'Linguistics / General'], 
-        'MATHEMATICS': ['General'], 
-        'POLITICAL SCIENCE': ['World / Middle Eastern'], 
-        'BUSINESS & ECONOMICS': ['Advertising & Promotion', 'General']
+        "SOCIAL SCIENCE": ["Sociology / General"],
+        "SCIENCE": ["Applied Sciences"],
+        "LANGUAGE ARTS & DISCIPLINES": [
+            "Communication Studies",
+            "Linguistics / General",
+        ],
+        "MATHEMATICS": ["General"],
+        "POLITICAL SCIENCE": ["World / Middle Eastern"],
+        "BUSINESS & ECONOMICS": ["Advertising & Promotion", "General"],
     }
 
 
@@ -40,18 +43,26 @@ def test_search_get_lc_value():
     for key in response.lc:
         response.lc[key].sort()
     assert response.lc == {
-        'Sociology / General': ['SOCIAL SCIENCE'], 
-        'Applied Sciences': ['SCIENCE'], 
-        'Linguistics / General': ['LANGUAGE ARTS & DISCIPLINES'], 
-        'General': ['BUSINESS & ECONOMICS', 'MATHEMATICS'], 
-        'World / Middle Eastern': ['POLITICAL SCIENCE'], 
-        'Communication Studies': ['LANGUAGE ARTS & DISCIPLINES'], 
-        'Advertising & Promotion': ['BUSINESS & ECONOMICS']
+        "Sociology / General": ["SOCIAL SCIENCE"],
+        "Applied Sciences": ["SCIENCE"],
+        "Linguistics / General": ["LANGUAGE ARTS & DISCIPLINES"],
+        "General": ["BUSINESS & ECONOMICS", "MATHEMATICS"],
+        "World / Middle Eastern": ["POLITICAL SCIENCE"],
+        "Communication Studies": ["LANGUAGE ARTS & DISCIPLINES"],
+        "Advertising & Promotion": ["BUSINESS & ECONOMICS"],
     }
 
 
 def test_search_get_filters_value():
-    assert search_get().filters == ["publisher", "year", "authors", "title", "isbn", "esbn", "format"]
+    assert search_get().filters == [
+        "publisher",
+        "year",
+        "authors",
+        "title",
+        "isbn",
+        "esbn",
+        "format",
+    ]
 
 
 def test_search_post_type():
