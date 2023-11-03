@@ -55,30 +55,34 @@ def test_search_get_filters_value():
 
 
 def test_search_post_type():
-    request = SearchPOSTRequest('', '', [])
+    request = SearchPOSTRequest(bisac="", lc="", filter_rows=[])
     response = search_post(request)
     assert type(response) == SearchPOSTResponse
 
 
 def test_search_post_content_empty():
-    request = SearchPOSTRequest('', '', [])
+    request = SearchPOSTRequest(bisac="", lc="", filter_rows=[])
     response = search_post(request)
     #assert response.books == [...]
 
 
 def test_search_post_content_bisac():
-    request = SearchPOSTRequest('LANGUAGE ARTS & DISCIPLINES', '', [])
+    request = SearchPOSTRequest(
+        bisac="LANGUAGE ARTS & DISCIPLINES", lc="", filter_rows=[]
+    )
     response = search_post(request)
     #assert response.books == [...]
 
 
 def test_search_post_content_lc():
-    request = SearchPOSTRequest('', 'Linguistics / General', [])
+    request = SearchPOSTRequest(bisac="", lc="Linguistics / General", filter_rows=[])
     response = search_post(request)
     #assert response.books == [...]
 
 
 def test_search_post_content_filter():
-    request = SearchPOSTRequest('', '', [FilterRow('year', '2018')])
+    request = SearchPOSTRequest(
+        bisac="", lc="", filter_rows=[FilterRow(filter="year", filter_input="2018")]
+    )
     response = search_post(request)
     #assert response.books == [...]
