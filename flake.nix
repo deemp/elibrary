@@ -269,10 +269,8 @@
               name = imageName;
               tag = "latest";
               contents = [
-                packages.importCatalog
-                packages.runElibrary
-
                 packages.dependenciesCI
+                packages.prod
                 pkgs.bashInteractive
                 pkgs.coreutils
                 pkgs.poetry
