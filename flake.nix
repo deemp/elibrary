@@ -222,6 +222,11 @@
               };
             };
 
+            dockerLoadImageServer = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''${packages.imageServer} | docker load'';
+            };
+
             packageFrontCI =
               let
                 inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
@@ -273,14 +278,17 @@
               ];
             };
 
-            dockerLoadImageServer = {
-              runtimeInputs = [ pkgs.docker ];
-              text = ''${packages.imageServer} | docker load'';
-            };
-
             dockerLoadImageCI = {
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageCI} | docker load'';
+            };
+
+            testCI = {
+              runtimeInputs = [ pkgs.poetry ];
+              text = ''
+                ${getExe packages."import-catalog"}
+                poetry run pytest
+              '';
             };
 
             dockerPush = {
