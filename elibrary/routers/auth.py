@@ -25,12 +25,10 @@ if env.ENABLE_AUTH:
 
     router = APIRouter()
 
-
     @router.get("/login")
     async def login(request: Request):
         redirect_uri = request.url_for("auth")
         return await oauth.google.authorize_redirect(request, redirect_uri)
-
 
     @router.get("/auth")
     async def auth(request: Request):
@@ -42,7 +40,6 @@ if env.ENABLE_AUTH:
         if user:
             request.session["user"] = dict(user)
         return RedirectResponse(url="/")
-
 
     @router.get("/logout")
     async def logout(request: Request):

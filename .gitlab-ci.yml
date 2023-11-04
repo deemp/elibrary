@@ -21,4 +21,9 @@ lint:
 test:
   stage: stage
   script:
-    - testCI
+    - prod &> logs
+    - sleep 5
+    - poetry run pytest &> logs.test
+    - cat logs
+    - cat logs.test
+

@@ -110,7 +110,7 @@
               '';
               description = ''run prod site at ${host}:${portElibrary}'';
             };
-            prod-elibrary = {
+            prodElibrary = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.importCatalog}
@@ -242,7 +242,7 @@
               };
 
             # should provide dependencies, but not the code from this repo
-            packageCI =
+            dependenciesCI =
               pkgs.stdenv.mkDerivation {
                 pname = "package-ci";
                 version = "0.0.1";
@@ -269,7 +269,8 @@
               name = imageName;
               tag = "latest";
               contents = [
-                packages.packageCI
+                packages.dependenciesCI
+                packages.prod
                 pkgs.bashInteractive
                 pkgs.coreutils
                 pkgs.poetry
@@ -281,14 +282,6 @@
             dockerLoadImageCI = {
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageCI} | docker load'';
-            };
-
-            testCI = {
-              runtimeInputs = [ pkgs.poetry ];
-              text = ''
-                ${getExe packages.importCatalog}
-                poetry run pytest
-              '';
             };
 
             dockerPushImageCI = {

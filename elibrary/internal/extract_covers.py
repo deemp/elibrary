@@ -21,6 +21,7 @@ def extract_covers(
         for img in images:
             img.save(f"{covers_dir}/{pdf_idx}.jpg", "JPEG")
 
+
 def run():
     argParser = argparse.ArgumentParser()
     argParser.add_argument(
@@ -43,5 +44,5 @@ def run():
     extract_covers(
         books_dir=args.input_directory,
         covers_dir=args.output_directory,
-        poppler_path=args.poppler_path
+        poppler_path=args.poppler_path,
     )
