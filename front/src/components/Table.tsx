@@ -5,7 +5,10 @@ import { TableVirtuoso } from 'react-virtuoso';
 import { Book, bookPretty } from '../models/book';
 import { Link } from 'react-router-dom';
 import {
+  CellContext,
   ColumnDef,
+  OnChangeFn,
+  SortingState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
@@ -49,7 +52,7 @@ const padding = '10px'
 
 function cell(id: string, value: any) {
   return (
-    <TableCell key={id} align={'left'} sx={{ padding }}> {value} </TableCell>
+    <TableCell key={id} align={'left'} sx={{ padding }}>{value}</TableCell>
   );
 }
 
@@ -62,12 +65,12 @@ export function BookTable({ books }: { books: Book[] }) {
       {
         id: 'read',
         size: 40,
-        f: props => <RowLink to={`/book/${props.row.original.book_id}/read`} text={"Read"} />
+        f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}/read`} text={"Read"} />
       },
       {
         id: 'info',
         size: 40,
-        f: props => <RowLink to={`/book/${props.row.original.book_id}`} text={"Info"} />
+        f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}`} text={"Info"} />
       }
     ].map(({ id, f, size }) => columnHelper.display({
       id,
@@ -116,7 +119,7 @@ export function BookTable({ books }: { books: Book[] }) {
     state: {
       sorting
     },
-    onSortingChange: setSorting,
+    onSortingChange: setSorting as OnChangeFn<SortingState>,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel()
   });
