@@ -1,11 +1,9 @@
-from pathlib import Path
 from fastapi import APIRouter, HTTPException, Request
 from sqlmodel import Session
 
 from ..internal.range_request import range_requests_response
 from ..internal.models import Book
 from ..internal.db import engine
-from baize.asgi import FileResponse
 
 router = APIRouter()
 

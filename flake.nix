@@ -2,11 +2,16 @@
   inputs = {
     flakes.url = "github:deemp/flakes/";
     pdfjs.url = "gitlab:elibrary/pdfjs?host=gitlab.pg.innopolis.university";
+
+    nixpkgs.url = "github:NixOS/nixpkgs/2bbf67d3c76927b5c3148f32c0e93c14e5dbc2d9";
+    slimlock.url = "github:thomashoneyman/slimlock";
+    slimlock.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
       inputs = {
         inherit (inputs.flakes.all) devshell drv-tools nixpkgs poetry2nix nix-filter;
+        inherit (inputs) slimlock;
         inherit (inputs) pdfjs;
       };
       perSystem = { inputs, system }:
@@ -21,6 +26,27 @@
           portElibrary = "5000";
           portFront = "5001";
           host = "0.0.0.0";
+
+          packageBack = groups:
+            let
+              inherit (pkgs.appendOverlays [ inputs.poetry2nix.overlays.default ]) poetry2nix;
+              p2nix = poetry2nix.overrideScope' (self: super: {
+                defaultPoetryOverrides = super.defaultPoetryOverrides.extend (pyself: pysuper: {
+                  baize = pysuper.baize.overridePythonAttrs
+                    (old: { buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.pdm-pep517 pysuper.setuptools ]; });
+                  pandas = pysuper.pandas.overridePythonAttrs
+                    (old: { buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.meson-python ]; });
+                });
+              });
+              app = p2nix.mkPoetryEnv {
+                projectDir = ./.;
+                inherit groups;
+              };
+            in
+            app;
+
+          imageName = "elibrary-ci";
+
           packages = mkShellApps {
             runElibrary = {
               text = ''
@@ -30,14 +56,14 @@
                 poetry run uvicorn --port ${portElibrary} --host ${host} elibrary.main:app --reload
               '';
             };
-            prod-build-pdfjs = {
+            prodBuildPdfjs = {
               runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
                 let dist = "front/public/pdfjs"; in
                 ''cp -r ${pdfjs.outPath}/build/generic/* ${dist}'';
               description = ''build pdfjs for front'';
             };
-            prod-build-react = {
+            prodBuildReact = {
               runtimeInputs = [ pkgs.nodejs ];
               text =
                 let dist = "elibrary/static/front"; in
@@ -48,16 +74,16 @@
                 '';
               description = ''prod build of front without pdfjs build'';
             };
-            prod-build-front = {
+            prodBuildFront = {
               text =
                 ''
-                  ${getExe packages.prod-build-pdfjs}
-                  ${getExe packages.prod-build-react}
+                  ${getExe packages.prodBuildPdfjs}
+                  ${getExe packages.prodBuildReact}
                 '';
               description = ''prod build of front'';
             };
 
-            import-catalog = {
+            importCatalog = {
               runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
               text = ''
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
@@ -68,7 +94,7 @@
               description = ''import books catalog into database + save sql'';
             };
 
-            extract-covers = {
+            extractCovers = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''poetry run extract-covers -p ${pkgs.poppler_utils}/bin -i books -o covers'';
               description = ''extract book cover images'';
@@ -77,17 +103,17 @@
             prod = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
-                ${getExe packages."import-catalog"}
-                ${getExe packages.prod-build-front}
+                ${getExe packages.importCatalog}
+                ${getExe packages.prodBuildFront}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
               description = ''run prod site at ${host}:${portElibrary}'';
             };
-            prod-elibrary = {
+            prodElibrary = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
-                ${getExe packages."import-catalog"}
+                ${getExe packages.importCatalog}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
@@ -96,7 +122,7 @@
             dev = {
               runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
               text = ''
-                ${getExe packages."import-catalog"}
+                ${getExe packages.importCatalog}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
                 (cd front && npx vite --port ${portFront} --host ${host}) &
@@ -122,37 +148,6 @@
               description = ''install dependencies'';
             };
 
-            packageBack =
-              let
-                poetry2nix = (pkgs.appendOverlays [ inputs.poetry2nix.overlays.default ]).poetry2nix;
-                p2nix = poetry2nix.overrideScope' (self: super: {
-                  defaultPoetryOverrides = super.defaultPoetryOverrides.extend (pyself: pysuper: {
-                    baize = pysuper.baize.overridePythonAttrs
-                      (
-                        old: {
-                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.pdm-pep517 pysuper.setuptools ];
-                        }
-                      );
-                    pandas = pysuper.pandas.overridePythonAttrs
-                      (
-                        old: {
-                          buildInputs = (old.buildInputs or [ ]) ++ [ pysuper.meson-python ];
-                        }
-                      );
-                  });
-                });
-                app = p2nix.mkPoetryEnv {
-                  projectDir = ./.;
-                  groups = [ "prod" ];
-                  editablePackageSources = {
-                    elibrary = ./elibrary;
-                    import-catalog = ./import-catalog;
-                    extract-covers = ./extract-covers;
-                  };
-                };
-              in
-              app;
-
             packageFront = pkgs.buildNpmPackage {
               name = "front";
               buildInputs = [ pkgs.nodejs ];
@@ -175,7 +170,6 @@
                   root = ./.;
                   include = [
                     "elibrary"
-                    "import-catalog"
                     "poetry.lock"
                     "poetry.toml"
                     "pyproject.toml"
@@ -195,7 +189,7 @@
 
                   cp -r ${source}/* $APP
                   chmod -R +w $APP
-                  cp -r ${packages.packageBack}/* $VENV
+                  cp -r ${packageBack [ "prod" ]}/* $VENV
 
                   FRONT=$APP/elibrary/static/front
                   mkdir -p $FRONT
@@ -232,20 +226,82 @@
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageServer} | docker load'';
             };
+
+            packageFrontCI =
+              let
+                inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
+                packageLock = slimlock.buildPackageLock { src = ./front; };
+              in
+              pkgs.stdenv.mkDerivation {
+                name = "front-ci";
+                src = ./front;
+                installPhase = ''
+                  mkdir -p $out
+                  cp -r ${packageLock}/js/node_modules $out/node_modules
+                '';
+              };
+
+            # should provide dependencies, but not the code from this repo
+            dependenciesCI =
+              pkgs.stdenv.mkDerivation {
+                pname = "package-ci";
+                version = "0.0.1";
+                phases = [ "installPhase" ];
+                installPhase = ''
+                  APP=$out/elibrary-ci
+                  mkdir -p $APP
+
+                  VENV=$APP/.venv
+                  mkdir -p $VENV
+                  cp -r ${packageBack [ "prod" "lint" "test" ]}/* $VENV
+
+                  PDFJS=$APP/front/public/pdfjs
+                  mkdir -p $PDFJS
+                  cp -r ${pdfjs.outPath}/build/generic/* $PDFJS
+
+                  FRONT=$APP/front
+                  mkdir -p $FRONT
+                  cp -r ${packages.packageFrontCI}/* $FRONT
+                '';
+              };
+
+            imageCI = pkgs.dockerTools.streamLayeredImage {
+              name = imageName;
+              tag = "latest";
+              contents = [
+                packages.dependenciesCI
+                packages.prod
+                pkgs.bashInteractive
+                pkgs.coreutils
+                pkgs.poetry
+                pkgs.nodejs
+                pkgs.gnugrep
+              ];
+            };
+
+            dockerLoadImageCI = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''${packages.imageCI} | docker load'';
+            };
+
+            dockerPushImageCI = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''
+                docker tag ${imageName} deemp/${imageName}
+                docker push deemp/${imageName}
+              '';
+            };
           };
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
-              pkgs.curl
               pkgs.sqlite
               pkgs.poetry
               pkgs.nodejs
-              pkgs.nodePackages.localtunnel
               pkgs.rnix-lsp
               pkgs.nixpkgs-fmt
               pkgs.openssl
               pkgs.gnupg
               pkgs.sops
-              pkgs.ngrok
               pkgs.graphviz
               pkgs.jdk11
               pkgs.plantuml

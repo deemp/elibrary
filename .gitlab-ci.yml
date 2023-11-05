@@ -1,0 +1,29 @@
+default:
+  image:
+    name: "deemp/elibrary-ci:latest"
+  before_script:
+    - mkdir -p "$HOME/.config/nix"
+    - echo 'experimental-features = nix-command flakes' > "$HOME/.config/nix/nix.conf"
+    - mkdir -p "/etc/containers/"
+    - echo '{"default":[{"type":"insecureAcceptAnything"}]}' > /etc/containers/policy.json
+    - cp -r /elibrary-ci/.* /elibrary-ci/* .
+
+stages:
+  - stage
+
+lint:
+  stage: stage
+  script:
+    - poetry run flake8 elibrary || true
+    - poetry run pylint elibrary || true
+    - (cd front && npm run lint) || true
+
+test:
+  stage: stage
+  script:
+    - prod &> logs
+    - sleep 5
+    - poetry run pytest &> logs.test
+    - cat logs
+    - cat logs.test
+

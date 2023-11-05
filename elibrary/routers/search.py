@@ -52,7 +52,7 @@ class SearchPOSTRequest(BaseModel):
     filter_rows: list[FilterRow]
 
 
-class SearchPostResponse(BaseModel):
+class SearchPOSTResponse(BaseModel):
     bisac: DictOptions
     lc: DictOptions
     books: list[Book]
@@ -60,7 +60,7 @@ class SearchPostResponse(BaseModel):
 
 # https://fastapi.tiangolo.com/tutorial/body/
 @router.post("/search")
-def search_post(request: SearchPOSTRequest) -> SearchPostResponse:
+def search_post(request: SearchPOSTRequest) -> SearchPOSTResponse:
     with Session(engine) as session:
         books = []
 
@@ -78,4 +78,4 @@ def search_post(request: SearchPOSTRequest) -> SearchPostResponse:
 
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")
-        return SearchPostResponse(books=books, bisac=bisac, lc=lc)
+        return SearchPOSTResponse(books=books, bisac=bisac, lc=lc)
