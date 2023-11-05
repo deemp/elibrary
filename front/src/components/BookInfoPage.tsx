@@ -68,18 +68,19 @@ const loadImage = (
 
 export function BookInfoPage() {
   const { id } = useParams();
+  const { faqButton, faqDrawer } = useFAQ();
+  const [book, setBook] = useState<Book | undefined>();
+  const [reference, setReference] = useState<string>("");
+  const [imageDimensions, setImageDimensions] = useState({
+    height: 200,
+    width: 200,
+  });
+
   if (id) {
     const bookId = Number.parseInt(id);
     const url = `${import.meta.env.VITE_API_PREFIX}/book/${bookId}`;
     const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${bookId}.jpg`;
     const maxCoverHeight = 300;
-
-    const [book, setBook] = useState<Book | undefined>();
-    const [reference, setReference] = useState<string>("");
-    const [imageDimensions, setImageDimensions] = useState({
-      height: 200,
-      width: 200,
-    });
 
     useEffect(() => {
       fetch(url, {
@@ -93,7 +94,7 @@ export function BookInfoPage() {
           setReference(
             `${r?.authors.split("-")[0]}. ${r?.title}/${r?.authors}/${
               r?.publisher
-            }.- ${r?.year}.-${r?.pages} p. -${r?.isbn}`
+            }.- ${r?.year}.-${r?.pages} p. - ISBN: ${r?.isbn}`
           );
         });
     }, [url, coverUrl]);
@@ -106,8 +107,6 @@ export function BookInfoPage() {
 
     const elevation = 5;
 
-    const { faqButton, faqDrawer } = useFAQ();
-
     const base = (
       <Base
         title="Info"
@@ -118,7 +117,15 @@ export function BookInfoPage() {
               <Grid container rowSpacing={2} marginTop={appbar.height}>
                 <Grid item xs={12} textAlign={"center"}>
                   <Link to={`/book/${bookId}/read`}>
-                    <Button variant="outlined" size="medium">
+                    <Button
+                      sx={{
+                        fontWeight: "bold",
+                        paddingY: "1.5rem",
+                        paddingX: { xs: "8rem", sm: "12rem" },
+                      }}
+                      variant="contained"
+                      size="large"
+                    >
                       READ
                     </Button>
                   </Link>
