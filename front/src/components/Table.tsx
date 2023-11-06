@@ -1,14 +1,21 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
+import React from 'react';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { TableVirtuoso, TableComponents } from 'react-virtuoso';
+import { TableVirtuoso } from 'react-virtuoso';
 import { Book, bookPretty } from '../models/book';
 import { Link } from 'react-router-dom';
+import {
+  CellContext,
+  ColumnDef,
+  OnChangeFn,
+  SortingState,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable
+} from '@tanstack/react-table';
+import { TiArrowUnsorted, TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 
 export interface BookRow {
   // C
@@ -36,127 +43,186 @@ function RowLink({ text, to }: { text: string, to: string }) {
   return <Link to={to} style={{ "color": "#1976d2", }}> {text} </Link>
 }
 
-function bookToBookRow(book: Book): BookRow {
-  return {
-    ...book,
-    info: <RowLink to={`/book/${book.book_id}`} text={"Info"} />,
-    read: <RowLink to={`/book/${book.book_id}/read`} text={"Read"} />
-  }
-}
-
-interface ColumnData {
-  dataKey: keyof BookRow;
-  label: string;
-  numeric?: boolean;
-  width: number;
-}
-
 const columnPretty = new Map([
   ...bookPretty.entries(),
   ...(new Map([['read', 'Read'], ['info', 'Info']]))
 ])
 
-const columns: ColumnData[] = [
-  {
-    width: 50,
-    dataKey: 'read',
-    numeric: false,
-  },
-  {
-    width: 50,
-    dataKey: 'info',
-    numeric: false,
-  },
-  {
-    width: 200,
-    dataKey: 'title',
-    numeric: false,
-  },
-  {
-    width: 200,
-    dataKey: 'authors',
-    numeric: false,
-  },
-  {
-    width: 100,
-    dataKey: 'publisher',
-    numeric: false,
-  },
-  {
-    width: 50,
-    dataKey: 'year',
-    numeric: true,
-  },
-  {
-    width: 150,
-    dataKey: 'isbn',
-    numeric: true,
-  },
-  {
-    width: 100,
-    dataKey: 'format',
-    numeric: false,
-  },
-].map(x => { return { ...x, label: columnPretty.get(x.dataKey) || '' } as ColumnData });
+const padding = '10px'
 
-const VirtuosoTableComponents: TableComponents<BookRow> = {
-  Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
-    <TableContainer component={Paper} {...props} ref={ref} />
-  )),
-  Table: (props) => (
-    <Table {...props} sx={{ borderCollapse: 'separate', tableLayout: 'fixed' }} />
-  ),
-  TableHead,
-  TableRow: ({ item: _item, ...props }) => <TableRow {...props} />,
-  TableBody: React.forwardRef<HTMLTableSectionElement>((props, ref) => (
-    <TableBody {...props} ref={ref} />
-  )),
-};
-
-function fixedHeaderContent() {
+function cell(id: string, value: any) {
   return (
-    <TableRow>
-      {columns.map((column) => (
-        <TableCell
-          key={column.dataKey}
-          variant="head"
-          align={column.numeric || false ? 'right' : 'left'}
-          style={{ width: column.width }}
-          sx={{
-            backgroundColor: 'background.paper',
-            fontWeight: "bold"
-          }}
-        >
-          {column.label}
-        </TableCell>
-      ))}
-    </TableRow>
+    <TableCell key={id} align={'left'} sx={{ padding }}>{value}</TableCell>
   );
 }
 
-function rowContent(_index: number, row: BookRow) {
-  return (
-    <React.Fragment>
-      {columns.map((column) => (
-        <TableCell
-          key={column.dataKey}
-          align={column.numeric || false ? 'right' : 'left'}
-        >
-          {row[column.dataKey]}
-        </TableCell>
-      ))}
-    </React.Fragment>
-  );
-}
+export function BookTable({ books }: { books: Book[] }) {
 
-export function BookTable({ rows }: { rows: Book[] }) {
+  const columnHelper = createColumnHelper<Book>()
+
+  const columns = React.useMemo(() =>
+    [
+      {
+        id: 'read',
+        size: 40,
+        f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}/read`} text={"Read"} />
+      },
+      {
+        id: 'info',
+        size: 40,
+        f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}`} text={"Info"} />
+      }
+    ].map(({ id, f, size }) => columnHelper.display({
+      id,
+      size,
+      cell: props => cell(id, f(props)),
+      header: () => columnPretty.get(id)
+    })).concat([
+      {
+        id: 'title',
+        size: 200,
+      },
+      {
+        id: 'authors',
+        size: 100,
+      },
+      {
+        id: 'publisher',
+        size: 100,
+      },
+      {
+        id: 'year',
+        size: 50,
+      },
+      {
+        id: 'isbn',
+        size: 110,
+      },
+      {
+        id: 'format',
+        size: 80,
+      },
+    ].map(({ id, size }) => columnHelper.accessor(id as keyof Book, {
+      header: () => columnPretty.get(id),
+      size,
+      cell: props => cell(id, props.getValue())
+    })) as ColumnDef<Book, unknown>[])
+    , [columnHelper]);
+
+  const [sorting, setSorting] = React.useState([]);
+
+  console.log("something")
+
+  const table = useReactTable({
+    data: books,
+    columns,
+    state: {
+      sorting
+    },
+    onSortingChange: setSorting as OnChangeFn<SortingState>,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel()
+  });
+
+  const { rows } = table.getRowModel();
+
   return (
     <Paper variant='outlined' style={{ height: '98%' }}>
       <TableVirtuoso
-        data={rows.map(bookToBookRow)}
-        components={VirtuosoTableComponents}
-        fixedHeaderContent={fixedHeaderContent}
-        itemContent={rowContent}
+        data={rows}
+        style={{ height: "100%", width: '100%', borderRadius: '3px' }}
+        totalCount={rows.length}
+        components={{
+          Table: ({ style, ...props }) => {
+            return (
+              <table
+                {...props}
+                style={{
+                  ...style,
+                  tableLayout: "fixed",
+                  borderCollapse: "collapse",
+                  width: '100%'
+                }}
+              />
+            );
+          },
+          TableRow: (props) => {
+            const index = props["data-index"];
+            const row = rows[index];
+            return (
+              <tr {...props}>
+                {row.getVisibleCells().map((cell) => (
+                  flexRender(cell.column.columnDef.cell, cell.getContext())
+                ))}
+              </tr>
+            );
+          }
+        }}
+        fixedHeaderContent={() => {
+          return (
+            table.getHeaderGroups().map((headerGroup) => (
+              <tr
+                key={headerGroup.id}
+                style={{
+                  background: "#e0e0e0",
+                  color: 'black'
+                }}
+              >
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <th
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      style={{
+                        width: header.getSize(),
+                        padding: padding,
+                        textAlign: "left",
+                      }}
+                    >
+                      {header.isPlaceholder ? null : (
+                        <div
+                          {...{
+                            style: {
+                              ...(header.column.getCanSort()
+                                ? {
+                                  cursor: "pointer", userSelect: "none"
+                                }
+                                : {}),
+                              display: 'flex',
+                              alignItems: 'center'
+                            },
+                            onClick: header.column.getToggleSortingHandler()
+                          }}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {(() => {
+                            const isSorted = header.column.getIsSorted()
+                            if (!isSorted) {
+                              const headerId = header.id
+                              return (
+                                (headerId != 'info' && headerId != 'read') ?
+                                  <TiArrowUnsorted style={{ "flex-shrink": 0 }} /> : null
+                              )
+                            } else {
+                              return {
+                                asc: <TiArrowSortedUp style={{ "flex-shrink": 0 }} />,
+                                desc: <TiArrowSortedDown style={{ "flex-shrink": 0 }} />
+                              }[isSorted]
+                            }
+                          })()
+                          }
+                        </div>
+                      )}
+                    </th>
+                  );
+                })}
+              </tr>
+            ))
+          )
+        }}
       />
     </Paper>
   );

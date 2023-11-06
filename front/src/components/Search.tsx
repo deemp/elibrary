@@ -244,9 +244,9 @@ export function Search() {
           </Grid>
         </Grid>
         <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`} paddingTop={1}>
-          <BookTable rows={Array.from(books)} />
+          <BookTable books={Array.from(books)} />
         </Grid>
       </Grid >
     </>
   );
-}
+} 
