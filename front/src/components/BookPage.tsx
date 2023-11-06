@@ -40,7 +40,12 @@ export function BookPage() {
                   justifyContent={"end"}
                   fontSize={"14px"}
                 >
-                  <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      fontSize: { xs: "1rem", sm: "1.5rem" },
+                    }}
+                  >
                     EBSCO EBOOK ARCHIVE
                   </Typography>
                 </Grid>
