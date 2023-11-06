@@ -45,10 +45,12 @@
             in
             app;
 
-          imageName = "elibrary-ci";
+          imageNameCI = "elibrary-ci";
+          imageNameServer = "elibrary";
 
           packages = mkShellApps {
             runElibrary = {
+              runtimeInputs = [ pkgs.poetry ];
               text = ''
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                   pkgs.stdenv.cc.cc.lib
@@ -101,7 +103,6 @@
             };
 
             prod = {
-              runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.importCatalog}
                 ${getExe packages.prodBuildFront}
@@ -111,7 +112,6 @@
               description = ''run prod site at ${host}:${portElibrary}'';
             };
             prodElibrary = {
-              runtimeInputs = [ pkgs.poetry ];
               text = ''
                 ${getExe packages.importCatalog}
                 ${getExe packages.stop}
@@ -120,7 +120,7 @@
               description = ''run prod server at ${host}:${portElibrary}'';
             };
             dev = {
-              runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
+              runtimeInputs = [ pkgs.nodejs ];
               text = ''
                 ${getExe packages.importCatalog}
                 ${getExe packages.stop}
@@ -161,7 +161,7 @@
                 cp -r ${pdfjs.outPath}/build/generic/* $out/pdfjs
               '';
 
-              npmDepsHash = "sha256-OUAjjv0xZjvh+M8xiH4MYNzF4Sa0ZwokBikseMnWE3M=";
+              npmDepsHash = "sha256-Ea2g4zacZBmj5QpLXQqF29p/oPu2UYqhjsQQKQWSwxM=";
             };
 
             packageServer =
@@ -170,6 +170,9 @@
                   root = ./.;
                   include = [
                     "elibrary"
+                    "books"
+                    "covers"
+                    "books.xlsx"
                     "poetry.lock"
                     "poetry.toml"
                     "pyproject.toml"
@@ -177,23 +180,22 @@
                 };
               in
               pkgs.stdenv.mkDerivation {
-                pname = "project";
+                pname = "package-server";
                 version = "0.0.1";
                 phases = [ "installPhase" ];
                 installPhase = ''
                   APP=$out/elibrary
                   mkdir -p $APP
 
-                  VENV=$APP/.venv
-                  mkdir $VENV
-
                   cp -r ${source}/* $APP
                   chmod -R +w $APP
-                  cp -r ${packageBack [ "prod" ]}/* $VENV
+
+                  VENV=$APP/.venv
+                  mkdir -p $VENV
+                  cp -r ${packageBack [ "prod" "lint" "test" ]}/* $VENV
 
                   FRONT=$APP/elibrary/static/front
                   mkdir -p $FRONT
-
                   cp -r ${packages.packageFront}/* $FRONT
                 '';
               };
@@ -225,6 +227,14 @@
             dockerLoadImageServer = {
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageServer} | docker load'';
+            };
+
+            dockerPushImageServer = {
+              runtimeInputs = [ pkgs.docker ];
+              text = ''
+                docker tag ${imageNameServer} deemp/${imageNameServer}
+                docker push deemp/${imageNameServer}
+              '';
             };
 
             packageFrontCI =
@@ -266,7 +276,7 @@
               };
 
             imageCI = pkgs.dockerTools.streamLayeredImage {
-              name = imageName;
+              name = imageNameCI;
               tag = "latest";
               contents = [
                 packages.dependenciesCI
@@ -287,8 +297,8 @@
             dockerPushImageCI = {
               runtimeInputs = [ pkgs.docker ];
               text = ''
-                docker tag ${imageName} deemp/${imageName}
-                docker push deemp/${imageName}
+                docker tag ${imageNameCI} deemp/${imageNameCI}
+                docker push deemp/${imageNameCI}
               '';
             };
           };
