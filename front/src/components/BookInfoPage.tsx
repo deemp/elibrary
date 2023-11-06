@@ -72,7 +72,7 @@ export function BookInfoPage() {
     const bookId = Number.parseInt(id);
     const url = `${import.meta.env.VITE_API_PREFIX}/book/${bookId}`;
     const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${bookId}.jpg`;
-    const maxCoverHeight = 300;
+    const maxCoverHeight = 375;
 
     const [book, setBook] = useState<Book | undefined>();
     const [reference, setReference] = useState<string>("");
@@ -133,7 +133,6 @@ export function BookInfoPage() {
                           width: `${imageDimensions.width}px`,
                         }}
                       >
-                        {/* TODO replace with cover url from book object */}
                         <CardMedia
                           component="img"
                           src={coverUrl}
