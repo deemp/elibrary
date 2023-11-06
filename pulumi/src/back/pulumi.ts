@@ -6,7 +6,7 @@ export interface Config {
     container: {
       replicaCount: number
       name: string
-      dockerHubImage?: string
+      dockerHubImage: string
     }
   }
   service: {

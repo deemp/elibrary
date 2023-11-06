@@ -7,7 +7,6 @@ import process = require('node:process')
 export function main(
   config: Config,
   environment: string,
-  dockerHubImage: string,
   provider: k8s.Provider,
   namespace: string
 ) {
@@ -16,7 +15,7 @@ export function main(
 
   const containerConfig = {
     ...deploymentConfig.container,
-    ...{ dockerHubImage: dockerHubImage },
+    ...{ dockerHubImage: config.deployment.container.dockerHubImage },
   }
   const serviceConfig = config.service
   const labels = {
@@ -26,25 +25,6 @@ export function main(
     provider: provider,
     deleteBeforeReplace: true,
   }
-
-  const staticContentHostPath = `${path.dirname(process.cwd())}/static`
-  console.log(staticContentHostPath)
-
-  var data: { [k: string]: Output<string> } = {}
-
-  const configMap = ((name = `${appName}-configmap`) =>
-    new k8s.core.v1.ConfigMap(
-      name,
-      {
-        metadata: {
-          name,
-          namespace,
-          labels,
-        },
-        data: data,
-      },
-      opts
-    ))()
 
   const containerPortName = `${appName}-port`
 
@@ -67,52 +47,31 @@ export function main(
               labels,
               namespace
             },
-            spec: ((
-              appVolume = `${name}-app-config-volume`,
-              staticVolume = `${name}-app-static-volume`,
-            ) => {
-              return {
-                containers: [
-                  {
-                    name: containerConfig.name,
-                    image: containerConfig.dockerHubImage,
-                    imagePullPolicy: "Always",
-                    ports: [
-                      {
-                        containerPort: 80,
-                        name: containerPortName,
-                      },
-                    ],
-                    resources: {
-                      requests: {
-                        memory: "900Mi",
-                        cpu: "250m",
-                      },
-                      limits: {
-                        memory: "900Mi",
-                        cpu: "500m",
-                      },
+            spec: ({
+              containers: [
+                {
+                  name: containerConfig.name,
+                  image: containerConfig.dockerHubImage,
+                  imagePullPolicy: "Always",
+                  ports: [
+                    {
+                      containerPort: config.service.port,
+                      name: containerPortName,
+                    },
+                  ],
+                  resources: {
+                    requests: {
+                      memory: "900Mi",
+                      cpu: "250m",
+                    },
+                    limits: {
+                      memory: "900Mi",
+                      cpu: "500m",
                     },
                   },
-                ],
-                volumes: [
-                  {
-                    name: appVolume,
-                    configMap: {
-                      // TODO
-                      name: configMap.metadata.name,
-                    },
-                  },
-                  {
-                    name: staticVolume,
-                    hostPath: {
-                      path: staticContentHostPath,
-                      type: `DirectoryOrCreate`,
-                    },
-                  },
-                ],
-              }
-            })(),
+                },
+              ],
+            }),
           },
         },
       },
