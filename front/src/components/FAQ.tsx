@@ -1,14 +1,14 @@
 import {
   Box,
-  Button,
   Grid,
   Link,
   SwipeableDrawer,
   Typography,
 } from "@mui/material";
-import * as appbar from "../models/appbar";
+import * as appbar from "./AppBar";
 import { useState } from "react";
 import { bookPretty } from "../models/book";
+import { AppBarButton, AppBarElement } from "./AppBar";
 
 interface Term {
   name: string;
@@ -16,7 +16,7 @@ interface Term {
   link: string;
 }
 
-const terms: Term[] = [
+export const terms: Term[] = [
   {
     name: "bisac",
     definition:
@@ -57,7 +57,7 @@ const terms: Term[] = [
   },
 ];
 
-export function useElements() {
+export function useFAQ() {
   const anchor = "right";
   const [state, setState] = useState(false);
 
@@ -75,23 +75,7 @@ export function useElements() {
       setState(open);
     };
 
-  const faqButton = (
-    <Button
-      sx={{
-        color: "#ffffff",
-        paddingLeft: '3px',
-        paddingRight: '3px',
-        fontWeight: "bold",
-        minWidth: '35px',
-        '&:hover': {
-          backgroundColor: '#4f9ae3'
-        }
-      }}
-      onClick={toggleDrawer(true)}
-    >
-      FAQ
-    </Button>
-  );
+  const faqButton = <AppBarButton text={'FAQ'} onClick={toggleDrawer(true)}></AppBarButton>;
 
   const faqDrawer = (
     <SwipeableDrawer
@@ -116,15 +100,7 @@ export function useElements() {
             height={appbar.height}
             bgcolor="#1976d2"
           >
-            <Typography
-              variant="h6"
-              sx={{
-                color: "#ffffff",
-                fontWeight: "bold",
-              }}
-            >
-              Terms and definitions
-            </Typography>
+            <AppBarElement text={'Terms and definitions'}></AppBarElement>
           </Grid>
         </Grid>
         <Grid container padding={1}>

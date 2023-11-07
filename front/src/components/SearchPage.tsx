@@ -1,12 +1,13 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
-import { NavLink } from "./NavLink";
-import { Box, Container, Grid, Typography } from "@mui/material";
-import * as appbar from "../models/appbar";
-import { useElements } from "./FAQ";
+import { Box, Container, Grid, } from "@mui/material";
+import { Ebsco } from "./AppBar";
+import * as appbar from "./AppBar"
+import { useFAQ } from "./FAQ";
+
 
 export function SearchPage() {
-  const { faqButton, faqDrawer } = useElements();
+  const { faqButton, faqDrawer } = useFAQ();
 
   const base = (
     <Base
@@ -28,33 +29,18 @@ export function SearchPage() {
         <>
           <Container maxWidth={"xl"}>
             <Grid container alignItems={"center"}>
-              <Grid item xs={7}>
+              <Grid item xs={4}>
                 <Grid container spacing={1}>
-                  <Grid item>
-                    <NavLink text={"Log out"} id={"logout"} to={"/"} />
-                  </Grid>
                   <Grid item>{faqButton}</Grid>
                 </Grid>
               </Grid>
               <Grid
                 item
-                xs={5}
-                paddingTop={appbar.padding}
-                paddingBottom={appbar.padding}
-                textAlign={"right"}
+                xs={8}
                 display={"flex"}
-                alignItems={"center"}
                 justifyContent={"end"}
-                fontSize={"14px"}
               >
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: { xs: "1rem", sm: "1.5rem" },
-                  }}
-                >
-                  EBSCO EBOOK ARCHIVE
-                </Typography>
+                {Ebsco}
               </Grid>
             </Grid>
           </Container>
