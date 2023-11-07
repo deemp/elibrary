@@ -197,7 +197,7 @@
 
                   VENV=$APP/.venv
                   mkdir -p $VENV
-                  cp -r ${packageBack [ "prod" "lint" "test" ]}/* $VENV
+                  cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
 
                   FRONT=$APP/elibrary/static/front
                   mkdir -p $FRONT
