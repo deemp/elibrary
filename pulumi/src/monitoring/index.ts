@@ -37,7 +37,14 @@ export function main(
     values: {},
   })
 
-  // https://www.pulumi.com/registry/packages/kubernetes/api-docs/helm/v3/release/#query-kubernetes-resource-installed-by-helm-chart
-  // const srv = k8s.core.v1.Service.get("loki", pulumi.interpolate`${loki.status.namespace}/${loki.status.name}-master`);
-  // const lokiClusterIP = srv.spec.externalName;
+  new k8s.helm.v3.Release('tempo', {
+    chart: "tempo",
+    namespace,
+    repositoryOpts: {
+      repo: "https://grafana.github.io/helm-charts",
+    },
+    values: {
+      name: 'tempo'
+    },
+  })
 }
