@@ -22,9 +22,9 @@ export function BookReadPage() {
               <Grid container>
                 <Grid item xs={7} sm={5}>
                   <Grid container columnSpacing={1}>
+                    <Grid item><AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} /></Grid>
                     <Grid item><AppBarLink text={"Search"} to={"/"} id={"search"} /></Grid>
                     <Grid item>{faqButton}</Grid>
-                    <Grid item><AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} /></Grid>
                   </Grid>
                 </Grid>
                 <Grid
