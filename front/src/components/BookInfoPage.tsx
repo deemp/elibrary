@@ -135,20 +135,22 @@ export function BookInfoPage() {
                 <Grid item xs={12}>
                   <Grid container spacing={3}>
                     <Grid item sx={{ width: `${imageDimensions.width}` }}>
-                      <Card
-                        elevation={elevation}
-                        sx={{
-                          height: `${imageDimensions.height}px`,
-                          width: `${imageDimensions.width}px`,
-                        }}
-                      >
-                        <CardMedia
-                          component="img"
-                          src={coverUrl}
-                          height={`${imageDimensions.height}px`}
-                          width={`${imageDimensions.width}px`}
-                        />
-                      </Card>
+                      <Link to={`/book/${bookId}/read`}>
+                        <Card
+                          elevation={elevation}
+                          sx={{
+                            height: `${imageDimensions.height}px`,
+                            width: `${imageDimensions.width}px`,
+                          }}
+                        >
+                          <CardMedia
+                            component="img"
+                            src={coverUrl}
+                            height={`${imageDimensions.height}px`}
+                            width={`${imageDimensions.width}px`}
+                          />
+                        </Card>
+                      </Link>
                     </Grid>
                     <Grid item xs={12} sm>
                       <Grid container rowSpacing={1}>
