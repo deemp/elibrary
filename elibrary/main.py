@@ -25,14 +25,11 @@ async def lifespan(_: FastAPI):
     yield
 
 
-
 app = FastAPI(lifespan=lifespan)
 
 
-
 APP_NAME = os.environ.get("APP_NAME", "app")
-EXPOSE_PORT = os.environ.get("EXPOSE_PORT", 8000)
-OTLP_GRPC_ENDPOINT = os.environ.get("OTLP_GRPC_ENDPOINT", "http://tempo:3100")
+OTLP_GRPC_ENDPOINT = os.environ.get("OTLP_GRPC_ENDPOINT", "http://tempo:4317")
 
 # Setting metrics middleware
 app.add_middleware(PrometheusMiddleware, app_name=APP_NAME)
@@ -46,6 +43,7 @@ class EndpointFilter(logging.Filter):
     # Uvicorn endpoint access log filter
     def filter(self, record: logging.LogRecord) -> bool:
         return record.getMessage().find("GET /metrics") == -1
+
 
 # Filter out /endpoint
 logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
@@ -81,4 +79,3 @@ app.include_router(search.router, prefix=prefix)
 @app.api_route("/{path:path}", methods=["GET"])
 async def catch_all(path: str):
     return FileResponse("elibrary/static/front/index.html")
-
