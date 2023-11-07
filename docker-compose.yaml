@@ -27,6 +27,8 @@ services:
       - loki
     environment:
       APP_NAME: "app-elibrary"
+      PORT: 5000
+      HOST: "0.0.0.0"
     logging: *default-logging
     volumes:
       - ./books:/elibrary/books
