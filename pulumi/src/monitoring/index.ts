@@ -4,7 +4,9 @@ import * as pulumi from "@pulumi/pulumi";
 export function main(
   namespaceName: string
 ) {
-  const namespace = namespaceName
+
+  const namespace = `${namespaceName}-monitoring`
+
   new k8s.core.v1.Namespace(namespace, {
     metadata: {
       name: namespace
