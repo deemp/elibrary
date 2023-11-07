@@ -59,7 +59,6 @@
                   --port ${portElibrary} \
                   --host ${host} elibrary.main:app \
                   --log-config elibrary/log_conf.yaml \
-                  --log-level info \
                   --reload
               '';
             };
@@ -170,20 +169,6 @@
             };
 
             packageServer =
-              let
-                source = inputs.nix-filter {
-                  root = ./.;
-                  include = [
-                    "elibrary"
-                    "books"
-                    "covers"
-                    "books.xlsx"
-                    "poetry.lock"
-                    "poetry.toml"
-                    "pyproject.toml"
-                  ];
-                };
-              in
               pkgs.stdenv.mkDerivation {
                 pname = "package-server";
                 version = "0.0.1";
@@ -192,16 +177,9 @@
                   APP=$out/elibrary
                   mkdir -p $APP
 
-                  cp -r ${source}/* $APP
-                  chmod -R +w $APP
-
                   VENV=$APP/.venv
                   mkdir -p $VENV
                   cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
-
-                  FRONT=$APP/elibrary/static/front
-                  mkdir -p $FRONT
-                  cp -r ${packages.packageFront}/* $FRONT
                 '';
               };
 
@@ -214,7 +192,6 @@
                 packages.packageServer
                 pkgs.bashInteractive
                 pkgs.coreutils
-                pkgs.poetry
               ];
 
               config = {
@@ -222,7 +199,6 @@
                 Cmd = [
                   ''
                     cd elibrary
-                    chmod +x .venv/bin/{python,uvicorn}
                     ${getExe packages.runElibrary}
                   ''
                 ];
