@@ -5,8 +5,7 @@ export const padding = '20px'
 
 const sxBase = {
   color: "#ffffff",
-  paddingLeft: '3px',
-  paddingRight: '3px',
+  paddingX: '3px',
   fontWeight: "bold",
   fontSize: { xs: "1.1rem", sm: '1.5rem' },
   height: { xs: '25px', sm: '40px' }

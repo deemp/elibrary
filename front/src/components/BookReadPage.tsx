@@ -20,15 +20,17 @@ export function BookReadPage() {
           <>
             <Container maxWidth={"xl"}>
               <Grid container>
-                <Grid item xs={5}>
+                <Grid item xs={7} sm={5}>
                   <Grid container spacing={1}>
                     <Grid item><AppBarLink text={"Search"} to={"/"} id={"search"} /></Grid>
                     <Grid item>{faqButton}</Grid>
+                    <Grid item><AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} /></Grid>
                   </Grid>
                 </Grid>
                 <Grid
                   item
-                  xs={7}
+                  xs={5}
+                  sm={7}
                   display={"flex"}
                   justifyContent={"end"}
                   alignItems={"center"}
