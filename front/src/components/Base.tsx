@@ -1,8 +1,8 @@
 import { ReactElement, useEffect } from "react";
 import { User } from "../models/User";
 import { AppBar, Toolbar } from "@mui/material";
-import { NavLink } from "./NavLink";
-import * as appbar from "../models/appbar";
+import * as appbar from "./AppBar";
+import { AppBarLink } from "./AppBar";
 
 export function Base({
   title,
@@ -31,7 +31,7 @@ export function Base({
           {user.isAuthenticated ? (
             nav
           ) : (
-            <NavLink text={"Log in"} to="/login" id={"login"} />
+            <AppBarLink text={"Log in"} to="/login" id={"login"} />
           )}
         </Toolbar>
       </AppBar>

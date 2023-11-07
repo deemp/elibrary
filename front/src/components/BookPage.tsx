@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
 import { Base } from "./Base";
 import { Book } from "./Book";
-import { NavLink } from "./NavLink";
-import { Container, Grid, Typography } from "@mui/material";
-import * as appbar from "../models/appbar";
-import { useElements as useFAQ } from "./FAQ";
+import { Container, Grid } from "@mui/material";
+import { Ebsco, AppBarLink } from "./AppBar";
+import { useFAQ } from "./FAQ";
 
 export function BookPage() {
   const { faqButton, faqDrawer } = useFAQ();
@@ -20,34 +19,21 @@ export function BookPage() {
         nav={
           <>
             <Container maxWidth={"xl"}>
-              <Grid container alignItems={"center"}>
-                <Grid item xs={7}>
+              <Grid container>
+                <Grid item xs={5}>
                   <Grid container spacing={1}>
-                    <Grid item>
-                      <NavLink text={"Search"} to={"/"} id={"search"} />
-                    </Grid>
+                    <Grid item><AppBarLink text={"Search"} to={"/"} id={"search"} /></Grid>
                     <Grid item>{faqButton}</Grid>
                   </Grid>
                 </Grid>
                 <Grid
                   item
-                  xs={5}
-                  paddingTop={appbar.padding}
-                  paddingBottom={appbar.padding}
-                  textAlign={"right"}
+                  xs={7}
                   display={"flex"}
-                  alignItems={"center"}
                   justifyContent={"end"}
-                  fontSize={"14px"}
+                  alignItems={"center"}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: { xs: "1rem", sm: "1.5rem" },
-                    }}
-                  >
-                    EBSCO EBOOK ARCHIVE
-                  </Typography>
+                  {Ebsco}
                 </Grid>
               </Grid>
             </Container>

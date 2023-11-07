@@ -50,11 +50,7 @@ const columnPretty = new Map([
 
 const padding = '10px'
 
-function cell(id: string, value: any) {
-  return (
-    <TableCell key={id} align={'left'} sx={{ padding }}>{value}</TableCell>
-  );
-}
+const cell = (id: string, value?: JSX.Element | string | number) => <TableCell key={id} align={'left'} sx={{ padding }}>{value}</TableCell>
 
 export function BookTable({ books }: { books: Book[] }) {
 

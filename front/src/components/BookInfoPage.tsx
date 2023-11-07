@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import { Base } from "./Base";
-import { NavLink } from "./NavLink";
 import {
   Box,
   Button,
@@ -13,10 +12,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
-import * as appbar from "../models/appbar";
+import * as appbar from "./AppBar";
+import { AppBarLink } from "./AppBar";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
-import { useElements as useFAQ } from "./FAQ";
+import { useFAQ } from "./FAQ";
+import { Ebsco } from "./AppBar";
 
 function Row({
   title,
@@ -92,8 +93,7 @@ export function BookInfoPage() {
           loadImage(setImageDimensions, coverUrl, maxCoverHeight);
           setBook(r);
           setReference(
-            `${r?.authors.split("-")[0]}. ${r?.title}/${r?.authors}/${
-              r?.publisher
+            `${r?.authors.split("-")[0]}. ${r?.title}/${r?.authors}/${r?.publisher
             }.- ${r?.year}.-${r?.pages} p. - ISBN: ${r?.isbn}`
           );
         });
@@ -205,34 +205,23 @@ export function BookInfoPage() {
         nav={
           <>
             <Container maxWidth={"xl"}>
-              <Grid container alignItems={"center"}>
-                <Grid item xs={7}>
-                  <Grid container spacing={1}>
+              <Grid container>
+                <Grid item xs={5}>
+                  <Grid container columnSpacing={1}>
                     <Grid item>
-                      <NavLink text={"Search"} to={"/"} id={"search"} />
+                      <AppBarLink text={"Search"} to={"/"} id={"search"} />
                     </Grid>
                     <Grid item>{faqButton}</Grid>
                   </Grid>
                 </Grid>
                 <Grid
                   item
-                  xs={5}
-                  paddingTop={appbar.padding}
-                  paddingBottom={appbar.padding}
-                  textAlign={"right"}
+                  xs={7}
                   display={"flex"}
-                  alignItems={"center"}
                   justifyContent={"end"}
-                  fontSize={"14px"}
+                  alignItems={"center"}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: { xs: "1rem", sm: "1.5rem" },
-                    }}
-                  >
-                    EBSCO EBOOK ARCHIVE
-                  </Typography>
+                  {Ebsco}
                 </Grid>
               </Grid>
             </Container>
