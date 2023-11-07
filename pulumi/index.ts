@@ -28,7 +28,6 @@ function mkSetup(
   )
 
   const monitoring = Monitoring.main(
-    config.requireObject("monitoring"),
     namespace
   )
 }
