@@ -32,7 +32,7 @@ app = FastAPI(lifespan=lifespan)
 
 APP_NAME = os.environ.get("APP_NAME", "app")
 EXPOSE_PORT = os.environ.get("EXPOSE_PORT", 8000)
-OTLP_GRPC_ENDPOINT = os.environ.get("OTLP_GRPC_ENDPOINT", "http://tempo:4317")
+OTLP_GRPC_ENDPOINT = os.environ.get("OTLP_GRPC_ENDPOINT", "http://tempo:3100")
 
 # Setting metrics middleware
 app.add_middleware(PrometheusMiddleware, app_name=APP_NAME)
