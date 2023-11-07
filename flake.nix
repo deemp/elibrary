@@ -55,7 +55,12 @@
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                   pkgs.stdenv.cc.cc.lib
                 ]}
-                poetry run uvicorn --port ${portElibrary} --host ${host} elibrary.main:app --reload
+                poetry run uvicorn \
+                  --port ${portElibrary} \
+                  --host ${host} elibrary.main:app \
+                  --log-config elibrary/log_conf.yaml \
+                  --log-level info \
+                  --reload
               '';
             };
             prodBuildPdfjs = {
