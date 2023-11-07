@@ -1,13 +1,9 @@
-// """
-// Creating a Kubernetes Deployment
-// """
-
 import * as pulumi from "@pulumi/pulumi"
 import * as k8s from "@pulumi/kubernetes"
 import * as Back from "./src/back/index"
 import * as Monitoring from "./src/monitoring/index"
 
-function mkSetup(
+async function mkSetup(
   environment: string,
   provider: k8s.Provider
 ) {
@@ -20,7 +16,7 @@ function mkSetup(
     }
   })
 
-  const back = Back.main(
+  const back = await Back.main(
     config.requireObject("back"),
     environment,
     provider,

@@ -1,10 +1,24 @@
-import { Output } from "@pulumi/pulumi"
 import { Config } from "./pulumi"
 import * as k8s from "@pulumi/kubernetes"
-import path = require("node:path")
-import process = require('node:process')
 
-export function main(
+interface Image {
+  digest: string
+}
+
+interface Response {
+  images: Image[]
+}
+
+async function resolveImage(image: string, tag: string) {
+  let resp = await fetch(`https://registry.hub.docker.com/v2/repositories/${image}/tags/${tag}`)
+  if (resp.ok) {
+    let json = await resp.json() as Response
+    return json.images[0].digest
+  } else return ""
+}
+
+
+export async function main(
   config: Config,
   environment: string,
   provider: k8s.Provider,
@@ -15,7 +29,7 @@ export function main(
 
   const containerConfig = {
     ...deploymentConfig.container,
-    ...{ dockerHubImage: config.deployment.container.dockerHubImage },
+    ...{ image: config.deployment.container.image },
   }
   const serviceConfig = config.service
   const labels = {
@@ -27,6 +41,8 @@ export function main(
   }
 
   const containerPortName = `${appName}-port`
+
+  const sha = await resolveImage(config.deployment.container.image, config.deployment.container.tag)
 
   const deployment = ((name = `${appName}-deployment`) =>
     new k8s.apps.v1.Deployment(
@@ -51,7 +67,7 @@ export function main(
               containers: [
                 {
                   name: containerConfig.name,
-                  image: containerConfig.dockerHubImage,
+                  image: `${containerConfig.image}@${sha}`,
                   imagePullPolicy: "Always",
                   ports: [
                     {

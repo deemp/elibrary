@@ -1,5 +1,4 @@
 import * as k8s from "@pulumi/kubernetes"
-import * as pulumi from "@pulumi/pulumi";
 
 export function main(
   namespaceName: string
@@ -23,6 +22,9 @@ export function main(
     values: {
       test_pod: {
         enabled: false
+      },
+      loki: {
+        isDefault: false
       }
     },
     name: 'loki'
@@ -34,7 +36,7 @@ export function main(
     repositoryOpts: {
       repo: "https://prometheus-community.github.io/helm-charts",
     },
-    values: {},
+    name: 'prometheus'
   })
 
   new k8s.helm.v3.Release('tempo', {
@@ -44,7 +46,8 @@ export function main(
       repo: "https://grafana.github.io/helm-charts",
     },
     values: {
-      name: 'tempo'
+
     },
+    name: 'tempo'
   })
 }

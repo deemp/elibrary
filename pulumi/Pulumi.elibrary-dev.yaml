@@ -5,7 +5,8 @@ config:
       container:
         replicaCount: 1
         name: elibrary
-        dockerHubImage: deemp/elibrary:latest
+        image: deemp/elibrary
+        tag: latest
     service:
       port: 5000
       type: NodePort
