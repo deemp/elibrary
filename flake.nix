@@ -25,7 +25,7 @@
           inherit (inputs) pdfjs;
           portElibrary = "5000";
           portFront = "5001";
-          host = "0.0.0.0";
+          hostElibrary = "0.0.0.0";
 
           packageBack = groups:
             let
@@ -48,7 +48,7 @@
           imageNameCI = "elibrary-ci";
           imageNameServer = "elibrary";
 
-          packages = mkShellApps {
+          runElibrary_ = { port, host }: (mkShellApps {
             runElibrary = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
@@ -56,12 +56,16 @@
                   pkgs.stdenv.cc.cc.lib
                 ]}
                 poetry run uvicorn \
-                  --port ${portElibrary} \
+                  --port ${port} \
                   --host ${host} elibrary.main:app \
                   --log-config elibrary/log_conf.yaml \
                   --reload
               '';
             };
+          }).runElibrary;
+
+          packages = mkShellApps {
+            runElibrary = runElibrary_ { port = portElibrary; host = hostElibrary; };
             prodBuildPdfjs = {
               runtimeInputs = [ pkgs.nodePackages.gulp ];
               text =
@@ -113,7 +117,7 @@
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
-              description = ''run prod site at ${host}:${portElibrary}'';
+              description = ''run prod site at ${hostElibrary}:${portElibrary}'';
             };
             prodElibrary = {
               text = ''
@@ -121,7 +125,7 @@
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
               '';
-              description = ''run prod server at ${host}:${portElibrary}'';
+              description = ''run prod server at ${hostElibrary}:${portElibrary}'';
             };
             dev = {
               runtimeInputs = [ pkgs.nodejs ];
@@ -129,9 +133,9 @@
                 ${getExe packages.importCatalog}
                 ${getExe packages.stop}
                 ${getExe packages.runElibrary} &
-                (cd front && npx vite --port ${portFront} --host ${host}) &
+                (cd front && npx vite --host ${hostElibrary} --port ${portFront}) &
               '';
-              description = "run dev site at ${host}:${portFront}";
+              description = "run dev site at ${hostElibrary}:${portFront}";
             };
 
             stop = {
@@ -185,25 +189,30 @@
 
             # data should be mounted externally
             # see compose.yaml
-            imageServer = pkgs.dockerTools.streamLayeredImage {
-              name = "elibrary";
-              tag = "latest";
-              contents = [
-                packages.packageServer
-                pkgs.bashInteractive
-                pkgs.coreutils
-              ];
-
-              config = {
-                Entrypoint = [ "bash" "-c" ];
-                Cmd = [
-                  ''
+            imageServer =
+              let
+                inherit (mkShellApps {
+                  cmd.text = ''
                     cd elibrary
-                    ${getExe packages.runElibrary}
-                  ''
+                    ${getExe (runElibrary_ { host = "$HOST"; port = "$PORT"; })}
+                  '';
+                }) cmd;
+              in
+              pkgs.dockerTools.streamLayeredImage {
+                name = "elibrary";
+                tag = "latest";
+                contents = [
+                  packages.packageServer
+                  pkgs.bashInteractive
+                  pkgs.coreutils
+                  cmd
                 ];
+
+                config = {
+                  Entrypoint = [ "bash" "-c" ];
+                  Cmd = [ (getExe cmd) ];
+                };
               };
-            };
 
             dockerLoadImageServer = {
               runtimeInputs = [ pkgs.docker ];
