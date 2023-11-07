@@ -984,8 +984,8 @@
       {
         "current": {
           "selected": false,
-          "text": "app-a",
-          "value": "app-a"
+          "text": "app-elibrary",
+          "value": "app-elibrary"
         },
         "datasource": {
           "type": "prometheus",
