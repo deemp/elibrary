@@ -1,4 +1,4 @@
-import * as appbar from '../models/appbar'
+import * as appbar from './AppBar'
 
 export function Book({ bookId }: { bookId: number }) {
   const prefix = import.meta.env.VITE_API_PREFIX

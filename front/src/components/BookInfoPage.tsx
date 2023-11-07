@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import { Base } from "./Base";
-import { NavLink } from "./NavLink";
 import {
   Box,
   Button,
@@ -13,10 +12,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
-import * as appbar from "../models/appbar";
+import * as appbar from "./AppBar";
+import { AppBarLink } from "./AppBar";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
-import { useElements as useFAQ } from "./FAQ";
+import { useFAQ } from "./FAQ";
+import { Ebsco } from "./AppBar";
 
 function Row({
   title,
@@ -92,8 +93,7 @@ export function BookInfoPage() {
           loadImage(setImageDimensions, coverUrl, maxCoverHeight);
           setBook(r);
           setReference(
-            `${r?.authors.split("-")[0]}. ${r?.title}/${r?.authors}/${
-              r?.publisher
+            `${r?.authors.split("-")[0]}. ${r?.title}/${r?.authors}/${r?.publisher
             }.- ${r?.year}.-${r?.pages} p. - ISBN: ${r?.isbn}`
           );
         });
@@ -120,33 +120,39 @@ export function BookInfoPage() {
                     <Button
                       sx={{
                         fontWeight: "bold",
-                        paddingY: "1.5rem",
-                        paddingX: { xs: "8rem", sm: "12rem" },
+                        paddingY: "1rem",
+                        paddingX: { xs: "5rem", sm: "12rem" },
+                        fontSize: { sm: '1.5rem' },
                       }}
                       variant="contained"
                       size="large"
+                      disableElevation
                     >
                       READ
                     </Button>
                   </Link>
                 </Grid>
                 <Grid item xs={12}>
-                  <Grid container spacing={3}>
+                  <Grid container spacing={3} justifyContent={'center'}>
                     <Grid item sx={{ width: `${imageDimensions.width}` }}>
-                      <Card
-                        elevation={elevation}
-                        sx={{
-                          height: `${imageDimensions.height}px`,
-                          width: `${imageDimensions.width}px`,
-                        }}
-                      >
-                        <CardMedia
-                          component="img"
-                          src={coverUrl}
-                          height={`${imageDimensions.height}px`}
-                          width={`${imageDimensions.width}px`}
-                        />
-                      </Card>
+                      <Link to={`/book/${bookId}/read`}>
+                        <Card
+                          elevation={elevation}
+                          sx={{
+                            height: { xs: `${imageDimensions.height * 0.8}px`, sm: `${imageDimensions.height}px` },
+                            width: { xs: `${imageDimensions.width * 0.8}px`, sm: `${imageDimensions.width}px` },
+                          }}
+                        >
+                          <CardMedia
+                            component="img"
+                            src={coverUrl}
+                            sx={{
+                              maxHeight: `100%`,
+                              maxWidth: `100%`
+                            }}
+                          />
+                        </Card>
+                      </Link>
                     </Grid>
                     <Grid item xs={12} sm>
                       <Grid container rowSpacing={1}>
@@ -205,34 +211,23 @@ export function BookInfoPage() {
         nav={
           <>
             <Container maxWidth={"xl"}>
-              <Grid container alignItems={"center"}>
-                <Grid item xs={7}>
-                  <Grid container spacing={1}>
+              <Grid container>
+                <Grid item xs={5}>
+                  <Grid container columnSpacing={1}>
                     <Grid item>
-                      <NavLink text={"Search"} to={"/"} id={"search"} />
+                      <AppBarLink text={"Search"} to={"/"} id={"search"} />
                     </Grid>
                     <Grid item>{faqButton}</Grid>
                   </Grid>
                 </Grid>
                 <Grid
                   item
-                  xs={5}
-                  paddingTop={appbar.padding}
-                  paddingBottom={appbar.padding}
-                  textAlign={"right"}
+                  xs={7}
                   display={"flex"}
-                  alignItems={"center"}
                   justifyContent={"end"}
-                  fontSize={"14px"}
+                  alignItems={"center"}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: { xs: "1rem", sm: "1.5rem" },
-                    }}
-                  >
-                    EBSCO EBOOK ARCHIVE
-                  </Typography>
+                  {Ebsco}
                 </Grid>
               </Grid>
             </Container>
