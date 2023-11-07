@@ -191,6 +191,12 @@
 
 1. Merge the request to the `main` branch.
 
+## References
+
+- [fastapi-observability](https://github.com/blueswen/fastapi-observability)
+  - configure for compose ([link](https://grafana.com/docs/loki/latest/send-data/docker-driver/configuration/#configure-the-logging-driver-for-a-swarm-service-or-compose))
+  - install docker loki plugin ([link](https://yuriktech.com/2020/03/21/Collecting-Docker-Logs-With-Loki/))
+
 <!-- ## Legacy sections below
 
 ## Getting started
