@@ -120,11 +120,13 @@ export function BookInfoPage() {
                     <Button
                       sx={{
                         fontWeight: "bold",
-                        paddingY: "1.5rem",
-                        paddingX: { xs: "8rem", sm: "12rem" },
+                        paddingY: "1rem",
+                        paddingX: { xs: "6rem", sm: "12rem" },
+                        fontSize: { sm: '1.5rem' },
                       }}
                       variant="contained"
                       size="large"
+                      disableElevation
                     >
                       READ
                     </Button>
