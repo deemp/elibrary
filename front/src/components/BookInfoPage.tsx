@@ -121,7 +121,7 @@ export function BookInfoPage() {
                       sx={{
                         fontWeight: "bold",
                         paddingY: "1rem",
-                        paddingX: { xs: "6rem", sm: "12rem" },
+                        paddingX: { xs: "5rem", sm: "12rem" },
                         fontSize: { sm: '1.5rem' },
                       }}
                       variant="contained"
