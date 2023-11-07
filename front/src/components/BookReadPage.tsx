@@ -5,7 +5,7 @@ import { Container, Grid } from "@mui/material";
 import { Ebsco, AppBarLink } from "./AppBar";
 import { useFAQ } from "./FAQ";
 
-export function BookPage() {
+export function BookReadPage() {
   const { faqButton, faqDrawer } = useFAQ();
   const { id } = useParams();
   if (id) {

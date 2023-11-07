@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { SearchPage } from "./components/SearchPage.tsx";
-import { BookPage } from "./components/BookPage.tsx";
+import { BookReadPage } from "./components/BookReadPage.tsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ErrorPage } from "./error-page.tsx";
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/book/:id/read",
-    element: <BookPage />,
+    element: <BookReadPage />,
     errorElement: <ErrorPage />,
   },
   {
