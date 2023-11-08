@@ -23,7 +23,7 @@ test:
   script:
     - prod &> logs || true
     - sleep 5
-    - poetry run pytest &> logs.test
+    - poetry run pytest &> logs.test || (cat logs && cat logs.test && false)
     - cat logs
     - cat logs.test
 

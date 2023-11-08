@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -9,6 +10,8 @@ from starlette.middleware.sessions import SessionMiddleware
 from . import env
 from .internal.import_catalog import import_catalog
 from .internal.extract_covers import extract_covers
+from .internal.otlp import PrometheusMiddleware, metrics, setting_otlp
+import logging
 
 
 # https://fastapi.tiangolo.com/advanced/events/
@@ -23,6 +26,28 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+
+APP_NAME = os.environ.get("APP_NAME", "app")
+OTLP_GRPC_ENDPOINT = os.environ.get("OTLP_GRPC_ENDPOINT", "http://tempo:4317")
+
+# Setting metrics middleware
+app.add_middleware(PrometheusMiddleware, app_name=APP_NAME)
+app.add_route("/metrics", metrics)
+
+# Setting OpenTelemetry exporter
+setting_otlp(app, APP_NAME, OTLP_GRPC_ENDPOINT)
+
+
+class EndpointFilter(logging.Filter):
+    # Uvicorn endpoint access log filter
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.getMessage().find("GET /metrics") == -1
+
+
+# Filter out /endpoint
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+
 
 prefix = env.PREFIX
 

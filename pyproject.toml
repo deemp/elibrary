@@ -51,6 +51,13 @@ requests = "^2.31.0"
 [tool.poetry.group.dev.dependencies]
 requests = "^2.31.0"
 
+[tool.poetry.group.telemetry.dependencies]
+opentelemetry-distro = "^0.41b0"
+opentelemetry-exporter-otlp = "^1.20.0"
+opentelemetry-instrumentation-fastapi = "^0.41b0"
+prometheus-client = "^0.18.0"
+opentelemetry-instrumentation-logging = "^0.41b0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
