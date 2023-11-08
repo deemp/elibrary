@@ -1,5 +1,5 @@
 creation_rules:
     - pgp: >-
-        F3BF419996D21EE8289E9C1576154DBF3994ED31,
-        11552627547CDD4CE362BA0FD6FC9AD932A51F19
-      path_regex: elibrary/enc\..*\.env
+        11552627547CDD4CE362BA0FD6FC9AD932A51F19,
+        2748634B597F4AF2FC5B4FEAC53ADDA057B66A56
+      path_regex: elibrary/.*\.enc\..*
