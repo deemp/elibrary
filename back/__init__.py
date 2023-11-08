@@ -20,6 +20,8 @@ class Env:
     BOOKS_DIR: str
     COVERS_DIR: str
 
+    FRONT_DIR: str
+
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
         self.DO_IMPORT_CATALOG = self.DO_IMPORT_CATALOG == "true"
