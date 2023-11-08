@@ -31,7 +31,7 @@ services:
     logging: *default-logging
     volumes:
       - ./books:/elibrary/books
-      - ./elibrary:/elibrary/elibrary
+      - ./back:/elibrary/back
       - ./covers:/elibrary/covers
       - ./poetry.toml:/elibrary/poetry.toml
       - ./pyproject.toml:/elibrary/pyproject.toml
