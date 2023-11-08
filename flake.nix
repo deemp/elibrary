@@ -253,7 +253,7 @@
 
                   VENV=$APP/.venv
                   mkdir -p $VENV
-                  cp -r ${packageBack [ "prod" "lint" "test" ]}/* $VENV
+                  cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
 
                   PDFJS=$APP/front/public/pdfjs
                   mkdir -p $PDFJS
