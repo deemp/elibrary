@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "elibrary"
+name = "back"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
@@ -7,8 +7,8 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.scripts]
-import-catalog = "elibrary.internal.import_catalog:run"
-extract-covers = "elibrary.internal.extract_covers:run"
+import-catalog = "back.internal.import_catalog:run"
+extract-covers = "back.internal.extract_covers:run"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
