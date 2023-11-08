@@ -10,9 +10,9 @@ async def root(request: Request):
     if env.ENABLE_AUTH:
         user = request.session.get("user")
         if user:
-            with open("elibrary/static/front/index.html", "r") as index:
+            with open(f"{env.FRONT_DIR}/index.html", "r") as index:
                 return HTMLResponse(index.read())
         return RedirectResponse(url="/login")
     else:
-        with open("elibrary/static/front/index.html", "r") as index:
+        with open(f"{env.FRONT_DIR}/index.html", "r") as index:
             return HTMLResponse(index.read())
