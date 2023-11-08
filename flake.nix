@@ -217,6 +217,7 @@
             dockerLoadImageServer = {
               runtimeInputs = [ pkgs.docker ];
               text = ''${packages.imageServer} | docker load'';
+              description = "Build and load prod image";
             };
 
             dockerPushImageServer = {
@@ -225,6 +226,7 @@
                 docker tag ${imageNameServer} deemp/${imageNameServer}
                 docker push deemp/${imageNameServer}
               '';
+              description = "Push prod image to dockerhub";
             };
 
             packageFrontCI =
@@ -290,6 +292,7 @@
                 docker tag ${imageNameCI} deemp/${imageNameCI}
                 docker push deemp/${imageNameCI}
               '';
+              description = "Push CI images to dockerhub";
             };
           };
           devShells.default = mkShell {
