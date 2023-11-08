@@ -28,16 +28,19 @@ def run():
         "-p",
         "--poppler-path",
         help="path to the poppler executable",
+        default=env.POPPLER_PATH
     )
     argParser.add_argument(
         "-i",
         "--input-directory",
         help="directory with book files (input)",
+        default=env.BOOKS_DIR
     )
     argParser.add_argument(
         "-o",
         "--output-directory",
         help="directory for covers (output)",
+        default=env.COVERS_DIR
     )
     args = argParser.parse_args()
 
