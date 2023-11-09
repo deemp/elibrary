@@ -4,7 +4,7 @@
 
 [link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
 
-## Quick start
+## Development
 
 - Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
 
@@ -34,125 +34,39 @@
 - Build `pdfjs`.
 
     ```console
-    nix run .#prod-build-pdfjs
+    nix run .#prodBuildPdfjs
     ```
 
-- Run dev servers.
+- Run dev servers (for `back` and `front`).
 
     ```console
     nix run .#dev
     ```
 
-- Open http://localhost:5001 in a browser.
+- Open <http://localhost:5001> in a browser.
 
-
-- Edit files in [elibrary](./elibrary/) and in [front](./front/).
+- Edit files in [back](./back) and in [front](./front/).
 
 - Stop servers.
 
-    ```
+    ```console
     nix run .#stop
     ```
 
-## Stack
+## Production
 
-- main package manager: [nix](https://nixos.org/manual/nix/unstable/introduction)
-
-### Security
-
-- [sops](https://github.com/getsops/sops)
-- [gnupg](https://www.gnupg.org/index.html)
-
-1. Get both tools in a `devshell`:
+1. Run server and monitoring containers.
 
     ```console
-    nix develop
-    sops --version
-    gpg --version
+    docker compose up
     ```
 
-1. The [elibrary/enc.auth.env](elibrary/enc.auth.env) file is encrypted via `sops`.
-    
-    - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` are for [Google Open ID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
-    - `SECRET_KEY` is for sessions
+1. Open server ([link](http://localhost:5000/)).
 
-1. The `sops` config is in [.sops.yaml](.sops.yaml).
-1. Access to the encoded file can be granted to other people ([link](https://dev.to/stack-labs/manage-your-secrets-in-git-with-sops-common-operations-118g)) by adding keys to `.sops.yaml`.
-1. Keys can be generated via `gnupg` ([link](https://blog.gitguardian.com/a-comprehensive-guide-to-sops/#2-sops-with-pgp-keys)).
-
-### Expose
-
-- [localtunnel](https://github.com/localtunnel/localtunnel) - default.
-    - exposes at https://elibrary-itpd.loca.lt
-- [ngrok](https://ngrok.com/) - currently used for deployment.
-    - exposes at https://recently-wanted-elf.ngrok-free.app
-    - Provides a single weird static endpoint ([link](https://ngrok.com/blog-post/free-static-domains-ngrok-users)).
-
-1. Get both tools in a `devShell`:
-
-    ```console
-    nix develop
-    lt --version
-    ngrok --version
-    ```
-
-1. Set the flag in [elibrary/.env](./elibrary/.env). 
-    
-    ```console
-    ENABLE_AUTH="true"
-    ```
-
-1. Expose via `localtunnel`.
-
-    ```console
-    nix run .#release
-
-    # stop later
-    nix run .#stop
-    ```
-
-1. Or, expose via `ngrok`.
-
-    ```console
-    nix run .#prod
-    ngrok http --domain <your domain (without https://)> 5000
-
-    # or, with default domain
-    nix run .#release-ngrok
-
-    # stop later
-    nix run .#stop
-    ```
-
-1. It may take long to load a book at `book/<book_id>/read`.
-
-### Back
-
-- package manager: [poetry](https://python-poetry.org/docs/)
-- database: [SQLite](https://www.sqlite.org/index.html)
-- language: [Python](https://www.python.org/)
-- libraries:
-  - [flask](https://flask.palletsprojects.com/en/3.0.x/)
-  - [sqlite3](https://docs.python.org/3/library/sqlite3.html)
-
-### Front
-
-- language: [TypeScript](https://www.typescriptlang.org/)
-- book viewer: [bookreader](https://github.com/internetarchive/bookreader)
-
-## Diagrams
-
-### Use case
-
-![diagram](./diagrams/use_case.png)
-
-### Static view
-
-![static](./diagrams/static.png)
-
-### Dynamic view
-
-![static](./diagrams/dynamic.png)
+1. Open Grafana ([link](http://localhost:3000/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s)).
+    - Login: `admin`
+    - Password: `admin`
+    - Skip updating password
 
 ## Connect by SSH
 
@@ -172,6 +86,72 @@
     ```console
     git clone git@gitlab.pg.innopolis.university:elibrary/elibrary.git
     ```
+
+## Security
+
+- [sops](https://github.com/getsops/sops)
+- [gnupg](https://www.gnupg.org/index.html)
+
+1. Get both tools in a `devshell`:
+
+    ```console
+    nix develop
+    sops --version
+    gpg --version
+    ```
+
+1. The [back/auth.enc.env](back/auth.enc.env) file is encrypted via `sops`.
+
+    - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` are for [Google Open ID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
+    - `SECRET_KEY` is for sessions
+
+1. The `sops` config is in [.sops.yaml](.sops.yaml).
+1. A current developer (`Alice`) (whose key is in `.sops.yaml`) can grant access to a new developer (`Bob`).
+    - Bob generates a PGP key pair via `gnupg` ([link](https://blog.gitguardian.com/a-comprehensive-guide-to-sops/#2-sops-with-pgp-keys)).
+    - Alice adds Bob's public PGP key (e.g., `gpg --import bobs.public.key`).
+    - Alice adds Bob's key fingerprint to [.sops.yaml](.sops.yaml).
+    - Alice updates the encrypted file.
+
+        ```console
+        sops updatekeys back/auth.enc.env
+        ```
+
+## Stack
+
+- main package manager: [nix](https://nixos.org/manual/nix/unstable/introduction)
+
+### Back
+
+- package manager: [poetry](https://python-poetry.org/docs/)
+- database: [SQLite](https://www.sqlite.org/index.html)
+- language: [Python](https://www.python.org/)
+- framework: [FastAPI](https://github.com/tiangolo/fastapi)
+
+### Front
+
+- language: [TypeScript](https://www.typescriptlang.org/)
+- framework: [React](https://react.dev/)
+- tooling: [Vite](https://vitejs.dev/)
+- book viewer: [PDF.js](https://github.com/mozilla/pdf.js)
+
+### Monitoring
+
+- containers manager: [Docker Compose](https://github.com/docker/compose)
+- monitoring: [FastAPI with Observability](https://github.com/blueswen/fastapi-observability)
+
+## Diagrams
+
+### Use case
+
+![diagram](./diagrams/use_case.png)
+
+### Static view
+
+![static](./diagrams/static.png)
+
+### Dynamic view
+
+![static](./diagrams/dynamic.png)
 
 ## Contribute
 
@@ -196,107 +176,3 @@
 - [fastapi-observability](https://github.com/blueswen/fastapi-observability)
   - configure for compose ([link](https://grafana.com/docs/loki/latest/send-data/docker-driver/configuration/#configure-the-logging-driver-for-a-swarm-service-or-compose))
   - install docker loki plugin ([link](https://yuriktech.com/2020/03/21/Collecting-Docker-Logs-With-Loki/))
-
-<!-- ## Legacy sections below
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.pg.innopolis.university/elibrary/demo.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.pg.innopolis.university/elibrary/demo/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-
-Choose a self-explaining name for your project.
-
-## Description
-
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-
-Show your appreciation to those who have contributed to the project.
-
-## License
-
-For open source projects, say how it is licensed.
-
-## Project status
-
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers. -->
