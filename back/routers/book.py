@@ -4,6 +4,7 @@ from sqlmodel import Session
 from ..internal.range_request import range_requests_response
 from ..internal.models import Book
 from ..internal.db import engine
+from .. import env
 
 router = APIRouter()
 
@@ -21,6 +22,6 @@ def book_page(book_id: int):
 async def file(book_id: int, request: Request):
     return range_requests_response(
         request=request,
-        file_path=f"books/{book_id}.pdf",
+        file_path=f"{env.BOOKS_DIR}/{book_id}.pdf",
         content_type="application/pdf",
     )

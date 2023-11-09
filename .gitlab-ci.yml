@@ -2,8 +2,6 @@ default:
   image:
     name: "deemp/elibrary-ci:latest"
   before_script:
-    - mkdir -p "$HOME/.config/nix"
-    - echo 'experimental-features = nix-command flakes' > "$HOME/.config/nix/nix.conf"
     - mkdir -p "/etc/containers/"
     - echo '{"default":[{"type":"insecureAcceptAnything"}]}' > /etc/containers/policy.json
     - cp -r /elibrary-ci/.* /elibrary-ci/* .

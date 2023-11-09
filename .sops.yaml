@@ -2,4 +2,4 @@ creation_rules:
     - pgp: >-
         11552627547CDD4CE362BA0FD6FC9AD932A51F19,
         2748634B597F4AF2FC5B4FEAC53ADDA057B66A56
-      path_regex: elibrary/.*\.enc\..*
+      path_regex: back/.*\.enc\..*

@@ -1,5 +1,5 @@
 import requests
-from elibrary.routers.search import *
+from ..routers.search import *
 
 
 def test_search_get_type():
