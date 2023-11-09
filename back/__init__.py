@@ -22,11 +22,17 @@ class Env:
     COVERS_DIR: str
 
     FRONT_DIR: str
+    
+    HOST: str
+    PORT: int
+    
+    LOG_CONFIG_PATH: str
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
         self.DO_IMPORT_CATALOG = self.DO_IMPORT_CATALOG == "true"
         self.DO_EXTRACT_COVERS = self.DO_EXTRACT_COVERS == "true"
+        self.PORT = int(self.PORT)
 
 def load_dotenv(cls, path):
     # https://github.com/theskumar/python-dotenv#other-use-cases
