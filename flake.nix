@@ -23,6 +23,7 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           inherit (inputs) pdfjs;
+
           portBack = "5000";
           portFront = "5001";
           hostBack = "0.0.0.0";
@@ -57,11 +58,7 @@
                   pkgs.stdenv.cc.cc.lib
                 ]}
                 ${getExe packages.writeBackDotenv}
-                poetry run uvicorn \
-                  --port ${port} \
-                  --host ${host} back.main:app \
-                  --log-config back/log_conf.yaml \
-                  --reload
+                poetry run back
               '';
               description = "run back at ${mkURL host port}";
             };
@@ -86,7 +83,11 @@
           packages =
             (
               mkShellApps {
-                writeBackDotenv = writeDotenv "back/.env" (import ./back/.env.nix { inherit pkgs; });
+                writeBackDotenv = writeDotenv "back/.env" (import ./back/.env.nix {
+                  inherit pkgs;
+                  host = hostBack;
+                  port = portBack;
+                });
               }
             ) //
             (
@@ -97,13 +98,23 @@
               in
               mkShellApps {
                 writeFrontProdDotenv = writeDotenv prod (import ./${prod}.nix { inherit prefix; });
+
                 writeFrontDevDotenv = writeDotenv dev (import ./${dev}.nix { host = hostBack; port = portBack; inherit prefix; });
+
                 writeFrontDotenv = {
                   text = ''
                     ${getExe packages.writeFrontDevDotenv}
                     ${getExe packages.writeFrontProdDotenv}
                   '';
                   description = ''write ${dev} and ${prod}'';
+                };
+
+                writeDotenv = {
+                  text = ''
+                    ${getExe packages.writeBackDotenv}
+                    ${getExe packages.writeFrontDotenv}
+                  '';
+                  description = "write .env files for ./front and ./back";
                 };
               }
             ) //
@@ -112,12 +123,12 @@
                 runBack = runBack_ { port = portBack; host = hostBack; };
 
                 prodBuildPdfjs = {
-                  runtimeInputs = [ pkgs.nodePackages.gulp ];
                   text = ''cp -r ${pdfjs.outPath}/build/generic/* ${pdfjsDir}'';
                   description = ''build pdfjs and write it to ${pdfjsDir}'';
                 };
 
                 prodBuildFront = {
+                  runtimeInputs = [ pkgs.nodejs ];
                   text =
                     let dist = "back/static/front"; in
                     ''
@@ -168,7 +179,7 @@
                     ${getExe packages.runBack} &
                     (cd front && npx vite --host ${hostBack} --port ${portFront}) &
                   '';
-                  description = "run dev site at ${mkURL hostBack portFront}";
+                  description = "run front site at ${mkURL hostBack portFront}, back site at ${mkURL hostBack portBack}";
                 };
 
                 stop = {
@@ -366,7 +377,6 @@
                   importCatalog
                   install
                   prod
-                  prodBack
                   prodBuildFront
                   prodBuildPdfjs
                   runBack

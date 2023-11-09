@@ -6,18 +6,18 @@
 
 ## Development
 
-- Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
+1. Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
 
-- Clone and enter this repository
+1. Clone and enter this repository
 
     ```console
     git clone https://gitlab.pg.innopolis.university/elibrary/elibrary
     cd elibrary
     ```
 
-- Run `direnv allow`.
+1. Run `direnv allow`.
 
-- Run `nix develop`. Check that you have `poetry` and `sqlite3` from a `devShell` (see [flake.nix](./flake.nix)).
+1. Run `nix develop`. Check that you have `poetry` and `sqlite3` from a `devShell` (see [flake.nix](./flake.nix)).
 
     ```console
     poetry --version
@@ -25,29 +25,31 @@
     sqlite3 --version
     ```
 
-- Install packages.
+1. Install packages.
 
     ```console
     nix run .#install
     ```
 
-- Build `pdfjs`.
+1. Build `pdfjs`.
 
     ```console
     nix run .#prodBuildPdfjs
     ```
 
-- Run dev servers (for `back` and `front`).
+1. Run dev servers (for `back` and `front`).
 
     ```console
     nix run .#dev
     ```
 
-- Open <http://localhost:5001> in a browser.
+1. (Optionally) Access back server at <http://0.0.0.0:5000>.
 
-- Edit files in [back](./back) and in [front](./front/).
+1. Access front server at <http://localhost:5001> in a browser.
 
-- Stop servers.
+1. Edit files in [back](./back) and in [front](./front/).
+
+1. Stop servers.
 
     ```console
     nix run .#stop
@@ -61,9 +63,9 @@
     docker compose up
     ```
 
-1. Open server ([link](http://localhost:5000/)).
+1. Open server at <http://0.0.0.0:5000/>.
 
-1. Open Grafana ([link](http://localhost:3000/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s)).
+1. Open Grafana at <http://0.0.0.0:3000/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s>.
     - Login: `admin`
     - Password: `admin`
     - Skip updating password
