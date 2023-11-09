@@ -58,6 +58,7 @@
                   pkgs.stdenv.cc.cc.lib
                 ]}
                 ${getExe packages.writeBackDotenv}
+                ${getExe packages.prodBuildFront}
                 poetry run back
               '';
               description = "run back at ${mkURL host port}";
