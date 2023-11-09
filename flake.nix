@@ -366,7 +366,6 @@
                   importCatalog
                   install
                   prod
-                  prodBack
                   prodBuildFront
                   prodBuildPdfjs
                   runBack
