@@ -37,6 +37,7 @@ services:
       - ./pyproject.toml:/elibrary/pyproject.toml
       - ./database.db:/elibrary/database.db
       - ./books.xlsx:/elibrary/books.xlsx
+      - ./front:/elibrary/front
 
   prometheus:
     image: prom/prometheus:v2.47.2
