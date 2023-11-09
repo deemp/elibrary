@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from dotenv import dotenv_values
 from pathlib import Path
+import os
 
 
 @dataclass
@@ -20,13 +21,20 @@ class Env:
     BOOKS_DIR: str
     COVERS_DIR: str
 
+    FRONT_DIR: str
+
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
         self.DO_IMPORT_CATALOG = self.DO_IMPORT_CATALOG == "true"
         self.DO_EXTRACT_COVERS = self.DO_EXTRACT_COVERS == "true"
 
+def load_dotenv(cls, path):
+    # https://github.com/theskumar/python-dotenv#other-use-cases
+    config = {**dotenv_values(Path(__file__).parent / path), **os.environ}
+    # https://stackoverflow.com/a/50874478
+    return cls(**{field: config.get(field) for field in cls.__dataclass_fields__})
 
-env = Env(**dotenv_values(Path(__file__).parent / ".env"))
+env = load_dotenv(Env, ".env")
 
 if env.ENABLE_AUTH:
 
@@ -35,5 +43,4 @@ if env.ENABLE_AUTH:
         SECRET_KEY: str
         GOOGLE_CLIENT_ID: str
         GOOGLE_CLIENT_SECRET: str
-
-    auth_secrets = Auth(**dotenv_values(Path(__file__).parent / "auth.env"))
+    auth_secrets = load_dotenv(Auth, "auth.env")

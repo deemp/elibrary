@@ -1,8 +1,8 @@
 *.db
 .direnv
 __pycache__/
-elibrary/website/static/pdfjs
-elibrary/website/static/front
+back/website/static/pdfjs
+back/website/static/front
 **/*.tmp.env
 auth.env
 pulumi/node_modules

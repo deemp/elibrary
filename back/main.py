@@ -61,12 +61,12 @@ if env.ENABLE_AUTH:
 # https://fastapi.tiangolo.com/tutorial/static-files/
 app.mount(
     f"{prefix}/static",
-    StaticFiles(directory="elibrary/static/front/", follow_symlink=True),
+    StaticFiles(directory=env.FRONT_DIR, follow_symlink=True),
     name="static",
 )
 app.mount(
     f"{prefix}/covers",
-    StaticFiles(directory="covers", follow_symlink=True),
+    StaticFiles(directory=env.COVERS_DIR, follow_symlink=True),
     name="covers",
 )
 
@@ -78,4 +78,4 @@ app.include_router(search.router, prefix=prefix)
 
 @app.api_route("/{path:path}", methods=["GET"])
 async def catch_all(path: str):
-    return FileResponse("elibrary/static/front/index.html")
+    return FileResponse(f"{env.FRONT_DIR}/index.html")

@@ -1,5 +1,5 @@
 import requests
-from elibrary.routers.book import *
+from ..routers.book import *
 
 
 def test_book_page_type():
