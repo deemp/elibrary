@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+import uvicorn
 from .internal.db import create_db_and_tables
 from contextlib import asynccontextmanager
 from .routers import book, root, search, auth
@@ -79,3 +80,19 @@ app.include_router(search.router, prefix=prefix)
 @app.api_route("/{path:path}", methods=["GET"])
 async def catch_all(path: str):
     return FileResponse(f"{env.FRONT_DIR}/index.html")
+
+
+def run():
+    config = uvicorn.Config(
+        f"{__name__}:app",
+        port=env.PORT,
+        host=env.HOST,
+        log_config=env.LOG_CONFIG_PATH,
+        reload=True,
+    )
+    server = uvicorn.Server(config)
+    server.run()
+
+
+if __name__ == "__main__":
+    run()
