@@ -86,7 +86,11 @@
           packages =
             (
               mkShellApps {
-                writeBackDotenv = writeDotenv "back/.env" (import ./back/.env.nix { inherit pkgs; });
+                writeBackDotenv = writeDotenv "back/.env" (import ./back/.env.nix {
+                  inherit pkgs;
+                  host = hostBack;
+                  port = portBack;
+                });
               }
             ) //
             (
@@ -97,13 +101,23 @@
               in
               mkShellApps {
                 writeFrontProdDotenv = writeDotenv prod (import ./${prod}.nix { inherit prefix; });
+
                 writeFrontDevDotenv = writeDotenv dev (import ./${dev}.nix { host = hostBack; port = portBack; inherit prefix; });
+
                 writeFrontDotenv = {
                   text = ''
                     ${getExe packages.writeFrontDevDotenv}
                     ${getExe packages.writeFrontProdDotenv}
                   '';
                   description = ''write ${dev} and ${prod}'';
+                };
+
+                writeDotenv = {
+                  text = ''
+                    ${getExe packages.writeBackDotenv}
+                    ${getExe packages.writeFrontDotenv}
+                  '';
+                  description = "write .env files for ./front and ./back";
                 };
               }
             ) //
