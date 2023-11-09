@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, host, port }:
 {
   ENABLE_AUTH = "false";
   DB_PATH = "database.db";
@@ -16,4 +16,8 @@
   COVERS_DIR = "covers";
 
   FRONT_DIR = "back/static/front";
+
+  HOST = host;
+  PORT = port;
+  LOG_COFIG_PATH = "back/log_conf.yaml";
 }
