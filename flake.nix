@@ -357,25 +357,24 @@
             (
               mkRunCommands "nix-run" {
                 inherit (packages)
-                  writeBackDotenv
-                  runBack
-                  prodBuildPdfjs
-                  prodBuildFront
-                  importCatalog
+                  dev
+                  dockerLoadImageCI
+                  dockerLoadImageProd
+                  dockerPushImageCI
+                  dockerPushImageProd
                   extractCovers
+                  importCatalog
+                  install
                   prod
                   prodBack
-                  dev
+                  prodBuildFront
+                  prodBuildPdfjs
+                  runBack
                   stop
-                  install
                   writeBackDotenv
-                  writeFrontProdDotenv
                   writeFrontDevDotenv
                   writeFrontDotenv
-                  dockerLoadImageProd
-                  dockerPushImageProd
-                  dockerLoadImageCI
-                  dockerPushImageCI
+                  writeFrontProdDotenv
                   ;
               }
             );
