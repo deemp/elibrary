@@ -23,6 +23,7 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           inherit (inputs) pdfjs;
+
           portBack = "5000";
           portFront = "5001";
           hostBack = "0.0.0.0";
