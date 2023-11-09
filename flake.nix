@@ -168,7 +168,7 @@
                     ${getExe packages.runBack} &
                     (cd front && npx vite --host ${hostBack} --port ${portFront}) &
                   '';
-                  description = "run dev site at ${mkURL hostBack portFront}";
+                  description = "run front site at ${mkURL hostBack portFront}, back site at ${mkURL hostBack portBack}";
                 };
 
                 stop = {
