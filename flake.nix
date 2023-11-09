@@ -23,9 +23,9 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           inherit (inputs) pdfjs;
-          portElibrary = "5000";
+          portBack = "5000";
           portFront = "5001";
-          hostElibrary = "0.0.0.0";
+          hostBack = "0.0.0.0";
 
           packageBack = groups:
             let
@@ -46,255 +46,299 @@
             app;
 
           imageNameCI = "elibrary-ci";
-          imageNameServer = "elibrary";
+          imageNameProd = "elibrary";
+          mkURL = host: port: "http://${host}:${port}";
 
-          runElibrary_ = { port, host }: (mkShellApps {
-            runElibrary = {
+          runBack_ = { port, host }: (mkShellApps {
+            runBack = {
               runtimeInputs = [ pkgs.poetry ];
               text = ''
                 export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                   pkgs.stdenv.cc.cc.lib
                 ]}
+                ${getExe packages.writeBackDotenv}
                 poetry run uvicorn \
                   --port ${port} \
-                  --host ${host} elibrary.main:app \
-                  --log-config elibrary/log_conf.yaml \
+                  --host ${host} back.main:app \
+                  --log-config back/log_conf.yaml \
                   --reload
               '';
+              description = "run back at ${mkURL host port}";
             };
-          }).runElibrary;
+          }).runBack;
 
-          packages = mkShellApps {
-            runElibrary = runElibrary_ { port = portElibrary; host = hostElibrary; };
-            prodBuildPdfjs = {
-              runtimeInputs = [ pkgs.nodePackages.gulp ];
-              text =
-                let dist = "front/public/pdfjs"; in
-                ''cp -r ${pdfjs.outPath}/build/generic/* ${dist}'';
-              description = ''build pdfjs for front'';
-            };
-            prodBuildReact = {
-              runtimeInputs = [ pkgs.nodejs ];
-              text =
-                let dist = "elibrary/static/front"; in
-                ''
-                  (cd front && npm run build)
-                  mkdir -p ${dist}
-                  cp -r front/dist/* ${dist}
-                '';
-              description = ''prod build of front without pdfjs build'';
-            };
-            prodBuildFront = {
-              text =
-                ''
-                  ${getExe packages.prodBuildPdfjs}
-                  ${getExe packages.prodBuildReact}
-                '';
-              description = ''prod build of front'';
-            };
+          pdfjsDir = "front/public/pdfjs";
 
-            importCatalog = {
-              runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
-              text = ''
-                export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
-                  pkgs.stdenv.cc.cc.lib
-                ]}
-                poetry run import-catalog
-              '';
-              description = ''import books catalog into database + save sql'';
-            };
-
-            extractCovers = {
-              runtimeInputs = [ pkgs.poetry ];
-              text = ''poetry run extract-covers -p ${pkgs.poppler_utils}/bin -i books -o covers'';
-              description = ''extract book cover images'';
-            };
-
-            prod = {
-              text = ''
-                ${getExe packages.importCatalog}
-                ${getExe packages.prodBuildFront}
-                ${getExe packages.stop}
-                ${getExe packages.runElibrary} &
-              '';
-              description = ''run prod site at ${hostElibrary}:${portElibrary}'';
-            };
-            prodElibrary = {
-              text = ''
-                ${getExe packages.importCatalog}
-                ${getExe packages.stop}
-                ${getExe packages.runElibrary} &
-              '';
-              description = ''run prod server at ${hostElibrary}:${portElibrary}'';
-            };
-            dev = {
-              runtimeInputs = [ pkgs.nodejs ];
-              text = ''
-                ${getExe packages.importCatalog}
-                ${getExe packages.stop}
-                ${getExe packages.runElibrary} &
-                (cd front && npx vite --host ${hostElibrary} --port ${portFront}) &
-              '';
-              description = "run dev site at ${hostElibrary}:${portFront}";
-            };
-
-            stop = {
-              runtimeInputs = [ pkgs.lsof ];
-              text = ''
-                kill -9 $(lsof -t -i:${portElibrary}) || true
-                kill -9 $(lsof -t -i:${portFront}) || true
-              '';
-              description = ''stop dev servers'';
-            };
-
-            install = {
-              runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
-              text = ''
-                poetry install
-                (cd front && npm i)
-              '';
-              description = ''install dependencies'';
-            };
-
-            packageFront = pkgs.buildNpmPackage {
-              name = "front";
-              buildInputs = [ pkgs.nodejs ];
-              src = ./front;
-              npmBuild = "npm run build";
-
-              installPhase = ''
-                mkdir -p $out
-                cp -r dist/* $out
-                mkdir $out/pdfjs
-                cp -r ${pdfjs.outPath}/build/generic/* $out/pdfjs
-              '';
-
-              npmDepsHash = "sha256-Ea2g4zacZBmj5QpLXQqF29p/oPu2UYqhjsQQKQWSwxM=";
-            };
-
-            packageServer =
-              pkgs.stdenv.mkDerivation {
-                pname = "package-server";
-                version = "0.0.1";
-                phases = [ "installPhase" ];
-                installPhase = ''
-                  APP=$out/elibrary
-                  mkdir -p $APP
-
-                  VENV=$APP/.venv
-                  mkdir -p $VENV
-                  cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
-                '';
-              };
-
-            # data should be mounted externally
-            # see compose.yaml
-            imageServer =
-              let
-                inherit (mkShellApps {
-                  cmd.text = ''
-                    cd elibrary
-                    ${getExe (runElibrary_ { host = "$HOST"; port = "$PORT"; })}
-                  '';
-                }) cmd;
+          writeDotenv = path: config: {
+            text =
+              let env =
+                pkgs.lib.strings.concatStringsSep
+                  "\n"
+                  (pkgs.lib.attrsets.mapAttrsToList
+                    (name: value: ''${name}="${value}"'')
+                    config
+                  );
               in
-              pkgs.dockerTools.streamLayeredImage {
-                name = "elibrary";
-                tag = "latest";
-                contents = [
-                  packages.packageServer
-                  pkgs.bashInteractive
-                  pkgs.coreutils
-                  cmd
-                ];
-
-                config = {
-                  Entrypoint = [ "bash" "-c" ];
-                  Cmd = [ (getExe cmd) ];
-                };
-              };
-
-            dockerLoadImageServer = {
-              runtimeInputs = [ pkgs.docker ];
-              text = ''${packages.imageServer} | docker load'';
-              description = "Build and load prod image";
-            };
-
-            dockerPushImageServer = {
-              runtimeInputs = [ pkgs.docker ];
-              text = ''
-                docker tag ${imageNameServer} deemp/${imageNameServer}
-                docker push deemp/${imageNameServer}
-              '';
-              description = "Push prod image to dockerhub";
-            };
-
-            packageFrontCI =
-              let
-                inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
-                packageLock = slimlock.buildPackageLock { src = ./front; };
-              in
-              pkgs.stdenv.mkDerivation {
-                name = "front-ci";
-                src = ./front;
-                installPhase = ''
-                  mkdir -p $out
-                  cp -r ${packageLock}/js/node_modules $out/node_modules
-                '';
-              };
-
-            # should provide dependencies, but not the code from this repo
-            dependenciesCI =
-              pkgs.stdenv.mkDerivation {
-                pname = "package-ci";
-                version = "0.0.1";
-                phases = [ "installPhase" ];
-                installPhase = ''
-                  APP=$out/elibrary-ci
-                  mkdir -p $APP
-
-                  VENV=$APP/.venv
-                  mkdir -p $VENV
-                  cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
-
-                  PDFJS=$APP/front/public/pdfjs
-                  mkdir -p $PDFJS
-                  cp -r ${pdfjs.outPath}/build/generic/* $PDFJS
-
-                  FRONT=$APP/front
-                  mkdir -p $FRONT
-                  cp -r ${packages.packageFrontCI}/* $FRONT
-                '';
-              };
-
-            imageCI = pkgs.dockerTools.streamLayeredImage {
-              name = imageNameCI;
-              tag = "latest";
-              contents = [
-                packages.dependenciesCI
-                packages.prod
-                pkgs.bashInteractive
-                pkgs.coreutils
-                pkgs.poetry
-                pkgs.nodejs
-                pkgs.gnugrep
-              ];
-            };
-
-            dockerLoadImageCI = {
-              runtimeInputs = [ pkgs.docker ];
-              text = ''${packages.imageCI} | docker load'';
-            };
-
-            dockerPushImageCI = {
-              runtimeInputs = [ pkgs.docker ];
-              text = ''
-                docker tag ${imageNameCI} deemp/${imageNameCI}
-                docker push deemp/${imageNameCI}
-              '';
-              description = "Push CI images to dockerhub";
-            };
+              ''printf '${env}\n' > ${path}'';
+            description = "write ${path}";
           };
+
+          packages =
+            (
+              mkShellApps {
+                writeBackDotenv = writeDotenv "back/.env" (import ./back/.env.nix { inherit pkgs; });
+              }
+            ) //
+            (
+              let
+                dev = "front/.env.development";
+                prod = "front/.env.production";
+                prefix = "/api";
+              in
+              mkShellApps {
+                writeFrontProdDotenv = writeDotenv prod (import ./${prod}.nix { inherit prefix; });
+                writeFrontDevDotenv = writeDotenv dev (import ./${dev}.nix { host = hostBack; port = portBack; inherit prefix; });
+                writeFrontDotenv = {
+                  text = ''
+                    ${getExe packages.writeFrontDevDotenv}
+                    ${getExe packages.writeFrontProdDotenv}
+                  '';
+                  description = ''write ${dev} and ${prod}'';
+                };
+              }
+            ) //
+            (
+              mkShellApps {
+                runBack = runBack_ { port = portBack; host = hostBack; };
+
+                prodBuildPdfjs = {
+                  runtimeInputs = [ pkgs.nodePackages.gulp ];
+                  text = ''cp -r ${pdfjs.outPath}/build/generic/* ${pdfjsDir}'';
+                  description = ''build pdfjs and write it to ${pdfjsDir}'';
+                };
+
+                prodBuildFront = {
+                  text =
+                    let dist = "back/static/front"; in
+                    ''
+                      ${getExe packages.prodBuildPdfjs}
+                      (cd front && npm run build)
+                      mkdir -p ${dist}
+                      cp -r front/dist/* ${dist}
+                    '';
+                  description = ''build front for prod'';
+                };
+
+                importCatalog = {
+                  runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
+                  text = ''
+                    export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
+                      pkgs.stdenv.cc.cc.lib
+                    ]}
+                    ${getExe packages.writeBackDotenv}
+                    poetry run import-catalog
+                  '';
+                  description = ''import books catalog into database + save sql'';
+                };
+
+                extractCovers = {
+                  runtimeInputs = [ pkgs.poetry ];
+                  text = ''
+                    ${getExe packages.writeBackDotenv}
+                    poetry run extract-covers
+                  '';
+                  description = ''extract book cover images'';
+                };
+
+                prod = {
+                  text = ''
+                    ${getExe packages.importCatalog}
+                    ${getExe packages.stop}
+                    ${getExe packages.prodBuildFront}
+                    ${getExe packages.runBack} &
+                  '';
+                  description = ''run prod site at ${mkURL hostBack portBack}'';
+                };
+
+                dev = {
+                  runtimeInputs = [ pkgs.nodejs ];
+                  text = ''
+                    ${getExe packages.importCatalog}
+                    ${getExe packages.stop}
+                    ${getExe packages.runBack} &
+                    (cd front && npx vite --host ${hostBack} --port ${portFront}) &
+                  '';
+                  description = "run dev site at ${mkURL hostBack portFront}";
+                };
+
+                stop = {
+                  runtimeInputs = [ pkgs.lsof ];
+                  text = ''
+                    kill -9 $(lsof -t -i:${portBack}) || true
+                    kill -9 $(lsof -t -i:${portFront}) || true
+                  '';
+                  description = ''stop back and front servers'';
+                };
+
+                install = {
+                  runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
+                  text = ''
+                    poetry install
+                    (cd front && npm i)
+                  '';
+                  description = ''install dependencies for back and front'';
+                };
+
+                packageFront = pkgs.buildNpmPackage {
+                  name = "front";
+                  buildInputs = [ pkgs.nodejs ];
+                  src = ./front;
+                  npmBuild = "npm run build";
+
+                  installPhase = ''
+                    mkdir -p $out
+                    cp -r dist/* $out
+                    mkdir $out/pdfjs
+                    cp -r ${pdfjs.outPath}/build/generic/* $out/pdfjs
+                  '';
+
+                  npmDepsHash = "sha256-Ea2g4zacZBmj5QpLXQqF29p/oPu2UYqhjsQQKQWSwxM=";
+                };
+
+                packageProd =
+                  pkgs.stdenv.mkDerivation {
+                    pname = "package-server";
+                    version = "0.0.1";
+                    phases = [ "installPhase" ];
+                    installPhase = ''
+                      APP=$out/elibrary
+                      mkdir -p $APP
+
+                      VENV=$APP/.venv
+                      mkdir -p $VENV
+                      cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
+                    '';
+                  };
+
+                # data (including pre-built front) should be mounted externally
+                # see docker-compose.yaml
+                imageProd =
+                  let
+                    inherit (mkShellApps {
+                      cmd.text = ''
+                        cd elibrary
+                        ${getExe (runBack_ { host = "$HOST"; port = "$PORT"; })}
+                      '';
+                    }) cmd;
+                  in
+                  pkgs.dockerTools.streamLayeredImage {
+                    name = "elibrary";
+                    tag = "latest";
+                    contents = [
+                      packages.packageProd
+                      pkgs.bashInteractive
+                      pkgs.coreutils
+                      cmd
+                    ];
+
+                    config = {
+                      Entrypoint = [ "bash" "-c" ];
+                      Cmd = [ (getExe cmd) ];
+                    };
+                  };
+
+                dockerLoadImageProd = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    ${packages.imageProd} | docker load
+                    docker tag ${packages.imageProd.imageName} deemp/${packages.imageProd.imageName}
+                  '';
+                  description = "build and load prod image";
+                };
+
+                dockerPushImageProd = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    docker tag ${imageNameProd} deemp/${imageNameProd}
+                    docker push deemp/${imageNameProd}
+                  '';
+                  description = "push prod image to dockerhub";
+                };
+
+                packageFrontCI =
+                  let
+                    inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
+                    packageLock = slimlock.buildPackageLock { src = ./front; };
+                  in
+                  pkgs.stdenv.mkDerivation {
+                    name = "front-ci";
+                    src = ./front;
+                    installPhase = ''
+                      mkdir -p $out
+                      cp -r ${packageLock}/js/node_modules $out/node_modules
+                    '';
+                  };
+
+                # provides dependencies
+
+                dependenciesCI =
+                  pkgs.stdenv.mkDerivation {
+                    pname = "package-ci";
+                    version = "0.0.1";
+                    phases = [ "installPhase" ];
+                    installPhase = ''
+                      APP=$out/${imageNameCI}
+                      mkdir -p $APP
+
+                      VENV=$APP/.venv
+                      mkdir -p $VENV
+                      cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
+
+                      PDFJS=$APP/${pdfjsDir}
+                      mkdir -p $PDFJS
+                      cp -r ${pdfjs.outPath}/build/generic/* $PDFJS
+
+                      FRONT=$APP/front
+                      mkdir -p $FRONT
+                      cp -r ${packages.packageFrontCI}/* $FRONT
+                    '';
+                  };
+
+                # data (including pre-built front) should be mounted externally
+                # see docker-compose.yaml
+                imageCI = pkgs.dockerTools.streamLayeredImage {
+                  name = imageNameCI;
+                  tag = "latest";
+                  contents = [
+                    packages.dependenciesCI
+                    packages.prod
+                    pkgs.bashInteractive
+                    pkgs.coreutils
+                    pkgs.poetry
+                    pkgs.nodejs
+                    pkgs.gnugrep
+                  ];
+                };
+
+                dockerLoadImageCI = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    ${packages.imageCI} | docker load
+                    docker tag ${packages.imageCI.imageName} deemp/${packages.imageCI.imageName}
+                  '';
+                  description = "load CI image";
+                };
+
+                dockerPushImageCI = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    docker tag ${imageNameCI} deemp/${imageNameCI}
+                    docker push deemp/${imageNameCI}
+                  '';
+                  description = "push CI image to dockerhub";
+                };
+              }
+            );
           devShells.default = mkShell {
             commands = (map (x: { package = x; }) [
               pkgs.sqlite
@@ -309,9 +353,31 @@
               pkgs.jdk11
               pkgs.plantuml
               pkgs.docker
-            ]) ++ mkCommands "scripts" [
-              packages.stop
-            ] ++ (mkRunCommands "nix-run" packages);
+            ]) ++
+            (
+              mkRunCommands "nix-run" {
+                inherit (packages)
+                  dev
+                  dockerLoadImageCI
+                  dockerLoadImageProd
+                  dockerPushImageCI
+                  dockerPushImageProd
+                  extractCovers
+                  importCatalog
+                  install
+                  prod
+                  prodBack
+                  prodBuildFront
+                  prodBuildPdfjs
+                  runBack
+                  stop
+                  writeBackDotenv
+                  writeFrontDevDotenv
+                  writeFrontDotenv
+                  writeFrontProdDotenv
+                  ;
+              }
+            );
           };
         in
         {
