@@ -122,12 +122,12 @@
                 runBack = runBack_ { port = portBack; host = hostBack; };
 
                 prodBuildPdfjs = {
-                  runtimeInputs = [ pkgs.nodePackages.gulp ];
                   text = ''cp -r ${pdfjs.outPath}/build/generic/* ${pdfjsDir}'';
                   description = ''build pdfjs and write it to ${pdfjsDir}'';
                 };
 
                 prodBuildFront = {
+                  runtimeInputs = [ pkgs.nodejs ];
                   text =
                     let dist = "back/static/front"; in
                     ''
