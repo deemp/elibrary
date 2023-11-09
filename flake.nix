@@ -57,11 +57,7 @@
                   pkgs.stdenv.cc.cc.lib
                 ]}
                 ${getExe packages.writeBackDotenv}
-                poetry run uvicorn \
-                  --port ${port} \
-                  --host ${host} back.main:app \
-                  --log-config back/log_conf.yaml \
-                  --reload
+                poetry run back
               '';
               description = "run back at ${mkURL host port}";
             };
