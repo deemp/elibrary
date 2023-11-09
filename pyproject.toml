@@ -9,6 +9,7 @@ readme = "README.md"
 [tool.poetry.scripts]
 import-catalog = "back.internal.import_catalog:run"
 extract-covers = "back.internal.extract_covers:run"
+back = "back.main:run"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
