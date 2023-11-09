@@ -4,7 +4,7 @@
 
 [link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
 
-## Quick start
+## Develop
 
 - Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
 
@@ -34,125 +34,24 @@
 - Build `pdfjs`.
 
     ```console
-    nix run .#prod-build-pdfjs
+    nix run .#prodBuildPdfjs
     ```
 
-- Run dev servers.
+- Run dev servers (for `back` and `front`).
 
     ```console
     nix run .#dev
     ```
 
-- Open http://localhost:5001 in a browser.
+- Open <http://localhost:5001> in a browser.
 
-
-- Edit files in [elibrary](./elibrary/) and in [front](./front/).
+- Edit files in [back](./back) and in [front](./front/).
 
 - Stop servers.
 
-    ```
+    ```console
     nix run .#stop
     ```
-
-## Stack
-
-- main package manager: [nix](https://nixos.org/manual/nix/unstable/introduction)
-
-### Security
-
-- [sops](https://github.com/getsops/sops)
-- [gnupg](https://www.gnupg.org/index.html)
-
-1. Get both tools in a `devshell`:
-
-    ```console
-    nix develop
-    sops --version
-    gpg --version
-    ```
-
-1. The [elibrary/enc.auth.env](elibrary/enc.auth.env) file is encrypted via `sops`.
-    
-    - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` are for [Google Open ID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
-    - `SECRET_KEY` is for sessions
-
-1. The `sops` config is in [.sops.yaml](.sops.yaml).
-1. Access to the encoded file can be granted to other people ([link](https://dev.to/stack-labs/manage-your-secrets-in-git-with-sops-common-operations-118g)) by adding keys to `.sops.yaml`.
-1. Keys can be generated via `gnupg` ([link](https://blog.gitguardian.com/a-comprehensive-guide-to-sops/#2-sops-with-pgp-keys)).
-
-### Expose
-
-- [localtunnel](https://github.com/localtunnel/localtunnel) - default.
-    - exposes at https://elibrary-itpd.loca.lt
-- [ngrok](https://ngrok.com/) - currently used for deployment.
-    - exposes at https://recently-wanted-elf.ngrok-free.app
-    - Provides a single weird static endpoint ([link](https://ngrok.com/blog-post/free-static-domains-ngrok-users)).
-
-1. Get both tools in a `devShell`:
-
-    ```console
-    nix develop
-    lt --version
-    ngrok --version
-    ```
-
-1. Set the flag in [elibrary/.env](./elibrary/.env). 
-    
-    ```console
-    ENABLE_AUTH="true"
-    ```
-
-1. Expose via `localtunnel`.
-
-    ```console
-    nix run .#release
-
-    # stop later
-    nix run .#stop
-    ```
-
-1. Or, expose via `ngrok`.
-
-    ```console
-    nix run .#prod
-    ngrok http --domain <your domain (without https://)> 5000
-
-    # or, with default domain
-    nix run .#release-ngrok
-
-    # stop later
-    nix run .#stop
-    ```
-
-1. It may take long to load a book at `book/<book_id>/read`.
-
-### Back
-
-- package manager: [poetry](https://python-poetry.org/docs/)
-- database: [SQLite](https://www.sqlite.org/index.html)
-- language: [Python](https://www.python.org/)
-- libraries:
-  - [flask](https://flask.palletsprojects.com/en/3.0.x/)
-  - [sqlite3](https://docs.python.org/3/library/sqlite3.html)
-
-### Front
-
-- language: [TypeScript](https://www.typescriptlang.org/)
-- book viewer: [bookreader](https://github.com/internetarchive/bookreader)
-
-## Diagrams
-
-### Use case
-
-![diagram](./diagrams/use_case.png)
-
-### Static view
-
-![static](./diagrams/static.png)
-
-### Dynamic view
-
-![static](./diagrams/dynamic.png)
 
 ## Connect by SSH
 
@@ -172,6 +71,72 @@
     ```console
     git clone git@gitlab.pg.innopolis.university:elibrary/elibrary.git
     ```
+
+## Security
+
+- [sops](https://github.com/getsops/sops)
+- [gnupg](https://www.gnupg.org/index.html)
+
+1. Get both tools in a `devshell`:
+
+    ```console
+    nix develop
+    sops --version
+    gpg --version
+    ```
+
+1. The [back/auth.enc.env](back/auth.enc.env) file is encrypted via `sops`.
+
+    - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` are for [Google Open ID Connect](https://developers.google.com/identity/openid-connect/openid-connect)
+    - `SECRET_KEY` is for sessions
+
+1. The `sops` config is in [.sops.yaml](.sops.yaml).
+1. A current developer (`Alice`) (whose key is in `.sops.yaml`) can grant access to a new developer (`Bob`).
+    - Bob generates a PGP key pair via `gnupg` ([link](https://blog.gitguardian.com/a-comprehensive-guide-to-sops/#2-sops-with-pgp-keys)).
+    - Alice adds Bob's public PGP key (e.g., `gpg --import bobs.public.key`).
+    - Alice adds Bob's key fingerprint to [.sops.yaml](.sops.yaml).
+    - Alice updates the encrypted file.
+
+        ```console
+        sops updatekeys back/auth.enc.env
+        ```
+
+## Stack
+
+- main package manager: [nix](https://nixos.org/manual/nix/unstable/introduction)
+
+### Back
+
+- package manager: [poetry](https://python-poetry.org/docs/)
+- database: [SQLite](https://www.sqlite.org/index.html)
+- language: [Python](https://www.python.org/)
+- framework: [FastAPI](https://github.com/tiangolo/fastapi)
+
+### Front
+
+- language: [TypeScript](https://www.typescriptlang.org/)
+- framework: [React](https://react.dev/)
+- tooling: [Vite](https://vitejs.dev/)
+- book viewer: [PDF.js](https://github.com/mozilla/pdf.js)
+
+### Deployment
+
+- containers manager: [Docker Compose](https://github.com/docker/compose)
+- monitoring: [FastAPI with Observability](https://github.com/blueswen/fastapi-observability)
+
+## Diagrams
+
+### Use case
+
+![diagram](./diagrams/use_case.png)
+
+### Static view
+
+![static](./diagrams/static.png)
+
+### Dynamic view
+
+![static](./diagrams/dynamic.png)
 
 ## Contribute
 
