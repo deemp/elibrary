@@ -4,7 +4,7 @@ default:
   before_script:
     - mkdir -p "/etc/containers/"
     - echo '{"default":[{"type":"insecureAcceptAnything"}]}' > /etc/containers/policy.json
-    - cp -r /elibrary-ci/.* /elibrary-ci/* .
+    - cp -R /dependencies/. .
 
 stages:
   - stage
