@@ -133,7 +133,7 @@
                   description = "write .env files for ./front and ./back";
                 };
 
-                runBack = mkRunBack { port = portBack; host = hostBack; };
+                runBackInBackground = mkRunBack { port = portBack; host = hostBack; doRunInBackground = true; };
 
                 prodBuildPdfjs = {
                   text = ''cp -R ${pdfjs}/. ${pdfjsDir}'';
@@ -178,18 +178,22 @@
                 prod = {
                   text = ''
                     ${getExe packages.stop}
-                    ${getExe packages.prodBuildFront}
-                    ${getExe packages.runBack} &
+                    ${getExe packages.runBackInBackground}
                   '';
                   description = ''run prod site at ${mkURL hostBack portBack}'';
                 };
 
-                dev = {
+                runFront = {
                   runtimeInputs = [ pkgs.nodejs ];
+                  text = ''(cd front && npx vite --host ${hostBack} --port ${portFront})'';
+                  description = "run front site at ${mkURL hostBack portFront}";
+                };
+
+                dev = {
+
                   text = ''
-                    ${getExe packages.stop}
-                    ${getExe packages.runBack} &
-                    (cd front && npx vite --host ${hostBack} --port ${portFront}) &
+                    ${getExe packages.prod}
+                    ${getExe packages.runFront} &
                   '';
                   description = "run front site at ${mkURL hostBack portFront}, back site at ${mkURL hostBack portBack}";
                 };
@@ -350,13 +354,8 @@
                   prod
                   prodBuildFront
                   prodBuildPdfjs
-                  runBack
                   stop
-                  writeBackDotenv
                   writeDotenv
-                  writeFrontDevDotenv
-                  writeFrontDotenv
-                  writeFrontProdDotenv
                   ;
               }
             );
