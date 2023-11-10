@@ -27,7 +27,7 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps mkShellApp;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           inherit (inputs) nix-filter;
-          
+
           pdfjs = "${nix-filter {
             root = inputs.pdfjs.outPath;
             include = [
@@ -62,7 +62,7 @@
 
           mkURL = host: port: "http://${host}:${port}";
 
-          mkRunBack = { port, host }: {
+          mkRunBack = { port, host, doRunInBackground ? false }: {
             runtimeInputs = [ pkgs.poetry ];
             text = ''
               export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
@@ -72,7 +72,7 @@
               export HOST=${host}
               ${getExe packages.writeBackDotenv}
               ${getExe packages.prodBuildFront}
-              poetry run back
+              poetry run back ${if doRunInBackground then "&" else ""}
             '';
             description = "run back at ${mkURL host port}";
           };
@@ -176,7 +176,6 @@
 
                 prod = {
                   text = ''
-                    ${getExe packages.importCatalog}
                     ${getExe packages.stop}
                     ${getExe packages.prodBuildFront}
                     ${getExe packages.runBack} &
@@ -187,7 +186,6 @@
                 dev = {
                   runtimeInputs = [ pkgs.nodejs ];
                   text = ''
-                    ${getExe packages.importCatalog}
                     ${getExe packages.stop}
                     ${getExe packages.runBack} &
                     (cd front && npx vite --host ${hostBack} --port ${portFront}) &
@@ -281,7 +279,8 @@
                     '';
                   };
 
-                run = mkRunBack { host = "$HOST"; port = "$PORT"; };
+                runProd = mkRunBack { host = "$HOST"; port = "$PORT"; };
+                runCI = mkRunBack { host = "$HOST"; port = "$PORT"; doRunInBackground = true; };
 
                 image =
                   pkgs.nix2container.buildImage {
@@ -294,10 +293,14 @@
                       pkgs.nodejs
                       pkgs.gnugrep
                     ];
-                    layers = [
-                      (pkgs.nix2container.buildLayer { copyToRoot = [ packages.packageDependencies ]; })
-                      (pkgs.nix2container.buildLayer { copyToRoot = [ packages.run ]; })
-                    ];
+                    layers =
+                      map
+                        (x: (pkgs.nix2container.buildLayer { copyToRoot = [ x ]; }))
+                        [
+                          packages.packageDependencies
+                          packages.runProd
+                          packages.runCI
+                        ];
                   };
 
                 dockerLoad = {
