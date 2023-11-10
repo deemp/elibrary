@@ -29,11 +29,12 @@ services:
       PORT: 5000
       HOST: "0.0.0.0"
     logging: *default-logging
+    entrypoint:
+      - "bash"
+      - "-c"
     command:
-      - bash
-      - -c
       - |
-        cp -r dependencies/* dependencies/\.* elibrary
+        cp -R dependencies/. elibrary
         cd elibrary
         run
     volumes:
