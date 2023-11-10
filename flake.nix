@@ -355,11 +355,7 @@
                   prodBuildFront
                   prodBuildPdfjs
                   stop
-                  writeBackDotenv
                   writeDotenv
-                  writeFrontDevDotenv
-                  writeFrontDotenv
-                  writeFrontProdDotenv
                   ;
               }
             );
