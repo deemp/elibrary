@@ -26,7 +26,14 @@
           };
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps mkShellApp;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
-          inherit (inputs) pdfjs;
+          inherit (inputs) nix-filter;
+          
+          pdfjs = "${nix-filter {
+            root = inputs.pdfjs.outPath;
+            include = [
+              "build/generic"
+            ];
+          }}/build/generic";
 
           portBack = "5000";
           portFront = "5001";
@@ -129,7 +136,7 @@
                 runBack = mkRunBack { port = portBack; host = hostBack; };
 
                 prodBuildPdfjs = {
-                  text = ''cp -r ${pdfjs.outPath}/build/generic/* ${pdfjsDir}'';
+                  text = ''cp -R ${pdfjs}/. ${pdfjsDir}'';
                   description = ''build pdfjs and write it to ${pdfjsDir}'';
                 };
 
@@ -141,7 +148,7 @@
                       ${getExe packages.prodBuildPdfjs}
                       (cd front && npm run build)
                       mkdir -p ${dist}
-                      cp -r front/dist/* ${dist}
+                      cp -R front/dist/. ${dist}
                     '';
                   description = ''build front for prod'';
                 };
@@ -216,7 +223,7 @@
                     src = ./front;
                     installPhase = ''
                       mkdir -p $out
-                      cp -r ${packageLock}/js/node_modules $out/node_modules
+                      cp -R ${packageLock}/js/node_modules/. $out/node_modules
                     '';
                   };
 
@@ -228,9 +235,9 @@
 
                   installPhase = ''
                     mkdir -p $out
-                    cp -r dist/* $out
+                    cp -R dist/. $out
                     mkdir $out/pdfjs
-                    cp -r ${pdfjs.outPath}/build/generic/* $out/pdfjs
+                    cp -R ${pdfjs}/. $out/pdfjs
                   '';
 
                   npmDepsHash = "sha256-H4GA5U2F/VkKCf7zsBoqH7Xd5WImJJeT8qauPOGxCtQ=";
@@ -243,7 +250,7 @@
                     phases = [ "installPhase" ];
                     installPhase = ''
                       mkdir -p $out
-                      cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $out
+                      cp -R ${packageBack [ "prod" "lint" "test" "telemetry" ]}/. $out
                     '';
                   };
 
@@ -258,19 +265,19 @@
 
                       VENV=$APP/.venv
                       mkdir -p $VENV
-                      cp -r ${packages.packageBackDependencies}/* $VENV
+                      cp -R ${packages.packageBackDependencies}/. $VENV
 
                       PDFJS=$APP/${pdfjsDir}
                       mkdir -p $PDFJS
-                      cp -r ${pdfjs.outPath}/build/generic/* $PDFJS
+                      cp -R ${pdfjs}/. $PDFJS
 
                       FRONT=$APP/front
                       mkdir -p $FRONT
-                      cp -r ${packages.packageFrontDependencies}/* $FRONT
+                      cp -R ${packages.packageFrontDependencies}/. $FRONT
 
                       STATIC_FRONT=$APP/back/static/front
                       mkdir -p $STATIC_FRONT
-                      cp -r ${packages.packageFrontDist}/* $STATIC_FRONT
+                      cp -R ${packages.packageFrontDist}/. $STATIC_FRONT
                     '';
                   };
 
