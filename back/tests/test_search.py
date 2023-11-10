@@ -1,6 +1,8 @@
 import requests
 from ..routers.search import *
+from .. import env
 
+search_url = f"{env.URL}/search"
 
 def test_search_get_type():
     assert type(search_get()) == SearchGETResponse
@@ -49,9 +51,7 @@ class TestSearchGetBisacValue:
         self.check(response)
 
     def test_api(self):
-        response = requests.get(
-            "http://localhost:5000/api/search"
-        )
+        response = requests.get(search_url)
         self.check(SearchGETResponse(**response.json()))
 
 
@@ -74,9 +74,7 @@ class TestSearchGetLcValue:
         self.check(response)
 
     def test_api(self):
-        response = requests.get(
-            "http://localhost:5000/api/search"
-        )
+        response = requests.get(search_url)
         self.check(SearchGETResponse(**response.json()))
 
 
@@ -97,9 +95,7 @@ class TestSearchGetFiltersValue:
         self.check(response)
 
     def test_api(self):
-        response = requests.get(
-            "http://localhost:5000/api/search"
-        )
+        response = requests.get(search_url)
         self.check(SearchGETResponse(**response.json()))
 
 
@@ -115,7 +111,7 @@ class TestSearchPostContentEmpty:
 
     def test_api(self):
         response = requests.post(
-            "http://localhost:5000/api/search",
+            search_url,
             self.request.json(),
         )
         self.check(SearchPOSTResponse(**response.json()))
@@ -135,16 +131,14 @@ class TestSearchPostContentBisac:
 
     def test_api(self):
         response = requests.post(
-            "http://localhost:5000/api/search",
+            search_url,
             self.request.json(),
         )
         self.check(SearchPOSTResponse(**response.json()))
 
 
 class TestSearchPostContentLc:
-    request = SearchPOSTRequest(
-        bisac="", lc="Linguistics / General", filter_rows=[]
-    )
+    request = SearchPOSTRequest(bisac="", lc="Linguistics / General", filter_rows=[])
 
     def check(self, response: SearchPOSTResponse):
         assert len(response.books) == 3
@@ -155,7 +149,7 @@ class TestSearchPostContentLc:
 
     def test_api(self):
         response = requests.post(
-            "http://localhost:5000/api/search",
+            search_url,
             self.request.json(),
         )
         self.check(SearchPOSTResponse(**response.json()))
@@ -175,7 +169,7 @@ class TestSearchPostContentFilter:
 
     def test_api(self):
         response = requests.post(
-            "http://localhost:5000/api/search",
+            search_url,
             self.request.json(),
         )
         self.check(SearchPOSTResponse(**response.json()))
