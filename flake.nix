@@ -147,6 +147,7 @@
                     ''
                       ${getExe packages.prodBuildPdfjs}
                       (cd front && npm run build)
+                      rm -rf ${dist}
                       mkdir -p ${dist}
                       cp -R front/dist/. ${dist}
                     '';
