@@ -84,19 +84,27 @@ export function BookInfoPage() {
     const maxCoverHeight = 375;
 
     useEffect(() => {
-      fetch(url, {
-        method: "GET",
-        headers: new Headers({ "content-type": "application/json" }),
-      })
-        .then((r) => r.json())
-        .then((r: Book | undefined) => {
-          loadImage(setImageDimensions, coverUrl, maxCoverHeight);
-          setBook(r);
-          setReference(
-            `${r?.authors.split("-")[0]}. ${r?.title}/${r?.authors}/${r?.publisher
-            }.- ${r?.year}.-${r?.pages} p. - ISBN: ${r?.isbn}`
-          );
-        });
+      async function foo() {
+        const resp = await fetch(url, {
+          method: "GET",
+          headers: new Headers({ "content-type": "application/json" }),
+        })
+
+        if (resp.status == 404) {
+          throw new Response("Not Found", { status: 404 })
+        }
+
+        const book: Book = await resp.json()
+
+        loadImage(setImageDimensions, coverUrl, maxCoverHeight);
+        setBook(book);
+        setReference(
+          `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher
+          }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn}`
+        );
+      }
+
+      foo()
     }, [url, coverUrl]);
 
     const copyToClipboard = () => {
