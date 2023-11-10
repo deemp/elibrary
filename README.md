@@ -1,5 +1,7 @@
 # Electronic Library of IU
 
+<https://test.library.innopolis.university>
+
 ## Technical specification
 
 [link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
