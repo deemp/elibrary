@@ -107,8 +107,6 @@ export function BookTable({ books }: { books: Book[] }) {
 
   const [sorting, setSorting] = React.useState([]);
 
-  console.log("something")
-
   const table = useReactTable({
     data: books,
     columns,
