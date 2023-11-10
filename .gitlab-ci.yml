@@ -19,7 +19,7 @@ lint:
 test:
   stage: stage
   script:
-    - prod &> logs || true
+    - run &> logs || true
     - sleep 5
     - poetry run pytest &> logs.test || (cat logs && cat logs.test && false)
     - cat logs
