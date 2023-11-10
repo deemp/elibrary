@@ -2,11 +2,11 @@
   "nodes": {
     "flakes": {
       "locked": {
-        "lastModified": 1698742110,
-        "narHash": "sha256-3Pz5iko5enknzwh0g9v4Kw5CrNuwkQxq1gqQIFMHU40=",
+        "lastModified": 1699572726,
+        "narHash": "sha256-TZYb5vz73nFLXKLuFiTS/1HJ9qJPFBy+U7pnOkbj7q4=",
         "owner": "deemp",
         "repo": "flakes",
-        "rev": "2f6c0048551282411e14692cafa1986568a3e5e3",
+        "rev": "6f1d910ccbbb1b3d11f46a37722cc4f1d20aa507",
         "type": "github"
       },
       "original": {
@@ -27,22 +27,6 @@
       "original": {
         "owner": "deemp",
         "repo": "flakes",
-        "type": "github"
-      }
-    },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1697700926,
-        "narHash": "sha256-4tQvS/t7Dt19L7GwjZ2D2r3M0LKtFxhG6BEGitDyUhQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2bbf67d3c76927b5c3148f32c0e93c14e5dbc2d9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2bbf67d3c76927b5c3148f32c0e93c14e5dbc2d9",
         "type": "github"
       }
     },
@@ -69,29 +53,7 @@
     "root": {
       "inputs": {
         "flakes": "flakes",
-        "nixpkgs": "nixpkgs",
-        "pdfjs": "pdfjs",
-        "slimlock": "slimlock"
-      }
-    },
-    "slimlock": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1688756706,
-        "narHash": "sha256-xzkkMv3neJJJ89zo3o2ojp7nFeaZc2G0fYwNXNJRFlo=",
-        "owner": "thomashoneyman",
-        "repo": "slimlock",
-        "rev": "cf72723f59e2340d24881fd7bf61cb113b4c407c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thomashoneyman",
-        "repo": "slimlock",
-        "type": "github"
+        "pdfjs": "pdfjs"
       }
     }
   },
