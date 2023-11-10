@@ -33,6 +33,7 @@ class Env:
         self.DO_IMPORT_CATALOG = self.DO_IMPORT_CATALOG == "true"
         self.DO_EXTRACT_COVERS = self.DO_EXTRACT_COVERS == "true"
         self.PORT = int(self.PORT)
+        self.URL = f"http://{self.HOST}:{self.PORT}{self.PREFIX}"
 
 def load_dotenv(cls, path):
     # https://github.com/theskumar/python-dotenv#other-use-cases
