@@ -2,27 +2,38 @@
   inputs = {
     flakes.url = "github:deemp/flakes/";
     pdfjs.url = "gitlab:elibrary/pdfjs?host=gitlab.pg.innopolis.university";
-
-    nixpkgs.url = "github:NixOS/nixpkgs/2bbf67d3c76927b5c3148f32c0e93c14e5dbc2d9";
-    slimlock.url = "github:thomashoneyman/slimlock";
-    slimlock.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
       inputs = {
-        inherit (inputs.flakes.all) devshell drv-tools nixpkgs poetry2nix nix-filter;
-        inherit (inputs) slimlock;
+        inherit (inputs.flakes.all)
+          devshell
+          drv-tools
+          nixpkgs
+          poetry2nix
+          nix-filter
+          slimlock
+          nix2container
+          ;
         inherit (inputs) pdfjs;
       };
       perSystem = { inputs, system }:
         let
           pkgs = import inputs.nixpkgs {
-            system = "x86_64-linux";
+            inherit system;
             config.allowUnfree = true;
+            overlays = [ inputs.nix2container.overlays.default ];
           };
-          inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps;
+          inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps mkShellApp;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
-          inherit (inputs) pdfjs;
+          inherit (inputs) nix-filter;
+          
+          pdfjs = "${nix-filter {
+            root = inputs.pdfjs.outPath;
+            include = [
+              "build/generic"
+            ];
+          }}/build/generic";
 
           portBack = "5000";
           portFront = "5001";
@@ -46,24 +57,25 @@
             in
             app;
 
-          imageNameCI = "elibrary-ci";
-          imageNameProd = "elibrary";
+          imageName = "elibrary";
+          imageDependenciesPath = "dependencies";
+
           mkURL = host: port: "http://${host}:${port}";
 
-          runBack_ = { port, host }: (mkShellApps {
-            runBack = {
-              runtimeInputs = [ pkgs.poetry ];
-              text = ''
-                export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
-                  pkgs.stdenv.cc.cc.lib
-                ]}
-                ${getExe packages.writeBackDotenv}
-                ${getExe packages.prodBuildFront}
-                poetry run back
-              '';
-              description = "run back at ${mkURL host port}";
-            };
-          }).runBack;
+          mkRunBack = { port, host }: {
+            runtimeInputs = [ pkgs.poetry ];
+            text = ''
+              export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
+                pkgs.stdenv.cc.cc.lib
+              ]}
+              export PORT=${port}
+              export HOST=${host}
+              ${getExe packages.writeBackDotenv}
+              ${getExe packages.prodBuildFront}
+              poetry run back
+            '';
+            description = "run back at ${mkURL host port}";
+          };
 
           pdfjsDir = "front/public/pdfjs";
 
@@ -109,7 +121,10 @@
                   '';
                   description = ''write ${dev} and ${prod}'';
                 };
-
+              }
+            ) //
+            (
+              mkShellApps {
                 writeDotenv = {
                   text = ''
                     ${getExe packages.writeBackDotenv}
@@ -117,14 +132,11 @@
                   '';
                   description = "write .env files for ./front and ./back";
                 };
-              }
-            ) //
-            (
-              mkShellApps {
-                runBack = runBack_ { port = portBack; host = hostBack; };
+
+                runBack = mkRunBack { port = portBack; host = hostBack; };
 
                 prodBuildPdfjs = {
-                  text = ''cp -r ${pdfjs.outPath}/build/generic/* ${pdfjsDir}'';
+                  text = ''cp -R ${pdfjs}/. ${pdfjsDir}'';
                   description = ''build pdfjs and write it to ${pdfjsDir}'';
                 };
 
@@ -136,7 +148,7 @@
                       ${getExe packages.prodBuildPdfjs}
                       (cd front && npm run build)
                       mkdir -p ${dist}
-                      cp -r front/dist/* ${dist}
+                      cp -R front/dist/. ${dist}
                     '';
                   description = ''build front for prod'';
                 };
@@ -201,153 +213,109 @@
                   description = ''install dependencies for back and front'';
                 };
 
-                packageFront = pkgs.buildNpmPackage {
-                  name = "front";
+                packageFrontDependencies =
+                  let
+                    inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
+                    packageLock = slimlock.buildPackageLock { src = ./front; };
+                  in
+                  pkgs.stdenv.mkDerivation {
+                    name = "front-dependencies";
+                    src = ./front;
+                    installPhase = ''
+                      mkdir -p $out
+                      cp -R ${packageLock}/js/node_modules/. $out/node_modules
+                    '';
+                  };
+
+                packageFrontDist = pkgs.buildNpmPackage {
+                  name = "front-dist";
                   buildInputs = [ pkgs.nodejs ];
                   src = ./front;
                   npmBuild = "npm run build";
 
                   installPhase = ''
                     mkdir -p $out
-                    cp -r dist/* $out
+                    cp -R dist/. $out
                     mkdir $out/pdfjs
-                    cp -r ${pdfjs.outPath}/build/generic/* $out/pdfjs
+                    cp -R ${pdfjs}/. $out/pdfjs
                   '';
 
-                  npmDepsHash = "sha256-Ea2g4zacZBmj5QpLXQqF29p/oPu2UYqhjsQQKQWSwxM=";
+                  npmDepsHash = "sha256-H4GA5U2F/VkKCf7zsBoqH7Xd5WImJJeT8qauPOGxCtQ=";
                 };
 
-                packageProd =
+                packageBackDependencies =
                   pkgs.stdenv.mkDerivation {
-                    pname = "package-server";
+                    pname = "back-dependencies";
                     version = "0.0.1";
                     phases = [ "installPhase" ];
-                    installPhase = ''
-                      APP=$out/elibrary
-                      mkdir -p $APP
-
-                      VENV=$APP/.venv
-                      mkdir -p $VENV
-                      cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
-                    '';
-                  };
-
-                # data (including pre-built front) should be mounted externally
-                # see docker-compose.yaml
-                imageProd =
-                  let
-                    inherit (mkShellApps {
-                      cmd.text = ''
-                        cd elibrary
-                        ${getExe (runBack_ { host = "$HOST"; port = "$PORT"; })}
-                      '';
-                    }) cmd;
-                  in
-                  pkgs.dockerTools.streamLayeredImage {
-                    name = "elibrary";
-                    tag = "latest";
-                    contents = [
-                      packages.packageProd
-                      pkgs.bashInteractive
-                      pkgs.coreutils
-                      cmd
-                    ];
-
-                    config = {
-                      Entrypoint = [ "bash" "-c" ];
-                      Cmd = [ (getExe cmd) ];
-                    };
-                  };
-
-                dockerLoadImageProd = {
-                  runtimeInputs = [ pkgs.docker ];
-                  text = ''
-                    ${packages.imageProd} | docker load
-                    docker tag ${packages.imageProd.imageName} deemp/${packages.imageProd.imageName}
-                  '';
-                  description = "build and load prod image";
-                };
-
-                dockerPushImageProd = {
-                  runtimeInputs = [ pkgs.docker ];
-                  text = ''
-                    docker tag ${imageNameProd} deemp/${imageNameProd}
-                    docker push deemp/${imageNameProd}
-                  '';
-                  description = "push prod image to dockerhub";
-                };
-
-                packageFrontCI =
-                  let
-                    inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
-                    packageLock = slimlock.buildPackageLock { src = ./front; };
-                  in
-                  pkgs.stdenv.mkDerivation {
-                    name = "front-ci";
-                    src = ./front;
                     installPhase = ''
                       mkdir -p $out
-                      cp -r ${packageLock}/js/node_modules $out/node_modules
+                      cp -R ${packageBack [ "prod" "lint" "test" "telemetry" ]}/. $out
                     '';
                   };
 
-                # provides dependencies
-
-                dependenciesCI =
+                packageDependencies =
                   pkgs.stdenv.mkDerivation {
-                    pname = "package-ci";
+                    pname = "dependencies";
                     version = "0.0.1";
                     phases = [ "installPhase" ];
                     installPhase = ''
-                      APP=$out/${imageNameCI}
+                      APP=$out/${imageDependenciesPath}
                       mkdir -p $APP
 
                       VENV=$APP/.venv
                       mkdir -p $VENV
-                      cp -r ${packageBack [ "prod" "lint" "test" "telemetry" ]}/* $VENV
+                      cp -R ${packages.packageBackDependencies}/. $VENV
 
                       PDFJS=$APP/${pdfjsDir}
                       mkdir -p $PDFJS
-                      cp -r ${pdfjs.outPath}/build/generic/* $PDFJS
+                      cp -R ${pdfjs}/. $PDFJS
 
                       FRONT=$APP/front
                       mkdir -p $FRONT
-                      cp -r ${packages.packageFrontCI}/* $FRONT
+                      cp -R ${packages.packageFrontDependencies}/. $FRONT
+
+                      STATIC_FRONT=$APP/back/static/front
+                      mkdir -p $STATIC_FRONT
+                      cp -R ${packages.packageFrontDist}/. $STATIC_FRONT
                     '';
                   };
 
-                # data (including pre-built front) should be mounted externally
-                # see docker-compose.yaml
-                imageCI = pkgs.dockerTools.streamLayeredImage {
-                  name = imageNameCI;
-                  tag = "latest";
-                  contents = [
-                    packages.dependenciesCI
-                    packages.prod
-                    pkgs.bashInteractive
-                    pkgs.coreutils
-                    pkgs.poetry
-                    pkgs.nodejs
-                    pkgs.gnugrep
-                  ];
-                };
+                run = mkRunBack { host = "$HOST"; port = "$PORT"; };
 
-                dockerLoadImageCI = {
+                image =
+                  pkgs.nix2container.buildImage {
+                    name = "elibrary";
+                    tag = "latest";
+                    copyToRoot = [
+                      pkgs.bashInteractive
+                      pkgs.coreutils
+                      pkgs.poetry
+                      pkgs.nodejs
+                      pkgs.gnugrep
+                    ];
+                    layers = [
+                      (pkgs.nix2container.buildLayer { copyToRoot = [ packages.packageDependencies ]; })
+                      (pkgs.nix2container.buildLayer { copyToRoot = [ packages.run ]; })
+                    ];
+                  };
+
+                dockerLoad = {
                   runtimeInputs = [ pkgs.docker ];
                   text = ''
-                    ${packages.imageCI} | docker load
-                    docker tag ${packages.imageCI.imageName} deemp/${packages.imageCI.imageName}
+                    ${getExe packages.image.copyToDockerDaemon}
+                    docker tag ${packages.image.imageName} deemp/${packages.image.imageName}
                   '';
-                  description = "load CI image";
+                  description = "build and load image";
                 };
 
-                dockerPushImageCI = {
+                dockerPush = {
                   runtimeInputs = [ pkgs.docker ];
                   text = ''
-                    docker tag ${imageNameCI} deemp/${imageNameCI}
-                    docker push deemp/${imageNameCI}
+                    docker tag ${imageName} deemp/${imageName}
+                    docker push deemp/${imageName}
                   '';
-                  description = "push CI image to dockerhub";
+                  description = "push image to dockerhub";
                 };
               }
             );
@@ -370,10 +338,8 @@
               mkRunCommands "nix-run" {
                 inherit (packages)
                   dev
-                  dockerLoadImageCI
-                  dockerLoadImageProd
-                  dockerPushImageCI
-                  dockerPushImageProd
+                  dockerLoad
+                  dockerPush
                   extractCovers
                   importCatalog
                   install
@@ -383,6 +349,7 @@
                   runBack
                   stop
                   writeBackDotenv
+                  writeDotenv
                   writeFrontDevDotenv
                   writeFrontDotenv
                   writeFrontProdDotenv

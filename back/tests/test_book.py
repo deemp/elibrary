@@ -1,6 +1,8 @@
 import requests
 from ..routers.book import *
+from .. import env
 
+book_url = f"{env.URL}/book"
 
 def test_book_page_type():
     book = book_page(676913)
@@ -36,7 +38,7 @@ class TestBookPage:
 
     def test_api(self):
         response = requests.get(
-            f"http://localhost:5000/api/book/{self.book_id}"
+            f"{book_url}/{self.book_id}"
         )
         self.check(Book(**response.json()))
 
@@ -54,6 +56,6 @@ class TestBookPageFail:
 
     def test_api(self):
         response = requests.get(
-            f"http://localhost:5000/api/book/{self.book_id}"
+            f"{book_url}/{self.book_id}"
         )
         assert response.json() == {"detail": "Book not found"}

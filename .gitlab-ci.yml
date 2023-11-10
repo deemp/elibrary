@@ -1,10 +1,10 @@
 default:
   image:
-    name: "deemp/elibrary-ci:latest"
+    name: "deemp/elibrary:latest"
   before_script:
     - mkdir -p "/etc/containers/"
     - echo '{"default":[{"type":"insecureAcceptAnything"}]}' > /etc/containers/policy.json
-    - cp -r /elibrary-ci/.* /elibrary-ci/* .
+    - cp -R /dependencies/. .
 
 stages:
   - stage
@@ -19,8 +19,10 @@ lint:
 test:
   stage: stage
   script:
-    - prod &> logs || true
-    - sleep 5
+    - export HOST='0.0.0.0'
+    - export PORT=5000
+    - run &> logs || (cat logs && false)
+    - sleep 10
     - poetry run pytest &> logs.test || (cat logs && cat logs.test && false)
     - cat logs
     - cat logs.test
