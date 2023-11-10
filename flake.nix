@@ -72,7 +72,7 @@
               export HOST=${host}
               ${getExe packages.writeBackDotenv}
               ${getExe packages.prodBuildFront}
-              poetry run back
+              poetry run back &
             '';
             description = "run back at ${mkURL host port}";
           };
