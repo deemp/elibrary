@@ -292,6 +292,7 @@
                       pkgs.coreutils
                       pkgs.poetry
                       pkgs.nodejs
+                      pkgs.gnugrep
                     ];
                     layers = [
                       (pkgs.nix2container.buildLayer { copyToRoot = [ packages.packageDependencies ]; })
