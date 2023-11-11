@@ -16,7 +16,7 @@ import * as appbar from "./AppBar";
 import { searchLink } from "./SearchLink"
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
-import { ReferenceTabs } from "./ReferenceTabs";
+import { ReferencePanel } from "./ReferenceTabs";
 
 function Row({
   title,
@@ -87,13 +87,11 @@ export function BookInfoPage() {
       loadImage(setImageDimensions, coverUrl, maxCoverHeight);
       setBook(book);
       setBibTexTitle(
-        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${
-          book.year
+        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${book.year
         }${book.title.split(" ")[0].toLowerCase()}`
       );
       setTextReference(
-        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${
-          book.publisher
+        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher
         }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn}`
       );
       setBibTexReference(
@@ -190,7 +188,7 @@ export function BookInfoPage() {
               </Grid>
               <Grid item xs={12} marginBottom={3}>
                 <Paper variant="outlined">
-                  <ReferenceTabs
+                  <ReferencePanel
                     textReference={textReference}
                     bibTexReference={bibTexReference}
                   />

@@ -1,8 +1,7 @@
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 import { SyntheticEvent, useState } from "react";
-import { Button, Stack } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { CustomTabPanel } from "./CustomTabPanel";
@@ -19,7 +18,7 @@ interface ReferenceProps {
   bibTexReference: string;
 }
 
-export function ReferenceTabs({
+export function ReferencePanel({
   textReference,
   bibTexReference,
 }: ReferenceProps) {
@@ -51,29 +50,45 @@ export function ReferenceTabs({
   };
 
   return (
-    <Stack direction={{ xs: "column", sm: "row" }}>
-      <Box sx={{ width: "100%", padding: "1%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange} aria-label="References">
-            <Tab label="BibTex" {...a11yProps(0)} />
-            <Tab label="Text Reference" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
-          {reference === undefined ? bibTexReference : reference}
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          {reference}
-        </CustomTabPanel>
-      </Box>
-      <Button
-        sx={{ margin: { xs: "5%", sm: "2%" } }}
-        size="medium"
-        variant="outlined"
-        onClick={copyToClipboard}
-      >
-        Copy Reference
-      </Button>
-    </Stack>
+    <Grid container>
+      <Grid item xs={12} sm>
+        <Grid item xs={12}>
+          <Grid container>
+            <Grid item xs={12} sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs value={value} onChange={handleChange} aria-label="References">
+                <Tab label="BibTex" {...a11yProps(0)} />
+                <Tab label="Text Reference" {...a11yProps(1)} />
+              </Tabs>
+            </Grid>
+            <Grid item xs={12}>
+              <CustomTabPanel value={value} index={0}>
+                {reference === undefined ? bibTexReference : reference}
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={1}>
+                {reference}
+              </CustomTabPanel>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item display={'flex'} sx={{
+        alignItems: 'center',
+        justifyContent: { xs: 'center', sm: 'right' },
+        width: { xs: '100%', sm: '200px', md: '300px' }
+      }}>
+        <Button
+          sx={{
+            fontSize: { xs: "1.2rem", sm: "1.5rem" },
+            margin: { xs: "1rem" },
+          }}
+          variant="contained"
+          size="large"
+          disableElevation
+          onClick={copyToClipboard}
+        >
+          copy reference
+        </Button>
+      </Grid>
+    </Grid>
   );
 }
