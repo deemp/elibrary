@@ -322,6 +322,7 @@
                   text = ''
                     ${getExe packages.stop}
                     ${composeProd} up -dV
+                    ${composeProd} logs --follow elibrary
                   '';
                   description =
                     let
