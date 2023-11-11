@@ -116,9 +116,8 @@ export function BookInfoPage() {
                 <Link to={`/book/${id}/read`}>
                   <Button
                     sx={{
-                      fontWeight: "bold",
                       paddingY: "0.5rem",
-                      paddingX: { xs: "1.5rem" },
+                      paddingX: "1.5rem",
                       fontSize: { xs: "1.2rem", sm: "1.5rem" },
                     }}
                     variant="contained"
