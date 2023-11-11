@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
 import * as appbar from "./AppBar";
-import { AppBarLink } from "./AppBar";
+import { searchLink } from "./SearchLink"
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
 import { ReferenceTabs } from "./ReferenceTabs";
@@ -208,7 +208,7 @@ export function BookInfoPage() {
               <Grid item xs={5}>
                 <Grid container columnSpacing={1}>
                   <Grid item>
-                    <AppBarLink text={"Search"} to={"/"} id={"search"} />
+                    {searchLink}
                   </Grid>
                   <Grid item>{faqButton}</Grid>
                 </Grid>
