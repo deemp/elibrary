@@ -34,7 +34,7 @@ services:
       - "-c"
     command:
       - |
-        cp -R dependencies/. elibrary
+        cp -pR dependencies/. elibrary
         cd elibrary
         runProd
     volumes:

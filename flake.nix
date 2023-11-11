@@ -38,6 +38,7 @@
           portBack = "5000";
           portFront = "5001";
           hostBack = "0.0.0.0";
+          portGrafana = "3000";
 
           packageBack = groups:
             let
@@ -61,6 +62,9 @@
           imageDependenciesPath = "dependencies";
 
           mkURL = host: port: "http://${host}:${port}";
+          mkHyperRef = text: url: '']8;;${url}\${text}]8;;\'';
+          frontRef = mkHyperRef "front" (mkURL hostBack portFront);
+          backRef = mkHyperRef "back" (mkURL hostBack portBack);
 
           mkRunBack = { port, host, doRunInBackground ? false }: {
             runtimeInputs = [ pkgs.poetry ];
@@ -92,6 +96,10 @@
               ''printf '${env}\n' > ${path}'';
             description = "write ${path}";
           };
+
+          composeDev = "docker compose -f dev.yaml";
+          composeProd = "docker compose -f prod.yaml";
+          serviceName = "elibrary";
 
           packages =
             (
@@ -175,36 +183,10 @@
                   description = ''extract book cover images'';
                 };
 
-                prod = {
-                  text = ''
-                    ${getExe packages.stop}
-                    ${getExe packages.runBackInBackground}
-                  '';
-                  description = ''run prod site at ${mkURL hostBack portBack}'';
-                };
-
                 runFront = {
                   runtimeInputs = [ pkgs.nodejs ];
                   text = ''(cd front && npx vite --host ${hostBack} --port ${portFront})'';
-                  description = "run front site at ${mkURL hostBack portFront}";
-                };
-
-                dev = {
-
-                  text = ''
-                    ${getExe packages.prod}
-                    ${getExe packages.runFront} &
-                  '';
-                  description = "run front site at ${mkURL hostBack portFront}, back site at ${mkURL hostBack portBack}";
-                };
-
-                stop = {
-                  runtimeInputs = [ pkgs.lsof ];
-                  text = ''
-                    kill -9 $(lsof -t -i:${portBack}) || true
-                    kill -9 $(lsof -t -i:${portFront}) || true
-                  '';
-                  description = ''stop back and front servers'';
+                  description = "run ${frontRef}";
                 };
 
                 install = {
@@ -257,7 +239,7 @@
                     '';
                   };
 
-                packageDependencies =
+                packageImageDependencies =
                   pkgs.stdenv.mkDerivation {
                     pname = "dependencies";
                     version = "0.0.1";
@@ -277,6 +259,17 @@
                       FRONT=$APP/front
                       mkdir -p $FRONT
                       cp -R ${packages.packageFrontDependencies}/. $FRONT
+                    '';
+                  };
+
+                packageImageFrontDist =
+                  pkgs.stdenv.mkDerivation {
+                    pname = "dist";
+                    version = "0.0.1";
+                    phases = [ "installPhase" ];
+                    installPhase = ''
+                      APP=$out/${imageDependenciesPath}
+                      mkdir -p $APP
 
                       STATIC_FRONT=$APP/back/static/front
                       mkdir -p $STATIC_FRONT
@@ -292,20 +285,30 @@
                     name = "elibrary";
                     tag = "latest";
                     copyToRoot = [
-                      pkgs.bashInteractive
-                      pkgs.coreutils
-                      pkgs.poetry
-                      pkgs.nodejs
-                      pkgs.gnugrep
+                      (
+                        pkgs.buildEnv
+                          {
+                            name = "root";
+                            paths = [
+                              pkgs.bashInteractive
+                              pkgs.coreutils
+                              pkgs.poetry
+                              pkgs.nodejs
+                              pkgs.gnugrep
+                              packages.runFront
+                              packages.runProd
+                              packages.runCI
+                            ];
+                            pathsToLink = [ "/bin" "/dependencies" ];
+                          }
+                      )
+                      packages.packageImageDependencies
                     ];
-                    layers =
-                      map
-                        (x: (pkgs.nix2container.buildLayer { copyToRoot = [ x ]; }))
-                        [
-                          packages.packageDependencies
-                          packages.runProd
-                          packages.runCI
-                        ];
+                    layers = [
+                      (pkgs.nix2container.buildLayer {
+                        copyToRoot = [ packages.packageImageFrontDist ];
+                      })
+                    ];
                   };
 
                 dockerLoad = {
@@ -324,6 +327,48 @@
                     docker push deemp/${imageName}
                   '';
                   description = "push image to dockerhub";
+                };
+
+                prod = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    ${getExe packages.stop}
+                    ${composeProd} up -dV
+                    ${composeProd} logs --follow ${serviceName}
+                  '';
+                  description =
+                    let
+                      prod = mkHyperRef "site" (mkURL hostBack portBack);
+                      monitoring = mkHyperRef "monitoring" ''${mkURL hostBack portGrafana}/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s'';
+                    in
+                    ''run ${prod} and ${monitoring}'';
+                };
+
+                prodBack = {
+                  text = ''
+                    ${composeProd} down ${serviceName}
+                    ${composeDev} down ${serviceName}
+                    ${composeProd} up -dV ${serviceName}
+                    ${composeProd} logs --follow ${serviceName}
+                  '';
+                  description = "(reload and) run ${backRef}";
+                };
+
+                dev = {
+                  text = ''
+                    ${getExe packages.stop}
+                    ${composeDev} up -V
+                  '';
+                  description = "run ${frontRef} and ${backRef}";
+                };
+
+                stop = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    ${composeDev} down
+                    ${composeProd} down
+                  '';
+                  description = ''stop prod and dev containers'';
                 };
               }
             );
@@ -352,8 +397,7 @@
                   importCatalog
                   install
                   prod
-                  prodBuildFront
-                  prodBuildPdfjs
+                  prodBack
                   stop
                   writeDotenv
                   ;

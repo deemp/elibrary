@@ -39,7 +39,7 @@
     nix run .#prodBuildPdfjs
     ```
 
-1. Run dev servers (for `back` and `front`).
+1. Run dev servers (`back` and `front`).
 
     ```console
     nix run .#dev
@@ -47,7 +47,7 @@
 
 1. (Optionally) Access back server at <http://0.0.0.0:5000>.
 
-1. Access front server at <http://localhost:5001> in a browser.
+1. Access front server at <http://0.0.0.0:5001> in a browser.
 
 1. Edit files in [back](./back) and in [front](./front/).
 
