@@ -117,15 +117,15 @@ export function BookInfoPage() {
                   <Button
                     sx={{
                       fontWeight: "bold",
-                      paddingY: "1rem",
-                      paddingX: { xs: "5rem", sm: "12rem" },
-                      fontSize: { sm: "1.5rem" },
+                      paddingY: "0.5rem",
+                      paddingX: { xs: "1.5rem" },
+                      fontSize: { xs: "1.2rem", sm: "1.5rem" },
                     }}
                     variant="contained"
                     size="large"
                     disableElevation
                   >
-                    READ
+                    read this book
                   </Button>
                 </Link>
               </Grid>
