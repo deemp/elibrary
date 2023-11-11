@@ -1,14 +1,22 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { Base } from "./Base";
-import { Box, Button, Card, CardMedia, Container, Grid, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardMedia,
+  Container,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
 import * as appbar from "./AppBar";
 import { AppBarLink } from "./AppBar";
-import copy from "copy-to-clipboard";
-import { toast } from "react-toastify";
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
+import { ReferenceTabs } from "./ReferenceTabs";
 
 function Row({
   title,
@@ -61,13 +69,15 @@ const loadImage = (
 export function BookInfoPage() {
   const { faqButton, faqDrawer } = useFAQ();
   const [book, setBook] = useState<Book>(useLoaderData() as Book);
-  const [reference, setReference] = useState<string>("");
+  const [textReference, setTextReference] = useState<string>("");
+  const [bibTexReference, setBibTexReference] = useState<string>("");
+  const [bibTexTitle, setBibTexTitle] = useState<string>("");
   const [imageDimensions, setImageDimensions] = useState({
     height: 200,
     width: 200,
   });
 
-  const id = book.book_id
+  const id = book.book_id;
 
   const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${id}.jpg`;
   const maxCoverHeight = 375;
@@ -76,18 +86,21 @@ export function BookInfoPage() {
     (async () => {
       loadImage(setImageDimensions, coverUrl, maxCoverHeight);
       setBook(book);
-      setReference(
-        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher
+      setBibTexTitle(
+        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${
+          book.year
+        }${book.title.split(" ")[0].toLowerCase()}`
+      );
+      setTextReference(
+        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${
+          book.publisher
         }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn}`
       );
-    })()
+      setBibTexReference(
+        `@book{${bibTexTitle}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
+      );
+    })();
   }, []);
-
-  const copyToClipboard = () => {
-    if (copy(reference)) {
-      toast.success("Copied to Clipboard");
-    }
-  };
 
   const elevation = 5;
 
@@ -106,7 +119,7 @@ export function BookInfoPage() {
                       fontWeight: "bold",
                       paddingY: "1rem",
                       paddingX: { xs: "5rem", sm: "12rem" },
-                      fontSize: { sm: '1.5rem' },
+                      fontSize: { sm: "1.5rem" },
                     }}
                     variant="contained"
                     size="large"
@@ -117,14 +130,20 @@ export function BookInfoPage() {
                 </Link>
               </Grid>
               <Grid item xs={12}>
-                <Grid container spacing={3} justifyContent={'center'}>
+                <Grid container spacing={3} justifyContent={"center"}>
                   <Grid item sx={{ width: `${imageDimensions.width}` }}>
                     <Link to={`/book/${id}/read`}>
                       <Card
                         elevation={elevation}
                         sx={{
-                          height: { xs: `${imageDimensions.height * 0.8}px`, sm: `${imageDimensions.height}px` },
-                          width: { xs: `${imageDimensions.width * 0.8}px`, sm: `${imageDimensions.width}px` },
+                          height: {
+                            xs: `${imageDimensions.height * 0.8}px`,
+                            sm: `${imageDimensions.height}px`,
+                          },
+                          width: {
+                            xs: `${imageDimensions.width * 0.8}px`,
+                            sm: `${imageDimensions.width}px`,
+                          },
                         }}
                       >
                         <CardMedia
@@ -132,7 +151,7 @@ export function BookInfoPage() {
                           src={coverUrl}
                           sx={{
                             maxHeight: `100%`,
-                            maxWidth: `100%`
+                            maxWidth: `100%`,
                           }}
                         />
                       </Card>
@@ -172,20 +191,10 @@ export function BookInfoPage() {
               </Grid>
               <Grid item xs={12} marginBottom={3}>
                 <Paper variant="outlined">
-                  <Grid container spacing={2} padding={"1rem"}>
-                    <Grid item xs={12} md={10}>
-                      <Typography variant="body1">{reference}</Typography>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                      <Button
-                        size="medium"
-                        variant="outlined"
-                        onClick={copyToClipboard}
-                      >
-                        Copy bibliographic record
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  <ReferenceTabs
+                    textReference={textReference}
+                    bibTexReference={bibTexReference}
+                  />
                 </Paper>
               </Grid>
             </Grid>
