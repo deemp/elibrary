@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { Base } from "./Base";
 import {
   Box,
@@ -67,9 +67,8 @@ const loadImage = (
 };
 
 export function BookInfoPage() {
-  const { id } = useParams();
   const { faqButton, faqDrawer } = useFAQ();
-  const [book, setBook] = useState<Book | undefined>();
+  const [book, setBook] = useState<Book>(useLoaderData() as Book);
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
   const [bibTexTitle, setBibTexTitle] = useState<string>("");
@@ -78,174 +77,157 @@ export function BookInfoPage() {
     width: 200,
   });
 
-  if (id) {
-    const bookId = Number.parseInt(id);
-    const url = `${import.meta.env.VITE_API_PREFIX}/book/${bookId}`;
-    const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${bookId}.jpg`;
-    const maxCoverHeight = 375;
+  const id = book.book_id;
 
-    useEffect(() => {
-      async function foo() {
-        const resp = await fetch(url, {
-          method: "GET",
-          headers: new Headers({ "content-type": "application/json" }),
-        });
+  const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${id}.jpg`;
+  const maxCoverHeight = 375;
 
-        if (resp.status == 404) {
-          throw new Response("Not Found", { status: 404 });
-        }
+  useEffect(() => {
+    (async () => {
+      loadImage(setImageDimensions, coverUrl, maxCoverHeight);
+      setBook(book);
+      setBibTexTitle(
+        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${
+          book.year
+        }${book.title.split(" ")[0].toLowerCase()}`
+      );
+      setTextReference(
+        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${
+          book.publisher
+        }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn}`
+      );
+      setBibTexReference(
+        `@book{${bibTexTitle}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
+      );
+    })();
+  }, []);
 
-        const book: Book = await resp.json();
+  const elevation = 5;
 
-        loadImage(setImageDimensions, coverUrl, maxCoverHeight);
-        setBook(book);
-        setBibTexTitle(
-          `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${
-            book.year
-          }${book.title.split(" ")[0].toLowerCase()}`
-        );
-        setTextReference(
-          `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${
-            book.publisher
-          }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn}`
-        );
-        setBibTexReference(
-          `@book{${bibTexTitle}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
-        );
-      }
-
-      foo();
-    }, [url, coverUrl, bibTexTitle]);
-
-    const elevation = 5;
-
-    const base = (
-      <Base
-        title="Info"
-        user={{ isAuthenticated: true }}
-        content={
-          <Container maxWidth="xl">
-            <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
-              <Grid container rowSpacing={2} marginTop={appbar.height}>
-                <Grid item xs={12} textAlign={"center"}>
-                  <Link to={`/book/${bookId}/read`}>
-                    <Button
-                      sx={{
-                        fontWeight: "bold",
-                        paddingY: "1rem",
-                        paddingX: { xs: "5rem", sm: "12rem" },
-                        fontSize: { sm: "1.5rem" },
-                      }}
-                      variant="contained"
-                      size="large"
-                      disableElevation
-                    >
-                      READ
-                    </Button>
-                  </Link>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container spacing={3} justifyContent={"center"}>
-                    <Grid item sx={{ width: `${imageDimensions.width}` }}>
-                      <Link to={`/book/${bookId}/read`}>
-                        <Card
-                          elevation={elevation}
+  const base = (
+    <Base
+      title="Info"
+      user={{ isAuthenticated: true }}
+      content={
+        <Container maxWidth="xl">
+          <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
+            <Grid container rowSpacing={2} marginTop={appbar.height}>
+              <Grid item xs={12} textAlign={"center"}>
+                <Link to={`/book/${id}/read`}>
+                  <Button
+                    sx={{
+                      fontWeight: "bold",
+                      paddingY: "1rem",
+                      paddingX: { xs: "5rem", sm: "12rem" },
+                      fontSize: { sm: "1.5rem" },
+                    }}
+                    variant="contained"
+                    size="large"
+                    disableElevation
+                  >
+                    READ
+                  </Button>
+                </Link>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={3} justifyContent={"center"}>
+                  <Grid item sx={{ width: `${imageDimensions.width}` }}>
+                    <Link to={`/book/${id}/read`}>
+                      <Card
+                        elevation={elevation}
+                        sx={{
+                          height: {
+                            xs: `${imageDimensions.height * 0.8}px`,
+                            sm: `${imageDimensions.height}px`,
+                          },
+                          width: {
+                            xs: `${imageDimensions.width * 0.8}px`,
+                            sm: `${imageDimensions.width}px`,
+                          },
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          src={coverUrl}
                           sx={{
-                            height: {
-                              xs: `${imageDimensions.height * 0.8}px`,
-                              sm: `${imageDimensions.height}px`,
-                            },
-                            width: {
-                              xs: `${imageDimensions.width * 0.8}px`,
-                              sm: `${imageDimensions.width}px`,
-                            },
+                            maxHeight: `100%`,
+                            maxWidth: `100%`,
                           }}
-                        >
-                          <CardMedia
-                            component="img"
-                            src={coverUrl}
-                            sx={{
-                              maxHeight: `100%`,
-                              maxWidth: `100%`,
-                            }}
-                          />
-                        </Card>
-                      </Link>
-                    </Grid>
-                    <Grid item xs={12} sm>
-                      <Grid container rowSpacing={1}>
-                        {[
-                          "title",
-                          "authors",
-                          "publisher",
-                          "year",
-                          "isbn",
-                          "esbn",
-                          "bisac",
-                          "lc",
-                          "imprint_publisher",
-                          "oclc",
-                          "lcc",
-                          "dewey",
-                        ].map((x) => {
-                          if (book && x in book) {
-                            return (
-                              <Row
-                                title={bookPretty.get(x)}
-                                content={`${book[x as keyof typeof book]}`}
-                                key={x}
-                              ></Row>
-                            );
-                          } else {
-                            return <></>;
-                          }
-                        })}
-                      </Grid>
+                        />
+                      </Card>
+                    </Link>
+                  </Grid>
+                  <Grid item xs={12} sm>
+                    <Grid container rowSpacing={1}>
+                      {[
+                        "title",
+                        "authors",
+                        "publisher",
+                        "year",
+                        "isbn",
+                        "esbn",
+                        "bisac",
+                        "lc",
+                        "imprint_publisher",
+                        "oclc",
+                        "lcc",
+                        "dewey",
+                      ].map((x) => {
+                        if (book && x in book) {
+                          return (
+                            <Row
+                              title={bookPretty.get(x)}
+                              content={`${book[x as keyof typeof book]}`}
+                              key={x}
+                            ></Row>
+                          );
+                        } else {
+                          return <></>;
+                        }
+                      })}
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} marginBottom={3}>
-                  <Paper variant="outlined">
-                    <ReferenceTabs
-                      textReference={textReference}
-                      bibTexReference={bibTexReference}
-                    />
-                  </Paper>
+              </Grid>
+              <Grid item xs={12} marginBottom={3}>
+                <Paper variant="outlined">
+                  <ReferenceTabs
+                    textReference={textReference}
+                    bibTexReference={bibTexReference}
+                  />
+                </Paper>
+              </Grid>
+            </Grid>
+          </Box>
+        </Container>
+      }
+      nav={
+        <>
+          <Container maxWidth={"xl"}>
+            <Grid container>
+              <Grid item xs={5}>
+                <Grid container columnSpacing={1}>
+                  <Grid item>
+                    <AppBarLink text={"Search"} to={"/"} id={"search"} />
+                  </Grid>
+                  <Grid item>{faqButton}</Grid>
                 </Grid>
               </Grid>
-            </Box>
+              <Grid
+                item
+                xs={7}
+                display={"flex"}
+                justifyContent={"end"}
+                alignItems={"center"}
+              >
+                {Ebsco}
+              </Grid>
+            </Grid>
           </Container>
-        }
-        nav={
-          <>
-            <Container maxWidth={"xl"}>
-              <Grid container>
-                <Grid item xs={5}>
-                  <Grid container columnSpacing={1}>
-                    <Grid item>
-                      <AppBarLink text={"Search"} to={"/"} id={"search"} />
-                    </Grid>
-                    <Grid item>{faqButton}</Grid>
-                  </Grid>
-                </Grid>
-                <Grid
-                  item
-                  xs={7}
-                  display={"flex"}
-                  justifyContent={"end"}
-                  alignItems={"center"}
-                >
-                  {Ebsco}
-                </Grid>
-              </Grid>
-            </Container>
-            {faqDrawer}
-          </>
-        }
-      ></Base>
-    );
-    return base;
-  } else {
-    return <></>;
-  }
+          {faqDrawer}
+        </>
+      }
+    ></Base>
+  );
+  return base;
 }

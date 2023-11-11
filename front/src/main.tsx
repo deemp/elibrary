@@ -3,30 +3,37 @@ import ReactDOM from "react-dom/client";
 import { SearchPage } from "./components/SearchPage.tsx";
 import { BookReadPage } from "./components/BookReadPage.tsx";
 import "./index.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ErrorPage } from "./error-page.tsx";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BookInfoPage } from "./components/BookInfoPage.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { bookLoader } from "./components/Responses.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <SearchPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <Navigate to={"/"} />
   },
   {
-    path: "/book/:id/read",
+    path: "book/:id/read",
+    loader: bookLoader,
     element: <BookReadPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <Navigate to={"/"} />
   },
   {
-    path: "/book/:id",
+    path: "book/:id",
+    loader: bookLoader,
     element: <BookInfoPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <Navigate to={"/"} />
   },
-]);
+  {
+    path: "*",
+    element: <Navigate to={"/"} />,
+    errorElement: <Navigate to={"/"} />
+  }
+], { basename: "/" });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
