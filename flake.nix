@@ -38,6 +38,7 @@
           portBack = "5000";
           portFront = "5001";
           hostBack = "0.0.0.0";
+          portGrafana = "3000";
 
           packageBack = groups:
             let
@@ -61,6 +62,8 @@
           imageDependenciesPath = "dependencies";
 
           mkURL = host: port: "http://${host}:${port}";
+          mkHyperRef = text: url: '']8;;${url}\${text}]8;;\'';
+          frontRef = mkHyperRef "front" (mkURL hostBack portFront);
 
           mkRunBack = { port, host, doRunInBackground ? false }: {
             runtimeInputs = [ pkgs.poetry ];
@@ -92,6 +95,9 @@
               ''printf '${env}\n' > ${path}'';
             description = "write ${path}";
           };
+
+          composeDev = "docker compose -f dev.yaml";
+          composeProd = "docker compose -f prod.yaml";
 
           packages =
             (
@@ -147,7 +153,7 @@
                     ''
                       ${getExe packages.prodBuildPdfjs}
                       (cd front && npm run build)
-                      sudo rm -rf ${dist}
+                      rm -rf ${dist}
                       mkdir -p ${dist}
                       cp -R front/dist/. ${dist}
                     '';
@@ -175,37 +181,12 @@
                   description = ''extract book cover images'';
                 };
 
-                prod = {
-                  text = ''
-                    ${getExe packages.stop}
-                    ${getExe packages.runBackInBackground}
-                  '';
-                  description = ''run prod site at ${mkURL hostBack portBack}'';
-                };
-
                 runFront = {
                   runtimeInputs = [ pkgs.nodejs ];
                   text = ''(cd front && npx vite --host ${hostBack} --port ${portFront})'';
-                  description = "run front site at ${mkURL hostBack portFront}";
+                  description = "run ${frontRef}";
                 };
 
-                dev = {
-
-                  text = ''
-                    ${getExe packages.prod}
-                    ${getExe packages.runFront} &
-                  '';
-                  description = "run front site at ${mkURL hostBack portFront}, back site at ${mkURL hostBack portBack}";
-                };
-
-                stop = {
-                  runtimeInputs = [ pkgs.lsof ];
-                  text = ''
-                    kill -9 $(lsof -t -i:${portBack}) || true
-                    kill -9 $(lsof -t -i:${portFront}) || true
-                  '';
-                  description = ''stop back and front servers'';
-                };
 
                 install = {
                   runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
@@ -297,6 +278,7 @@
                       pkgs.poetry
                       pkgs.nodejs
                       pkgs.gnugrep
+                      packages.runFront
                     ];
                     layers =
                       map
@@ -333,6 +315,37 @@
                     docker push deemp/${imageName}
                   '';
                   description = "push image to dockerhub";
+                };
+
+                prod = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    ${getExe packages.stop}
+                    ${composeProd} up -dV
+                  '';
+                  description =
+                    let
+                      prod = mkHyperRef "site" (mkURL hostBack portBack);
+                      monitoring = mkHyperRef "monitoring" ''${mkURL hostBack portGrafana}/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s'';
+                    in
+                    ''run ${prod} and ${monitoring}'';
+                };
+
+                dev = {
+                  text = ''
+                    ${getExe packages.stop}
+                    ${composeDev} up -V
+                  '';
+                  description = "run ${frontRef} and ${mkHyperRef "back" (mkURL hostBack portBack)}";
+                };
+
+                stop = {
+                  runtimeInputs = [ pkgs.docker ];
+                  text = ''
+                    ${composeDev} down
+                    ${composeProd} down
+                  '';
+                  description = ''stop prod and dev containers'';
                 };
               }
             );
