@@ -187,7 +187,6 @@
                   description = "run ${frontRef}";
                 };
 
-
                 install = {
                   runtimeInputs = [ pkgs.poetry pkgs.nodejs ];
                   text = ''
@@ -238,7 +237,7 @@
                     '';
                   };
 
-                packageDependencies =
+                packageImageDependencies =
                   pkgs.stdenv.mkDerivation {
                     pname = "dependencies";
                     version = "0.0.1";
@@ -258,6 +257,17 @@
                       FRONT=$APP/front
                       mkdir -p $FRONT
                       cp -R ${packages.packageFrontDependencies}/. $FRONT
+                    '';
+                  };
+
+                packageImageFrontDist =
+                  pkgs.stdenv.mkDerivation {
+                    pname = "dist";
+                    version = "0.0.1";
+                    phases = [ "installPhase" ];
+                    installPhase = ''
+                      APP=$out/${imageDependenciesPath}
+                      mkdir -p $APP
 
                       STATIC_FRONT=$APP/back/static/front
                       mkdir -p $STATIC_FRONT
@@ -273,30 +283,30 @@
                     name = "elibrary";
                     tag = "latest";
                     copyToRoot = [
-                      pkgs.bashInteractive
-                      pkgs.coreutils
-                      pkgs.poetry
-                      pkgs.nodejs
-                      pkgs.gnugrep
-                      packages.runFront
+                      (
+                        pkgs.buildEnv
+                          {
+                            name = "root";
+                            paths = [
+                              pkgs.bashInteractive
+                              pkgs.coreutils
+                              pkgs.poetry
+                              pkgs.nodejs
+                              pkgs.gnugrep
+                              packages.runFront
+                              packages.runProd
+                              packages.runCI
+                            ];
+                            pathsToLink = [ "/bin" "/dependencies" ];
+                          }
+                      )
+                      packages.packageImageDependencies
                     ];
-                    layers =
-                      map
-                        (x: (pkgs.nix2container.buildLayer {
-                          copyToRoot = [ x ];
-                          perms = [
-                            {
-                              path = x;
-                              regex = ".*";
-                              mode = "0777";
-                            }
-                          ];
-                        }))
-                        [
-                          packages.packageDependencies
-                          packages.runProd
-                          packages.runCI
-                        ];
+                    layers = [
+                      (pkgs.nix2container.buildLayer {
+                        copyToRoot = [ packages.packageImageFrontDist ];
+                      })
+                    ];
                   };
 
                 dockerLoad = {
