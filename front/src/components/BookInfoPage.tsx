@@ -16,7 +16,7 @@ import * as appbar from "./AppBar";
 import { searchLink } from "./SearchLink"
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
-import { ReferencePanel } from "./ReferenceTabs";
+import { ReferencePanel } from "./ReferencePanel";
 
 function Row({
   title,
