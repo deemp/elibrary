@@ -5,6 +5,7 @@ import { Button, Grid } from "@mui/material";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import { CustomTabPanel } from "./CustomTabPanel";
+import { buttonPadding, fontSize } from "../models/elements";
 
 function a11yProps(index: number) {
   return {
@@ -56,8 +57,8 @@ export function ReferencePanel({
           <Grid container>
             <Grid item xs={12} sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs value={value} onChange={handleChange} aria-label="References">
-                <Tab label="BibTex" {...a11yProps(0)} />
-                <Tab label="Text Reference" {...a11yProps(1)} />
+                <Tab sx={{ fontSize }} label="BibTex" {...a11yProps(0)} />
+                <Tab sx = {{ fontSize }} label="text reference" {...a11yProps(1)} />
               </Tabs>
             </Grid>
             <Grid item xs={12}>
@@ -78,7 +79,8 @@ export function ReferencePanel({
       }}>
         <Button
           sx={{
-            fontSize: { xs: "1.2rem", sm: "1.5rem" },
+            fontSize,
+            ...buttonPadding,
             margin: { xs: "1rem" },
           }}
           variant="contained"

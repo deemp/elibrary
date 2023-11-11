@@ -17,6 +17,7 @@ import { searchLink } from "./SearchLink"
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
 import { ReferencePanel } from "./ReferencePanel";
+import { buttonPadding, fontSize } from "../models/elements";
 
 function Row({
   title,
@@ -114,9 +115,8 @@ export function BookInfoPage() {
                 <Link to={`/book/${id}/read`}>
                   <Button
                     sx={{
-                      paddingY: "0.5rem",
-                      paddingX: "1.5rem",
-                      fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                      ...buttonPadding,
+                      fontSize,
                     }}
                     variant="contained"
                     size="large"

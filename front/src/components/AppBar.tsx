@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material"
+import { fontSize } from "../models/elements"
 
 export const height = '60px'
 export const padding = '20px'
@@ -6,7 +7,7 @@ export const padding = '20px'
 const sxBase = {
   color: "#ffffff",
   paddingX: '3px',
-  fontSize: { xs: "1.1rem", sm: '1.5rem' },
+  fontSize,
   height: { xs: '25px', sm: '40px' }
 }
 
