@@ -13,10 +13,11 @@ import {
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
 import * as appbar from "./AppBar";
-import { AppBarLink } from "./AppBar";
+import { searchLink } from "./SearchLink"
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
-import { ReferenceTabs } from "./ReferenceTabs";
+import { ReferencePanel } from "./ReferencePanel";
+import { buttonPadding, fontSize } from "../models/elements";
 
 function Row({
   title,
@@ -87,13 +88,11 @@ export function BookInfoPage() {
       loadImage(setImageDimensions, coverUrl, maxCoverHeight);
       setBook(book);
       setBibTexTitle(
-        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${
-          book.year
+        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${book.year
         }${book.title.split(" ")[0].toLowerCase()}`
       );
       setTextReference(
-        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${
-          book.publisher
+        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher
         }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn}`
       );
       setBibTexReference(
@@ -116,16 +115,14 @@ export function BookInfoPage() {
                 <Link to={`/book/${id}/read`}>
                   <Button
                     sx={{
-                      fontWeight: "bold",
-                      paddingY: "1rem",
-                      paddingX: { xs: "5rem", sm: "12rem" },
-                      fontSize: { sm: "1.5rem" },
+                      ...buttonPadding,
+                      fontSize,
                     }}
                     variant="contained"
                     size="large"
                     disableElevation
                   >
-                    READ
+                    read this book
                   </Button>
                 </Link>
               </Grid>
@@ -191,7 +188,7 @@ export function BookInfoPage() {
               </Grid>
               <Grid item xs={12} marginBottom={3}>
                 <Paper variant="outlined">
-                  <ReferenceTabs
+                  <ReferencePanel
                     textReference={textReference}
                     bibTexReference={bibTexReference}
                   />
@@ -208,7 +205,7 @@ export function BookInfoPage() {
               <Grid item xs={5}>
                 <Grid container columnSpacing={1}>
                   <Grid item>
-                    <AppBarLink text={"Search"} to={"/"} id={"search"} />
+                    {searchLink}
                   </Grid>
                   <Grid item>{faqButton}</Grid>
                 </Grid>

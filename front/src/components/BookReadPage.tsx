@@ -5,6 +5,7 @@ import { Container, Grid } from "@mui/material";
 import { Ebsco, AppBarLink } from "./AppBar";
 import { useFAQ } from "./FAQ";
 import { Book as BookModel } from "../models/book"
+import { searchLink } from "./SearchLink";
 
 export function BookReadPage() {
   const { faqButton, faqDrawer } = useFAQ();
@@ -22,7 +23,7 @@ export function BookReadPage() {
               <Grid item xs={7} sm={5}>
                 <Grid container columnSpacing={1}>
                   <Grid item><AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} /></Grid>
-                  <Grid item><AppBarLink text={"Search"} to={"/"} id={"search"} /></Grid>
+                  <Grid item>{searchLink}</Grid>
                   <Grid item>{faqButton}</Grid>
                 </Grid>
               </Grid>

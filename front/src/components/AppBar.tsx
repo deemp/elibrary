@@ -1,4 +1,5 @@
 import { Box, Button } from "@mui/material"
+import { fontSize } from "../models/elements"
 
 export const height = '60px'
 export const padding = '20px'
@@ -6,8 +7,7 @@ export const padding = '20px'
 const sxBase = {
   color: "#ffffff",
   paddingX: '3px',
-  fontWeight: "bold",
-  fontSize: { xs: "1.1rem", sm: '1.5rem' },
+  fontSize,
   height: { xs: '25px', sm: '40px' }
 }
 
@@ -29,7 +29,7 @@ export function AppBarLink({ text, id, to, }: { text: string; id: string; to: st
 
 
 export function AppBarElement({ text }: { text: string }) {
-  return <Box sx={{ ...sxBase, height: 'auto', alignItems: 'center' }}>{text}</Box>
+  return <Box sx={{ ...sxBase, fontWeight: "bold", height: 'auto', alignItems: 'center' }}>{text}</Box>
 }
 
 export const Ebsco = <AppBarElement text={'EBSCO EBOOK ARCHIVE'}></AppBarElement>
