@@ -64,6 +64,7 @@
           mkURL = host: port: "http://${host}:${port}";
           mkHyperRef = text: url: '']8;;${url}\${text}]8;;\'';
           frontRef = mkHyperRef "front" (mkURL hostBack portFront);
+          backRef = mkHyperRef "back" (mkURL hostBack portBack);
 
           mkRunBack = { port, host, doRunInBackground ? false }: {
             runtimeInputs = [ pkgs.poetry ];
@@ -98,6 +99,7 @@
 
           composeDev = "docker compose -f dev.yaml";
           composeProd = "docker compose -f prod.yaml";
+          serviceName = "elibrary";
 
           packages =
             (
@@ -332,7 +334,7 @@
                   text = ''
                     ${getExe packages.stop}
                     ${composeProd} up -dV
-                    ${composeProd} logs --follow elibrary
+                    ${composeProd} logs --follow ${serviceName}
                   '';
                   description =
                     let
@@ -342,12 +344,22 @@
                     ''run ${prod} and ${monitoring}'';
                 };
 
+                prodBack = {
+                  text = ''
+                    ${composeProd} down ${serviceName}
+                    ${composeDev} down ${serviceName}
+                    ${composeProd} up -dV ${serviceName}
+                    ${composeProd} logs --follow ${serviceName}
+                  '';
+                  description = "(reload and) run ${backRef}";
+                };
+
                 dev = {
                   text = ''
                     ${getExe packages.stop}
                     ${composeDev} up -V
                   '';
-                  description = "run ${frontRef} and ${mkHyperRef "back" (mkURL hostBack portBack)}";
+                  description = "run ${frontRef} and ${backRef}";
                 };
 
                 stop = {
@@ -385,8 +397,7 @@
                   importCatalog
                   install
                   prod
-                  prodBuildFront
-                  prodBuildPdfjs
+                  prodBack
                   stop
                   writeDotenv
                   ;
