@@ -300,7 +300,16 @@
                     ];
                     layers =
                       map
-                        (x: (pkgs.nix2container.buildLayer { copyToRoot = [ x ]; }))
+                        (x: (pkgs.nix2container.buildLayer {
+                          copyToRoot = [ x ];
+                          perms = [
+                            {
+                              path = x;
+                              regex = ".*";
+                              mode = "0777";
+                            }
+                          ];
+                        }))
                         [
                           packages.packageDependencies
                           packages.runProd
