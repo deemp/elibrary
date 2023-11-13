@@ -2,7 +2,7 @@ import {
   Box,
   Grid,
   Link,
-  SwipeableDrawer,
+  Drawer,
   Typography,
 } from "@mui/material";
 import * as appbar from "./AppBar";
@@ -78,11 +78,10 @@ export function useFAQ() {
   const faqButton = <AppBarButton text={'FAQ'} onClick={toggleDrawer(true)}></AppBarButton>;
 
   const faqDrawer = (
-    <SwipeableDrawer
+    <Drawer
       anchor={anchor}
       open={state}
       onClose={toggleDrawer(false)}
-      onOpen={toggleDrawer(true)}
     >
       <Box
         sx={{ width: "60vw" }}
@@ -124,7 +123,7 @@ export function useFAQ() {
           })}
         </Grid>
       </Box>
-    </SwipeableDrawer>
+    </Drawer>
   );
   return { faqButton, faqDrawer };
 }
