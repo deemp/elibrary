@@ -1,7 +1,10 @@
 {
   inputs = {
     flakes.url = "github:deemp/flakes/";
-    pdfjs.url = "gitlab:elibrary/pdfjs?host=gitlab.pg.innopolis.university";
+    pdfjs = {
+      url = "gitlab:elibrary/pdf.js/dist?host=gitlab.pg.innopolis.university";
+      flake = false;
+    };
   };
   outputs = inputs: inputs.flakes.makeFlake
     {
