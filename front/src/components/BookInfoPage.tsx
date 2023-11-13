@@ -87,7 +87,6 @@ export function BookInfoPage() {
     (async () => {
       loadImage(setImageDimensions, coverUrl, maxCoverHeight);
       setBook(book);
-      console.log(book.authors)
       setBibTexTitle(
         `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
       );
