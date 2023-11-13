@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material"
-import { fontSize } from "../models/elements"
+import { fontSize, linkStyle } from "../models/elements"
 
 export const height = '60px'
 export const padding = '20px'
@@ -24,7 +24,7 @@ export function AppBarButton({ text, onClick }: { text: string, onClick?: React.
 import { Link } from "react-router-dom";
 
 export function AppBarLink({ text, id, to, }: { text: string; id: string; to: string; }) {
-  return <Link id={id} style={{ textDecoration: 'none' }} to={to}><AppBarButton text={text}></AppBarButton></Link>
+  return <Link id={id} style={linkStyle} to={to}><AppBarButton text={text}/></Link>
 }
 
 

@@ -17,7 +17,7 @@ import { searchLink } from "./SearchLink"
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
 import { ReferencePanel } from "./ReferencePanel";
-import { buttonPadding, fontSize } from "../models/elements";
+import { buttonPadding, fontSize, linkStyle } from "../models/elements";
 
 function Row({
   title,
@@ -112,7 +112,7 @@ export function BookInfoPage() {
           <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
             <Grid container rowSpacing={2} marginTop={appbar.height}>
               <Grid item xs={12} display={'flex'} justifyContent={'center'}>
-                <Link to={`/book/${id}/read`} style={{ textDecoration: 'none' }}>
+                <Link to={`/book/${id}/read`} style={linkStyle}>
                   <Button
                     sx={{
                       ...buttonPadding,
