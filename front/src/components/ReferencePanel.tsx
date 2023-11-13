@@ -57,23 +57,23 @@ export function ReferencePanel({
           <Grid container>
             <Grid item xs={12} sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs value={value} onChange={handleChange} aria-label="References">
-                <Tab sx={{ fontSize }} label="BibTex" {...a11yProps(0)} />
-                <Tab sx = {{ fontSize }} label="text reference" {...a11yProps(1)} />
+                <Tab sx = {{ fontSize, maxWidth: { xs: '200px', md: '400px' } }} label="bibliographic information" {...a11yProps(0)} />
+                <Tab sx={{ fontSize }} label="BibTex" {...a11yProps(1)} />
               </Tabs>
             </Grid>
             <Grid item xs={12}>
               <CustomTabPanel value={value} index={0}>
-                {reference === undefined ? bibTexReference : reference}
+                {reference}
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-                {reference}
+                {reference === undefined ? bibTexReference : reference}
               </CustomTabPanel>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
       <Grid item display={'flex'} sx={{
-        alignItems: 'center',
+        alignItems: 'start',
         justifyContent: { xs: 'center', sm: 'right' },
         width: { xs: '100%', sm: '200px', md: '300px' }
       }}>
