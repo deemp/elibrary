@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.13",
+    "@mui/lab": "^5.0.0-alpha.152",
     "@mui/material": "^5.14.13",
     "@tanstack/react-table": "^8.10.7",
     "@types/autosuggest-highlight": "^3.2.2",
