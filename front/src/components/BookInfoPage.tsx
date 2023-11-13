@@ -111,7 +111,7 @@ export function BookInfoPage() {
         <Container maxWidth="xl">
           <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
             <Grid container rowSpacing={2} marginTop={appbar.height}>
-              <Grid item xs={12} textAlign={"center"}>
+              <Grid item xs={12} display={'flex'} justifyContent={'center'}>
                 <Link to={`/book/${id}/read`}>
                   <Button
                     sx={{
@@ -127,8 +127,8 @@ export function BookInfoPage() {
                 </Link>
               </Grid>
               <Grid item xs={12}>
-                <Grid container spacing={3} justifyContent={"center"}>
-                  <Grid item sx={{ width: `${imageDimensions.width}` }}>
+                <Grid container spacing={3} justifyContent={'center'}>
+                  <Grid item sx={{ width: `${imageDimensions.width * 1.1}px` }} display={'flex'} justifyContent={'center'}>
                     <Link to={`/book/${id}/read`}>
                       <Card
                         elevation={elevation}
