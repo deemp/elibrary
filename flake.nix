@@ -101,14 +101,17 @@
           composeProd = "docker compose -f prod.yaml";
           serviceName = "elibrary";
 
+          envBackPath = "back/.env";
+          envBack = import ./${envBackPath}.nix {
+            inherit pkgs;
+            host = hostBack;
+            port = portBack;
+          };
+
           packages =
             (
               mkShellApps {
-                writeBackDotenv = writeDotenv "back/.env" (import ./back/.env.nix {
-                  inherit pkgs;
-                  host = hostBack;
-                  port = portBack;
-                });
+                writeBackDotenv = writeDotenv envBackPath envBack;
               }
             ) //
             (
@@ -348,6 +351,7 @@
                   text = ''
                     ${composeProd} down ${serviceName}
                     ${composeDev} down ${serviceName}
+                    touch ${envBack.DB_PATH}
                     ${composeProd} up -dV ${serviceName}
                     ${composeProd} logs --follow ${serviceName}
                   '';
@@ -357,6 +361,7 @@
                 dev = {
                   text = ''
                     ${getExe packages.stop}
+                    touch ${envBack.DB_PATH}
                     ${composeDev} up -V
                   '';
                   description = "run ${frontRef} and ${backRef}";
