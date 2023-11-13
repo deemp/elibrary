@@ -93,7 +93,7 @@ export function BookInfoPage() {
       );
       setTextReference(
         `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher
-        }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn}`
+        }.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE: URL: ${window.location.href}`
       );
       setBibTexReference(
         `@book{${bibTexTitle}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
