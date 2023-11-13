@@ -112,7 +112,7 @@ export function BookInfoPage() {
           <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
             <Grid container rowSpacing={2} marginTop={appbar.height}>
               <Grid item xs={12} display={'flex'} justifyContent={'center'}>
-                <Link to={`/book/${id}/read`}>
+                <Link to={`/book/${id}/read`} style={{ textDecoration: 'none' }}>
                   <Button
                     sx={{
                       ...buttonPadding,
