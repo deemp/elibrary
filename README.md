@@ -183,4 +183,4 @@
 
 ## License
 
-The `MIT` license is used for the purpose of not resticting any usage of the software.
+The `MIT` license is used for allowing any usage of this software.
