@@ -1,5 +1,6 @@
 import { Params } from "react-router-dom";
 import { Book } from "../models/book"
+import { getImageSize } from 'react-image-size'
 
 export const emptyId = new Response(`Empty ID`, { status: 404 })
 export const invalidId = (id: number) => new Response(`Invalid ID: '${id}'`, { status: 404 })
@@ -34,3 +35,13 @@ export async function getBook(id: string | undefined): Promise<Book> {
 }
 
 export async function bookLoader({ params }: { params: Params<string> }) { return getBook(params.id) }
+
+export async function fetchImage(id: number) {
+    const imageUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${id}.jpg`;
+    const dimensions = await getImageSize(imageUrl)
+    const maxHeight = 375;
+    return {
+        height: maxHeight,
+        width: maxHeight / dimensions.height * dimensions.width,
+    }
+}
