@@ -6,6 +6,26 @@
 
 [link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
 
+## Features
+
+- Search books in the archive through set of filters
+- Get information about the books
+- Read the books in browser
+
+## Screenshots
+
+![Search](screenshots/1.png)
+
+![Info](screenshots/2.png)
+
+![Bookreader](screenshots/3.png)
+
+## Usage
+
+- On search page enter values to filters to get list of books, which satisfy them.
+- Push `info` button to open information page with the chosen book.
+- Push `read` button on search or information page to open bookreader with the chosen book.
+
 ## Development
 
 1. Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
