@@ -231,7 +231,7 @@
                     cp -R ${pdfjs}/. $out/pdfjs
                   '';
 
-                  npmDepsHash = "sha256-JWsaqiqY5wEvfSmxj0HG3q6cg7I6yasNXNG6WZa6Q/g=";
+                  npmDepsHash = "sha256-AMOodQPITMpd1IdiaDaaRpfjl1hrvyP+TUV/jxqxAnY=";
                 };
 
                 packageBackDependencies =
