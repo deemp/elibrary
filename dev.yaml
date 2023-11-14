@@ -15,8 +15,10 @@ services:
       - "-c"
     command:
       - |
-        cp -pR dependencies/. elibrary
         cd elibrary
+        ln -s /dependencies/back/static/front back/static/front
+        ln -s /dependencies/.venv .venv
+        ln -s /dependencies/front/node_modules front/node_modules
         runFront &
         runProd
     volumes:
