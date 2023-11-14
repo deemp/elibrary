@@ -209,6 +209,47 @@
 
 1. Merge the request to the `main` branch.
 
+## For customer
+
+### Future maintenance
+
+#### New maintainers
+
+New maintainers should be:
+
+- able to use SSH and CLI programs in general.
+- knowledgeable in Nix and understand [flake.nix](./flake.nix).
+- able to understand the above sections that explain how to develop and deploy the library.
+
+Please, contact one of the current project maintainers so that maintainers can transfer their knowledge to a new maintainer.
+
+#### Deployment
+
+For now, we don't provide automated deployment.
+
+Currently, we perform these steps:
+
+- Make changes, commit and push to the git repository ([link](https://gitlab.pg.innopolis.university/)).
+- Update the docker image if the changes modify project dependencies ([front/package-lock.json](./front/package-lock.json), [flake.nix](./flake.lock), [poetry.lock](./poetry.lock)).
+
+    ```console
+    nix run .#dockerLoad
+    ```
+
+- Push that image to DockerHub.
+
+    ```console
+    nix run .#dockerPush
+    ```
+
+- Connect by SSH to the Virtual Machine that runs the server.
+- Pull the latest changes from the repository.
+- Pull the latest Docker image if not present and restart the server.
+
+    ```console
+    nix run .#prodBack
+    ```
+
 ## References
 
 - [fastapi-observability](https://github.com/blueswen/fastapi-observability)
