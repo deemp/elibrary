@@ -72,7 +72,6 @@ export function BookInfoPage() {
   const [book, setBook] = useState<Book>(useLoaderData() as Book);
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
-  const [bibTexTitle, setBibTexTitle] = useState<string>("");
   const [imageDimensions, setImageDimensions] = useState({
     height: 200,
     width: 200,
@@ -87,12 +86,12 @@ export function BookInfoPage() {
     (async () => {
       loadImage(setImageDimensions, coverUrl, maxCoverHeight);
       setBook(book);
-      setBibTexTitle(
-        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
-      );
       setTextReference(
         `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher}.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE: URL: ${window.location.href}`
       );
+      const bibTexTitle =
+        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
+          .match(/[a-zA-Z0-9]/g)?.join("")
       setBibTexReference(
         `@book{${bibTexTitle}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
       );
