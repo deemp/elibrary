@@ -8,9 +8,11 @@
 
 ## Features
 
-- Search books in the archive through set of filters
-- Get information about the books
-- Read the books in browser
+- Search books in an EBSCO e-book archive
+- Read the books in a browser
+- Use multiple filters
+- Get books information
+- Copy generated references
 
 ## Screenshots
 
