@@ -20,6 +20,7 @@ services:
 
   elibrary:
     image: deemp/elibrary:latest
+    pull_policy: always
     ports:
       - "5000:5000"
     depends_on:
