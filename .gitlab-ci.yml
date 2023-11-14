@@ -4,7 +4,9 @@ default:
   before_script:
     - mkdir -p "/etc/containers/"
     - echo '{"default":[{"type":"insecureAcceptAnything"}]}' > /etc/containers/policy.json
-    - cp -R /dependencies/. .
+    - ln -s /dependencies/back/static/front back/static/front
+    - ln -s /dependencies/.venv .venv
+    - ln -s /dependencies/front/node_modules front/node_modules
 
 stages:
   - stage
