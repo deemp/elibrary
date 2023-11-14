@@ -2,10 +2,6 @@
 
 <https://test.library.innopolis.university>
 
-## Technical specification
-
-[link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
-
 ## Features
 
 - Search books in an EBSCO e-book archive
@@ -40,11 +36,6 @@
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
 1. In the top of the page, click on `SEARCH`.
 1. In the results table, click on `Read` to open a book.
-
-
-- On search page enter values to filters to get list of books, which satisfy them.
-- Push `info` button to open information page with the chosen book.
-- Push `read` button on search or information page to open bookreader with the chosen book.
 
 ## Development
 
@@ -182,6 +173,10 @@
 
 - containers manager: [Docker Compose](https://github.com/docker/compose)
 - monitoring: [FastAPI with Observability](https://github.com/blueswen/fastapi-observability)
+
+## Technical specification
+
+[link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
 
 ## Diagrams
 
