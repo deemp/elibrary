@@ -35,7 +35,6 @@
 1. In the `BIBTEX` tab, click on `Copy`.
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
 1. In the top of the page, click on `SEARCH`.
-1. In the results table, click on `Read` to open a book.
 
 ## Development
 
