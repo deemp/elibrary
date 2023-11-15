@@ -77,7 +77,6 @@
               ]}
               export PORT=${port}
               export HOST=${host}
-              ${getExe packages.writeBackDotenv}
               ${getExe packages.prodBuildFront}
               poetry run back ${if doRunInBackground then "&" else ""}
             '';
@@ -174,7 +173,6 @@
                     export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                       pkgs.stdenv.cc.cc.lib
                     ]}
-                    ${getExe packages.writeBackDotenv}
                     poetry run import-catalog
                   '';
                   description = ''import books catalog into database + save sql'';
@@ -182,10 +180,7 @@
 
                 extractCovers = {
                   runtimeInputs = [ pkgs.poetry ];
-                  text = ''
-                    ${getExe packages.writeBackDotenv}
-                    poetry run extract-covers
-                  '';
+                  text = ''poetry run extract-covers'';
                   description = ''extract book cover images'';
                 };
 
