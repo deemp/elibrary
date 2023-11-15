@@ -8,7 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { BookInfoPage } from "./components/BookInfoPage.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { bookLoader } from "./components/Responses.tsx";
+import { bookLoader, fetchImage } from "./components/Responses.tsx";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,11 @@ const router = createBrowserRouter([
   },
   {
     path: "book/:id",
-    loader: bookLoader,
+    loader: async (params) => {
+      const book = await bookLoader(params)
+      const dimensions = await fetchImage(book.book_id)
+      return { book, dimensions }
+    },
     element: <BookInfoPage />,
     errorElement: <Navigate to={"/"} />
   },

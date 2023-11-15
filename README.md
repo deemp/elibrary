@@ -2,9 +2,39 @@
 
 <https://test.library.innopolis.university>
 
-## Technical specification
+## Features
 
-[link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
+- Search books in an EBSCO e-book archive
+- Read the books in a browser
+- Use multiple filters
+- Get books information
+- Copy generated references
+
+## Screenshots
+
+![Search](screenshots/1.png)
+
+![Info](screenshots/2.png)
+
+![Bookreader](screenshots/3.png)
+
+## A site walkthrough
+
+1. Go to <https://test.library.innopolis.university>
+1. Click on `Filter`.
+1. Select `Title`.
+1. Type `99` in the `Filter input`.
+1. Click on suggestion.
+1. In the results table, click on `Read`.
+1. In the top of the page, click on `Info`.
+1. Look at the book info.
+1. In the top of the page, click on `FAQ` to see what book info entries mean.
+1. In the `BIBLIOGRAPHIC INFORMATION` tab, click on `Copy`.
+1. (Optionally) paste the copied text somewhere to make sure it's correct.
+1. Click on `BIBTEX`.
+1. In the `BIBTEX` tab, click on `Copy`.
+1. (Optionally) paste the copied text somewhere to make sure it's correct.
+1. In the top of the page, click on `SEARCH`.
 
 ## Development
 
@@ -143,6 +173,10 @@
 - containers manager: [Docker Compose](https://github.com/docker/compose)
 - monitoring: [FastAPI with Observability](https://github.com/blueswen/fastapi-observability)
 
+## Technical specification
+
+[link](https://disk.yandex.ru/i/LyUBcA0CbtMhzA)
+
 ## Diagrams
 
 ### Use case
@@ -180,3 +214,7 @@
 - [fastapi-observability](https://github.com/blueswen/fastapi-observability)
   - configure for compose ([link](https://grafana.com/docs/loki/latest/send-data/docker-driver/configuration/#configure-the-logging-driver-for-a-swarm-service-or-compose))
   - install docker loki plugin ([link](https://yuriktech.com/2020/03/21/Collecting-Docker-Logs-With-Loki/))
+
+## License
+
+The `MIT` license is used for allowing any usage of this software.

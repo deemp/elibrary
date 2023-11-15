@@ -40,52 +40,26 @@ function Row({
   );
 }
 
-interface ImageDimensions {
-  height: number;
-  width: number;
+interface Data {
+  book: Book
+  dimensions: {
+    height: number
+    width: number
+  }
 }
-
-const loadImage = (
-  setImageDimensions: React.Dispatch<React.SetStateAction<ImageDimensions>>,
-  imageUrl: string,
-  maxHeight: number
-) => {
-  const img = new Image();
-  img.src = imageUrl;
-
-  const ratio = img.height / img.width;
-
-  img.onload = () => {
-    setImageDimensions({
-      height: maxHeight,
-      width: maxHeight / ratio,
-    });
-  };
-  img.onerror = (err) => {
-    console.log("img error");
-    console.error(err);
-  };
-};
 
 export function BookInfoPage() {
   const { faqButton, faqDrawer } = useFAQ();
-  const [book, setBook] = useState<Book>(useLoaderData() as Book);
+  const { book, dimensions } = useLoaderData() as Data;
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
-  const [imageDimensions, setImageDimensions] = useState({
-    height: 200,
-    width: 200,
-  });
 
   const id = book.book_id;
 
   const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${id}.jpg`;
-  const maxCoverHeight = 375;
 
   useEffect(() => {
     (async () => {
-      loadImage(setImageDimensions, coverUrl, maxCoverHeight);
-      setBook(book);
       setTextReference(
         `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher}.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE: URL: ${window.location.href}`
       );
@@ -96,7 +70,7 @@ export function BookInfoPage() {
         `@book{${bibTexTitle}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
       );
     })();
-  }, []);
+  }, [book]);
 
   const elevation = 5;
 
@@ -125,18 +99,18 @@ export function BookInfoPage() {
               </Grid>
               <Grid item xs={12}>
                 <Grid container spacing={3} justifyContent={'center'}>
-                  <Grid item sx={{ width: `${imageDimensions.width * 1.1}px` }} display={'flex'} justifyContent={'center'}>
+                  <Grid item sx={{ width: `${dimensions.width * 1.1}px` }} display={'flex'} justifyContent={'center'}>
                     <Link to={`/book/${id}/read`}>
                       <Card
                         elevation={elevation}
                         sx={{
                           height: {
-                            xs: `${imageDimensions.height * 0.8}px`,
-                            sm: `${imageDimensions.height}px`,
+                            xs: `${dimensions.height * 0.8}px`,
+                            sm: `${dimensions.height}px`,
                           },
                           width: {
-                            xs: `${imageDimensions.width * 0.8}px`,
-                            sm: `${imageDimensions.width}px`,
+                            xs: `${dimensions.width * 0.8}px`,
+                            sm: `${dimensions.width}px`,
                           },
                         }}
                       >
