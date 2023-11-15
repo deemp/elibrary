@@ -28,6 +28,8 @@ class Env:
     
     LOG_CONFIG_PATH: str
     OPENID_CONFIG_URL: str
+    
+    REDIRECT_URL: str
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"

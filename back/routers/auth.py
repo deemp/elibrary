@@ -27,7 +27,7 @@ if env.ENABLE_AUTH:
 
     @router.get("/login")
     async def login(request: Request):
-        redirect_uri = request.url_for("auth")
+        redirect_uri = env.REDIRECT_URL
         return await oauth.sso.authorize_redirect(request, redirect_uri)
 
     @router.get("/auth")
