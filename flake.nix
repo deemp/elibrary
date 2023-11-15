@@ -347,8 +347,8 @@
 
                 prodBack = {
                   text = ''
-                    ${composeProd} down ${serviceName}
-                    ${composeDev} down ${serviceName}
+                    ${composeProd} down -v ${serviceName}
+                    ${composeDev} down -v ${serviceName}
                     touch ${envBack.DB_PATH}
                     ${composeProd} up -dV ${serviceName}
                     ${composeProd} logs --follow ${serviceName}
