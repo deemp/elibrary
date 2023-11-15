@@ -83,15 +83,13 @@ async def catch_all(path: str):
 
 
 def run():
-    config = uvicorn.Config(
+    uvicorn.run(
         f"{__name__}:app",
         port=env.PORT,
         host=env.HOST,
         log_config=env.LOG_CONFIG_PATH,
-        reload=True,
+        reload=env.DO_RELOAD,
     )
-    server = uvicorn.Server(config)
-    server.run()
 
 
 if __name__ == "__main__":
