@@ -223,6 +223,12 @@ New maintainers should be:
 
 Please, contact one of the current project maintainers so that maintainers can transfer their knowledge to a new maintainer.
 
+### Accessibility
+
+- When a user zoom in or zooms out, the page auto scales to accomodate the view.
+- The main color of the website is color-blind friendly [see info](https://www.colorhexa.com/1976d2#:~:text=Color%20Blindness%20Simulator)
+- Support for multiple screen sizes (desktop, mobile, tablets etc.)
+
 #### Deployment
 
 For now, we don't provide automated deployment.
