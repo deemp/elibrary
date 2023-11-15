@@ -113,7 +113,7 @@
           packages =
             (
               mkShellApps {
-                writeBackDotenv = writeDotenv envBackPath envBack;
+                writeDotenvBack = writeDotenv envBackPath envBack;
               }
             ) //
             (
@@ -127,7 +127,7 @@
 
                 writeFrontDevDotenv = writeDotenv dev (import ./${dev}.nix { host = hostBack; port = portBack; inherit prefix; });
 
-                writeFrontDotenv = {
+                writeDotenvFront = {
                   text = ''
                     ${getExe packages.writeFrontDevDotenv}
                     ${getExe packages.writeFrontProdDotenv}
@@ -140,8 +140,8 @@
               mkShellApps {
                 writeDotenv = {
                   text = ''
-                    ${getExe packages.writeBackDotenv}
-                    ${getExe packages.writeFrontDotenv}
+                    ${getExe packages.writeDotenvBack}
+                    ${getExe packages.writeDotenvFront}
                   '';
                   description = "write .env files for ./front and ./back";
                 };
