@@ -333,6 +333,7 @@
                 prod = {
                   runtimeInputs = [ pkgs.docker ];
                   text = ''
+                    ${getExe packages.writeDotenv}
                     ${getExe packages.stop}
                     ${composeProd} up -dV
                     ${composeProd} logs --follow ${serviceName}
@@ -347,6 +348,7 @@
 
                 prodBack = {
                   text = ''
+                    ${getExe packages.writeDotenv}
                     ${composeProd} down -v ${serviceName}
                     ${composeDev} down -v ${serviceName}
                     touch ${envBack.DB_PATH}
@@ -358,6 +360,7 @@
 
                 dev = {
                   text = ''
+                    ${getExe packages.writeDotenv}
                     ${getExe packages.stop}
                     touch ${envBack.DB_PATH}
                     ${composeDev} up -V
