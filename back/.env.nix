@@ -20,4 +20,6 @@
   HOST = host;
   PORT = port;
   LOG_COFIG_PATH = "back/log_conf.yaml";
+
+  OPENID_CONFIG_URL = "https://sso.university.innopolis.ru/adfs/.well-known/openid-configuration";
 }

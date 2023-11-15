@@ -27,6 +27,7 @@ class Env:
     PORT: int
     
     LOG_CONFIG_PATH: str
+    OPENID_CONFIG_URL: str
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
@@ -47,7 +48,8 @@ if env.ENABLE_AUTH:
 
     @dataclass
     class Auth:
+        AppID: str
+        Secret: str
+        
         SECRET_KEY: str
-        GOOGLE_CLIENT_ID: str
-        GOOGLE_CLIENT_SECRET: str
     auth_secrets = load_dotenv(Auth, "auth.env")
