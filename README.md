@@ -219,7 +219,7 @@ New maintainers should be:
 
 - able to use SSH and CLI programs in general.
 - knowledgeable in Nix and understand [flake.nix](./flake.nix).
-- able to understand the above sections that explain how to develop and deploy the library.
+- able to understand sections that explain how to develop and deploy the library.
 
 Please, contact one of the current project maintainers so that maintainers can transfer their knowledge to a new maintainer.
 
@@ -236,7 +236,7 @@ Currently, we perform these steps:
     nix run .#dockerLoad
     ```
 
-- Push that image to DockerHub.
+- Push that image to Docker Hub.
 
     ```console
     nix run .#dockerPush
