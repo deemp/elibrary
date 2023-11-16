@@ -27,6 +27,7 @@ services:
       - loki
     environment:
       APP_NAME: "app-elibrary"
+      OTLP_GRPC_ENDPOINT: "http://tempo:4317"
       PORT: 5000
       HOST: "0.0.0.0"
     logging: *default-logging
@@ -41,7 +42,15 @@ services:
         ln -s /dependencies/front/node_modules front/node_modules
         runProd
     volumes:
-      - ./back:/elibrary/back
+      - ./back/internal:/elibrary/back/internal
+      - ./back/routers:/elibrary/back/routers
+      - ./back/static:/elibrary/back/static
+      - ./back/tests:/elibrary/back/tests
+      - ./back/__init__.py:/elibrary/back/__init__.py
+      - ./back/.env.production:/elibrary/back/.env
+      - ./back/auth.env:/elibrary/back/auth.env
+      - ./back/log_conf.yaml:/elibrary/back/log_conf.yaml
+      - ./back/main.py:/elibrary/back/main.py
       - ./books:/elibrary/books
       - ./covers:/elibrary/covers
       - ./poetry.toml:/elibrary/poetry.toml

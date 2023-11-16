@@ -3,6 +3,7 @@ version: "3.4"
 services:
   elibrary:
     image: deemp/elibrary:latest
+    pull_policy: always
     ports:
       - "5000:5000"
       - "5001:5001"
@@ -22,7 +23,15 @@ services:
         runFront &
         runProd
     volumes:
-      - ./back:/elibrary/back
+      - ./back/internal:/elibrary/back/internal
+      - ./back/routers:/elibrary/back/routers
+      - ./back/static:/elibrary/back/static
+      - ./back/tests:/elibrary/back/tests
+      - ./back/__init__.py:/elibrary/back/__init__.py
+      - ./back/.env.development:/elibrary/back/.env
+      - ./back/auth.env:/elibrary/back/auth.env
+      - ./back/log_conf.yaml:/elibrary/back/log_conf.yaml
+      - ./back/main.py:/elibrary/back/main.py
       - ./books:/elibrary/books
       - ./covers:/elibrary/covers
       - ./poetry.toml:/elibrary/poetry.toml
