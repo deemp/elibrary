@@ -41,6 +41,7 @@ services:
         ln -s /dependencies/front/node_modules front/node_modules
         runProd
     volumes:
+      - ./back/.env.production:/elibrary/back/.env
       - ./back:/elibrary/back
       - ./books:/elibrary/books
       - ./covers:/elibrary/covers
