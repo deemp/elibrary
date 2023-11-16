@@ -114,8 +114,8 @@
           packages =
             (
               let
-                dev = "back/.env.development";
-                prod = "back/.env.production";
+                dev = "${envBackPath}.development";
+                prod = "${envBackPath}.production";
                 envProdBack = envBack // { DO_RELOAD = "false"; ENV = "prod"; };
                 envDevBack = envBack // { ENV = "dev"; };
                 envScriptsBack = envDevBack;
@@ -126,8 +126,8 @@
                 writeDotenvDevBack = writeDotenv dev envDevBack;
 
                 writeDotenvScriptsBack = writeDotenv envBackPath envScriptsBack;
-                writeDotenvBack =
-                  {
+
+                writeDotenvBack = {
                   text = ''
                     ${getExe packages.writeDotenvProdBack}
                     ${getExe packages.writeDotenvDevBack}
