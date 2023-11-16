@@ -28,26 +28,21 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+if env.ENV == "prod":
+    # Setting metrics middleware
+    app.add_middleware(PrometheusMiddleware, app_name=env.APP_NAME)
+    app.add_route("/metrics", metrics)
 
-APP_NAME = os.environ.get("APP_NAME", "app")
-OTLP_GRPC_ENDPOINT = os.environ.get("OTLP_GRPC_ENDPOINT", "http://tempo:4317")
+    # Setting OpenTelemetry exporter
+    setting_otlp(app, env.APP_NAME, env.OTLP_GRPC_ENDPOINT)
 
-# Setting metrics middleware
-app.add_middleware(PrometheusMiddleware, app_name=APP_NAME)
-app.add_route("/metrics", metrics)
+    class EndpointFilter(logging.Filter):
+        # Uvicorn endpoint access log filter
+        def filter(self, record: logging.LogRecord) -> bool:
+            return record.getMessage().find("GET /metrics") == -1
 
-# Setting OpenTelemetry exporter
-setting_otlp(app, APP_NAME, OTLP_GRPC_ENDPOINT)
-
-
-class EndpointFilter(logging.Filter):
-    # Uvicorn endpoint access log filter
-    def filter(self, record: logging.LogRecord) -> bool:
-        return record.getMessage().find("GET /metrics") == -1
-
-
-# Filter out /endpoint
-logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+    # Filter out /endpoint
+    logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 
 prefix = env.PREFIX
