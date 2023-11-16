@@ -77,7 +77,7 @@
               ]}
               export PORT=${port}
               export HOST=${host}
-              ${getExe packages.writeBackDotenv}
+              ${getExe packages.writeDotenvBack}
               ${getExe packages.prodBuildFront}
               poetry run back ${if doRunInBackground then "&" else ""}
             '';
@@ -113,8 +113,25 @@
 
           packages =
             (
+              let
+                dev = "back/.env.development";
+                prod = "back/.env.production";
+                envProdBack = envBack // { DO_RELOAD = "false"; ENV = "prod"; };
+                envDevBack = envBack // { ENV = "dev"; };
+              in
               mkShellApps {
-                writeBackDotenv = writeDotenv envBackPath envBack;
+                writeDotenvProdBack = writeDotenv prod envProdBack;
+
+                writeDotenvDevBack = writeDotenv dev envDevBack;
+
+                writeDotenvBack =
+                  {
+                    text = ''
+                      ${getExe packages.writeDotenvProdBack}
+                      ${getExe packages.writeDotenvDevBack}
+                    '';
+                    description = ''write ${dev} and ${prod}'';
+                  };
               }
             ) //
             (
@@ -122,16 +139,18 @@
                 dev = "front/.env.development";
                 prod = "front/.env.production";
                 prefix = "/api";
+                envProdFront = (import ./${prod}.nix { inherit prefix; });
+                envDevFront = (import ./${dev}.nix { host = hostBack; port = portBack; inherit prefix; });
               in
               mkShellApps {
-                writeFrontProdDotenv = writeDotenv prod (import ./${prod}.nix { inherit prefix; });
+                writeDotenvProdFront = writeDotenv prod envProdFront;
 
-                writeFrontDevDotenv = writeDotenv dev (import ./${dev}.nix { host = hostBack; port = portBack; inherit prefix; });
+                writeDotenvDevFront = writeDotenv dev envDevFront;
 
-                writeFrontDotenv = {
+                writeDotenvFront = {
                   text = ''
-                    ${getExe packages.writeFrontDevDotenv}
-                    ${getExe packages.writeFrontProdDotenv}
+                    ${getExe packages.writeDotenvDevFront}
+                    ${getExe packages.writeDotenvProdFront}
                   '';
                   description = ''write ${dev} and ${prod}'';
                 };
@@ -141,8 +160,8 @@
               mkShellApps {
                 writeDotenv = {
                   text = ''
-                    ${getExe packages.writeBackDotenv}
-                    ${getExe packages.writeFrontDotenv}
+                    ${getExe packages.writeDotenvBack}
+                    ${getExe packages.writeDotenvFront}
                   '';
                   description = "write .env files for ./front and ./back";
                 };
@@ -174,7 +193,7 @@
                     export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                       pkgs.stdenv.cc.cc.lib
                     ]}
-                    ${getExe packages.writeBackDotenv}
+                    ${getExe packages.writeDotenvBack}
                     poetry run import-catalog
                   '';
                   description = ''import books catalog into database + save sql'';
@@ -183,7 +202,7 @@
                 extractCovers = {
                   runtimeInputs = [ pkgs.poetry ];
                   text = ''
-                    ${getExe packages.writeBackDotenv}
+                    ${getExe packages.writeDotenvBack}
                     poetry run extract-covers
                   '';
                   description = ''extract book cover images'';
