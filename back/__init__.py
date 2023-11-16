@@ -31,6 +31,9 @@ class Env:
     DO_RELOAD: bool
     
     ENV: str
+    
+    OTLP_GRPC_ENDPOINT: str
+    APP_NAME: str
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
