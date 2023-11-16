@@ -118,20 +118,22 @@
                 prod = "back/.env.production";
                 envProdBack = envBack // { DO_RELOAD = "false"; ENV = "prod"; };
                 envDevBack = envBack // { ENV = "dev"; };
+                envScriptsBack = envDevBack;
               in
               mkShellApps {
                 writeDotenvProdBack = writeDotenv prod envProdBack;
 
                 writeDotenvDevBack = writeDotenv dev envDevBack;
 
+                writeDotenvScriptsBack = writeDotenv envBackPath envScriptsBack;
                 writeDotenvBack =
                   {
-                    text = ''
-                      ${getExe packages.writeDotenvProdBack}
-                      ${getExe packages.writeDotenvDevBack}
-                    '';
-                    description = ''write ${dev} and ${prod}'';
-                  };
+                  text = ''
+                    ${getExe packages.writeDotenvProdBack}
+                    ${getExe packages.writeDotenvDevBack}
+                  '';
+                  description = ''write ${dev} and ${prod}'';
+                };
               }
             ) //
             (
@@ -193,7 +195,7 @@
                     export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                       pkgs.stdenv.cc.cc.lib
                     ]}
-                    ${getExe packages.writeDotenvBack}
+                    ${getExe packages.writeDotenvScriptsBack}
                     poetry run import-catalog
                   '';
                   description = ''import books catalog into database + save sql'';
@@ -202,7 +204,7 @@
                 extractCovers = {
                   runtimeInputs = [ pkgs.poetry ];
                   text = ''
-                    ${getExe packages.writeDotenvBack}
+                    ${getExe packages.writeDotenvScriptsBack}
                     poetry run extract-covers
                   '';
                   description = ''extract book cover images'';
