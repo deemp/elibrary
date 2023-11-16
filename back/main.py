@@ -36,13 +36,15 @@ if env.ENV == "prod":
     # Setting OpenTelemetry exporter
     setting_otlp(app, env.APP_NAME, env.OTLP_GRPC_ENDPOINT)
 
-    class EndpointFilter(logging.Filter):
-        # Uvicorn endpoint access log filter
-        def filter(self, record: logging.LogRecord) -> bool:
-            return record.getMessage().find("GET /metrics") == -1
 
-    # Filter out /endpoint
-    logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+class EndpointFilter(logging.Filter):
+    # Uvicorn endpoint access log filter
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.getMessage().find("GET /metrics") == -1
+
+
+# Filter out /endpoint
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 
 prefix = env.PREFIX
@@ -78,15 +80,13 @@ async def catch_all(path: str):
 
 
 def run():
-    config = uvicorn.Config(
+    uvicorn.run(
         f"{__name__}:app",
         port=env.PORT,
         host=env.HOST,
-        log_config=env.LOG_CONFIG_PATH,
-        reload=True,
+        reload=env.DO_RELOAD,
+        **({"log_config": env.LOG_CONFIG_PATH} if env.ENV == "prod" else {}),
     )
-    server = uvicorn.Server(config)
-    server.run()
 
 
 if __name__ == "__main__":
