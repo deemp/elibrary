@@ -27,6 +27,10 @@ class Env:
     PORT: int
     
     LOG_CONFIG_PATH: str
+    
+    DO_RELOAD: bool
+    
+    ENV: str
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
@@ -34,6 +38,7 @@ class Env:
         self.DO_EXTRACT_COVERS = self.DO_EXTRACT_COVERS == "true"
         self.PORT = int(self.PORT)
         self.URL = f"http://{self.HOST}:{self.PORT}{self.PREFIX}"
+        self.DO_RELOAD = self.ENV == "dev"
 
 def load_dotenv(cls, path):
     # https://github.com/theskumar/python-dotenv#other-use-cases
