@@ -1,3 +1,4 @@
+from typing import Optional
 from sqlmodel import Field, SQLModel
 
 from .. import env
@@ -10,14 +11,14 @@ class Book(SQLModel, table=True):
     publisher: str
     year: int
     book_id: int = Field(primary_key=True)
-    authors: str
+    authors: Optional[str]
     title: str
     imprint_publisher: str
-    isbn: int
+    isbn: Optional[int]
     esbn: int
-    oclc: int
-    lcc: str
-    dewey: float
+    oclc: Optional[int]
+    lcc: Optional[str]
+    dewey: Optional[float]
     format: str
     pages: int
     reads: int = Field(default=0, nullable=False)
@@ -30,13 +31,13 @@ class BookTmp(SQLModel, table=True):
     publisher: str
     year: int
     book_id: int = Field(primary_key=True)
-    authors: str
+    authors: Optional[str]
     title: str
     imprint_publisher: str
-    isbn: int
+    isbn: Optional[int]
     esbn: int
-    oclc: int
-    lcc: str
-    dewey: float
+    oclc: Optional[int]
+    lcc: Optional[str]
+    dewey: Optional[float]
     format: str
     pages: int
