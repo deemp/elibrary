@@ -4,7 +4,6 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from starlette.config import Config
 from authlib.integrations.starlette_client import OAuth, OAuthError
-from ..internal.check import check
 from .. import env
 
 if env.ENABLE_AUTH:
@@ -33,7 +32,7 @@ if env.ENABLE_AUTH:
         redirect_uri = env.REDIRECT_URL
         return await oauth.sso.authorize_redirect(request, redirect_uri)
 
-    @router.get("/auth", dependencies=[check])
+    @router.get("/auth")
     async def auth(request: Request):
         try:
             token = await oauth.sso.authorize_access_token(request)
@@ -44,7 +43,7 @@ if env.ENABLE_AUTH:
             request.session["user"] = dict(user)
         return RedirectResponse(url=env.PREFIX if env.DEV else "/")
 
-    @router.get("/logout", dependencies=[check])
+    @router.get("/logout")
     async def logout(request: Request):
         request.session.pop("user", None)
         return RedirectResponse(url=env.PREFIX if env.DEV else "/")
