@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 from .internal.db import create_db_and_tables
@@ -12,6 +12,7 @@ from .internal.import_catalog import import_catalog
 from .internal.extract_covers import extract_covers
 from .internal.otlp import PrometheusMiddleware, metrics, setting_otlp
 import logging
+from .internal.check import check
 
 
 # https://fastapi.tiangolo.com/advanced/events/
@@ -68,15 +69,13 @@ app.mount(
 )
 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
-app.include_router(root.router, prefix=prefix if env.DEV else "")
-app.include_router(book.router, prefix=prefix)
-app.include_router(search.router, prefix=prefix)
+app.include_router(root.router, prefix=prefix if env.DEV else "", dependencies=[check])
+app.include_router(book.router, prefix=prefix, dependencies=[check])
+app.include_router(search.router, prefix=prefix, dependencies=[check])
 
 
-@app.api_route("/{path:path}", methods=["GET"])
-async def catch_all(request: Request):
-    if env.ENABLE_AUTH and not request.session.get("user"):
-        return RedirectResponse(url="/login")
+@app.get("/{path:path}", dependencies=[check])
+async def catch_all():
     return FileResponse(f"{env.FRONT_DIR}/index.html")
 
 
