@@ -19,5 +19,6 @@
 
   HOST = host;
   PORT = port;
-  LOG_COFIG_PATH = "back/log_conf.yaml";
+
+  DO_RELOAD = "true";
 }

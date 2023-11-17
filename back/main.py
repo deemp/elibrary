@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -13,6 +12,7 @@ from .internal.import_catalog import import_catalog
 from .internal.extract_covers import extract_covers
 from .internal.otlp import PrometheusMiddleware, metrics, setting_otlp
 import logging
+from .internal.check import check
 
 
 # https://fastapi.tiangolo.com/advanced/events/
@@ -54,7 +54,7 @@ if env.ENABLE_AUTH:
 
     # https://stackoverflow.com/a/73924330/11790403
     app.add_middleware(SessionMiddleware, secret_key=auth_secrets.SECRET_KEY)
-    app.include_router(auth.router, prefix=prefix)
+    app.include_router(auth.router, prefix="" if env.PROD else prefix)
 
 # https://fastapi.tiangolo.com/tutorial/static-files/
 app.mount(
@@ -69,13 +69,13 @@ app.mount(
 )
 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
-app.include_router(root.router, prefix=prefix)
+app.include_router(root.router, prefix="" if env.PROD else prefix, dependencies=[check])
 app.include_router(book.router, prefix=prefix)
-app.include_router(search.router, prefix=prefix)
+app.include_router(search.router, prefix=prefix, dependencies=[check])
 
 
-@app.api_route("/{path:path}", methods=["GET"])
-async def catch_all(path: str):
+@app.get("/{path:path}", dependencies=[check])
+async def catch_all():
     return FileResponse(f"{env.FRONT_DIR}/index.html")
 
 

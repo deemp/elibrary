@@ -12,14 +12,16 @@ if env.ENABLE_AUTH:
     oauth = OAuth()
     config = Config(
         environ={
-            "GOOGLE_CLIENT_ID": auth_secrets.GOOGLE_CLIENT_ID,
-            "GOOGLE_CLIENT_SECRET": auth_secrets.GOOGLE_CLIENT_SECRET,
+            "AppID": auth_secrets.AppID,
+            "Secret": auth_secrets.Secret,
         }
     )
     oauth = OAuth(config)
     oauth.register(
-        name="google",
-        server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+        client_id=auth_secrets.AppID,
+        client_secret=auth_secrets.Secret,
+        name="sso",
+        server_metadata_url=env.OPENID_CONFIG_URL,
         client_kwargs={"scope": "openid email profile"},
     )
 
@@ -27,21 +29,23 @@ if env.ENABLE_AUTH:
 
     @router.get("/login")
     async def login(request: Request):
-        redirect_uri = request.url_for("auth")
-        return await oauth.google.authorize_redirect(request, redirect_uri)
+        redirect_uri = env.REDIRECT_URL
+        return await oauth.sso.authorize_redirect(request, redirect_uri)
 
+    redirect_response = RedirectResponse(url="/" if env.PROD else env.PREFIX)
+    
     @router.get("/auth")
     async def auth(request: Request):
         try:
-            token = await oauth.google.authorize_access_token(request)
+            token = await oauth.sso.authorize_access_token(request)
         except OAuthError as error:
             return HTMLResponse(f"<h1>{error.error}</h1>")
         user = token.get("userinfo")
         if user:
             request.session["user"] = dict(user)
-        return RedirectResponse(url="/")
+        return redirect_response
 
     @router.get("/logout")
     async def logout(request: Request):
         request.session.pop("user", None)
-        return RedirectResponse(url="/")
+        return redirect_response

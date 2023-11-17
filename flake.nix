@@ -116,7 +116,7 @@
               let
                 dev = "${envBackPath}.development";
                 prod = "${envBackPath}.production";
-                envProdBack = envBack // { DO_RELOAD = "false"; ENV = "prod"; };
+                envProdBack = envBack // (import ./${prod}.nix);
                 envDevBack = envBack // { ENV = "dev"; };
                 envScriptsBack = envDevBack;
               in
@@ -359,6 +359,7 @@
                 prod = {
                   runtimeInputs = [ pkgs.docker ];
                   text = ''
+                    ${getExe packages.writeDotenv}
                     ${getExe packages.stop}
                     ${composeProd} up -dV
                     ${composeProd} logs --follow ${serviceName}
@@ -373,8 +374,9 @@
 
                 prodBack = {
                   text = ''
-                    ${composeProd} down ${serviceName}
-                    ${composeDev} down ${serviceName}
+                    ${getExe packages.writeDotenv}
+                    ${composeProd} down -v ${serviceName}
+                    ${composeDev} down -v ${serviceName}
                     touch ${envBack.DB_PATH}
                     ${composeProd} up -dV ${serviceName}
                     ${composeProd} logs --follow ${serviceName}
@@ -384,6 +386,7 @@
 
                 dev = {
                   text = ''
+                    ${getExe packages.writeDotenv}
                     ${getExe packages.stop}
                     touch ${envBack.DB_PATH}
                     ${composeDev} up -V
