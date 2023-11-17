@@ -48,9 +48,7 @@ const columnPretty = new Map([
   ...(new Map([['read', 'Read'], ['info', 'Info']]))
 ])
 
-const padding = '10px'
-
-const cell = (id: string, value?: JSX.Element | string | number) => <TableCell key={id} align={'left'} sx={{ padding }}>{value}</TableCell>
+const padding = "0.5rem"
 
 export function BookTable({ books }: { books: Book[] }) {
 
@@ -60,48 +58,48 @@ export function BookTable({ books }: { books: Book[] }) {
     [
       {
         id: 'read',
-        size: 40,
+        size: 60,
         f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}/read`} text={"Read"} />
       },
       {
         id: 'info',
-        size: 40,
+        size: 60,
         f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}`} text={"Info"} />
       }
     ].map(({ id, f, size }) => columnHelper.display({
       id,
       size,
-      cell: props => cell(id, f(props)),
+      cell: props => f(props),
       header: () => columnPretty.get(id)
     })).concat([
       {
         id: 'title',
-        size: 200,
+        size: 300,
       },
       {
         id: 'authors',
-        size: 100,
+        size: 200,
       },
       {
         id: 'publisher',
-        size: 100,
+        size: 200,
       },
       {
         id: 'year',
-        size: 50,
+        size: 60,
       },
       {
         id: 'isbn',
-        size: 110,
+        size: 130,
       },
       {
         id: 'format',
-        size: 80,
+        size: 90,
       },
     ].map(({ id, size }) => columnHelper.accessor(id as keyof Book, {
       header: () => columnPretty.get(id),
       size,
-      cell: props => cell(id, props.getValue())
+      cell: props => props.getValue()
     })) as ColumnDef<Book, unknown>[])
     , [columnHelper]);
 
@@ -146,7 +144,9 @@ export function BookTable({ books }: { books: Book[] }) {
             return (
               <tr {...props}>
                 {row.getVisibleCells().map((cell) => (
-                  flexRender(cell.column.columnDef.cell, cell.getContext())
+                  <TableCell key={cell.id} sx={{ padding }}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
                 ))}
               </tr>
             );
@@ -169,7 +169,7 @@ export function BookTable({ books }: { books: Book[] }) {
                       colSpan={header.colSpan}
                       style={{
                         width: header.getSize(),
-                        padding: padding,
+                        padding,
                         textAlign: "left",
                       }}
                     >
