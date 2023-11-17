@@ -13,7 +13,7 @@ from .internal.extract_covers import extract_covers
 from .internal.otlp import PrometheusMiddleware, metrics, setting_otlp
 import logging
 from .internal.check import check
-
+from fastapi.middleware.cors import CORSMiddleware
 
 # https://fastapi.tiangolo.com/advanced/events/
 @asynccontextmanager
@@ -28,7 +28,20 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-if env.ENV == "prod":
+if env.PROD:
+    origins = [
+        "https://test.library.innnopolis.university",
+        "https://sso.university.innopolis.ru"
+    ]
+    
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
     # Setting metrics middleware
     app.add_middleware(PrometheusMiddleware, app_name=env.APP_NAME)
     app.add_route("/metrics", metrics)
@@ -69,9 +82,9 @@ app.mount(
 )
 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
-app.include_router(root.router, prefix="" if env.PROD else prefix, dependencies=[check])
+app.include_router(root.router, prefix="" if env.PROD else prefix)
 app.include_router(book.router, prefix=prefix)
-app.include_router(search.router, prefix=prefix, dependencies=[check])
+app.include_router(search.router, prefix=prefix)
 
 
 @app.get("/{path:path}", dependencies=[check])

@@ -1,3 +1,4 @@
+from typing import Annotated
 from fastapi import Depends, Request
 from fastapi.responses import RedirectResponse
 from .. import env
@@ -7,4 +8,7 @@ def check_session(request: Request):
         return RedirectResponse(url="/login")
     return None
 
+
 check = Depends(check_session)
+
+MaybeRedirect = Annotated[RedirectResponse | None, check]

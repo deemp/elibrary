@@ -4,16 +4,15 @@ from ..internal.range_request import range_requests_response
 from ..internal.models import Book
 from ..internal.db import engine
 from .. import env
-from ..internal.check import check_session
+from ..internal.check import MaybeRedirect
 
 router = APIRouter()
 
 
 @router.get("/book/{book_id}")
-def book_page(book_id: int, request: Request):
-    if env.PROD:
-        if response := check_session(request):
-            return response
+async def book_page(book_id: int, response: MaybeRedirect):
+    if response:
+        return response
     with Session(engine) as session:
         book = session.get(Book, book_id)
         if not book:
@@ -22,10 +21,9 @@ def book_page(book_id: int, request: Request):
 
 
 @router.get("/book/{book_id}/file")
-async def file(book_id: int, request: Request):
-    if env.PROD:
-        if response := check_session(request):
-            return response
+async def file(book_id: int, request: Request, response: MaybeRedirect):
+    if response:
+        return response
     return range_requests_response(
         request=request,
         file_path=f"{env.BOOKS_DIR}/{book_id}.pdf",
