@@ -4,8 +4,8 @@ from .. import env
 
 book_url = f"{env.URL}/book"
 
-def test_book_page_type():
-    book = book_page(676913, None)
+async def test_book_page_type():
+    book = await book_page(676913, None)
     assert type(book) == Book
 
 
@@ -32,8 +32,8 @@ class TestBookPage:
             pages=316,
         )
 
-    def test_unit(self):
-        response = book_page(self.book_id, None)
+    async def test_unit(self):
+        response = await book_page(self.book_id, None)
         self.check(response)
 
     def test_api(self):
@@ -46,13 +46,12 @@ class TestBookPage:
 class TestBookPageFail:
     book_id = 1
 
-    def test_unit(self):
+    async def test_unit(self):
         try:
-            book_page(self.book_id, None)
+            await book_page(self.book_id, None)
             assert False
         except HTTPException:
             return
-        assert False
 
     def test_api(self):
         response = requests.get(
