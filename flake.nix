@@ -116,7 +116,7 @@
               let
                 dev = "${envBackPath}.development";
                 prod = "${envBackPath}.production";
-                envProdBack = envBack // { DO_RELOAD = "false"; ENV = "prod"; };
+                envProdBack = envBack // (import ./${prod}.nix);
                 envDevBack = envBack // { ENV = "dev"; };
                 envScriptsBack = envDevBack;
               in
