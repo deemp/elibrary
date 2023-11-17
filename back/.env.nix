@@ -7,7 +7,7 @@
 
   DO_IMPORT_CATALOG = "true";
   XLSX_PATH = "books.xlsx";
-  SHEET = "Sheet1";
+  SHEET = "books";
   SQL_DUMP_PATH = "database.sql";
 
   DO_EXTRACT_COVERS = "false";
