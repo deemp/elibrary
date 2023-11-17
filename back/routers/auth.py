@@ -41,9 +41,9 @@ if env.ENABLE_AUTH:
         user = token.get("userinfo")
         if user:
             request.session["user"] = dict(user)
-        return RedirectResponse(url="/")
+        return RedirectResponse(url=env.PREFIX if env.DEV else "/")
 
     @router.get("/logout")
     async def logout(request: Request):
         request.session.pop("user", None)
-        return RedirectResponse(url="/")
+        return RedirectResponse(url=env.PREFIX if env.DEV else "/")

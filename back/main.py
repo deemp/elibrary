@@ -1,6 +1,5 @@
-import os
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 from .internal.db import create_db_and_tables
@@ -36,13 +35,15 @@ if env.ENV == "prod":
     # Setting OpenTelemetry exporter
     setting_otlp(app, env.APP_NAME, env.OTLP_GRPC_ENDPOINT)
 
-    class EndpointFilter(logging.Filter):
-        # Uvicorn endpoint access log filter
-        def filter(self, record: logging.LogRecord) -> bool:
-            return record.getMessage().find("GET /metrics") == -1
 
-    # Filter out /endpoint
-    logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+class EndpointFilter(logging.Filter):
+    # Uvicorn endpoint access log filter
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.getMessage().find("GET /metrics") == -1
+
+
+# Filter out /endpoint
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 
 prefix = env.PREFIX
@@ -52,7 +53,7 @@ if env.ENABLE_AUTH:
 
     # https://stackoverflow.com/a/73924330/11790403
     app.add_middleware(SessionMiddleware, secret_key=auth_secrets.SECRET_KEY)
-    app.include_router(auth.router, prefix=prefix)
+    app.include_router(auth.router, prefix=prefix if env.DEV else "")
 
 # https://fastapi.tiangolo.com/tutorial/static-files/
 app.mount(
@@ -67,13 +68,15 @@ app.mount(
 )
 
 # https://fastapi.tiangolo.com/tutorial/bigger-applications/
-app.include_router(root.router, prefix=prefix)
+app.include_router(root.router, prefix=prefix if env.DEV else "")
 app.include_router(book.router, prefix=prefix)
 app.include_router(search.router, prefix=prefix)
 
 
 @app.api_route("/{path:path}", methods=["GET"])
-async def catch_all(path: str):
+async def catch_all(request: Request):
+    if env.ENABLE_AUTH and not request.session.get("user"):
+        return RedirectResponse(url="/login")
     return FileResponse(f"{env.FRONT_DIR}/index.html")
 
 
@@ -82,8 +85,8 @@ def run():
         f"{__name__}:app",
         port=env.PORT,
         host=env.HOST,
-        log_config=env.LOG_CONFIG_PATH,
         reload=env.DO_RELOAD,
+        **({"log_config": env.LOG_CONFIG_PATH} if env.ENV == "prod" else {}),
     )
 
 
