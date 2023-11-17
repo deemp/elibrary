@@ -5,7 +5,7 @@ from .. import env
 book_url = f"{env.URL}/book"
 
 def test_book_page_type():
-    book = book_page(676913)
+    book = book_page(676913, None)
     assert type(book) == Book
 
 
@@ -33,7 +33,7 @@ class TestBookPage:
         )
 
     def test_unit(self):
-        response = book_page(self.book_id)
+        response = book_page(self.book_id, None)
         self.check(response)
 
     def test_api(self):
@@ -48,7 +48,7 @@ class TestBookPageFail:
 
     def test_unit(self):
         try:
-            book_page(self.book_id)
+            book_page(self.book_id, None)
             assert False
         except HTTPException:
             return

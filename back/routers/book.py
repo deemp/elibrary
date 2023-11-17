@@ -10,8 +10,8 @@ router = APIRouter()
 
 
 @router.get("/book/{book_id}")
-def book_page(book_id: int, request: Request | None = None):
-    if env.PROD and request:
+def book_page(book_id: int, request: Request):
+    if env.PROD:
         if response := check_session(request):
             return response
     with Session(engine) as session:
