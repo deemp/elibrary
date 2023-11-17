@@ -19,6 +19,7 @@ if env.ENABLE_AUTH:
     oauth = OAuth(config)
     oauth.register(
         client_id=auth_secrets.AppID,
+        client_secret=auth_secrets.Secret,
         name="sso",
         server_metadata_url=env.OPENID_CONFIG_URL,
         client_kwargs={"scope": "openid email profile"},
