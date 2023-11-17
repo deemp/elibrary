@@ -60,14 +60,16 @@ export function BookInfoPage() {
 
   useEffect(() => {
     (async () => {
+      const authors = book.authors.split("; ")
+      const author = authors[0]
       setTextReference(
-        `${book.authors.split("-")[0]}. ${book.title}/${book.authors}/${book.publisher}.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE: URL: ${window.location.href}/read`
+        `${author}. ${book.title}/${book.authors}/${book.publisher}.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE: URL: ${window.location.href}/read`
       );
       const bibTexTitle =
-        `${book.authors.split("-")[0].split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
+        `${author.split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
           .match(/[a-zA-Z0-9]/g)?.join("")
       setBibTexReference(
-        `@book{${bibTexTitle}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
+        `@book{${bibTexTitle}, author={${authors.join(" and ")}}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
       );
     })();
   }, [book]);
