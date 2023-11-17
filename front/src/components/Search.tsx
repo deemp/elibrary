@@ -23,11 +23,11 @@ export interface POSTResponse {
 type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 
 
-function SearchField({ isLeft, label, options, xs: colWidth, setter }: {
-  isLeft?: boolean, label: string, options: Strings, xs?: number, setter: Setter<string>
+function SearchField({ isLeft, label, options, xs, sm, setter }: {
+  isLeft?: boolean, label: string, options: Strings, xs?: number, sm?: number, setter: Setter<string>
 }) {
   return (
-    <Grid item xs={colWidth}>
+    <Grid item xs={xs} sm={sm}>
       <Autocomplete
         disablePortal
         options={Array.from(options)}
@@ -184,23 +184,23 @@ export function Search() {
     search()
   }, [search]);
 
-  const rowHeight = 52
-  const filtersHeight = (filterCounter + 1) * rowHeight
+  const rowHeight = 56
+  const filtersHeight = (cnt: number) => cnt * rowHeight
   const filtersCountOptions = List(Array.from({ length: maxFilterCounter }, (_, idx) => (idx + 1).toString()))
   return (
     <>
-      <Grid container rowSpacing={0} marginTop={appbar.height} paddingTop={1} height={'100%'}>
-        <Grid item xs={12} height={filtersHeight} paddingTop={1}>
-          <Grid container rowSpacing={1.5}>
+      <Grid container rowSpacing={2} marginTop={appbar.height} height={'100%'}>
+        <Grid item xs={12} >
+          <Grid container rowSpacing={2}>
             <Grid item xs={12}>
-              <Grid container spacing={1}>
-                <Grid item xs={10}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={10}>
                   <Grid container spacing={0}>
                     <SearchField xs={6} isLeft={true} label={bookPretty.get('bisac') || ''} options={bisacOptions} setter={setBisac} />
                     <SearchField xs={6} isLeft={false} label={bookPretty.get('lc') || ''} options={lcOptions} setter={setLc} />
                   </Grid>
                 </Grid>
-                <SearchField xs={2} label={'Filters'} options={filtersCountOptions} setter={value => {
+                <SearchField xs={12} sm={2} label={'Filters'} options={filtersCountOptions} setter={value => {
                   const num = Number.parseFloat(value as string)
                   const filterCounterNew = Math.min(maxFilterCounter, Math.max(minFilterCounter, Number.isNaN(num) ? 0 : num))
                   setFilterCounter(filterCounterNew)
@@ -210,12 +210,12 @@ export function Search() {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Grid container rowSpacing={1.5}>
+              <Grid container rowSpacing={1}>
                 {rowFilter.slice(0, filterCounter).map((_i, idx) => {
                   return (
                     <Grid item xs={12} key={idx}>
                       <Grid container spacing={0}>
-                        <Grid item xs={3}>
+                        <Grid item width={'150px'}>
                           <SearchField isLeft={true} label={"Filter"} options={filterOptions} setter={x => {
                             const f = rowFilter.update(idx, v => {
                               if (v) {
@@ -225,7 +225,7 @@ export function Search() {
                             setRowFilter(f)
                           }} />
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item xs>
                           <SearchField isLeft={false} label={"Filter input"} options={rowFilterInputOptions.get(idx) || List([])} setter={x => {
                             const f = rowFilter.update(idx, v => {
                               if (v) {
@@ -243,9 +243,10 @@ export function Search() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} height={`calc(100% - ${filtersHeight}px)`} paddingTop={1}>
-          <BookTable books={Array.from(books)} />
-        </Grid>
+        {((height = (cnt: number) => `calc(100% - ${filtersHeight(filterCounter + cnt)}px)`) =>
+          <Grid item xs={12} height={{ xs: height(2), sm: height(1) }}>
+            <BookTable books={Array.from(books)} />
+          </Grid>)()}
       </Grid >
     </>
   );
