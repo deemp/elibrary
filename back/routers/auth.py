@@ -32,6 +32,8 @@ if env.ENABLE_AUTH:
         redirect_uri = env.REDIRECT_URL
         return await oauth.sso.authorize_redirect(request, redirect_uri)
 
+    redirect_response = RedirectResponse(url="/" if env.PROD else env.PREFIX)
+    
     @router.get("/auth")
     async def auth(request: Request):
         try:
@@ -41,9 +43,9 @@ if env.ENABLE_AUTH:
         user = token.get("userinfo")
         if user:
             request.session["user"] = dict(user)
-        return RedirectResponse(url=env.PREFIX if env.DEV else "/")
+        return redirect_response
 
     @router.get("/logout")
     async def logout(request: Request):
         request.session.pop("user", None)
-        return RedirectResponse(url=env.PREFIX if env.DEV else "/")
+        return redirect_response
