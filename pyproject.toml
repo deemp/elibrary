@@ -47,6 +47,7 @@ pandas-stubs = "^2.1.1.230928"
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.3"
 requests = "^2.31.0"
+pytest-asyncio = "^0.21.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -62,3 +63,6 @@ opentelemetry-instrumentation-logging = "^0.41b0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
