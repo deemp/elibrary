@@ -63,7 +63,7 @@ export function BookInfoPage() {
       const authors = book.authors.split("; ")
       const author = authors[0]
       setTextReference(
-        `${author}. ${book.title}/${book.authors}/${book.publisher}.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE: URL: ${window.location.href}/read`
+        `${author}. ${book.title}/${authors.join(", ")}/${book.publisher}.- ${book.year}.-${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE: URL: ${window.location.href}/read`
       );
       const bibTexTitle =
         `${author.split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
