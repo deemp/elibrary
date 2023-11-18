@@ -140,7 +140,7 @@ export function Search() {
     // run once
   }, []);
 
-  const search = useCallback(() => {
+  useEffect(() => {
     // https://mui.com/material-ui/react-progress/#delaying-appearance
     const timer = setTimeout(() => {
       setBooksLoaded(false)
@@ -187,10 +187,6 @@ export function Search() {
         setRowFilterInputOptions(f)
       })
   }, [url, lc, bisac, setBisacLcOptions, rowFilter])
-
-  useEffect(() => {
-    search()
-  }, [search]);
 
   const rowHeight = 56
   const filtersHeight = (cnt: number) => cnt * rowHeight

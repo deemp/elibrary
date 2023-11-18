@@ -127,22 +127,19 @@ export function BookTable({ books, booksLoaded }: { books: Book[], booksLoaded: 
         </Box>}
       <TableVirtuoso
         data={rows}
-        style={{ height: "100%", width: '100%', borderRadius: '3px' }}
+        style={{ width: '100%', borderRadius: '3px' }}
         totalCount={rows.length}
         components={{
-          Table: ({ style, ...props }) => {
-            return (
-              <table
-                {...props}
-                style={{
-                  ...style,
-                  tableLayout: "fixed",
-                  borderCollapse: "collapse",
-                  width: '100%'
-                }}
-              />
-            );
-          },
+          Table: ({ style, ...props }) =>
+            <table
+              {...props}
+              style={{
+                ...style,
+                tableLayout: "fixed",
+                borderCollapse: "collapse",
+                width: '100%'
+              }}
+            />,
           TableRow: (props) => {
             const index = props["data-index"];
             const row = rows[index];
