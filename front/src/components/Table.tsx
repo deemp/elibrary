@@ -16,6 +16,7 @@ import {
   useReactTable
 } from '@tanstack/react-table';
 import { TiArrowUnsorted, TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
+import { Box, CircularProgress } from '@mui/material';
 
 export interface BookRow {
   // C
@@ -50,7 +51,7 @@ const columnPretty = new Map([
 
 const padding = "0.5rem"
 
-export function BookTable({ books }: { books: Book[] }) {
+export function BookTable({ books, booksLoaded }: { books: Book[], booksLoaded: boolean }) {
 
   const columnHelper = createColumnHelper<Book>()
 
@@ -119,7 +120,11 @@ export function BookTable({ books }: { books: Book[] }) {
   const { rows } = table.getRowModel();
 
   return (
-    <Paper variant='outlined' style={{ height: '98%' }}>
+    <Paper variant='outlined' style={{ height: '98%' }} sx={{ position: 'relative' }}>
+      {booksLoaded ? undefined :
+        <Box position={'absolute'} left={'50%'} top={'50%'}>
+          <CircularProgress size={'4rem'}/>
+        </Box>}
       <TableVirtuoso
         data={rows}
         style={{ height: "100%", width: '100%', borderRadius: '3px' }}

@@ -82,6 +82,7 @@ export function Search() {
   const [filterCounter, setFilterCounter] = useState<number>(1)
 
   const [books, setBooks] = useState<List<Book>>(List([]));
+  const [booksLoaded, setBooksLoaded] = useState<boolean>(true)
 
   const [filterOptions, setFilterOptions] = useState<Strings>(List([]));
 
@@ -140,6 +141,11 @@ export function Search() {
   }, []);
 
   const search = useCallback(() => {
+    // https://mui.com/material-ui/react-progress/#delaying-appearance
+    const timer = setTimeout(() => {
+      setBooksLoaded(false)
+    }, 1000)
+    
     fetch(url, {
       method: "POST",
       headers: new Headers({ "content-type": "application/json" }),
@@ -163,6 +169,8 @@ export function Search() {
         }
       })
       .then((r: POSTResponse) => {
+        setBooksLoaded(true)
+        clearTimeout(timer)
         setBooks(r.books);
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
         const f = rowFilter.map(row => {
@@ -245,7 +253,7 @@ export function Search() {
         </Grid>
         {((height = (cnt: number) => `calc(100% - ${filtersHeight(filterCounter + cnt)}px)`) =>
           <Grid item xs={12} height={{ xs: height(2), sm: height(1) }}>
-            <BookTable books={Array.from(books)} />
+            <BookTable books={Array.from(books)} booksLoaded={booksLoaded} />
           </Grid>)()}
       </Grid >
     </>
