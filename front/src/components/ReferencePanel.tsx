@@ -1,6 +1,6 @@
 import Tab from "@mui/material/Tab";
 import { ReactNode, SyntheticEvent, useState } from "react";
-import { Button, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -29,7 +29,9 @@ function tab(value: string, reference: string, copyToClipboard: () => void) {
     <TabPanel value={value}>
       <Grid container>
         <Grid item xs>
-          {reference}
+          <Box sx={{ fontFamily: 'monospace' }}>
+            {reference}
+          </Box>
         </Grid>
         <Grid item display={'flex'} sx={{
           alignItems: 'start',
