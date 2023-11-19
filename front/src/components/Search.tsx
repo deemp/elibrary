@@ -23,8 +23,8 @@ export interface POSTResponse {
 type Setter<T> = React.Dispatch<React.SetStateAction<T>>
 
 
-function SearchField({ isLeft, label, options, xs, sm, setter }: {
-  isLeft?: boolean, label: string, options: Strings, xs?: number, sm?: number, setter: Setter<string>
+function SearchField({ isLeft, label, value, options, xs, sm, setter }: {
+  isLeft?: boolean, label: string, value: string, options: Strings, xs?: number, sm?: number, setter: Setter<string>
 }) {
   return (
     <Grid item xs={xs} sm={sm}>
@@ -32,12 +32,15 @@ function SearchField({ isLeft, label, options, xs, sm, setter }: {
         disablePortal
         options={Array.from(options)}
         renderInput={(params) =>
-          <TextField {...params} label={label}
+          <TextField
+            {...params}
+            label={label}
             sx={isLeft !== undefined ? {
               "& .MuiOutlinedInput-root": {
                 borderRadius: isLeft ? "6px 0px 0px 6px" : "0px 6px 6px 0px",
               },
             } : {}}
+            value={value}
             size="small"
           />}
         renderOption={(props, option, { inputValue }) => {
@@ -70,40 +73,54 @@ function SearchField({ isLeft, label, options, xs, sm, setter }: {
   )
 }
 
-interface RowFilter {
+export interface RowFilter {
   filter: string
   filterInput: string
 }
 
-type Strings = List<string>
-type MapStrings = Map<string, Strings>
+export type Strings = List<string>
+export type MapStrings = Map<string, Strings>
 
-export function Search() {
-  const [filterCounter, setFilterCounter] = useState<number>(1)
+export interface Props {
+  emptyRowFilter: RowFilter,
+  maxFilterCounter: number
+  minFilterCounter: number
+  filterCounter: number
+  setFilterCounter: Setter<number>
+  rowFilter: List<RowFilter>
+  setRowFilter: Setter<List<RowFilter>>
+  bisac: string
+  setBisac: Setter<string>
+  lc: string
+  setLc: Setter<string>
+}
+
+const url = `${import.meta.env.VITE_API_PREFIX}/search`;
+
+export function Search(
+  { emptyRowFilter,
+    maxFilterCounter,
+    minFilterCounter,
+    filterCounter,
+    setFilterCounter,
+    rowFilter,
+    setRowFilter,
+    bisac,
+    setBisac,
+    lc,
+    setLc
+  }: Props) {
+
+  console.log(`bisac: ${bisac}, lc: ${lc}`)
 
   const [books, setBooks] = useState<List<Book>>(List([]));
   const [booksLoaded, setBooksLoaded] = useState<boolean>(true)
-
   const [filterOptions, setFilterOptions] = useState<Strings>(List([]));
 
-  const maxFilterCounter = 5
-  const minFilterCounter = 1
-
-  const emptyRowFilter = { filter: "", filterInput: "" }
-
   // filter and filter input
-  const [rowFilter, setRowFilter] = useState<List<RowFilter>>(List(Array.from({ length: maxFilterCounter }, () => emptyRowFilter)));
-
   const [rowFilterInputOptions, setRowFilterInputOptions] = useState<List<Strings>>(List([]));
-
-  const [bisac, setBisac] = useState<string>("")
   const [bisacOptions, setBisacOptions] = useState<Strings>(List([]));
-
-  const [lc, setLc] = useState<string>("")
   const [lcOptions, setLcOptions] = useState<Strings>(List([]));
-
-
-  const url = `${import.meta.env.VITE_API_PREFIX}/search`;
 
   const setBisacLcOptions = useCallback((r: { bisac: MapStrings, lc: MapStrings }) => {
     if (bisac != "" && lc == "") {
@@ -145,7 +162,7 @@ export function Search() {
     const timer = setTimeout(() => {
       setBooksLoaded(false)
     }, 1000)
-    
+
     fetch(url, {
       method: "POST",
       headers: new Headers({ "content-type": "application/json" }),
@@ -186,7 +203,7 @@ export function Search() {
         })
         setRowFilterInputOptions(f)
       })
-  }, [url, lc, bisac, setBisacLcOptions, rowFilter])
+  }, [lc, bisac, setBisacLcOptions, rowFilter])
 
   const rowHeight = 56
   const filtersHeight = (cnt: number) => cnt * rowHeight
@@ -200,11 +217,11 @@ export function Search() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={10}>
                   <Grid container spacing={0}>
-                    <SearchField xs={6} isLeft={true} label={bookPretty.get('bisac') || ''} options={bisacOptions} setter={setBisac} />
-                    <SearchField xs={6} isLeft={false} label={bookPretty.get('lc') || ''} options={lcOptions} setter={setLc} />
+                    <SearchField xs={6} isLeft={true} label={bookPretty.get('bisac') || ''} value={bisac} options={bisacOptions} setter={setBisac} />
+                    <SearchField xs={6} isLeft={false} label={bookPretty.get('lc') || ''} value={lc} options={lcOptions} setter={setLc} />
                   </Grid>
                 </Grid>
-                <SearchField xs={12} sm={2} label={'Filters'} options={filtersCountOptions} setter={value => {
+                <SearchField xs={12} sm={2} label={'Filters'} value={`${filterCounter}`} options={filtersCountOptions} setter={value => {
                   const num = Number.parseFloat(value as string)
                   const filterCounterNew = Math.min(maxFilterCounter, Math.max(minFilterCounter, Number.isNaN(num) ? 0 : num))
                   setFilterCounter(filterCounterNew)
@@ -215,12 +232,12 @@ export function Search() {
             </Grid>
             <Grid item xs={12}>
               <Grid container rowSpacing={1}>
-                {rowFilter.slice(0, filterCounter).map((_i, idx) => {
+                {rowFilter.slice(0, filterCounter).map((filter, idx) => {
                   return (
                     <Grid item xs={12} key={idx}>
                       <Grid container spacing={0}>
                         <Grid item width={'150px'}>
-                          <SearchField isLeft={true} label={"Filter"} options={filterOptions} setter={x => {
+                          <SearchField isLeft={true} label={"Filter"} value={filter.filter} options={filterOptions} setter={x => {
                             const f = rowFilter.update(idx, v => {
                               if (v) {
                                 return { ...v, filter: bookPrettyInverse.get(x as string) || '', }
@@ -230,7 +247,7 @@ export function Search() {
                           }} />
                         </Grid>
                         <Grid item xs>
-                          <SearchField isLeft={false} label={"Filter input"} options={rowFilterInputOptions.get(idx) || List([])} setter={x => {
+                          <SearchField isLeft={false} label={"Filter input"} value={filter.filterInput} options={rowFilterInputOptions.get(idx) || List([])} setter={x => {
                             const f = rowFilter.update(idx, v => {
                               if (v) {
                                 return { ...v, filterInput: x as string }

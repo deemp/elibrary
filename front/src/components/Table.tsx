@@ -123,7 +123,7 @@ export function BookTable({ books, booksLoaded }: { books: Book[], booksLoaded: 
     <Paper variant='outlined' style={{ height: '98%' }} sx={{ position: 'relative' }}>
       {booksLoaded ? undefined :
         <Box position={'absolute'} left={'50%'} top={'50%'}>
-          <CircularProgress size={'4rem'}/>
+          <CircularProgress size={'4rem'} />
         </Box>}
       <TableVirtuoso
         data={rows}
@@ -200,12 +200,12 @@ export function BookTable({ books, booksLoaded }: { books: Book[], booksLoaded: 
                               const headerId = header.id
                               return (
                                 (headerId != 'info' && headerId != 'read') ?
-                                  <TiArrowUnsorted style={{ "flex-shrink": 0 }} /> : null
+                                  <TiArrowUnsorted style={{ flexShrink: 0 }} /> : null
                               )
                             } else {
                               return {
-                                asc: <TiArrowSortedUp style={{ "flex-shrink": 0 }} />,
-                                desc: <TiArrowSortedDown style={{ "flex-shrink": 0 }} />
+                                asc: <TiArrowSortedUp style={{ flexShrink: 0 }} />,
+                                desc: <TiArrowSortedDown style={{ flexShrink: 0 }} />
                               }[isSorted]
                             }
                           })()
