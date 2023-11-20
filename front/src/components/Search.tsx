@@ -235,7 +235,7 @@ export function Search(
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Grid container rowSpacing={1}>
+              <Grid container rowSpacing={2}>
                 {(() => {
                   return rowFilter.slice(0, filterCounter).map((filter, idx) => {
                     return (
