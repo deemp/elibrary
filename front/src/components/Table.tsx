@@ -93,10 +93,6 @@ export function BookTable({ books, booksLoaded }: { books: Book[], booksLoaded: 
         id: 'isbn',
         size: 130,
       },
-      {
-        id: 'format',
-        size: 90,
-      },
     ].map(({ id, size }) => columnHelper.accessor(id as keyof Book, {
       header: () => columnPretty.get(id),
       size,
