@@ -219,7 +219,7 @@ export function Search(
                     <SearchField xs={6} isLeft={false} label={bookPretty.get('lc') || ''} value={lc} options={lcOptions} setter={setLc} />
                   </Grid>
                 </Grid>
-                <SearchField xs={12} sm={2} label={'Filters'} value={`${filterCounter}`} options={List(["Reset"]).concat(filtersCountOptions)}
+                <SearchField xs={12} sm={2} label={'Filters'} value={`${filterCounter}`} options={filtersCountOptions}
                   setter={value => {
                     const num = Number.parseInt(value as string)
                     if (Number.isNaN(num)) {
