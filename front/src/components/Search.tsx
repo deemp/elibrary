@@ -31,8 +31,7 @@ function SearchField({ isLeft, label, value, options, xs, sm, setter }: {
       <Autocomplete
         disablePortal
         options={Array.from(options)}
-        defaultValue={value}
-        // value={value}
+        value={value}
         renderInput={(params) =>
           <TextField
             {...params}
@@ -43,7 +42,6 @@ function SearchField({ isLeft, label, value, options, xs, sm, setter }: {
               },
             } : {}}
             size="small"
-            // defaultValue={value}
           />}
         renderOption={(props, option, { inputValue }) => {
           const matches = match(option, inputValue, { insideWords: true });
@@ -224,9 +222,7 @@ export function Search(
                 <SearchField xs={12} sm={2} label={'Filters'} value={`${filterCounter}`} options={List(["Reset"]).concat(filtersCountOptions)}
                   setter={value => {
                     const num = Number.parseInt(value as string)
-                    console.log('something')
                     if (Number.isNaN(num)) {
-                      console.log('reset')
                       const f = rowFilter.map(_v => emptyRowFilter)
                       setFilterCounter(1)
                       setRowFilter(f)
