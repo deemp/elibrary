@@ -1,5 +1,6 @@
 from typing import Optional
 from sqlmodel import Field, SQLModel
+from datetime import datetime
 
 from .. import env
 
@@ -41,3 +42,11 @@ class BookTmp(SQLModel, table=True):
     dewey: Optional[float]
     format: str
     pages: int
+
+
+class ReadCount(SQLModel, table=True):
+    __tablename__ = "read_count"
+    id: int = Field(primary_key=True)
+    book_id: int = Field(foreign_key="{}.book_id".format(env.DB_TABLE_BOOK))
+    month: int = Field(default=datetime.now().month)
+    year: int = Field(default=datetime.now().year)
