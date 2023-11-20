@@ -4,9 +4,9 @@ import { Box, Container, Grid, } from "@mui/material";
 import { Ebsco } from "./AppBar";
 import * as appbar from "./AppBar"
 import { useFAQ } from "./FAQ";
+import { Props } from './Search'
 
-
-export function SearchPage() {
+export function SearchPage(props: Props) {
   const { faqButton, faqDrawer } = useFAQ();
 
   const base = (
@@ -21,7 +21,7 @@ export function SearchPage() {
             sx={{ backgroundColor: "white" }}
             marginTop={appbar.height}
           >
-            <Search />
+            <Search {...props} />
           </Box>
         </Container>
       }
