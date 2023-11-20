@@ -32,7 +32,7 @@ function tab(value: string, reference: string) {
         <Grid item display={'flex'} sx={{
           alignItems: 'start',
           justifyContent: { xs: 'center', sm: 'right' },
-          width: { xs: '100%', sm: '150px' }
+          width: { xs: '100%', sm: '9rem' },
         }}>
           <Button
             sx={{
