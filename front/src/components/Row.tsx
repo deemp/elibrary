@@ -7,7 +7,7 @@ export function Row({
   content,
 }: {
   title: string | undefined;
-  variant: "text" | "outline" | "contained";
+  variant: string | undefined;
   title_width: string | undefined;
   content: string | undefined;
 }) {
