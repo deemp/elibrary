@@ -20,11 +20,9 @@ interface ReferenceProps {
   bibTexReference: string;
 }
 
-interface Reference {
-  text: string
-}
 
-function tab(value: string, reference: string, copyToClipboard: () => void) {
+
+function tab(value: string, reference: string) {
   return (
     <TabPanel value={value}>
       <Grid container>
@@ -46,7 +44,13 @@ function tab(value: string, reference: string, copyToClipboard: () => void) {
             variant="contained"
             size="large"
             disableElevation
-            onClick={copyToClipboard}
+            onClick={() => {
+              if (copy(reference)) {                
+                toast.success("Copied to Clipboard");
+              } else {
+                toast.warn("Could not copy to Clipboard");
+              }
+            }}
           >
             copy
           </Button>
@@ -61,17 +65,11 @@ export function ReferencePanel({
   bibTexReference,
 }: ReferenceProps) {
   const [value, setValue] = React.useState<string>("0")
-  const [reference, setReference] = useState<Reference>({ text: textReference });
+  const [_reference, setReference] = useState<string>(textReference);
 
   const handleChange = (_e: SyntheticEvent, type: string) => {
     setValue(type)
-    setReference({ text: type === "0" ? textReference : bibTexReference })
-  };
-
-  const copyToClipboard = () => {
-    if (copy(reference.text)) {
-      toast.success("Copied to Clipboard");
-    }
+    setReference(type === "0" ? textReference : bibTexReference)
   };
 
   return (
@@ -86,8 +84,8 @@ export function ReferencePanel({
               </TabList>
             </Grid>
             <Grid item xs={12}>
-              {tab("0", textReference, copyToClipboard)}
-              {tab("1", bibTexReference, copyToClipboard)}
+              {tab("0", textReference)}
+              {tab("1", bibTexReference)}
             </Grid>
           </Grid>
         </TabContext>

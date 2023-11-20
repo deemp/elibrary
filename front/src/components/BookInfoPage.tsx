@@ -59,19 +59,17 @@ export function BookInfoPage() {
   const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${id}.jpg`;
 
   useEffect(() => {
-    (async () => {
-      const authors = book.authors.split("; ")
-      const author = authors[0]
-      setTextReference(
-        `${author}. ${book.title} / ${authors.join(" , ")} // ${book.publisher}. - ${book.year}. - ${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE. - URL: ${window.location.href}/read`
-      );
-      const bibTexTitle =
-        `${author.split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
-          .match(/[a-zA-Z0-9]/g)?.join("")
-      setBibTexReference(
-        `@book{${bibTexTitle}, author={${authors.join(" and ")}}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
-      );
-    })();
+    const authors = book.authors.split("; ")
+    const author = authors[0]
+    setTextReference(
+      `${author}. ${book.title} / ${authors.join(" , ")} // ${book.publisher}. - ${book.year}. - ${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE. - URL: ${window.location.href}/read`
+    );
+    const bibTexTitle =
+      `${author.split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
+        .match(/[a-zA-Z0-9]/g)?.join("")
+    setBibTexReference(
+      `@book{${bibTexTitle}, author={${authors.join(" and ")}}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
+    );
   }, [book]);
 
   const elevation = 5;
