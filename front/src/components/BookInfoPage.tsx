@@ -15,9 +15,9 @@ import { Book, bookPretty } from "../models/book";
 import * as appbar from "./AppBar";
 import { searchLink } from "./SearchLink"
 import { useFAQ } from "./FAQ";
-import { Ebsco } from "./AppBar";
 import { ReferencePanel } from "./ReferencePanel";
 import { buttonPadding, fontSize, linkStyle } from "../models/elements";
+import { AppBar } from "./AppBar";
 
 function Row({
   title,
@@ -169,33 +169,13 @@ export function BookInfoPage() {
           </Box>
         </Container>
       }
-      nav={
-        <>
-          <Container maxWidth={"xl"}>
-            <Grid container>
-              <Grid item xs={5}>
-                <Grid container columnSpacing={1}>
-                  <Grid item>
-                    {searchLink}
-                  </Grid>
-                  <Grid item>{faqButton}</Grid>
-                </Grid>
-              </Grid>
-              <Grid
-                item
-                xs={7}
-                display={"flex"}
-                justifyContent={"end"}
-                alignItems={"center"}
-              >
-                {Ebsco}
-              </Grid>
-            </Grid>
-          </Container>
-          {faqDrawer}
-        </>
-      }
-    ></Base>
+      nav={<AppBar
+        faqDrawer={faqDrawer}
+        leftChildren={[
+          <Grid item>{searchLink}</Grid>,
+          <Grid item>{faqButton}</Grid>,
+        ]} />}
+    />
   );
   return base;
 }

@@ -1,7 +1,7 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
-import { Box, Container, Grid, } from "@mui/material";
-import { Ebsco } from "./AppBar";
+import { Box, Container, Grid } from "@mui/material";
+import { AppBar } from "./AppBar";
 import * as appbar from "./AppBar"
 import { useFAQ } from "./FAQ";
 import { Props } from './Search'
@@ -26,27 +26,10 @@ export function SearchPage(props: Props) {
         </Container>
       }
       nav={
-        <>
-          <Container maxWidth={"xl"}>
-            <Grid container alignItems={"center"}>
-              <Grid item xs={4}>
-                <Grid container spacing={1}>
-                  <Grid item>{faqButton}</Grid>
-                </Grid>
-              </Grid>
-              <Grid
-                item
-                xs={8}
-                display={"flex"}
-                justifyContent={"end"}
-              >
-                {Ebsco}
-              </Grid>
-            </Grid>
-          </Container>
-          {faqDrawer}
-        </>
-      }
+        <AppBar
+          faqDrawer={faqDrawer}
+          leftChildren={[<Grid item>{faqButton}</Grid>]}
+        />}
     />
   );
   return base;
