@@ -184,8 +184,10 @@ export function Search(
         }
       })
       .then((r: POSTResponse) => {
-        setBooksLoaded(true)
+        // clear timeout before setting to true 
+        // so that the code in the timeout doesn't overwrite this value
         clearTimeout(timer)
+        setBooksLoaded(true)
         setBooks(r.books);
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
         const f = rowFilter.map(row => {
