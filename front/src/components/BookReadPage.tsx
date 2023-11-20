@@ -4,13 +4,14 @@ import { Book } from "./Book";
 import { Container, Grid } from "@mui/material";
 import { Ebsco, AppBarLink } from "./AppBar";
 import { useFAQ } from "./FAQ";
-import { Book as BookModel } from "../models/book"
+import { Book as BookModel } from "../models/book";
 import { searchLink } from "./SearchLink";
+import { reportLink } from "./ReportLink";
 
 export function BookReadPage() {
   const { faqButton, faqDrawer } = useFAQ();
-  const book = useLoaderData() as BookModel
-  const id = book.book_id
+  const book = useLoaderData() as BookModel;
+  const id = book.book_id;
   const base = (
     <Base
       title="Book"
@@ -22,8 +23,11 @@ export function BookReadPage() {
             <Grid container>
               <Grid item xs={7} sm={5}>
                 <Grid container columnSpacing={1}>
-                  <Grid item><AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} /></Grid>
+                  <Grid item>
+                    <AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} />
+                  </Grid>
                   <Grid item>{searchLink}</Grid>
+                  <Grid item>{reportLink}</Grid>
                   <Grid item>{faqButton}</Grid>
                 </Grid>
               </Grid>
