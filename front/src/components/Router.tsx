@@ -10,10 +10,12 @@ import { List } from "immutable";
 
 export function Router() {
   const [filterCounter, setFilterCounter] = useState<number>(1)
-  const minFilterCounter = 1
+  const minFilterCounter = 0
   const maxFilterCounter = 5
   const emptyRowFilter = { filter: "", filterInput: "" }
-  const [rowFilter, setRowFilter] = useState<List<RowFilter>>(List(Array.from({ length: maxFilterCounter }, () => emptyRowFilter)));
+  const [rowFilter, setRowFilter] = useState<List<RowFilter>>(
+    List(Array.from({ length: maxFilterCounter }, () => emptyRowFilter))
+  );
   const [bisac, setBisac] = useState<string>("")
   const [lc, setLc] = useState<string>("")
 

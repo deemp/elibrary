@@ -31,6 +31,8 @@ function SearchField({ isLeft, label, value, options, xs, sm, setter }: {
       <Autocomplete
         disablePortal
         options={Array.from(options)}
+        defaultValue={value}
+        // value={value}
         renderInput={(params) =>
           <TextField
             {...params}
@@ -40,8 +42,8 @@ function SearchField({ isLeft, label, value, options, xs, sm, setter }: {
                 borderRadius: isLeft ? "6px 0px 0px 6px" : "0px 6px 6px 0px",
               },
             } : {}}
-            value={value}
             size="small"
+            // defaultValue={value}
           />}
         renderOption={(props, option, { inputValue }) => {
           const matches = match(option, inputValue, { insideWords: true });
@@ -110,8 +112,6 @@ export function Search(
     lc,
     setLc
   }: Props) {
-
-  console.log(`bisac: ${bisac}, lc: ${lc}`)
 
   const [books, setBooks] = useState<List<Book>>(List([]));
   const [booksLoaded, setBooksLoaded] = useState<boolean>(true)
@@ -221,45 +221,54 @@ export function Search(
                     <SearchField xs={6} isLeft={false} label={bookPretty.get('lc') || ''} value={lc} options={lcOptions} setter={setLc} />
                   </Grid>
                 </Grid>
-                <SearchField xs={12} sm={2} label={'Filters'} value={`${filterCounter}`} options={filtersCountOptions} setter={value => {
-                  const num = Number.parseFloat(value as string)
-                  const filterCounterNew = Math.min(maxFilterCounter, Math.max(minFilterCounter, Number.isNaN(num) ? 0 : num))
-                  setFilterCounter(filterCounterNew)
-                  setRowFilter(rowFilter.map((v, idx) => (idx >= filterCounterNew ? emptyRowFilter : v)))
-                }
-                } />
+                <SearchField xs={12} sm={2} label={'Filters'} value={`${filterCounter}`} options={List(["Reset"]).concat(filtersCountOptions)}
+                  setter={value => {
+                    const num = Number.parseInt(value as string)
+                    console.log('something')
+                    if (Number.isNaN(num)) {
+                      console.log('reset')
+                      const f = rowFilter.map(_v => emptyRowFilter)
+                      setFilterCounter(1)
+                      setRowFilter(f)
+                    } else {
+                      const filterCounterNew = Math.min(maxFilterCounter, Math.max(minFilterCounter, num))
+                      setFilterCounter(filterCounterNew)
+                      setRowFilter(rowFilter.map((v, idx) => (idx >= filterCounterNew ? emptyRowFilter : v)))
+                    }
+                  }} />
               </Grid>
             </Grid>
             <Grid item xs={12}>
               <Grid container rowSpacing={1}>
-                {rowFilter.slice(0, filterCounter).map((filter, idx) => {
-                  return (
-                    <Grid item xs={12} key={idx}>
-                      <Grid container spacing={0}>
-                        <Grid item width={'150px'}>
-                          <SearchField isLeft={true} label={"Filter"} value={filter.filter} options={filterOptions} setter={x => {
-                            const f = rowFilter.update(idx, v => {
-                              if (v) {
-                                return { ...v, filter: bookPrettyInverse.get(x as string) || '', }
-                              }
-                            })
-                            setRowFilter(f)
-                          }} />
-                        </Grid>
-                        <Grid item xs>
-                          <SearchField isLeft={false} label={"Filter input"} value={filter.filterInput} options={rowFilterInputOptions.get(idx) || List([])} setter={x => {
-                            const f = rowFilter.update(idx, v => {
-                              if (v) {
-                                return { ...v, filterInput: x as string }
-                              }
-                            })
-                            setRowFilter(f)
-                          }} />
+                {(() => {
+                  return rowFilter.slice(0, filterCounter).map((filter, idx) => {
+                    return (
+                      <Grid item xs={12} key={idx}>
+                        <Grid container spacing={0}>
+                          <Grid item width={'150px'}>
+                            <SearchField isLeft={true} label={"Filter"} value={bookPretty.get(filter.filter) || ''} options={filterOptions} setter={x => {
+                              const f = rowFilter.update(idx, v => {
+                                if (v) {
+                                  return { ...v, filter: bookPrettyInverse.get(x as string) || '', }
+                                }
+                              })
+                              setRowFilter(f)
+                            }} />
+                          </Grid>
+                          <Grid item xs>
+                            <SearchField isLeft={false} label={"Filter input"} value={filter.filterInput} options={rowFilterInputOptions.get(idx) || List([])} setter={x => {
+                              const f = rowFilter.update(idx, v => {
+                                if (v) {
+                                  return { ...v, filterInput: x as string }
+                                }
+                              })
+                              setRowFilter(f)
+                            }} />
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                  )
-                })}
+                    )
+                  })})()}
               </Grid>
             </Grid>
           </Grid>
