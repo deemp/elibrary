@@ -1,6 +1,6 @@
 import Tab from "@mui/material/Tab";
 import { ReactNode, SyntheticEvent, useState } from "react";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -27,8 +27,8 @@ function tab(value: string, reference: string) {
     <TabPanel value={value}>
       <Grid container>
         <Grid item xs>
-          <Box sx={{ fontFamily: 'monospace' }}>
-            {reference}
+          <Box>
+            <Typography sx={{ fontFamily: 'monospace', wordWrap: 'break-word' }}>{reference}</Typography>
           </Box>
         </Grid>
         <Grid item display={'flex'} sx={{
@@ -45,7 +45,7 @@ function tab(value: string, reference: string) {
             size="large"
             disableElevation
             onClick={() => {
-              if (copy(reference)) {                
+              if (copy(reference)) {
                 toast.success("Copied to Clipboard");
               } else {
                 toast.warn("Could not copy to Clipboard");
