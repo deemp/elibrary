@@ -8,44 +8,24 @@ import {
   Container,
   Grid,
   Paper,
-  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
 import * as appbar from "./AppBar";
-import { searchLink } from "./SearchLink"
+import { searchLink } from "./SearchLink";
 import { useFAQ } from "./FAQ";
 import { Ebsco } from "./AppBar";
 import { ReferencePanel } from "./ReferencePanel";
 import { buttonPadding, fontSize, linkStyle } from "../models/elements";
-
-function Row({
-  title,
-  content,
-}: {
-  title: string | undefined;
-  content: string | undefined;
-}) {
-  return (
-    <Grid item xs={12}>
-      <Grid container>
-        <Grid item sx={{ width: "80px" }}>
-          <Typography>{title}</Typography>
-        </Grid>
-        <Grid item xs>
-          <Typography sx={{ fontWeight: "bold" }}>{content}</Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-}
+import { reportLink } from "./ReportLink";
+import { Row } from "./Row";
 
 interface Data {
-  book: Book
+  book: Book;
   dimensions: {
-    height: number
-    width: number
-  }
+    height: number;
+    width: number;
+  };
 }
 
 export function BookInfoPage() {
@@ -60,16 +40,24 @@ export function BookInfoPage() {
 
   useEffect(() => {
     (async () => {
-      const authors = book.authors.split("; ")
-      const author = authors[0]
+      const authors = book.authors.split("; ");
+      const author = authors[0];
       setTextReference(
-        `${author}. ${book.title} / ${authors.join(" , ")} // ${book.publisher}. - ${book.year}. - ${book.pages} p. - ISBN: ${book.isbn} // EBSCO EBOOK ARCHIVE. - URL: ${window.location.href}/read`
+        `${author}. ${book.title} / ${authors.join(" , ")} // ${
+          book.publisher
+        }. - ${book.year}. - ${book.pages} p. - ISBN: ${
+          book.isbn
+        } // EBSCO EBOOK ARCHIVE. - URL: ${window.location.href}/read`
       );
-      const bibTexTitle =
-        `${author.split(" ").pop()?.toLowerCase()}${book.year}${book.title.split(" ")[0].toLowerCase()}`
-          .match(/[a-zA-Z0-9]/g)?.join("")
+      const bibTexTitle = `${author.split(" ").pop()?.toLowerCase()}${
+        book.year
+      }${book.title.split(" ")[0].toLowerCase()}`
+        .match(/[a-zA-Z0-9]/g)
+        ?.join("");
       setBibTexReference(
-        `@book{${bibTexTitle}, author={${authors.join(" and ")}}, title={${book.title}}, year={${book.year}}, publisher={${book.publisher}}}`
+        `@book{${bibTexTitle}, author={${authors.join(" and ")}}, title={${
+          book.title
+        }}, year={${book.year}}, publisher={${book.publisher}}}`
       );
     })();
   }, [book]);
@@ -84,7 +72,7 @@ export function BookInfoPage() {
         <Container maxWidth="xl">
           <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
             <Grid container rowSpacing={2} marginTop={appbar.height}>
-              <Grid item xs={12} display={'flex'} justifyContent={'center'}>
+              <Grid item xs={12} display={"flex"} justifyContent={"center"}>
                 <Link to={`/book/${id}/read`} style={linkStyle}>
                   <Button
                     sx={{
@@ -100,8 +88,13 @@ export function BookInfoPage() {
                 </Link>
               </Grid>
               <Grid item xs={12}>
-                <Grid container spacing={3} justifyContent={'center'}>
-                  <Grid item sx={{ width: `${dimensions.width * 1.1}px` }} display={'flex'} justifyContent={'center'}>
+                <Grid container spacing={3} justifyContent={"center"}>
+                  <Grid
+                    item
+                    sx={{ width: `${dimensions.width * 1.1}px` }}
+                    display={"flex"}
+                    justifyContent={"center"}
+                  >
                     <Link to={`/book/${id}/read`}>
                       <Card
                         elevation={elevation}
@@ -147,6 +140,8 @@ export function BookInfoPage() {
                           return (
                             <Row
                               title={bookPretty.get(x)}
+                              variant="body1"
+                              title_width="80px"
                               content={`${book[x as keyof typeof book]}`}
                               key={x}
                             ></Row>
@@ -177,9 +172,8 @@ export function BookInfoPage() {
             <Grid container>
               <Grid item xs={5}>
                 <Grid container columnSpacing={1}>
-                  <Grid item>
-                    {searchLink}
-                  </Grid>
+                  <Grid item>{searchLink}</Grid>
+                  <Grid item>{reportLink}</Grid>
                   <Grid item>{faqButton}</Grid>
                 </Grid>
               </Grid>
