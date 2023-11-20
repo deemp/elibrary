@@ -5,6 +5,7 @@ import { Ebsco } from "./AppBar";
 import * as appbar from "./AppBar"
 import { useFAQ } from "./FAQ";
 import { Props } from './Search'
+import { reportLink } from "./ReportLink";
 
 export function SearchPage(props: Props) {
   const { faqButton, faqDrawer } = useFAQ();
@@ -31,15 +32,11 @@ export function SearchPage(props: Props) {
             <Grid container alignItems={"center"}>
               <Grid item xs={4}>
                 <Grid container spacing={1}>
+                  <Grid item>{reportLink}</Grid>
                   <Grid item>{faqButton}</Grid>
                 </Grid>
               </Grid>
-              <Grid
-                item
-                xs={8}
-                display={"flex"}
-                justifyContent={"end"}
-              >
+              <Grid item xs={8} display={"flex"} justifyContent={"end"}>
                 {Ebsco}
               </Grid>
             </Grid>
