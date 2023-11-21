@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 from .internal.db import create_db_and_tables
 from contextlib import asynccontextmanager
-from .routers import book, root, search, auth
+from .routers import book, root, search, auth, report
 from .routers import auth
 from starlette.middleware.sessions import SessionMiddleware
 from . import env
@@ -85,6 +85,7 @@ app.mount(
 app.include_router(root.router, prefix="" if env.PROD else prefix)
 app.include_router(book.router, prefix=prefix)
 app.include_router(search.router, prefix=prefix)
+app.include_router(report.router, prefix=prefix)
 
 
 @app.get("/{path:path}", dependencies=[check])

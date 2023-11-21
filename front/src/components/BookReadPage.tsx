@@ -3,14 +3,15 @@ import { Base } from "./Base";
 import { Book } from "./Book";
 import { AppBarLink, AppBar } from "./AppBar";
 import { useFAQ } from "./FAQ";
-import { Book as BookModel } from "../models/book"
+import { Book as BookModel } from "../models/book";
 import { searchLink } from "./SearchLink";
+import { reportLink } from "./ReportLink";
 import { Grid } from "@mui/material";
 
 export function BookReadPage() {
   const { faqButton, faqDrawer } = useFAQ();
-  const book = useLoaderData() as BookModel
-  const id = book.book_id
+  const book = useLoaderData() as BookModel;
+  const id = book.book_id;
   const base = (
     <Base
       title="Book"
@@ -20,13 +21,12 @@ export function BookReadPage() {
         <AppBar
           faqDrawer={faqDrawer}
           leftChildren={[
-            <Grid item><AppBarLink
-              text={"Info"}
-              to={`/book/${id}`}
-              id={"info"}
-            /></Grid>,
+            <Grid item>
+              <AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} />
+            </Grid>,
             <Grid item>{searchLink}</Grid>,
-            <Grid item>{faqButton}</Grid>
+            <Grid item>{reportLink}</Grid>,
+            <Grid item>{faqButton}</Grid>,
           ]}
         />
       }

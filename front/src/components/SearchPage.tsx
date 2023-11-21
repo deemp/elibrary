@@ -2,9 +2,10 @@ import { Base } from "./Base";
 import { Search } from "./Search";
 import { Box, Container, Grid } from "@mui/material";
 import { AppBar } from "./AppBar";
-import * as appbar from "./AppBar"
+import * as appbar from "./AppBar";
 import { useFAQ } from "./FAQ";
-import { Props } from './Search'
+import { Props } from "./Search";
+import { reportLink } from "./ReportLink";
 
 export function SearchPage(props: Props) {
   const { faqButton, faqDrawer } = useFAQ();
@@ -28,8 +29,12 @@ export function SearchPage(props: Props) {
       nav={
         <AppBar
           faqDrawer={faqDrawer}
-          leftChildren={[<Grid item>{faqButton}</Grid>]}
-        />}
+          leftChildren={[
+            <Grid item>{reportLink}</Grid>,
+            <Grid item>{faqButton}</Grid>,
+          ]}
+        />
+      }
     />
   );
   return base;
