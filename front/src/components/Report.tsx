@@ -5,6 +5,7 @@ import { searchLink } from "./SearchLink";
 import { Container, Grid, Typography } from "@mui/material";
 import { useFAQ } from "./FAQ";
 import * as appbar from "./AppBar";
+import { AppBar } from "./AppBar";
 import { BookTable } from "./Table";
 import { Row } from "./Row";
 
@@ -75,28 +76,13 @@ export const Report = () => {
           </Container>
         }
         nav={
-          <>
-            <Container maxWidth={"xl"}>
-              <Grid container>
-                <Grid item xs={5}>
-                  <Grid container columnSpacing={1}>
-                    <Grid item>{searchLink}</Grid>
-                    <Grid item>{faqButton}</Grid>
-                  </Grid>
-                </Grid>
-                <Grid
-                  item
-                  xs={7}
-                  display={"flex"}
-                  justifyContent={"end"}
-                  alignItems={"center"}
-                >
-                  {appbar.Ebsco}
-                </Grid>
-              </Grid>
-            </Container>
-            {faqDrawer}
-          </>
+          <AppBar
+            faqDrawer={faqDrawer}
+            leftChildren={[
+              <Grid item>{searchLink}</Grid>,
+              <Grid item>{faqButton}</Grid>,
+            ]}
+          />
         }
       />
     </>
