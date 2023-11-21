@@ -141,7 +141,7 @@ export function BookInfoPage() {
                             <Row
                               sx={{}}
                               title={bookPretty.get(x)}
-                              title_width="80px"
+                              widthSx={{ width: "80px" }}
                               content={`${book[x as keyof typeof book]}`}
                               key={x}
                             ></Row>
@@ -170,7 +170,7 @@ export function BookInfoPage() {
         <>
           <Container maxWidth={"xl"}>
             <Grid container>
-              <Grid item xs={5}>
+              <Grid item xs={7} sm={5}>
                 <Grid container columnSpacing={1}>
                   <Grid item>{searchLink}</Grid>
                   <Grid item>{reportLink}</Grid>
@@ -179,7 +179,8 @@ export function BookInfoPage() {
               </Grid>
               <Grid
                 item
-                xs={7}
+                xs={5}
+                sm={7}
                 display={"flex"}
                 justifyContent={"end"}
                 alignItems={"center"}
