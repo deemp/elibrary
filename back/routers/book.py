@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import APIRouter, HTTPException, Request
 from sqlmodel import Session
 from ..internal.range_request import range_requests_response
@@ -27,7 +28,9 @@ async def file(book_id: int, request: Request, response: MaybeRedirect):
 
     with Session(engine) as session:
         if request.headers.get("range") is None:
-            read_count = ReadCount(book_id=book_id)
+            read_count = ReadCount(
+                book_id=book_id, month=datetime.now().month, year=datetime.now().year
+            )
             session.add(read_count)
             session.commit()
 
