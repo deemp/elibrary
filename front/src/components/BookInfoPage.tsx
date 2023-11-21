@@ -139,8 +139,8 @@ export function BookInfoPage() {
                         if (book && x in book) {
                           return (
                             <Row
+                              sx={{}}
                               title={bookPretty.get(x)}
-                              variant="body1"
                               title_width="80px"
                               content={`${book[x as keyof typeof book]}`}
                               key={x}
