@@ -1,6 +1,6 @@
 import Tab from "@mui/material/Tab";
 import { ReactNode, SyntheticEvent, useState } from "react";
-import { Box, Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -20,33 +20,36 @@ interface ReferenceProps {
   bibTexReference: string;
 }
 
-interface Reference {
-  text: string
-}
 
-function tab(value: string, reference: string, copyToClipboard: () => void) {
+
+function tab(value: string, reference: string) {
   return (
     <TabPanel value={value}>
       <Grid container>
         <Grid item xs>
-          <Box sx={{ fontFamily: 'monospace' }}>
-            {reference}
-          </Box>
+          <Typography sx={{ fontFamily: 'monospace', wordWrap: 'break-word' }}>{reference}</Typography>
         </Grid>
         <Grid item display={'flex'} sx={{
           alignItems: 'start',
           justifyContent: { xs: 'center', sm: 'right' },
-          width: { xs: '100%', sm: '150px' }
+          width: { xs: '100%', sm: '9rem' },
         }}>
           <Button
             sx={{
               fontSize,
               ...buttonPadding,
+              marginTop: { xs: '1rem', sm: 0 }
             }}
             variant="contained"
             size="large"
             disableElevation
-            onClick={copyToClipboard}
+            onClick={() => {
+              if (copy(reference)) {
+                toast.success("Copied to Clipboard");
+              } else {
+                toast.warn("Could not copy to Clipboard");
+              }
+            }}
           >
             copy
           </Button>
@@ -61,17 +64,11 @@ export function ReferencePanel({
   bibTexReference,
 }: ReferenceProps) {
   const [value, setValue] = React.useState<string>("0")
-  const [reference, setReference] = useState<Reference>({ text: textReference });
+  const [_reference, setReference] = useState<string>(textReference);
 
   const handleChange = (_e: SyntheticEvent, type: string) => {
     setValue(type)
-    setReference({ text: type === "0" ? textReference : bibTexReference })
-  };
-
-  const copyToClipboard = () => {
-    if (copy(reference.text)) {
-      toast.success("Copied to Clipboard");
-    }
+    setReference(type === "0" ? textReference : bibTexReference)
   };
 
   return (
@@ -86,8 +83,8 @@ export function ReferencePanel({
               </TabList>
             </Grid>
             <Grid item xs={12}>
-              {tab("0", textReference, copyToClipboard)}
-              {tab("1", bibTexReference, copyToClipboard)}
+              {tab("0", textReference)}
+              {tab("1", bibTexReference)}
             </Grid>
           </Grid>
         </TabContext>

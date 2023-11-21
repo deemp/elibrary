@@ -24,17 +24,18 @@
 1. Click on `Filter`.
 1. Select `Title`.
 1. Type `99` in the `Filter input`.
-1. Click on suggestion.
-1. In the results table, click on `Read`.
-1. In the top of the page, click on `Info`.
+1. Click on a suggestion under `Filter input`.
+1. In the results table, click on `Read` or on the book cover.
+1. Go to the page `95`( of `272`).
+1. In the top of the page, click on `INFO`.
 1. Look at the book info.
 1. In the top of the page, click on `FAQ` to see what book info entries mean.
-1. In the `BIBLIOGRAPHIC INFORMATION` tab, click on `Copy`.
+1. In the `BIBLIOGRAPHIC INFORMATION` tab, click on `COPY`.
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
 1. Click on `BIBTEX`.
-1. In the `BIBTEX` tab, click on `Copy`.
+1. In the `BIBTEX` tab, click on `COPY`.
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
-1. In the top of the page, click on `SEARCH`.
+1. In the top of the page, click on `SEARCH` to return to the search page.
 
 ## Development
 
