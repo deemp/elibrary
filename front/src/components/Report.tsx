@@ -44,22 +44,22 @@ export const Report = () => {
               container
               rowSpacing={2}
               marginTop={appbar.height}
-              height={"100%"}
+              height={`calc(100vh - ${appbar.height})`}
             >
-              <Grid marginTop={"1rem"} width={"100%"}>
+              <Grid paddingTop={"1rem"} width={"100%"} height={"20%"}>
                 <Row
                   title="Total number of reads: "
                   content={`${totalReads}`}
-                  title_width="30%"
                   sx={{
-                    fontSize: { xs: "1.5rem", sm: "2rem" },
+                    fontSize: { xs: "1rem", sm: "2rem" },
                     display: "flex",
                   }}
+                  widthSx={{ width: { xs: "50%", md: "25%" } }}
                 />
                 <Typography
                   marginY={"1rem"}
                   sx={{
-                    fontSize: { xs: "2rem", sm: "3rem" },
+                    fontSize: { xs: "1.5rem", sm: "3rem" },
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -68,7 +68,7 @@ export const Report = () => {
                   Top 10 Books
                 </Typography>
               </Grid>
-              <Grid item xs={12} height={"80vh"}>
+              <Grid item xs={12} height={"80%"}>
                 <BookTable books={books} booksLoaded={booksLoaded} />
               </Grid>
             </Grid>
