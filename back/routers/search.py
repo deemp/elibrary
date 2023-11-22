@@ -21,7 +21,8 @@ class BookSearch(SQLModel):
     authors: Optional[str]
     publisher: str
     year: int
-    isbn: int
+    isbn: Optional[int]
+
 
 class BookSearchResponse(SQLModel):
     book_id: int
@@ -29,7 +30,7 @@ class BookSearchResponse(SQLModel):
     authors: Optional[str]
     publisher: str
     year: int
-    isbn: int
+    isbn: Optional[int]
 
 
 def getDict(books: List[BookSearch], attr1, attr2) -> DictOptions:
@@ -89,7 +90,7 @@ class SearchPOSTRequest(BaseModel):
 class SearchPOSTResponse(BaseModel):
     bisac: DictOptions
     lc: DictOptions
-    books: list[BookSearchResponse]
+    books: List[BookSearchResponse]
 
 
 # https://fastapi.tiangolo.com/tutorial/body/
@@ -107,7 +108,7 @@ def search_post(request: SearchPOSTRequest) -> SearchPOSTResponse:
             if r.filter in filters:
                 filter_attr = Book.__dict__[r.filter]
                 conditions.append(filter_attr.contains(r.filter_input))
-        
+
         books = [
             BookSearch(*i)
             for i in session.exec(select_books().where(*conditions)).all()
@@ -115,6 +116,8 @@ def search_post(request: SearchPOSTRequest) -> SearchPOSTResponse:
 
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")
-        
-        books_response: List[BookSearchResponse] = [BookSearchResponse(**i.__dict__) for i in books]
+
+        books_response: List[BookSearchResponse] = [
+            BookSearchResponse(**i.__dict__) for i in books
+        ]
         return SearchPOSTResponse(books=books_response, bisac=bisac, lc=lc)
