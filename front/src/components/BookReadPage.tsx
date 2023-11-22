@@ -5,7 +5,6 @@ import { AppBarLink, AppBar } from "./AppBar";
 import { useFAQ } from "./FAQ";
 import { Book as BookModel } from "../models/book";
 import { searchLink } from "./SearchLink";
-import { reportLink } from "./ReportLink";
 import { Grid } from "@mui/material";
 
 export function BookReadPage() {
@@ -25,7 +24,6 @@ export function BookReadPage() {
               <AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} />
             </Grid>,
             <Grid item>{searchLink}</Grid>,
-            <Grid item>{reportLink}</Grid>,
             <Grid item>{faqButton}</Grid>,
           ]}
         />
