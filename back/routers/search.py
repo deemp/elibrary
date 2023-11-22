@@ -1,6 +1,7 @@
-from typing import TypeAlias
+from typing import List, Optional, TypeAlias
+from dataclasses import dataclass
 from fastapi import APIRouter
-from sqlmodel import Session, select
+from sqlmodel import SQLModel, Session, select
 from ..internal.models import Book
 from ..internal.db import engine
 from pydantic import BaseModel
@@ -11,7 +12,27 @@ Strings: TypeAlias = list[str]
 DictOptions: TypeAlias = dict[str, Strings]
 
 
-def getDict(books, attr1, attr2) -> DictOptions:
+@dataclass
+class BookSearch(SQLModel):
+    book_id: int
+    bisac: str
+    lc: str
+    title: str
+    authors: Optional[str]
+    publisher: str
+    year: int
+    isbn: int
+
+class BookSearchResponse(SQLModel):
+    book_id: int
+    title: str
+    authors: Optional[str]
+    publisher: str
+    year: int
+    isbn: int
+
+
+def getDict(books: List[BookSearch], attr1, attr2) -> DictOptions:
     ret = {}
     for book in books:
         if (attr := book.__dict__[attr1]) not in ret.keys():
@@ -29,13 +50,26 @@ class SearchGETResponse(BaseModel):
     filters: Strings
 
 
-filters = ["publisher", "year", "authors", "title", "isbn", "esbn", "format"]
+filters = ["title", "authors", "publisher", "year", "isbn"]
+
+
+def select_books():
+    return select(
+        Book.book_id,
+        Book.bisac,
+        Book.lc,
+        Book.title,
+        Book.authors,
+        Book.publisher,
+        Book.year,
+        Book.isbn,
+    )
 
 
 @router.get("/search")
 def search_get() -> SearchGETResponse:
     with Session(engine) as session:
-        books = session.exec(select(Book)).all()
+        books = [BookSearch(*i) for i in session.exec(select_books()).all()]
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")
         return SearchGETResponse(bisac=bisac, lc=lc, filters=filters)
@@ -55,14 +89,14 @@ class SearchPOSTRequest(BaseModel):
 class SearchPOSTResponse(BaseModel):
     bisac: DictOptions
     lc: DictOptions
-    books: list[Book]
+    books: list[BookSearchResponse]
 
 
 # https://fastapi.tiangolo.com/tutorial/body/
 @router.post("/search")
 def search_post(request: SearchPOSTRequest) -> SearchPOSTResponse:
     with Session(engine) as session:
-        books = []
+        books: List[BookSearch] = []
 
         conditions = [
             Book.bisac.contains(request.bisac),
@@ -73,9 +107,14 @@ def search_post(request: SearchPOSTRequest) -> SearchPOSTResponse:
             if r.filter in filters:
                 filter_attr = Book.__dict__[r.filter]
                 conditions.append(filter_attr.contains(r.filter_input))
-
-        books = session.exec(select(Book).where(*conditions)).all()
+        
+        books = [
+            BookSearch(*i)
+            for i in session.exec(select_books().where(*conditions)).all()
+        ]
 
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")
-        return SearchPOSTResponse(books=books, bisac=bisac, lc=lc)
+        
+        books_response: List[BookSearchResponse] = [BookSearchResponse(**i.__dict__) for i in books]
+        return SearchPOSTResponse(books=books_response, bisac=bisac, lc=lc)
