@@ -26,7 +26,6 @@ test:
     - poetry run pytest &> logs.test || (cat logs && cat logs.test && false)
     - cat logs
     - cat logs.test
-  environment:
+  variables:
     HOST: '0.0.0.0'
     PORT: 5000
-    ENV: 'dev'
