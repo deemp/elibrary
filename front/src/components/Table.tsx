@@ -2,7 +2,7 @@ import React from 'react';
 import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
 import { TableVirtuoso } from 'react-virtuoso';
-import { Book, bookPretty } from '../models/book';
+import { BookSearch as Book, bookPretty } from '../models/book';
 import { Link } from 'react-router-dom';
 import {
   CellContext,
