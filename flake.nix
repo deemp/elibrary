@@ -1,6 +1,6 @@
 {
   inputs = {
-    flakes.url = "github:deemp/flakes/";
+    flakes.url = "github:deemp/flakes";
     pdfjs = {
       url = "gitlab:elibrary/pdf.js/dist?host=gitlab.pg.innopolis.university";
       flake = false;
@@ -356,7 +356,7 @@
                     docker tag ${imageName} deemp/${imageName}
                     docker push deemp/${imageName}
                   '';
-                  description = "push image to dockerhub";
+                  description = "push image to Docker Hub";
                 };
 
                 prod = {
