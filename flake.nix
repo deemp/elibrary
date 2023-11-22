@@ -78,7 +78,10 @@
               export PORT=${port}
               export HOST=${host}
               ${getExe packages.writeDotenvBack}
-              ${getExe packages.prodBuildFront}
+              if [[ $ENV == prod ]]
+              then
+                ${getExe packages.prodBuildFront}
+              fi
               poetry run back ${if doRunInBackground then "&" else ""}
             '';
             description = "run back at ${mkURL host port}";
