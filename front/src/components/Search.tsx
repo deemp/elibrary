@@ -1,4 +1,4 @@
-import { Book, bookPretty, bookPrettyInverse } from "../models/book";
+import { BookSearch as Book, bookPretty, bookPrettyInverse } from "../models/book";
 import "../App.css";
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { BookTable } from "./Table";

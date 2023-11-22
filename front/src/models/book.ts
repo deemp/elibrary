@@ -17,6 +17,15 @@ export interface Book {
   cover_url?: string;
 }
 
+export interface BookSearch {
+  book_id: number;
+  title: string;
+  authors: string;
+  publisher: string;
+  year: number;
+  isbn: number;
+}
+
 const rename: [string, string][] = [
   ['bisac', 'Category'],
   ['lc', 'Subject'],
