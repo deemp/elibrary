@@ -30,6 +30,7 @@ services:
       OTLP_GRPC_ENDPOINT: "http://tempo:4317"
       PORT: 5000
       HOST: "0.0.0.0"
+      ENV: prod
     logging: *default-logging
     entrypoint:
       - "bash"

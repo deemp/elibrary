@@ -1,6 +1,6 @@
 {
   inputs = {
-    flakes.url = "github:deemp/flakes/";
+    flakes.url = "github:deemp/flakes";
     pdfjs = {
       url = "gitlab:elibrary/pdf.js/dist?host=gitlab.pg.innopolis.university";
       flake = false;
@@ -78,7 +78,10 @@
               export PORT=${port}
               export HOST=${host}
               ${getExe packages.writeDotenvBack}
-              ${getExe packages.prodBuildFront}
+              if [[ $ENV == prod ]]
+              then
+                ${getExe packages.prodBuildFront}
+              fi
               poetry run back ${if doRunInBackground then "&" else ""}
             '';
             description = "run back at ${mkURL host port}";
@@ -353,7 +356,7 @@
                     docker tag ${imageName} deemp/${imageName}
                     docker push deemp/${imageName}
                   '';
-                  description = "push image to dockerhub";
+                  description = "push image to Docker Hub";
                 };
 
                 prod = {
