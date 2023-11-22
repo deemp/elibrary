@@ -1,6 +1,7 @@
 import requests
 from ..routers.search import *
 from .. import env
+from ..routers.search import filters
 
 search_url = f"{env.URL}/search"
 
@@ -80,15 +81,7 @@ class TestSearchGetLcValue:
 
 class TestSearchGetFiltersValue:
     def check(self, response: SearchGETResponse):
-        assert response.filters == [
-            "publisher",
-            "year",
-            "authors",
-            "title",
-            "isbn",
-            "esbn",
-            "format",
-        ]
+        assert response.filters == filters
 
     def test_unit(self):
         response = search_get()
