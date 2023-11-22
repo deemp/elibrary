@@ -16,7 +16,6 @@ import { searchLink } from "./SearchLink";
 import { useFAQ } from "./FAQ";
 import { ReferencePanel } from "./ReferencePanel";
 import { buttonPadding, fontSize, linkStyle } from "../models/elements";
-import { reportLink } from "./ReportLink";
 import { Row } from "./Row";
 
 interface Data {
@@ -168,7 +167,6 @@ export function BookInfoPage() {
           faqDrawer={faqDrawer}
           leftChildren={[
             <Grid item>{searchLink}</Grid>,
-            <Grid item>{reportLink}</Grid>,
             <Grid item>{faqButton}</Grid>,
           ]}
         />

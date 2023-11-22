@@ -30,8 +30,8 @@ export function SearchPage(props: Props) {
         <AppBar
           faqDrawer={faqDrawer}
           leftChildren={[
-            <Grid item>{reportLink}</Grid>,
             <Grid item>{faqButton}</Grid>,
+            <Grid item>{reportLink}</Grid>,
           ]}
         />
       }
