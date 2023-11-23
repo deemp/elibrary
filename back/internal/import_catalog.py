@@ -37,8 +37,7 @@ def import_catalog(
     book_tmp = BookTmp.__tablename__
 
     with Session(engine) as session:
-        sql = f"delete from {book_tmp};"
-        session.execute(sql)
+        session.execute(f"delete from {book_tmp};")
         for row_dict in df_xlsx.to_dict(orient="records"):
             session.add(BookTmp(**row_dict))
         session.commit()
@@ -46,12 +45,13 @@ def import_catalog(
     book = Book.__tablename__
     book_id = "book_id"
 
-    sql = f"delete from {book} where {book}.{book_id} not in (select {book_id} from {book_tmp});"
-    session.execute(sql)
-    sql = f"insert into {book} select {book_tmp}.*, 0 from {book_tmp} where {book_tmp}.{book_id} not in (select {book_id} from {book})"
-    session.execute(sql)
-    sql = f"delete from {book_tmp}"
-    session.execute(sql)
+    session.execute(
+        f"delete from {book} where {book}.{book_id} not in (select {book_id} from {book_tmp});"
+    )
+    session.execute(
+        f"insert into {book} select {book_tmp}.* from {book_tmp} where {book_tmp}.{book_id} not in (select {book_id} from {book})"
+    )
+    session.execute(f"delete from {book_tmp}")
     session.commit()
 
     with closing(sqlite3.connect(db_path)) as conn:
