@@ -13,25 +13,26 @@ from .. import env
 from pypdf import PdfReader
 
 
-def import_catalog(
-    xlsx=env.XLSX_PATH,
-    sheet_name=env.SHEET,
-    sql_dump_path=env.SQL_DUMP_PATH,
-    db_path=env.DB_PATH,
-    books_dir=env.BOOKS_DIR,
-):
-    Path(db_path).parent.mkdir(exist_ok=True, parents=True)
-
-    df_xlsx = pd.read_excel(xlsx, sheet_name)
-
+def record_pages(df_xlsx, books_dir):
     def count_pages(row):
         book_id = row["book_id"]
         book_path = f"{books_dir}/{book_id}.pdf"
         reader = PdfReader(book_path)
         number_of_pages = len(reader.pages)
-        return number_of_pages
+        return number_of_pages[]
 
     df_xlsx["pages"] = df_xlsx.apply(count_pages, axis=1)
+
+
+def import_catalog(
+    xlsx=env.XLSX_PATH,
+    sheet_name=env.SHEET,
+    sql_dump_path=env.SQL_DUMP_PATH,
+    db_path=env.DB_PATH,
+):
+    Path(db_path).parent.mkdir(exist_ok=True, parents=True)
+
+    df_xlsx = pd.read_excel(xlsx, sheet_name)
 
     book_tmp = BookTmp.__tablename__
 
