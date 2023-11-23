@@ -165,7 +165,7 @@ export function Search(
 
     const fetchData = async () => {
       try {
-        fetch(url, {
+        await fetch(url, {
           method: "POST",
           headers: new Headers({ "content-type": "application/json" }),
           body: JSON.stringify({
