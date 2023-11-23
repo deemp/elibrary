@@ -156,54 +156,72 @@ export function Search(
   }, []);
 
   useEffect(() => {
+    const abortController = new AbortController();
+    
     // https://mui.com/material-ui/react-progress/#delaying-appearance
     const timer = setTimeout(() => {
       setBooksLoaded(false)
     }, 1000)
 
-    fetch(url, {
-      method: "POST",
-      headers: new Headers({ "content-type": "application/json" }),
-      body: JSON.stringify({
-        filter_rows: rowFilter
-          .filter(x => x.filterInput !== '')
-          .map(x => {
+    const fetchData = async () => {
+      try {
+        fetch(url, {
+          method: "POST",
+          headers: new Headers({ "content-type": "application/json" }),
+          body: JSON.stringify({
+            filter_rows: rowFilter
+              .filter(x => x.filterInput !== '')
+              .map(x => {
+                return {
+                  filter: x.filter,
+                  filter_input: x.filterInput
+                }
+              }), lc, bisac
+          }),
+          signal: abortController.signal
+        })
+          .then((r) => r.json())
+          .then((r) => {
             return {
-              filter: x.filter,
-              filter_input: x.filterInput
+              books: r.books,
+              lc: Map(r.lc) as MapStrings,
+              bisac: Map(r.bisac) as MapStrings
             }
-          }), lc, bisac
-      }),
-    })
-      .then((r) => r.json())
-      .then((r) => {
-        return {
-          books: r.books,
-          lc: Map(r.lc) as MapStrings,
-          bisac: Map(r.bisac) as MapStrings
+          })
+          .then((r: POSTResponse) => {
+            setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
+            const f = rowFilter.map(row => {
+              const filterInputOptions = r.books.map(book => {
+                if (row.filter in book) {
+                  return `${book[row.filter as keyof typeof book]}`
+                } else {
+                  return ""
+                }
+              })
+                .filter(x => x !== "")
+              return List([... new Set(filterInputOptions)])
+            })
+            setRowFilterInputOptions(f)
+            setBooks(r.books);
+          })
+      } catch (e) {
+        if (!abortController.signal.aborted) {
+          console.log(e.message)
         }
-      })
-      .then((r: POSTResponse) => {
+      } finally {
         // clear timeout before setting to true 
         // so that the code in the timeout doesn't overwrite this value
         clearTimeout(timer)
         setBooksLoaded(true)
-        setBooks(r.books);
-        setBisacLcOptions({ bisac: r.bisac, lc: r.lc })
-        const f = rowFilter.map(row => {
-          const filterInputOptions = r.books.map(book => {
-            if (row.filter in book) {
-              return `${book[row.filter as keyof typeof book]}`
-            } else {
-              return ""
-            }
-          })
-            .filter(x => x !== "")
-          return List([... new Set(filterInputOptions)])
-        })
-        setRowFilterInputOptions(f)
-      })
-  }, [lc, bisac, setBisacLcOptions, rowFilter])
+      }
+    }
+
+    fetchData()
+
+    return () => {
+      abortController.abort()
+    }
+  }, [lc, bisac, setBisacLcOptions, setBooks, setBooksLoaded, rowFilter, setRowFilterInputOptions])
 
   const rowHeight = 56
   const filtersHeight = (cnt: number) => cnt * rowHeight
@@ -266,7 +284,8 @@ export function Search(
                         </Grid>
                       </Grid>
                     )
-                  })})()}
+                  })
+                })()}
               </Grid>
             </Grid>
           </Grid>
