@@ -7,6 +7,12 @@ import * as appbar from './AppBar'
 import { Map, List } from 'immutable'
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
+import {
+  CellContext,
+  ColumnDef,
+  ColumnHelper
+} from '@tanstack/react-table';
+import { Link } from "react-router-dom";
 
 export interface GETResponse {
   bisac: MapStrings
@@ -95,6 +101,61 @@ export interface Props {
   setLc: Setter<string>
 }
 
+function RowLink({ text, to }: { text: string, to: string }) {
+  return <Link to={to} style={{ "color": "#1976d2", }}> {text} </Link>
+}
+
+// @ts-ignore
+const columnPretty = new Map([
+  ...bookPretty,
+  // @ts-ignore
+  ...(new Map([['read', 'Read'], ['info', 'Info']]))
+])
+
+const columns = (columnHelper: ColumnHelper<Book>) =>
+  [
+    {
+      id: 'read',
+      size: 60,
+      f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}/read`} text={"Read"} />
+    },
+    {
+      id: 'info',
+      size: 60,
+      f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}`} text={"Info"} />
+    }
+  ].map(({ id, f, size }) => columnHelper.display({
+    id,
+    size,
+    cell: props => f(props),
+    header: () => columnPretty.get(id)
+  })).concat([
+    {
+      id: 'title',
+      size: 300,
+    },
+    {
+      id: 'authors',
+      size: 200,
+    },
+    {
+      id: 'publisher',
+      size: 200,
+    },
+    {
+      id: 'year',
+      size: 60,
+    },
+    {
+      id: 'isbn',
+      size: 130,
+    },
+  ].map(({ id, size }) => columnHelper.accessor(id as keyof Book, {
+    header: () => columnPretty.get(id),
+    size,
+    cell: props => props.getValue()
+  })) as ColumnDef<Book, unknown>[]);
+
 const url = `${import.meta.env.VITE_API_PREFIX}/search`;
 
 export function Search(
@@ -157,7 +218,7 @@ export function Search(
 
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     // https://mui.com/material-ui/react-progress/#delaying-appearance
     const timer = setTimeout(() => {
       setBooksLoaded(false)
@@ -206,7 +267,7 @@ export function Search(
           })
       } catch (e) {
         if (!abortController.signal.aborted) {
-          console.log(e.message)
+          console.log((e as { message: string }).message)
         }
       } finally {
         // clear timeout before setting to true 
@@ -292,7 +353,7 @@ export function Search(
         </Grid>
         {((height = (cnt: number) => `calc(100% - ${filtersHeight(filterCounter + cnt)}px)`) =>
           <Grid item xs={12} height={{ xs: height(2), sm: height(1) }}>
-            <BookTable books={Array.from(books)} booksLoaded={booksLoaded} />
+            <BookTable books={Array.from(books)} booksLoaded={booksLoaded} columns={columns} />
           </Grid>)()}
       </Grid >
     </>

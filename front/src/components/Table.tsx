@@ -2,11 +2,9 @@ import React from 'react';
 import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
 import { TableVirtuoso } from 'react-virtuoso';
-import { BookSearch as Book, bookPretty } from '../models/book';
-import { Link } from 'react-router-dom';
 import {
-  CellContext,
   ColumnDef,
+  ColumnHelper,
   OnChangeFn,
   SortingState,
   createColumnHelper,
@@ -40,65 +38,12 @@ export interface BookRow {
   read: React.ReactElement;
 }
 
-function RowLink({ text, to }: { text: string, to: string }) {
-  return <Link to={to} style={{ "color": "#1976d2", }}> {text} </Link>
-}
-
-const columnPretty = new Map([
-  ...bookPretty.entries(),
-  ...(new Map([['read', 'Read'], ['info', 'Info']]))
-])
-
 const padding = "0.5rem"
 
-export function BookTable({ books, booksLoaded }: { books: Book[], booksLoaded: boolean }) {
+export function BookTable<T>({ books, booksLoaded, columns: columns_ }: { books: T[], booksLoaded: boolean, columns: (arg: ColumnHelper<T>) => ColumnDef<T, unknown>[] }) {
 
-  const columnHelper = createColumnHelper<Book>()
-
-  const columns = React.useMemo(() =>
-    [
-      {
-        id: 'read',
-        size: 60,
-        f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}/read`} text={"Read"} />
-      },
-      {
-        id: 'info',
-        size: 60,
-        f: (props: CellContext<Book, unknown>) => <RowLink to={`/book/${props.row.original.book_id}`} text={"Info"} />
-      }
-    ].map(({ id, f, size }) => columnHelper.display({
-      id,
-      size,
-      cell: props => f(props),
-      header: () => columnPretty.get(id)
-    })).concat([
-      {
-        id: 'title',
-        size: 300,
-      },
-      {
-        id: 'authors',
-        size: 200,
-      },
-      {
-        id: 'publisher',
-        size: 200,
-      },
-      {
-        id: 'year',
-        size: 60,
-      },
-      {
-        id: 'isbn',
-        size: 130,
-      },
-    ].map(({ id, size }) => columnHelper.accessor(id as keyof Book, {
-      header: () => columnPretty.get(id),
-      size,
-      cell: props => props.getValue()
-    })) as ColumnDef<Book, unknown>[])
-    , [columnHelper]);
+  const columnHelper = createColumnHelper<T>()
+  const columns = React.useMemo(() => columns_(columnHelper), [columnHelper, columns_])
 
   const [sorting, setSorting] = React.useState([]);
 
