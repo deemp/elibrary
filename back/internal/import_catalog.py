@@ -19,7 +19,7 @@ def record_pages(df_xlsx, books_dir):
         book_path = f"{books_dir}/{book_id}.pdf"
         reader = PdfReader(book_path)
         number_of_pages = len(reader.pages)
-        return number_of_pages[]
+        return number_of_pages
 
     df_xlsx["pages"] = df_xlsx.apply(count_pages, axis=1)
 
