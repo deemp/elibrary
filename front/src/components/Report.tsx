@@ -82,7 +82,9 @@ export const Report = () => {
   }, [date]);
 
   useEffect(() => setData(), [setData]);
-
+  const height = "56px";
+  const calculateHeight = (cnt: number) =>
+    `calc(100vh - ${appbar.height} - ${cnt} * ${height})`;
   return (
     <Base
       title="Report"
@@ -102,6 +104,7 @@ export const Report = () => {
               md={"auto"}
               sx={{
                 display: "flex",
+                alignItems: "center",
                 justifyContent: { xs: "center", md: "start" },
               }}
             >
@@ -114,6 +117,7 @@ export const Report = () => {
                   onChange={(value) => {
                     if (value) setDate(value);
                   }}
+                  slotProps={{ textField: { size: "small" } }}
                 />
               </LocalizationProvider>
             </Grid>
@@ -125,9 +129,10 @@ export const Report = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: { xs: "center", md: "start" },
+                height,
               }}
             >
-              <Typography sx={{ fontSize: "2rem" }}>
+              <Typography sx={{ fontSize: { xs: "1.3rem", sm: "2rem" } }}>
                 Reads (month/year):{" "}
                 <Box fontWeight="fontWeightMedium" display="inline">
                   {totalReadsMonth}
@@ -138,7 +143,14 @@ export const Report = () => {
                 </Box>
               </Typography>
             </Grid>
-            <Grid item xs={12} height={{ xs: "80%", md: "90%" }}>
+            <Grid
+              item
+              xs={12}
+              height={{
+                xs: calculateHeight(2),
+                md: calculateHeight(1),
+              }}
+            >
               <BookTable
                 books={books}
                 booksLoaded={booksLoaded}
