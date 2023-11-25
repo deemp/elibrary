@@ -117,7 +117,7 @@
                 dev = "${envBackPath}.development";
                 prod = "${envBackPath}.production";
                 envProdBack = envBack // (import ./${prod}.nix);
-                envDevBack = envBack // { ENV = "dev"; };
+                envDevBack = envBack // (import ./${dev}.nix);
                 envScriptsBack = envDevBack;
               in
               mkShellApps {
