@@ -1,8 +1,9 @@
+from collections import defaultdict
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, Request
-from sqlmodel import Session
+from sqlmodel import Session, select
 from ..internal.range_request import range_requests_response
-from ..internal.models import Book, ReadCount
+from ..internal.models import Book, read_count_key
 from ..internal.db import engine
 from .. import env
 from ..internal.check import MaybeRedirect
@@ -28,10 +29,11 @@ async def file(book_id: int, request: Request, response: MaybeRedirect):
 
     with Session(engine) as session:
         if request.headers.get("range") is None:
-            read_count = ReadCount(
-                book_id=book_id, month=datetime.now().month, year=datetime.now().year
-            )
-            session.add(read_count)
+            book: Book = session.exec(select(Book).where(Book.book_id == book_id)).one()
+            time = datetime.utcnow()
+            book.read_count = defaultdict(int, book.read_count)
+            book.read_count[read_count_key(time)] += 1
+            session.add(book)
             session.commit()
 
     return range_requests_response(
