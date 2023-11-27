@@ -21,7 +21,7 @@ lint:
 test:
   stage: stage
   script:
-    - runCI &> logs || (cat logs && false)
+    - ciBackRun &> logs || (cat logs && false)
     - sleep 10
     - poetry run pytest &> logs.test || (cat logs && cat logs.test && false)
     - cat logs

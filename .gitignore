@@ -3,7 +3,6 @@
 __pycache__/
 back/website/static/pdfjs
 back/website/static/front
-**/*.tmp.env
-auth.env
 pulumi/node_modules
 .kube
+**/*.env
