@@ -20,12 +20,4 @@ lint:
 
 test:
   stage: stage
-  script:
-    - ciBackRun &> logs || (cat logs && false)
-    - sleep 10
-    - poetry run pytest &> logs.test || (cat logs && cat logs.test && false)
-    - cat logs
-    - cat logs.test
-  variables:
-    HOST: '0.0.0.0'
-    PORT_BACK: 5000
+  script: ciBackTest
