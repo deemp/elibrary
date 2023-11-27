@@ -28,4 +28,4 @@ test:
     - cat logs.test
   variables:
     HOST: '0.0.0.0'
-    PORT: 5000
+    PORT_BACK: 5000
