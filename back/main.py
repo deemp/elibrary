@@ -15,6 +15,7 @@ import logging
 from .internal.check import check
 from fastapi.middleware.cors import CORSMiddleware
 
+
 # https://fastapi.tiangolo.com/advanced/events/
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -31,9 +32,9 @@ app = FastAPI(lifespan=lifespan)
 if env.PROD:
     origins = [
         "https://test.library.innnopolis.university",
-        "https://sso.university.innopolis.ru"
+        "https://sso.university.innopolis.ru",
     ]
-    
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
@@ -47,7 +48,7 @@ if env.PROD:
     app.add_route("/metrics", metrics)
 
     # Setting OpenTelemetry exporter
-    setting_otlp(app, env.APP_NAME, env.OTLP_GRPC_ENDPOINT)
+    setting_otlp(app=app, app_name=env.APP_NAME, endpoint=env.OTLP_GRPC_ENDPOINT)
 
 
 class EndpointFilter(logging.Filter):
@@ -96,7 +97,7 @@ async def catch_all():
 def run():
     uvicorn.run(
         f"{__name__}:app",
-        port=env.PORT,
+        port=env.PORT_BACK,
         host=env.HOST,
         reload=env.DO_RELOAD,
         **({"log_config": env.LOG_CONFIG_PATH} if env.ENV == "prod" else {}),

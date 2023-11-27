@@ -27,7 +27,7 @@ def record_pages(df_xlsx, books_dir):
 def import_catalog(
     xlsx=env.XLSX_PATH,
     sheet_name=env.SHEET,
-    sql_dump_path=env.SQL_DUMP_PATH,
+    sql_dump_path=env.DB_DUMP_PATH,
     db_path=env.DB_PATH,
 ):
     Path(db_path).parent.mkdir(exist_ok=True, parents=True)

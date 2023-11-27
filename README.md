@@ -122,6 +122,15 @@
     git clone git@gitlab.pg.innopolis.university:elibrary/elibrary.git
     ```
 
+## Configuration
+
+We try to follow the 12-factor application approach while maintaining convenient development tools.
+
+- We generate environments from Nix expressions and dump them in `.env` files.
+- We don't check in the generated `.env` files into the repository.
+- We run scripts in environments produced from these expressions.
+- Other files like `docker-compose` may override environment variables used in scripts.
+
 ## Security
 
 - [sops](https://github.com/getsops/sops)

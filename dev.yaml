@@ -3,14 +3,10 @@ version: "3.4"
 services:
   elibrary:
     image: deemp/elibrary:latest
-    pull_policy: always
+    # pull_policy: always
     ports:
       - "5000:5000"
       - "5001:5001"
-    environment:
-      APP_NAME: "app-elibrary"
-      PORT: 5000
-      HOST: "0.0.0.0"
     entrypoint:
       - "bash"
       - "-c"
@@ -20,29 +16,27 @@ services:
         ln -s /dependencies/back/static/front back/static/front
         ln -s /dependencies/.venv .venv
         ln -s /dependencies/front/node_modules front/node_modules
-        runFront &
-        runProd
+        devFrontRun &
+        devBackRun
     volumes:
+      - ./${ENV}.db:/elibrary/${ENV}.db
+      - ./${ENV}.sql:/elibrary/${ENV}.sql
+      - ./back/__init__.py:/elibrary/back/__init__.py
+      - ./back/auth.env:/elibrary/back/auth.env
       - ./back/internal:/elibrary/back/internal
+      - ./back/main.py:/elibrary/back/main.py
       - ./back/routers:/elibrary/back/routers
       - ./back/static:/elibrary/back/static
       - ./back/tests:/elibrary/back/tests
-      - ./back/__init__.py:/elibrary/back/__init__.py
-      - ./back/.env.development:/elibrary/back/.env
-      - ./back/auth.env:/elibrary/back/auth.env
-      - ./back/log_conf.yaml:/elibrary/back/log_conf.yaml
-      - ./back/main.py:/elibrary/back/main.py
       - ./books:/elibrary/books
-      - ./covers:/elibrary/covers
-      - ./poetry.toml:/elibrary/poetry.toml
-      - ./pyproject.toml:/elibrary/pyproject.toml
-      - ./database.db:/elibrary/database.db
       - ./books.xlsx:/elibrary/books.xlsx
-      - ./front/public/vite.svg:/elibrary/front/public/vite.svg
-      - ./front/.env.development:/elibrary/front/.env.development
+      - ./covers:/elibrary/covers
+      - ./front/index.html:/elibrary/front/index.html
       - ./front/package.json:/elibrary/front/package.json
+      - ./front/public/vite.svg:/elibrary/front/public/vite.svg
+      - ./front/src:/elibrary/front/src
       - ./front/tsconfig.json:/elibrary/front/tsconfig.json
       - ./front/tsconfig.node.json:/elibrary/front/tsconfig.node.json
       - ./front/vite.config.ts:/elibrary/front/vite.config.ts
-      - ./front/index.html:/elibrary/front/index.html
-      - ./front/src:/elibrary/front/src
+      - ./poetry.toml:/elibrary/poetry.toml
+      - ./pyproject.toml:/elibrary/pyproject.toml

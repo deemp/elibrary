@@ -30,6 +30,8 @@
           inherit (inputs.drv-tools.lib.${system}) getExe mkShellApps mkShellApp;
           inherit (inputs.devshell.lib.${system}) mkShell mkCommands mkRunCommands;
           inherit (inputs) nix-filter;
+          inherit (pkgs.lib.strings) concatStringsSep;
+          inherit (pkgs.lib.attrsets) mapAttrsToList;
 
           pdfjs = "${nix-filter {
             root = inputs.pdfjs.outPath;
@@ -38,10 +40,7 @@
             ];
           }}/build/generic";
 
-          portBack = "5000";
-          portFront = "5001";
-          hostBack = "0.0.0.0";
-          portGrafana = "3000";
+          commonEnv = import ./.env.nix;
 
           packageBack = groups:
             let
@@ -66,122 +65,132 @@
 
           mkURL = host: port: "http://${host}:${port}";
           mkHyperRef = text: url: '']8;;${url}\${text}]8;;\'';
-          frontRef = mkHyperRef "front" (mkURL hostBack portFront);
-          backRef = mkHyperRef "back" (mkURL hostBack portBack);
+          frontRef = host: port: mkHyperRef "front" (mkURL host port);
+          backRef = host: port: mkHyperRef "back" (mkURL host port);
 
-          mkRunBack = { port, host, doRunInBackground ? false }: {
+          mkBackRun = { env, doRunInBackground ? false }: {
             runtimeInputs = [ pkgs.poetry ];
             text = ''
               export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
                 pkgs.stdenv.cc.cc.lib
               ]}
-              export PORT=${port}
-              export HOST=${host}
-              ${getExe packages.writeDotenvBack}
-              ${getExe packages.prodBuildFront}
-              poetry run back ${if doRunInBackground then "&" else ""}
+              ${getExe packages.prodFrontBuild}
+              ${runInEnv env ''poetry run back ${if doRunInBackground then "&" else ""}''}
             '';
-            description = "run back at ${mkURL host port}";
+            description = "run back at ${mkURL env.HOST env.PORT_BACK}";
           };
 
           pdfjsDir = "front/public/pdfjs";
 
-          writeDotenv = path: config: {
-            text =
-              let env =
-                pkgs.lib.strings.concatStringsSep
-                  "\n"
-                  (pkgs.lib.attrsets.mapAttrsToList
-                    (name: value: ''${name}="${value}"'')
-                    config
-                  );
-              in
-              ''printf '${env}\n' > ${path}'';
+          writeDotenv = path: env: {
+            text = ''printf '${concatStringsSep "\n" (mapAttrsToList (name: value: ''${name}="${value}"'') env)}\n' > ${path}'';
             description = "write ${path}";
           };
 
-          composeDev = "docker compose -f dev.yaml";
-          composeProd = "docker compose -f prod.yaml";
+          mkEnv = env: concatStringsSep "\n" (mapAttrsToList (name: value: ''export ${name}="''${${name}:="${value}"}"'') env);
+          runInEnv = env: commands: ''
+            {
+              ${mkEnv env}
+              ${commands}
+            }
+          '';
+
+          devCompose = "docker compose -f dev.yaml";
+          prodCompose = "docker compose -f prod.yaml";
           serviceName = "elibrary";
 
-          envBackPath = "back/.env";
-          envBack = import ./${envBackPath}.nix {
-            inherit pkgs;
-            host = hostBack;
-            port = portBack;
+          backEnvPrefixPath = "back/.env";
+          backEnv = import ./${backEnvPrefixPath}.nix { inherit pkgs; } // { inherit (commonEnv) HOST; };
+
+          prodBackDotenvPath = "${backEnvPrefixPath}.${commonEnv.ENV_PROD}";
+          prodBackEnv = backEnv // (
+            import ./${prodBackDotenvPath}.nix // { inherit (commonEnv) PORT_BACK; }
+          );
+
+          devBackDotenvPath = "${backEnvPrefixPath}.${commonEnv.ENV_DEV}";
+          devBackEnv = backEnv // (
+            import ./${devBackDotenvPath}.nix // { inherit (commonEnv) PORT_BACK; }
+          );
+
+          devEnv = devBackEnv // devFrontEnv;
+          prodEnv = prodBackEnv // prodFrontEnv;
+
+          importCatalog = env: {
+            runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
+            text = ''
+              export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
+                pkgs.stdenv.cc.cc.lib
+              ]}
+              poetry run import-catalog
+            '';
+            description = ''import books catalog into database + save sql'';
+          };
+
+          extractCovers = env: {
+            runtimeInputs = [ pkgs.poetry ];
+            text = ''
+              poetry run extract-covers
+            '';
+            description = ''extract book cover images'';
+          };
+
+          devFrontDotenvPath = "front/.env.development";
+          prodFrontDotenvPath = "front/.env.production";
+          prodFrontEnv = import ./${prodFrontDotenvPath}.nix { prefix = commonEnv.PREFIX; };
+          devFrontEnv = import ./${devFrontDotenvPath}.nix {
+            prefix = commonEnv.PREFIX;
+            host = commonEnv.HOST;
+            portFront = commonEnv.PORT_FRONT;
+            portBack = commonEnv.PORT_BACK;
           };
 
           packages =
             (
-              let
-                dev = "${envBackPath}.development";
-                prod = "${envBackPath}.production";
-                envProdBack = envBack // (import ./${prod}.nix);
-                envDevBack = envBack // (import ./${dev}.nix);
-                envScriptsBack = envDevBack;
-              in
               mkShellApps {
-                writeDotenvProdBack = writeDotenv prod envProdBack;
+                prodBackWriteDotenv = writeDotenv prodBackDotenvPath prodBackEnv;
 
-                writeDotenvDevBack = writeDotenv dev envDevBack;
+                devBackWriteDotenv = writeDotenv devBackDotenvPath devBackEnv;
 
-                writeDotenvScriptsBack = writeDotenv envBackPath envScriptsBack;
-
-                writeDotenvBack = {
+                backWriteDotenv = {
                   text = ''
-                    ${getExe packages.writeDotenvProdBack}
-                    ${getExe packages.writeDotenvDevBack}
+                    ${getExe packages.prodBackWriteDotenv}
+                    ${getExe packages.devBackWriteDotenv}
                   '';
-                  description = ''write ${dev} and ${prod}'';
+                  description = ''write ${devBackDotenvPath} and ${prodBackDotenvPath}'';
                 };
-              }
-            ) //
-            (
-              let
-                dev = "front/.env.development";
-                prod = "front/.env.production";
-                prefix = "/api";
-                envProdFront = (import ./${prod}.nix { inherit prefix; });
-                envDevFront = (import ./${dev}.nix { host = hostBack; port = portBack; inherit prefix; });
-              in
-              mkShellApps {
-                writeDotenvProdFront = writeDotenv prod envProdFront;
 
-                writeDotenvDevFront = writeDotenv dev envDevFront;
+                prodFrontWriteDotenv = writeDotenv prodFrontDotenvPath prodFrontEnv;
 
-                writeDotenvFront = {
+                devFrontWriteDotenv = writeDotenv devFrontDotenvPath devFrontEnv;
+
+                frontWriteDotenv = {
                   text = ''
-                    ${getExe packages.writeDotenvDevFront}
-                    ${getExe packages.writeDotenvProdFront}
+                    ${getExe packages.devFrontWriteDotenv}
+                    ${getExe packages.prodFrontWriteDotenv}
                   '';
-                  description = ''write ${dev} and ${prod}'';
+                  description = ''write ${devFrontDotenvPath} and ${prodFrontDotenvPath}'';
                 };
-              }
-            ) //
-            (
-              mkShellApps {
+
                 writeDotenv = {
                   text = ''
-                    ${getExe packages.writeDotenvBack}
-                    ${getExe packages.writeDotenvFront}
+                    ${getExe packages.backWriteDotenv}
+                    ${getExe packages.frontWriteDotenv}
                   '';
                   description = "write .env files for ./front and ./back";
                 };
 
-                runBackInBackground = mkRunBack { port = portBack; host = hostBack; doRunInBackground = true; };
-
-                prodBuildPdfjs = {
+                prodPdfjsBuild = {
                   text = ''cp -R ${pdfjs}/. ${pdfjsDir}'';
                   description = ''build pdfjs and write it to ${pdfjsDir}'';
                 };
 
-                prodBuildFront = {
+                prodFrontBuild = {
                   runtimeInputs = [ pkgs.nodejs ];
                   text =
                     let dist = "back/static/front"; in
                     ''
-                      ${getExe packages.prodBuildPdfjs}
-                      (cd front && npm run build)
+                      ${getExe packages.prodPdfjsBuild}
+                      (cd front && ${runInEnv prodFrontEnv "npm run build"})
                       rm -rf ${dist}
                       mkdir -p ${dist}
                       cp -R front/dist/. ${dist}
@@ -189,31 +198,24 @@
                   description = ''build front for prod'';
                 };
 
-                importCatalog = {
-                  runtimeInputs = [ pkgs.poetry pkgs.sqlite ];
-                  text = ''
-                    export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [
-                      pkgs.stdenv.cc.cc.lib
-                    ]}
-                    ${getExe packages.writeDotenvScriptsBack}
-                    poetry run import-catalog
-                  '';
-                  description = ''import books catalog into database + save sql'';
-                };
+                devImportCatalog = importCatalog devBackDotenvPath;
+                devExtractCovers = extractCovers devBackDotenvPath;
 
-                extractCovers = {
-                  runtimeInputs = [ pkgs.poetry ];
-                  text = ''
-                    ${getExe packages.writeDotenvScriptsBack}
-                    poetry run extract-covers
-                  '';
-                  description = ''extract book cover images'';
-                };
+                prodImportCatalog = importCatalog prodBackDotenvPath;
+                prodExtractCovers = extractCovers prodBackDotenvPath;
 
-                runFront = {
+                devFrontRun = {
                   runtimeInputs = [ pkgs.nodejs ];
-                  text = ''(cd front && npx vite --host ${hostBack} --port ${portFront})'';
-                  description = "run ${frontRef}";
+                  text = ''
+                    (cd front && ${
+                      runInEnv 
+                      devFrontEnv 
+                      "npx vite \
+                        --host ${devFrontEnv.HOST} \
+                        --port ${devFrontEnv.PORT_FRONT}"
+                    })
+                  '';
+                  description = "run ${frontRef devFrontEnv.HOST devFrontEnv.PORT_FRONT}";
                 };
 
                 install = {
@@ -243,7 +245,7 @@
                   name = "front-dist";
                   buildInputs = [ pkgs.nodejs ];
                   src = ./front;
-                  npmBuild = "npm run build";
+                  npmBuild = runInEnv prodFrontEnv "npm run build";
 
                   installPhase = ''
                     mkdir -p $out
@@ -304,8 +306,21 @@
                     '';
                   };
 
-                runProd = mkRunBack { host = "$HOST"; port = "$PORT"; };
-                runCI = mkRunBack { host = "$HOST"; port = "$PORT"; doRunInBackground = true; };
+                prodBackRun = mkBackRun { env = prodBackEnv; };
+
+                devBackRun = mkBackRun { env = devBackEnv; };
+
+                ciBackRun = mkBackRun { env = prodBackEnv; doRunInBackground = true; };
+
+                ciBackTest = {
+                  text = ''
+                    ${getExe packages.ciBackRun} &> logs || (cat logs && false)
+                    sleep 10
+                    ${runInEnv prodBackEnv "poetry run pytest"} &> logs.test || (cat logs && cat logs.test && false)
+                    cat logs
+                    cat logs.test
+                  '';
+                };
 
                 image =
                   pkgs.nix2container.buildImage {
@@ -317,14 +332,18 @@
                           {
                             name = "root";
                             paths = [
+                              packages.ciBackRun
+                              packages.ciBackTest
+                              packages.devBackRun
+                              packages.devFrontRun
+                              packages.prodBackRun
                               pkgs.bashInteractive
                               pkgs.coreutils
-                              pkgs.poetry
-                              pkgs.nodejs
                               pkgs.gnugrep
-                              packages.runFront
-                              packages.runProd
-                              packages.runCI
+                              pkgs.htop
+                              pkgs.lsof
+                              pkgs.nodejs
+                              pkgs.poetry
                             ];
                             pathsToLink = [ "/bin" "/dependencies" ];
                           }
@@ -338,7 +357,7 @@
                     ];
                   };
 
-                dockerLoad = {
+                imageLoad = {
                   runtimeInputs = [ pkgs.docker ];
                   text = ''
                     ${getExe packages.image.copyToDockerDaemon}
@@ -347,7 +366,7 @@
                   description = "build and load image";
                 };
 
-                dockerPush = {
+                imagePush = {
                   runtimeInputs = [ pkgs.docker ];
                   text = ''
                     docker tag ${imageName} deemp/${imageName}
@@ -357,48 +376,51 @@
                 };
 
                 prod = {
-                  runtimeInputs = [ pkgs.docker ];
+                  runtimeInputs = [ pkgs.docker pkgs.sops ];
                   text = ''
-                    ${getExe packages.writeDotenv}
                     ${getExe packages.stop}
-                    ${composeProd} up -dV
-                    ${composeProd} logs --follow ${serviceName}
+                    touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
+                    set -a; eval "$(sops -d back/auth.enc.env)"; set +a
+                    ${runInEnv prodEnv ''
+                      printf "$OTLP_GRPC_ENDPOINT\n"
+                      ${prodCompose} up -dV
+                    ''}
+                    ${prodCompose} logs --follow ${serviceName}
                   '';
                   description =
                     let
-                      prod = mkHyperRef "site" (mkURL hostBack portBack);
-                      monitoring = mkHyperRef "monitoring" ''${mkURL hostBack portGrafana}/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s'';
+                      prod = mkHyperRef "site" (mkURL prodBackEnv.HOST prodBackEnv.PORT_BACK);
+                      monitoring = mkHyperRef "monitoring" ''${mkURL prodBackEnv.HOST commonEnv.PORT_GRAFANA}/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s'';
                     in
                     ''run ${prod} and ${monitoring}'';
                 };
 
                 prodBack = {
                   text = ''
-                    ${getExe packages.writeDotenv}
-                    ${composeProd} down -v ${serviceName}
-                    ${composeDev} down -v ${serviceName}
-                    touch ${envBack.DB_PATH}
-                    ${composeProd} up -dV ${serviceName}
-                    ${composeProd} logs --follow ${serviceName}
+                    ${runInEnv prodEnv "${prodCompose} down -v ${serviceName}"}
+                    ${runInEnv devEnv "${devCompose} down -v ${serviceName}"}
+                    touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
+                    ${runInEnv prodEnv "${prodCompose} up -dV ${serviceName}"}
+                    ${prodCompose} logs --follow ${serviceName}
                   '';
-                  description = "(reload and) run ${backRef}";
+                  description = "(reload and) run ${backRef prodBackEnv.HOST prodBackEnv.PORT_BACK}";
                 };
 
                 dev = {
                   text = ''
-                    ${getExe packages.writeDotenv}
                     ${getExe packages.stop}
-                    touch ${envBack.DB_PATH}
-                    ${composeDev} up -V
+                    touch ${devBackEnv.DB_PATH} ${devBackEnv.DB_DUMP_PATH}
+                    ${runInEnv devEnv "${devCompose} up -V"}
                   '';
-                  description = "run ${frontRef} and ${backRef}";
+                  description = "run ${frontRef devFrontEnv.HOST devFrontEnv.PORT_FRONT} and ${backRef devBackEnv.HOST devBackEnv.PORT_BACK}";
                 };
 
                 stop = {
                   runtimeInputs = [ pkgs.docker ];
                   text = ''
-                    ${composeDev} down
-                    ${composeProd} down
+                    ${runInEnv devEnv "${devCompose} down"}
+                    ${runInEnv prodEnv "${prodCompose} down"}
+                    kill -9 $(lsof -t -i:${prodBackEnv.PORT_BACK}) || true
                   '';
                   description = ''stop prod and dev containers'';
                 };
@@ -423,13 +445,15 @@
               mkRunCommands "nix-run" {
                 inherit (packages)
                   dev
-                  dockerLoad
-                  dockerPush
-                  extractCovers
-                  importCatalog
+                  devExtractCovers
+                  devImportCatalog
+                  imageLoad
+                  imagePush
                   install
                   prod
                   prodBack
+                  prodExtractCovers
+                  prodImportCatalog
                   stop
                   writeDotenv
                   ;

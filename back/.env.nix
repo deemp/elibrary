@@ -1,14 +1,12 @@
-{ pkgs, host, port }:
+{ pkgs }:
 {
   ENABLE_AUTH = "false";
-  DB_PATH = "database.db";
   DB_TABLE_BOOK = "book";
   PREFIX = "/api";
 
   DO_IMPORT_CATALOG = "true";
   XLSX_PATH = "books.xlsx";
   SHEET = "books";
-  SQL_DUMP_PATH = "database.sql";
 
   DO_EXTRACT_COVERS = "false";
   POPPLER_PATH = "${pkgs.poppler_utils}/bin";
@@ -16,9 +14,6 @@
   COVERS_DIR = "covers";
 
   FRONT_DIR = "back/static/front";
-
-  HOST = host;
-  PORT = port;
 
   DO_RELOAD = "true";
 }
