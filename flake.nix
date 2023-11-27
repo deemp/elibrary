@@ -312,6 +312,16 @@
 
                 ciBackRun = mkBackRun { env = prodBackEnv; doRunInBackground = true; };
 
+                ciBackTest = {
+                  text = ''
+                    ${getExe packages.ciBackRun} &> logs || (cat logs && false)
+                    sleep 10
+                    ${runInEnv prodBackEnv "poetry run pytest"} &> logs.test || (cat logs && cat logs.test && false)
+                    cat logs
+                    cat logs.test
+                  '';
+                };
+
                 image =
                   pkgs.nix2container.buildImage {
                     name = "elibrary";
@@ -323,6 +333,7 @@
                             name = "root";
                             paths = [
                               packages.ciBackRun
+                              packages.ciBackTest
                               packages.devBackRun
                               packages.devFrontRun
                               packages.prodBackRun
