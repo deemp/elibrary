@@ -1,4 +1,5 @@
 { env }: {
+  ENABLE_AUTH = "false";
   DO_RELOAD = "false";
   ENV = env;
   OPENID_CONFIG_URL = "https://sso.university.innopolis.ru/adfs/.well-known/openid-configuration";

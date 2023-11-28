@@ -1,6 +1,5 @@
 { pkgs }:
 {
-  ENABLE_AUTH = "false";
   DB_TABLE_BOOK = "book";
   PREFIX = "/api";
 
