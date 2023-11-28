@@ -329,9 +329,9 @@
                   runtimeInputs = [ pkgs.docker pkgs.sops ];
                   text = ''
                     ${getExe packages.writeDotenv}
+                    ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     ${prodCompose} down
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
-                    ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     ${prodCompose} up -dV
                     ${prodCompose} logs --follow ${prodServiceName}
                   '';
@@ -346,9 +346,9 @@
                 prodBack = {
                   text = ''
                     ${getExe packages.writeDotenv}
+                    ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     ${prodCompose} down ${prodServiceName}
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
-                    ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     ${prodCompose} up -dV ${prodServiceName}
                     ${prodCompose} logs --follow ${prodServiceName}
                   '';
