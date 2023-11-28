@@ -88,7 +88,6 @@ export const Report = () => {
   return (
     <Base
       title="Report"
-      user={{ isAuthenticated: true }}
       content={
         <Container maxWidth={"xl"}>
           <Grid

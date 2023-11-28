@@ -1,17 +1,13 @@
 import { ReactElement, useEffect } from "react";
-import { User } from "../models/User";
 import { AppBar, Toolbar } from "@mui/material";
 import * as appbar from "./AppBar";
-import { AppBarLink } from "./AppBar";
 
 export function Base({
   title,
-  user,
   content,
   nav,
 }: {
   title: string;
-  user: User;
   content: ReactElement;
   nav: ReactElement;
 }) {
@@ -28,11 +24,7 @@ export function Base({
           disableGutters
           sx={{ minHeight: 60, height: 60 }}
         >
-          {user.isAuthenticated ? (
-            nav
-          ) : (
-            <AppBarLink text={"Log in"} to="/login" id={"login"} />
-          )}
+          {nav}
         </Toolbar>
       </AppBar>
       {content}

@@ -14,7 +14,6 @@ export function BookReadPage() {
   const base = (
     <Base
       title="Book"
-      user={{ isAuthenticated: true }}
       content={<Book bookId={id}></Book>}
       nav={
         <AppBar

@@ -13,7 +13,6 @@ export function SearchPage(props: Props) {
   const base = (
     <Base
       title="Search"
-      user={{ isAuthenticated: true }}
       content={
         <Container maxWidth="xl">
           <Box
