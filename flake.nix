@@ -143,6 +143,7 @@
             portFront = commonEnv.PORT_FRONT;
             portBack = commonEnv.PORT_BACK;
           };
+          withEnvDefault = env: name: ''"''${${name}:="${env.${name}}"}"'';
 
           packages =
             (
@@ -206,15 +207,10 @@
 
                 devFrontRun = {
                   runtimeInputs = [ pkgs.nodejs ];
-                  text = ''
-                    (cd front && ${
-                      runInEnv 
-                      devFrontEnv 
-                      "npx vite \
-                        --host ${devFrontEnv.HOST} \
-                        --port ${devFrontEnv.PORT_FRONT}"
-                    })
-                  '';
+                  text = ''(cd front && ${runInEnv devFrontEnv ''
+                    npx vite \
+                      --host ${withEnvDefault devFrontEnv "HOST"} \
+                      --port ${withEnvDefault devFrontEnv "PORT_FRONT"}''})'';
                   description = "run ${frontRef devFrontEnv.HOST devFrontEnv.PORT_FRONT}";
                 };
 
