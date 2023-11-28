@@ -37,11 +37,9 @@ services:
         ln -s /dependencies/front/node_modules front/node_modules
         prodBackRun
     volumes:
-      - ./${ENV}.db:/elibrary/${ENV}.db
-      - ./${ENV}.sql:/elibrary/${ENV}.sql
-      - ./${LOG_CONFIG_PATH}:/elibrary/${LOG_CONFIG_PATH}
       - ./back/__init__.py:/elibrary/back/__init__.py
       - ./back/internal:/elibrary/back/internal
+      - ./back/log_conf.yaml:/elibrary/back/log_conf.yaml
       - ./back/main.py:/elibrary/back/main.py
       - ./back/routers:/elibrary/back/routers
       - ./back/static:/elibrary/back/static
@@ -57,6 +55,8 @@ services:
       - ./front/tsconfig.node.json:/elibrary/front/tsconfig.node.json
       - ./front/vite.config.ts:/elibrary/front/vite.config.ts
       - ./poetry.toml:/elibrary/poetry.toml
+      - ./production.db:/elibrary/production.db
+      - ./production.sql:/elibrary/production.sql
       - ./pyproject.toml:/elibrary/pyproject.toml
 
   prometheus:
