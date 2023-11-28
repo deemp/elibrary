@@ -3,7 +3,7 @@ version: "3.4"
 services:
   elibrary:
     image: deemp/elibrary:latest
-    # pull_policy: always
+    pull_policy: always
     ports:
       - "5000:5000"
       - "5001:5001"
@@ -19,10 +19,7 @@ services:
         devFrontRun &
         devBackRun
     volumes:
-      - ./${ENV}.db:/elibrary/${ENV}.db
-      - ./${ENV}.sql:/elibrary/${ENV}.sql
       - ./back/__init__.py:/elibrary/back/__init__.py
-      - ./back/auth.env:/elibrary/back/auth.env
       - ./back/internal:/elibrary/back/internal
       - ./back/main.py:/elibrary/back/main.py
       - ./back/routers:/elibrary/back/routers
@@ -31,6 +28,8 @@ services:
       - ./books:/elibrary/books
       - ./books.xlsx:/elibrary/books.xlsx
       - ./covers:/elibrary/covers
+      - ./development.db:/elibrary/development.db
+      - ./development.sql:/elibrary/development.sql
       - ./front/index.html:/elibrary/front/index.html
       - ./front/package.json:/elibrary/front/package.json
       - ./front/public/vite.svg:/elibrary/front/public/vite.svg
