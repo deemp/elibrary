@@ -63,7 +63,7 @@ export function Router() {
       {
         path: "/report",
         element: <Report />,
-        // errorElement: <Navigate to={"/"} />,
+        errorElement: <Navigate to={"/"} />,
       },
       {
         path: "*",

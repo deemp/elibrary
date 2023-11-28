@@ -1,2 +1,6 @@
-import { AppBarLink } from "./AppBar"
-export const searchLink = AppBarLink({ text: "search", to: "/", id: "search" })
+import { AppBarButton } from "./AppBar";
+export const searchLink = AppBarButton({
+  text: "search",
+  to: "/",
+  id: "search",
+});

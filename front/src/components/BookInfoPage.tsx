@@ -15,7 +15,7 @@ import * as appbar from "./AppBar";
 import { searchLink } from "./SearchLink";
 import { useFAQ } from "./FAQ";
 import { ReferencePanel } from "./ReferencePanel";
-import { buttonPadding, fontSize, linkStyle } from "../models/elements";
+import { buttonPadding, fontSize } from "../models/elements";
 import { Row } from "./Row";
 
 interface Data {
@@ -63,13 +63,13 @@ export function BookInfoPage() {
   const base = (
     <Base
       title="Info"
-      user={{ isAuthenticated: true }}
       content={
         <Container maxWidth="xl">
           <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
             <Grid container rowSpacing={2} marginTop={appbar.height}>
               <Grid item xs={12} display={"flex"} justifyContent={"center"}>
-                <Link to={`/book/${id}/read`} style={linkStyle}>
+                {
+                  //@ts-ignore
                   <Button
                     sx={{
                       ...buttonPadding,
@@ -78,10 +78,13 @@ export function BookInfoPage() {
                     variant="contained"
                     size="large"
                     disableElevation
+                    component={Link}
+                    underline={"none"}
+                    to={`/book/${id}/read`}
                   >
                     read this book
                   </Button>
-                </Link>
+                }
               </Grid>
               <Grid item xs={12}>
                 <Grid container spacing={3} justifyContent={"center"}>
