@@ -331,7 +331,7 @@
                     ${getExe packages.writeDotenv}
                     ${prodCompose} down
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
-                    ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv ''eval "$(sops -d back/auth.enc.env)"'' else ""}
+                    ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     ${prodCompose} up -dV
                     ${prodCompose} logs --follow ${prodServiceName}
                   '';
@@ -340,7 +340,7 @@
                       prod = backRef commonEnv.HOST commonEnv.PROD_HOST_PORT_BACK;
                       monitoring = mkHyperRef "monitoring" ''${mkURL commonEnv.HOST commonEnv.PROD_HOST_PORT_GRAFANA}/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s'';
                     in
-                    ''run ${prod} and ${monitoring}'';
+                    ''reload and run ${prod} and ${monitoring}'';
                 };
 
                 prodBack = {
@@ -348,6 +348,7 @@
                     ${getExe packages.writeDotenv}
                     ${prodCompose} down ${prodServiceName}
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
+                    ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     ${prodCompose} up -dV ${prodServiceName}
                     ${prodCompose} logs --follow ${prodServiceName}
                   '';
