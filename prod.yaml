@@ -32,6 +32,10 @@ services:
     env_file:
       - back/.env.production
       - front/.env.production
+    environment:
+      AppID: "$AppID"
+      Secret: "$Secret"
+      SECRET_KEY: "$SECRET_KEY"
     command:
       - |
         cd elibrary
