@@ -29,6 +29,9 @@ services:
     entrypoint:
       - "bash"
       - "-c"
+    env_file:
+      - back/.env.production
+      - front/.env.production
     command:
       - |
         cd elibrary

@@ -10,6 +10,9 @@ services:
     entrypoint:
       - "bash"
       - "-c"
+    env_file:
+      - back/.env.development
+      - front/.env.development
     command:
       - |
         cd elibrary
