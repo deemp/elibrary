@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { Base } from "./Base";
 import { Book } from "./Book";
-import { AppBarLink, AppBar } from "./AppBar";
+import { AppBar, AppBarButton } from "./AppBar";
 import { useFAQ } from "./FAQ";
 import { Book as BookModel } from "../models/book";
 import { searchLink } from "./SearchLink";
@@ -14,14 +14,13 @@ export function BookReadPage() {
   const base = (
     <Base
       title="Book"
-      user={{ isAuthenticated: true }}
       content={<Book bookId={id}></Book>}
       nav={
         <AppBar
           faqDrawer={faqDrawer}
           leftChildren={[
             <Grid item>
-              <AppBarLink text={"Info"} to={`/book/${id}`} id={"info"} />
+              <AppBarButton text={"Info"} to={`/book/${id}`} id={"info"} />
             </Grid>,
             <Grid item>{searchLink}</Grid>,
             <Grid item>{faqButton}</Grid>,

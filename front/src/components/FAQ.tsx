@@ -1,14 +1,10 @@
-import {
-  Box,
-  Grid,
-  Link,
-  Drawer,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Drawer, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import * as appbar from "./AppBar";
 import { useState } from "react";
 import { bookPretty } from "../models/book";
 import { AppBarButton, AppBarElement } from "./AppBar";
+import { color } from "../models/elements";
 
 interface Term {
   name: string;
@@ -67,7 +63,8 @@ export function useFAQ() {
         event &&
         event.type === "keydown" &&
         ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+          (event as React.KeyboardEvent).key === "Shift" ||
+          (event as React.KeyboardEvent).key === "Enter")
       ) {
         return;
       }
@@ -75,14 +72,26 @@ export function useFAQ() {
       setState(open);
     };
 
-  const faqButton = <AppBarButton text={'FAQ'} onClick={toggleDrawer(true)}></AppBarButton>;
+  const faqButton = (
+    <AppBarButton text={"FAQ"} onClick={toggleDrawer(true)}></AppBarButton>
+  );
+
+  const header = (text: string) => (
+    <Grid
+      item
+      xs={12}
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      height={appbar.height}
+      bgcolor={color}
+    >
+      <AppBarElement text={text}></AppBarElement>
+    </Grid>
+  );
 
   const faqDrawer = (
-    <Drawer
-      anchor={anchor}
-      open={state}
-      onClose={toggleDrawer(false)}
-    >
+    <Drawer anchor={anchor} open={state} onClose={toggleDrawer(false)}>
       <Box
         sx={{ width: "60vw" }}
         role="presentation"
@@ -90,29 +99,20 @@ export function useFAQ() {
         onKeyDown={toggleDrawer(false)}
       >
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            height={appbar.height}
-            bgcolor="#1976d2"
-          >
-            <AppBarElement text={'Terms and definitions'}></AppBarElement>
-          </Grid>
-        </Grid>
-        <Grid container padding={1}>
+          {header("Terms and definitions")}
           {terms.map((x) => {
             return (
-              <Grid item xs={12} key={x.name}>
+              <Grid item xs={12} key={x.name} paddingX={"1rem"}>
                 <Grid container>
                   <Grid item xs={12}>
-                    <Link href={x.link}>
-                      <Typography variant="h6">
-                        {bookPretty.get(x.name)}
-                      </Typography>
-                    </Link>
+                    <Typography
+                      component={Link}
+                      to={x.link}
+                      sx={{ color }}
+                      variant="h6"
+                    >
+                      {bookPretty.get(x.name)}
+                    </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     {x.definition}
@@ -121,6 +121,23 @@ export function useFAQ() {
               </Grid>
             );
           })}
+          {header("Source code")}
+          <Grid item xs={12} paddingX={"1rem"}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography
+                  component={Link}
+                  to={
+                    "https://gitlab.pg.innopolis.university/elibrary/elibrary"
+                  }
+                  variant="h6"
+                  sx={{ color }}
+                >
+                  {"elibrary"}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
       </Box>
     </Drawer>
