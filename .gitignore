@@ -6,3 +6,4 @@ back/website/static/front
 pulumi/node_modules
 .kube
 **/*.env
+**/*.sql
