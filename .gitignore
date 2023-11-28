@@ -1,4 +1,3 @@
-*.db
 .direnv
 __pycache__/
 back/website/static/pdfjs
@@ -7,3 +6,4 @@ pulumi/node_modules
 .kube
 **/*.env
 **/*.sql
+**/*.db
