@@ -1,5 +1,5 @@
-rec {
-  ENV = "development";
-  DB_PATH = "${ENV}.db";
-  DB_DUMP_PATH = "${ENV}.sql";
+{ env }: {
+  ENV = env;
+  DB_PATH = "${env}.db";
+  DB_DUMP_PATH = "${env}.sql";
 }
