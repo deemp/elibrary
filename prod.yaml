@@ -48,7 +48,7 @@ services:
       - ./back/static:/elibrary/back/static
       - ./back/tests:/elibrary/back/tests
       - ./books:/elibrary/books
-      - ./books.xlsx:/elibrary/books.xlsx
+      - ./books-sample.xlsx:/elibrary/books.xlsx
       - ./covers:/elibrary/covers
       - ./front/index.html:/elibrary/front/index.html
       - ./front/package.json:/elibrary/front/package.json

@@ -29,7 +29,7 @@ services:
       - ./back/static:/elibrary/back/static
       - ./back/tests:/elibrary/back/tests
       - ./books:/elibrary/books
-      - ./books.xlsx:/elibrary/books.xlsx
+      - ./books-sample.xlsx:/elibrary/books.xlsx
       - ./covers:/elibrary/covers
       - ./development.db:/elibrary/development.db
       - ./development.sql:/elibrary/development.sql
