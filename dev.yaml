@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  elibrary:
+  elibrary-dev:
     image: deemp/elibrary:latest
     pull_policy: always
     ports:
