@@ -15,6 +15,7 @@ def extract_covers(
         pdf_idx = pdf.stem
         cover_path = covers_dir / f"{pdf_idx}.jpg"
         if not cover_path.exists():
+            print(f"Extracting {cover_path}...")
             try:
                 images = convert_from_path(
                     pdf_path=pdf,

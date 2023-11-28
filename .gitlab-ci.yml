@@ -7,6 +7,7 @@ default:
     - ln -s /dependencies/back/static/front back/static/front
     - ln -s /dependencies/.venv .venv
     - ln -s /dependencies/front/node_modules front/node_modules
+    - ln -s books-sample.xlsx books.xlsx
 
 stages:
   - stage

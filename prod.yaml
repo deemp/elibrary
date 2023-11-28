@@ -18,11 +18,11 @@ services:
     ports:
       - "3100:3100"
 
-  elibrary:
+  elibrary-prod:
     image: deemp/elibrary:latest
     pull_policy: always
     ports:
-      - "5000:5000"
+      - "5100:5001"
     depends_on:
       - loki
     logging: *default-logging
@@ -48,7 +48,7 @@ services:
       - ./back/static:/elibrary/back/static
       - ./back/tests:/elibrary/back/tests
       - ./books:/elibrary/books
-      - ./books.xlsx:/elibrary/books.xlsx
+      - ./books-sample.xlsx:/elibrary/books.xlsx
       - ./covers:/elibrary/covers
       - ./front/index.html:/elibrary/front/index.html
       - ./front/package.json:/elibrary/front/package.json
