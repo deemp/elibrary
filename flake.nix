@@ -267,6 +267,8 @@
 
                 ciBackTest = {
                   text = ''
+                    ${exportEnv "source ${prodBackDotenvPath}"}
+                    ${exportEnv "source ${prodFrontDotenvPath}"}
                     ${getExe packages.ciBackRun} &> logs || (cat logs && false)
                     sleep 10
                     poetry run pytest &> logs.test || (cat logs && cat logs.test && false)
