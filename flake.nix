@@ -131,10 +131,11 @@
           };
 
           frontDotenvPrefixPath = "front/.env";
+          frontEnv = import ./${frontDotenvPrefixPath}.nix;
           devFrontDotenvPath = "${frontDotenvPrefixPath}.${commonEnv.ENV_DEV}";
           prodFrontDotenvPath = "${frontDotenvPrefixPath}.${commonEnv.ENV_PROD}";
-          prodFrontEnv = import ./${prodFrontDotenvPath}.nix { prefix = commonEnv.PREFIX; };
-          devFrontEnv = import ./${devFrontDotenvPath}.nix {
+          prodFrontEnv = frontEnv // import ./${prodFrontDotenvPath}.nix { prefix = commonEnv.PREFIX; };
+          devFrontEnv = frontEnv // import ./${devFrontDotenvPath}.nix {
             prefix = commonEnv.PREFIX;
             host = commonEnv.HOST;
             portFront = commonEnv.PORT_FRONT;
