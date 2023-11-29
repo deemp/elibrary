@@ -21,8 +21,8 @@ export function BookReadPage() {
           faqDrawer={faqDrawer}
           leftChildren={[
             faqButton,
-            searchLink,
             reportLink(),
+            searchLink,
             infoLink(id),
           ]}
         />
