@@ -78,12 +78,6 @@
     nix run .#install
     ```
 
-1. Build `pdfjs`.
-
-    ```console
-    nix run .#prodBuildPdfjs
-    ```
-
 1. Run dev servers (`back` and `front`).
 
     ```console
@@ -116,6 +110,12 @@
     - Login: `admin`
     - Password: `admin`
     - Skip updating password
+
+1. Restart back server.
+
+    ```console
+    nix run .#prodBack
+    ```
 
 ## Connect by SSH
 
@@ -186,7 +186,7 @@
 ### Front
 
 - language: [TypeScript](https://www.typescriptlang.org/)
-- framework: [React](https://react.dev/)
+- framework: [Material UI](https://mui.com/material-ui/)
 - tooling: [Vite](https://vitejs.dev/)
 - book viewer: [PDF.js](https://github.com/mozilla/pdf.js)
 
