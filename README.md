@@ -1,6 +1,6 @@
-# Electronic Library of IU
+# eLibrary - Electronic Library of IU
 
-<https://test.library.innopolis.university>
+<https://ebsco.library.innopolis.university>
 
 ## Features
 
@@ -12,30 +12,44 @@
 
 ## Screenshots
 
-![Search](screenshots/1.png)
+### Search page
 
-![Info](screenshots/2.png)
+![Search](README/search.png)
 
-![Bookreader](screenshots/3.png)
+### Book info page
+
+![Info](README/info.png)
+
+### Book reading page
+
+![Read](README/read.png)
+
+### Report page
+
+![Read](README/report.png)
 
 ## A site walkthrough
 
-1. Go to <https://test.library.innopolis.university>
-1. Click on `Filter`.
+1. Go to <https://ebsco.library.innopolis.university>
+1. Click on `Filter by`.
 1. Select `Title`.
-1. Type `99` in the `Filter input`.
-1. Click on a suggestion under `Filter input`.
-1. In the results table, click on `Read` or on the book cover.
+1. Type `99` in the `Using text`.
+1. Click on the first suggestion under `Using text`.
+1. In the results table, click on `Read`.
 1. Go to the page `95`( of `272`).
 1. In the top of the page, click on `INFO`.
 1. Look at the book info.
-1. In the top of the page, click on `FAQ` to see what book info entries mean.
+1. In the top of the page, click on `FAQ` to see meanings of terms used in the book info.
 1. In the `BIBLIOGRAPHIC INFORMATION` tab, click on `COPY`.
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
 1. Click on `BIBTEX`.
 1. In the `BIBTEX` tab, click on `COPY`.
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
 1. In the top of the page, click on `SEARCH` to return to the search page.
+1. Click on `Report`.
+1. Click on `November`.
+1. Start typing a month name, e.g., `D` (for `December`).
+1. Click on `Search`.
 
 ## Development
 
@@ -64,21 +78,15 @@
     nix run .#install
     ```
 
-1. Build `pdfjs`.
-
-    ```console
-    nix run .#prodBuildPdfjs
-    ```
-
 1. Run dev servers (`back` and `front`).
 
     ```console
     nix run .#dev
     ```
 
-1. (Optionally) Access back server at <http://0.0.0.0:5000>.
+1. (Optionally) Access back server ([link](http://0.0.0.0:5001)).
 
-1. Access front server at <http://0.0.0.0:5001> in a browser.
+1. Access front server ([link](http://0.0.0.0:5000)) in a browser.
 
 1. Edit files in [back](./back) and in [front](./front/).
 
@@ -93,15 +101,21 @@
 1. Run server and monitoring containers.
 
     ```console
-    docker compose up
+    nix run .#prod
     ```
 
-1. Open server at <http://0.0.0.0:5000/>.
+1. Open server ([link](http://0.0.0.0:5100/)).
 
-1. Open Grafana at <http://0.0.0.0:3000/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s>.
+1. Open Grafana ([link](http://0.0.0.0:3000/d/fastapi-observability/fastapi-observability?orgId=1&refresh=5s)).
     - Login: `admin`
     - Password: `admin`
     - Skip updating password
+
+1. Restart back server.
+
+    ```console
+    nix run .#prodBack
+    ```
 
 ## Connect by SSH
 
@@ -124,12 +138,10 @@
 
 ## Configuration
 
-We try to follow the 12-factor application approach while maintaining convenient development tools.
-
-- We generate environments from Nix expressions and dump them in `.env` files.
-- We don't check in the generated `.env` files into the repository.
-- We run scripts in environments produced from these expressions.
-- Other files like `docker-compose` may override environment variables used in scripts.
+- We source secrets in Nix scripts
+- We generate `.env` files with non-sensitive data from Nix expressions in Nix scripts
+- We check into the repo both these expressions and generated `.env` files
+- We use `.env` files in `docker compose` files
 
 ## Security
 
@@ -174,7 +186,7 @@ We try to follow the 12-factor application approach while maintaining convenient
 ### Front
 
 - language: [TypeScript](https://www.typescriptlang.org/)
-- framework: [React](https://react.dev/)
+- framework: [Material UI](https://mui.com/material-ui/)
 - tooling: [Vite](https://vitejs.dev/)
 - book viewer: [PDF.js](https://github.com/mozilla/pdf.js)
 
@@ -207,7 +219,7 @@ We try to follow the 12-factor application approach while maintaining convenient
 
 1. In its description, define steps to be completed.
 
-1. Create a merge request [from the issue](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html#from-an-issue) agains the `main` branch.
+1. Create a merge request [from the issue](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html#from-an-issue) against the `main` branch.
 
 1. Describe the request using the default [closing pattern](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically).
 
@@ -217,7 +229,7 @@ We try to follow the 12-factor application approach while maintaining convenient
 
 1. If necessary, ask for a review.
 
-1. Merge the request to the `main` branch.
+1. Merge the request into the `main` branch.
 
 ## References
 
