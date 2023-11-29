@@ -1,6 +1,8 @@
 import { AppBarButton } from "./AppBar";
-export const reportLink = AppBarButton({
-  text: "report",
-  to: "/report",
-  id: "report",
-});
+export const reportLink = (onClick?: () => void) =>
+  AppBarButton({
+    text: "report",
+    to: "/report",
+    id: "report",
+    onClick
+  });

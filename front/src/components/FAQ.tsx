@@ -1,10 +1,11 @@
 import { Box, Grid, Drawer, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import * as appbar from "./AppBar";
 import { useState } from "react";
 import { bookPretty } from "../models/book";
 import { AppBarButton, AppBarElement } from "./AppBar";
-import { color } from "../models/elements";
+import { color } from "../models/constants";
+import * as constants from "../models/constants";
+
 
 interface Term {
   name: string;
@@ -83,7 +84,7 @@ export function useFAQ() {
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
-      height={appbar.height}
+      height={constants.heightAdaptive}
       bgcolor={color}
     >
       <AppBarElement text={text}></AppBarElement>

@@ -1,16 +1,21 @@
 import { Box, Button } from "@mui/material";
-import { fontSize } from "../models/elements";
+import {
+  buttonBackgroundColor,
+  fontSize,
+  lineHeight,
+} from "../models/constants";
 import { Container, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const height = "60px";
+export const height = "80px";
 export const padding = "20px";
 
 const sxBase = {
   color: "#ffffff",
-  paddingX: "3px",
   fontSize,
-  height: { xs: "25px", sm: "40px" },
+  paddingY: { xs: 0, sm: "0.2rem" },
+  lineHeight,
+  paddingX: "0px",
 };
 
 export function AppBarButton({
@@ -27,18 +32,23 @@ export function AppBarButton({
   const sx = {
     ...sxBase,
     "&:hover": {
-      backgroundColor: "#4f9ae3",
+      backgroundColor: buttonBackgroundColor,
+    },
+    width: {
+      xs: `calc(${text.length} * ${fontSize.xs} * 0.8)`,
+      sm: `calc(${text.length} * ${fontSize.sm} * 0.8)`,
     },
   };
   return (
     <Button
       onClick={onClick}
-      //@ts-ignore
-      component={Link}
-      to={to}
-      underline={"none"}
+      LinkComponent={Link}
+      href={to}
       sx={sx}
       id={id}
+      // @ts-expect-error doesn't inherit properties from `Link`
+      underline={"none"}
+      to={to}
     >
       {text}
     </Button>
@@ -53,7 +63,6 @@ export function AppBarElement({ text }: { text: string }) {
         fontWeight: "bold",
         height: "auto",
         alignItems: "center",
-        lineHeight: "1.2rem",
       }}
     >
       {text}
@@ -61,7 +70,7 @@ export function AppBarElement({ text }: { text: string }) {
   );
 }
 
-const Ebsco = <AppBarElement text={"EBSCO EBOOK ARCHIVE"}></AppBarElement>;
+const Ebsco = <AppBarElement text={"EBSCO EBOOK ARCHIVE"} />;
 
 export function AppBar({
   faqDrawer,
@@ -74,13 +83,21 @@ export function AppBar({
     <>
       <Container maxWidth={"xl"}>
         <Grid container>
-          <Grid item xs={7} sm={6} display={"flex"} alignItems={"center"}>
-            <Grid container columnSpacing={1} children={leftChildren} />
+          <Grid item xs={7} sm md lg xl display={"flex"} alignItems={"center"}>
+            <Grid
+              container
+              children={leftChildren.map((x) => (
+                <Grid item display={"flex"} maxHeight={"auto"} height={"auto"}>
+                  {x}
+                </Grid>
+              ))}
+            />
           </Grid>
           <Grid
             item
             xs={5}
-            sm={6}
+            sm={3.5}
+            md={5}
             display={"flex"}
             justifyContent={"end"}
             alignItems={"center"}

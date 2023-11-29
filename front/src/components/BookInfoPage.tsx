@@ -15,8 +15,11 @@ import * as appbar from "./AppBar";
 import { searchLink } from "./SearchLink";
 import { useFAQ } from "./FAQ";
 import { ReferencePanel } from "./ReferencePanel";
-import { buttonPadding, fontSize } from "../models/elements";
+import { buttonPadding, fontSize } from "../models/constants";
 import { Row } from "./Row";
+import { reportLink } from "./ReportLink";
+import { readLink } from "./ReadLink";
+import * as constants from "../models/constants";
 
 interface Data {
   book: Book;
@@ -32,9 +35,9 @@ export function BookInfoPage() {
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
 
-  const id = book.book_id;
+  const bookId = book.book_id;
 
-  const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${id}.jpg`;
+  const coverUrl = `${import.meta.env.VITE_API_PREFIX}/covers/${bookId}.jpg`;
 
   useEffect(() => {
     const authors = book.authors.split("; ");
@@ -65,11 +68,11 @@ export function BookInfoPage() {
       title="Info"
       content={
         <Container maxWidth="xl">
-          <Box sx={{ minHeight: `calc(100vh - ${appbar.height})` }}>
-            <Grid container rowSpacing={2} marginTop={appbar.height}>
+          <Box sx={{ minHeight: constants.contentHeightAdaptive }}>
+            <Grid container rowSpacing={2} marginTop={constants.heightAdaptive}>
               <Grid item xs={12} display={"flex"} justifyContent={"center"}>
                 {
-                  //@ts-ignore
+                  //@ts-expect-error doesn't support the property `to` from `Link`
                   <Button
                     sx={{
                       ...buttonPadding,
@@ -78,9 +81,10 @@ export function BookInfoPage() {
                     variant="contained"
                     size="large"
                     disableElevation
-                    component={Link}
+                    LinkComponent={Link}
+                    href={`/book/${bookId}/read`}
+                    to={`/book/${bookId}/read`}
                     underline={"none"}
-                    to={`/book/${id}/read`}
                   >
                     read this book
                   </Button>
@@ -94,7 +98,7 @@ export function BookInfoPage() {
                     display={"flex"}
                     justifyContent={"center"}
                   >
-                    <Link to={`/book/${id}/read`}>
+                    <Link to={`/book/${bookId}/read`}>
                       <Card
                         elevation={elevation}
                         sx={{
@@ -169,8 +173,10 @@ export function BookInfoPage() {
         <appbar.AppBar
           faqDrawer={faqDrawer}
           leftChildren={[
-            <Grid item>{searchLink}</Grid>,
-            <Grid item>{faqButton}</Grid>,
+            faqButton,
+            searchLink,
+            reportLink(),
+            readLink(bookId),
           ]}
         />
       }
