@@ -1,12 +1,18 @@
-import * as appbar from './AppBar'
+import { Box } from "@mui/material";
+import * as constants from "../models/constants";
 
-export function Book({ bookId }: { bookId: number }) {
-  const prefix = import.meta.env.VITE_API_PREFIX
+export function BookReader({ bookId }: { bookId: number }) {
+  const prefix = import.meta.env.VITE_API_PREFIX;
   return (
-    <iframe
-      id="reader"
-      src={`${prefix}/static/pdfjs/web/viewer.html?file=${prefix}/book/${bookId}/file`}
-      style={{ marginTop: appbar.height }}
-    />
+    <Box
+      height={constants.contentHeightAdaptive}
+      marginTop={constants.heightAdaptive}
+    >
+      <iframe
+        id="reader"
+        src={`${prefix}/static/pdfjs/web/viewer.html?file=${prefix}/book/${bookId}/file`}
+        style={{ height: "100%" }}
+      />
+    </Box>
   );
 }

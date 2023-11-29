@@ -7,13 +7,12 @@ import "../App.css";
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import { BookTable } from "./Table";
 import React, { useCallback, useEffect, useState } from "react";
-import * as appbar from "./AppBar";
 import { Map, List } from "immutable";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import { CellContext, ColumnDef, ColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
-import { color } from "../models/elements";
+import * as constants from "../models/constants";
 
 export interface GETResponse {
   bisac: MapStrings;
@@ -124,7 +123,7 @@ export interface Props {
 
 function RowLink({ text, to }: { text: string; to: string }) {
   return (
-    <Link to={to} style={{ color }}>
+    <Link to={to} style={{ color: constants.color }}>
       {text}
     </Link>
   );
@@ -349,7 +348,12 @@ export function Search({
   );
   return (
     <>
-      <Grid container rowSpacing={2} marginTop={appbar.height} height={"100%"}>
+      <Grid
+        container
+        rowSpacing={2}
+        marginTop={constants.heightAdaptive}
+        height={"100%"}
+      >
         <Grid item xs={12}>
           <Grid container rowSpacing={2}>
             <Grid item xs={12}>

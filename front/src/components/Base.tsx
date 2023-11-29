@@ -1,6 +1,6 @@
 import { ReactElement, useEffect } from "react";
 import { AppBar, Toolbar } from "@mui/material";
-import * as appbar from "./AppBar";
+import * as constants from "../models/constants";
 
 export function Base({
   title,
@@ -18,11 +18,17 @@ export function Base({
   // TODO show error pages
   return (
     <>
-      <AppBar elevation={0} sx={{ height: appbar.height, color: "white" }}>
+      <AppBar
+        elevation={0}
+        sx={{ height: constants.heightAdaptive, color: "white" }}
+      >
         <Toolbar
           variant="dense"
           disableGutters
-          sx={{ minHeight: 60, height: 60 }}
+          sx={{
+            minHeight: constants.heightAdaptive,
+            height: constants.heightAdaptive,
+          }}
         >
           {nav}
         </Toolbar>

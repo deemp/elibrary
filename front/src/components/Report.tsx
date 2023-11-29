@@ -3,7 +3,6 @@ import { Base } from "./Base";
 import { searchLink } from "./SearchLink";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { useFAQ } from "./FAQ";
-import * as appbar from "./AppBar";
 import { AppBar } from "./AppBar";
 import { BookTable } from "./Table";
 import { bookPretty } from "../models/book";
@@ -12,6 +11,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
+import * as constants from "../models/constants";
 
 interface Book {
   book_id: number;
@@ -83,8 +83,10 @@ export const Report = () => {
 
   useEffect(() => setData(), [setData]);
   const height = "56px";
-  const calculateHeight = (cnt: number) =>
-    `calc(100vh - ${appbar.height} - ${cnt} * ${height})`;
+  const calculateHeight = (cnt: number, size: "xs" | "md") =>
+    `calc(100vh - ${
+      constants.heightAdaptive[size as keyof typeof constants.heightAdaptive]
+    } - ${cnt} * ${height})`;
   return (
     <Base
       title="Report"
@@ -94,8 +96,8 @@ export const Report = () => {
             container
             rowSpacing={2}
             columnSpacing={2}
-            marginTop={appbar.height}
-            height={`calc(100vh - ${appbar.height})`}
+            marginTop={constants.heightAdaptive}
+            height={constants.contentHeightAdaptive}
           >
             <Grid
               item
@@ -114,7 +116,9 @@ export const Report = () => {
                   defaultValue={dayjs()}
                   views={["month", "year"]}
                   onChange={(value) => {
-                    if (value) setDate(value);
+                    if (value) {
+                      setDate(value);
+                    }
                   }}
                   slotProps={{ textField: { size: "small" } }}
                 />
@@ -146,8 +150,8 @@ export const Report = () => {
               item
               xs={12}
               height={{
-                xs: calculateHeight(2),
-                md: calculateHeight(1),
+                xs: calculateHeight(2, "xs"),
+                md: calculateHeight(1, "md"),
               }}
             >
               <BookTable
@@ -160,13 +164,7 @@ export const Report = () => {
         </Container>
       }
       nav={
-        <AppBar
-          faqDrawer={faqDrawer}
-          leftChildren={[
-            <Grid item>{searchLink}</Grid>,
-            <Grid item>{faqButton}</Grid>,
-          ]}
-        />
+        <AppBar faqDrawer={faqDrawer} leftChildren={[faqButton, searchLink]} />
       }
     />
   );

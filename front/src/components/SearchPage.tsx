@@ -1,11 +1,11 @@
 import { Base } from "./Base";
 import { Search } from "./Search";
-import { Box, Container, Grid } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { AppBar } from "./AppBar";
-import * as appbar from "./AppBar";
 import { useFAQ } from "./FAQ";
 import { Props } from "./Search";
 import { reportLink } from "./ReportLink";
+import * as constants from "../models/constants";
 
 export function SearchPage(props: Props) {
   const { faqButton, faqDrawer } = useFAQ();
@@ -17,9 +17,9 @@ export function SearchPage(props: Props) {
         <Container maxWidth="xl">
           <Box
             width={"100%"}
-            height={`calc(100vh - ${appbar.height})`}
+            height={constants.contentHeightAdaptive}
             sx={{ backgroundColor: "white" }}
-            marginTop={appbar.height}
+            marginTop={constants.heightAdaptive}
           >
             <Search {...props} />
           </Box>
@@ -28,10 +28,7 @@ export function SearchPage(props: Props) {
       nav={
         <AppBar
           faqDrawer={faqDrawer}
-          leftChildren={[
-            <Grid item>{faqButton}</Grid>,
-            <Grid item>{reportLink}</Grid>,
-          ]}
+          leftChildren={[faqButton, reportLink()]}
         />
       }
     />
