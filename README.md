@@ -55,6 +55,8 @@
 
 1. Install `Nix` ([link](https://github.com/deemp/flakes/blob/main/README/InstallNix.md#install-nix)) and `direnv`.
 
+1. Install Docker ([link](https://docs.docker.com/engine/install/)).
+
 1. Clone and enter this repository
 
     ```console
