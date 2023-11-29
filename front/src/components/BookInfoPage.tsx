@@ -174,7 +174,7 @@ export function BookInfoPage() {
       nav={
         <appbar.AppBar
           faqDrawer={faqDrawer}
-          leftChildren={[faqButton, searchLink, reportLink(), readLink(bookId)]}
+          leftChildren={[faqButton, reportLink(), searchLink, readLink(bookId)]}
         />
       }
     />
