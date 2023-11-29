@@ -75,12 +75,13 @@ export function BookTable<T>({
   const { rows } = table.getRowModel();
 
   return (
-    <Paper variant="outlined" style={{ height: "98%" }}>
+    <Paper variant="outlined" style={{ height: "98%", position: "relative" }}>
       {booksLoaded ? undefined : (
         <Box
           position={"absolute"}
           left={"calc(50% - 2rem)"}
           top={"calc(50% - 2rem)"}
+          zIndex={1}
         >
           <CircularProgress size={"4rem"} />
         </Box>
