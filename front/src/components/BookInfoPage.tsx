@@ -47,7 +47,9 @@ export function BookInfoPage() {
         book.publisher
       }. - ${book.year}. - ${book.pages} p. - ISBN: ${
         book.isbn
-      } // EBSCO EBOOK ARCHIVE. - URL: ${window.location.href}/read`
+      } // EBSCO EBOOK ARCHIVE. - URL: ${
+        import.meta.env.VITE_BASE_URL
+      }/book/${bookId}/read`
     );
     const bibTexTitle = `${author.split(" ").pop()?.toLowerCase()}${
       book.year
@@ -59,7 +61,7 @@ export function BookInfoPage() {
         book.title
       }}, year={${book.year}}, publisher={${book.publisher}}}`
     );
-  }, [book]);
+  }, [book, bookId]);
 
   const elevation = 5;
 
@@ -172,12 +174,7 @@ export function BookInfoPage() {
       nav={
         <appbar.AppBar
           faqDrawer={faqDrawer}
-          leftChildren={[
-            faqButton,
-            searchLink,
-            reportLink(),
-            readLink(bookId),
-          ]}
+          leftChildren={[faqButton, searchLink, reportLink(), readLink(bookId)]}
         />
       }
     />
