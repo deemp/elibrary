@@ -92,7 +92,7 @@ function SearchField({
         }}
         freeSolo
         onInputChange={(_event, value) => {
-          setter(value || "");
+          setter(value);
         }}
       />
     </Grid>
@@ -358,11 +358,10 @@ export function Search({
           <Grid container rowSpacing={2}>
             <Grid item xs={12}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={10}>
-                  <Grid container spacing={0}>
+                <Grid item xs={12} sm>
+                  <Grid container columnSpacing={2}>
                     <SearchField
                       xs={6}
-                      isLeft={true}
                       label={bookPretty.get("bisac") || ""}
                       value={bisac}
                       options={bisacOptions}
@@ -370,7 +369,6 @@ export function Search({
                     />
                     <SearchField
                       xs={6}
-                      isLeft={false}
                       label={bookPretty.get("lc") || ""}
                       value={lc}
                       options={lcOptions}
@@ -378,32 +376,35 @@ export function Search({
                     />
                   </Grid>
                 </Grid>
-                <SearchField
-                  xs={12}
-                  sm={2}
-                  label={"Filters"}
-                  value={`${filterCounter}`}
-                  options={filtersCountOptions}
-                  setter={(value) => {
-                    const num = Number.parseInt(value as string);
-                    if (Number.isNaN(num)) {
-                      const f = rowFilter.map((_v) => emptyRowFilter);
-                      setFilterCounter(1);
-                      setRowFilter(f);
-                    } else {
-                      const filterCounterNew = Math.min(
-                        maxFilterCounter,
-                        Math.max(minFilterCounter, num)
-                      );
-                      setFilterCounter(filterCounterNew);
-                      setRowFilter(
-                        rowFilter.map((v, idx) =>
-                          idx >= filterCounterNew ? emptyRowFilter : v
-                        )
-                      );
-                    }
-                  }}
-                />
+                <Grid item width={{ xs: '100%', sm: "12rem" }}>
+                  <Grid container>
+                    <SearchField
+                      xs={12}
+                      label={"Number of filters"}
+                      value={`${filterCounter}`}
+                      options={filtersCountOptions}
+                      setter={(value) => {
+                        const num = Number.parseInt(value as string);
+                        if (Number.isNaN(num)) {
+                          const f = rowFilter.map((_v) => emptyRowFilter);
+                          setFilterCounter(1);
+                          setRowFilter(f);
+                        } else {
+                          const filterCounterNew = Math.min(
+                            maxFilterCounter,
+                            Math.max(minFilterCounter, num)
+                          );
+                          setFilterCounter(filterCounterNew);
+                          setRowFilter(
+                            rowFilter.map((v, idx) =>
+                              idx >= filterCounterNew ? emptyRowFilter : v
+                            )
+                          );
+                        }
+                      }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -415,10 +416,10 @@ export function Search({
                       return (
                         <Grid item xs={12} key={idx}>
                           <Grid container spacing={0}>
-                            <Grid item width={"150px"}>
+                            <Grid item width={"7rem"}>
                               <SearchField
                                 isLeft={true}
-                                label={"Filter"}
+                                label={"Filter by"}
                                 value={bookPretty.get(filter.filter) || ""}
                                 options={filterOptions}
                                 setter={(x) => {
@@ -439,7 +440,7 @@ export function Search({
                             <Grid item xs>
                               <SearchField
                                 isLeft={false}
-                                label={"Filter input"}
+                                label={"Using text"}
                                 value={filter.filterInput}
                                 options={
                                   rowFilterInputOptions.get(idx) || List([])
