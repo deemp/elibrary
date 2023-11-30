@@ -12,6 +12,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import * as constants from "../models/constants";
+import { PropsCommon } from "../models/propsCommon";
 
 interface Book {
   book_id: number;
@@ -56,8 +57,8 @@ const columns = (columnHelper: ColumnHelper<Book>) =>
 
 const url = `${import.meta.env.VITE_API_PREFIX}/report`;
 
-export const Report = () => {
-  const { faqButton, faqDrawer } = useFAQ();
+export function Report(props: PropsCommon) {
+  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
   const [books, setBooks] = useState<Book[]>([]);
   const [totalReadsMonth, setTotalReadsMonth] = useState<number>(0);
   const [totalReadsYear, setTotalReadsYear] = useState<number>(0);
@@ -168,4 +169,4 @@ export const Report = () => {
       }
     />
   );
-};
+}

@@ -20,6 +20,7 @@ import { Row } from "./Row";
 import { reportLink } from "./ReportLink";
 import { readLink } from "./ReadLink";
 import * as constants from "../models/constants";
+import { PropsCommon } from "../models/propsCommon";
 
 interface Data {
   book: Book;
@@ -29,8 +30,8 @@ interface Data {
   };
 }
 
-export function BookInfoPage() {
-  const { faqButton, faqDrawer } = useFAQ();
+export function BookInfoPage(props: PropsCommon) {
+  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
   const { book, dimensions } = useLoaderData() as Data;
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
