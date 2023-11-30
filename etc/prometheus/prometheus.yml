@@ -27,10 +27,10 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-  - job_name: 'elibrary'
+  - job_name: 'elibrary-prod'
 
     # Override the global default and scrape targets from this job every 5 seconds.
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['elibrary:5000']
+      - targets: ['elibrary-prod:5001']
