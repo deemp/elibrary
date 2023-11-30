@@ -105,6 +105,7 @@ export function AppBar({
             display={"flex"}
             justifyContent={"end"}
             alignItems={"center"}
+            textAlign={'right'}
           >
             {Ebsco}
           </Grid>
