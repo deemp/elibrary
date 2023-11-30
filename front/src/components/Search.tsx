@@ -376,7 +376,7 @@ export function Search({
                     />
                   </Grid>
                 </Grid>
-                <Grid item width={{ xs: '100%', sm: "12rem" }}>
+                <Grid item width={{ xs: "100%", sm: "12rem" }}>
                   <Grid container>
                     <SearchField
                       xs={12}
@@ -416,7 +416,7 @@ export function Search({
                       return (
                         <Grid item xs={12} key={idx}>
                           <Grid container spacing={0}>
-                            <Grid item width={"7rem"}>
+                            <Grid item width={"7.5rem"}>
                               <SearchField
                                 isLeft={true}
                                 label={"Filter by"}

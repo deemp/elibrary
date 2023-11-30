@@ -15,4 +15,6 @@
   FRONT_DIR = "back/static/front";
 
   DO_RELOAD = "true";
+
+  SEARCH_RESULTS_MAX = "100";
 }

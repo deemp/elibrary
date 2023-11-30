@@ -41,6 +41,8 @@ class Env:
 
     APP_NAME: str
 
+    SEARCH_RESULTS_MAX: str
+
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
         self.DO_IMPORT_CATALOG = self.DO_IMPORT_CATALOG == "true"
@@ -50,6 +52,7 @@ class Env:
         self.DO_RELOAD = self.DO_RELOAD == "true"
         self.DEV = self.ENV == "development"
         self.PROD = self.ENV == "production"
+        self.SEARCH_RESULTS_MAX = int(self.SEARCH_RESULTS_MAX)
 
 
 def load_env(cls):
