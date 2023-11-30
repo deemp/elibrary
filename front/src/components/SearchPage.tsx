@@ -8,7 +8,7 @@ import { reportLink } from "./ReportLink";
 import * as constants from "../models/constants";
 
 export function SearchPage(props: Props) {
-  const { faqButton, faqDrawer } = useFAQ();
+  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
 
   const base = (
     <Base

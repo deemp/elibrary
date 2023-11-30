@@ -53,7 +53,7 @@ export const terms: Term[] = [
   },
 ];
 
-export function useFAQ() {
+export function useFAQ(searchResultsMax: number) {
   const anchor = "right";
   const [state, setState] = useState(false);
 
@@ -135,6 +135,14 @@ export function useFAQ() {
                 >
                   {"elibrary"}
                 </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          {header("Max search results")}
+          <Grid item xs={12} paddingX={"1rem"}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="h6">{searchResultsMax}</Typography>
               </Grid>
             </Grid>
           </Grid>

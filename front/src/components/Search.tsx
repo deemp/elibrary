@@ -18,6 +18,7 @@ export interface GETResponse {
   bisac: MapStrings;
   lc: MapStrings;
   filters: Strings;
+  searchResultsMax: number;
 }
 
 export interface POSTResponse {
@@ -119,6 +120,8 @@ export interface Props {
   setBisac: Setter<string>;
   lc: string;
   setLc: Setter<string>;
+  searchResultsMax: number;
+  setSearchResultsMax: Setter<number>;
 }
 
 function RowLink({ text, to }: { text: string; to: string }) {
@@ -212,6 +215,7 @@ export function Search({
   setBisac,
   lc,
   setLc,
+  setSearchResultsMax,
 }: Props) {
   const [books, setBooks] = useState<List<Book>>(List([]));
   const [booksLoaded, setBooksLoaded] = useState<boolean>(true);
@@ -251,6 +255,7 @@ export function Search({
           filters: r.filters as Strings,
           lc: Map(r.lc) as MapStrings,
           bisac: Map(r.bisac) as MapStrings,
+          searchResultsMax: Number.parseInt(r.search_results_max),
         };
       })
       .then((r: GETResponse) => {
@@ -258,6 +263,7 @@ export function Search({
           r.filters.map((filter) => bookPretty.get(filter) || "")
         );
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc });
+        setSearchResultsMax(r.searchResultsMax);
       });
     // run once
   }, []);

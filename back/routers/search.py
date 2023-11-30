@@ -50,6 +50,7 @@ class SearchGETResponse(BaseModel):
     bisac: DictOptions
     lc: DictOptions
     filters: Strings
+    search_results_max: int
 
 
 filters = ["title", "authors", "publisher", "year", "isbn"]
@@ -74,7 +75,12 @@ def search_get() -> SearchGETResponse:
         books = [BookSearch(*i) for i in session.exec(select_books()).all()]
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")
-        return SearchGETResponse(bisac=bisac, lc=lc, filters=filters)
+        return SearchGETResponse(
+            bisac=bisac,
+            lc=lc,
+            filters=filters,
+            search_results_max=env.SEARCH_RESULTS_MAX,
+        )
 
 
 class FilterRow(BaseModel):
@@ -112,7 +118,9 @@ def search_post(request: SearchPOSTRequest) -> SearchPOSTResponse:
 
         books = [
             BookSearch(*i)
-            for i in session.exec(select_books().where(*conditions)).fetchmany(env.SEARCH_RESULTS_MAX)
+            for i in session.exec(select_books().where(*conditions)).fetchmany(
+                env.SEARCH_RESULTS_MAX
+            )
         ]
 
         bisac = getDict(books, "bisac", "lc")

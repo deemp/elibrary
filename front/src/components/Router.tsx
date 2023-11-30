@@ -11,6 +11,7 @@ import { bookLoader, fetchImage } from "./Responses.tsx";
 import { Props, RowFilter } from "./Search.tsx";
 import { List } from "immutable";
 import { Report } from "./Report.tsx";
+import { PropsCommon } from "../models/propsCommon.ts";
 
 export function Router() {
   const [filterCounter, setFilterCounter] = useState<number>(1);
@@ -22,6 +23,7 @@ export function Router() {
   );
   const [bisac, setBisac] = useState<string>("");
   const [lc, setLc] = useState<string>("");
+  const [searchResultsMax, setSearchResultsMax] = useState<number>(0);
 
   const props: Props = {
     emptyRowFilter,
@@ -35,7 +37,11 @@ export function Router() {
     setBisac,
     lc,
     setLc,
+    searchResultsMax,
+    setSearchResultsMax,
   };
+
+  const propsCommon: PropsCommon = { searchResultsMax };
 
   const router = createBrowserRouter(
     [
@@ -47,7 +53,7 @@ export function Router() {
       {
         path: "book/:id/read",
         loader: bookLoader,
-        element: <BookReadPage />,
+        element: <BookReadPage {...propsCommon} />,
         errorElement: <Navigate to={"/"} />,
       },
       {
@@ -57,12 +63,12 @@ export function Router() {
           const dimensions = await fetchImage(book.book_id);
           return { book, dimensions };
         },
-        element: <BookInfoPage />,
+        element: <BookInfoPage {...propsCommon} />,
         errorElement: <Navigate to={"/"} />,
       },
       {
         path: "/report",
-        element: <Report />,
+        element: <Report {...propsCommon} />,
         errorElement: <Navigate to={"/"} />,
       },
       {
