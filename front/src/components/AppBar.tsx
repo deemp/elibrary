@@ -60,7 +60,7 @@ export function AppBarElement({ text }: { text: string }) {
     <Box
       sx={{
         ...sxBase,
-        fontWeight: "bold",
+        fontWeight: 800,
         height: "auto",
         alignItems: "center",
       }}
@@ -83,7 +83,12 @@ export function AppBar({
     <>
       <Container maxWidth={"xl"}>
         <Grid container>
-          <Grid item xs={7} sm md lg xl display={"flex"} alignItems={"center"}>
+          <Grid
+            item
+            sx={{ width: { xs: "auto", sm: "auto" } }}
+            display={"flex"}
+            alignItems={"center"}
+          >
             <Grid
               container
               children={leftChildren.map((x) => (
@@ -95,12 +100,12 @@ export function AppBar({
           </Grid>
           <Grid
             item
-            xs={5}
-            sm={3.5}
-            md={5}
+            xs={12}
+            sm
             display={"flex"}
             justifyContent={"end"}
             alignItems={"center"}
+            textAlign={'right'}
           >
             {Ebsco}
           </Grid>
