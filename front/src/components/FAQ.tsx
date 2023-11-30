@@ -6,7 +6,6 @@ import { AppBarButton, AppBarElement } from "./AppBar";
 import { color } from "../models/constants";
 import * as constants from "../models/constants";
 
-
 interface Term {
   name: string;
   definition: string;
