@@ -5,6 +5,7 @@ from sqlmodel import SQLModel, Session, select
 from ..internal.models import Book
 from ..internal.db import engine
 from pydantic import BaseModel
+from .. import env
 
 router = APIRouter()
 
@@ -111,7 +112,7 @@ def search_post(request: SearchPOSTRequest) -> SearchPOSTResponse:
 
         books = [
             BookSearch(*i)
-            for i in session.exec(select_books().where(*conditions)).all()
+            for i in session.exec(select_books().where(*conditions)).fetchmany(env.SEARCH_RESULTS_MAX)
         ]
 
         bisac = getDict(books, "bisac", "lc")
