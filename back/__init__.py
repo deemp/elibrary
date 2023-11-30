@@ -41,7 +41,9 @@ class Env:
 
     APP_NAME: str
 
-    SEARCH_RESULTS_MAX: str
+    SEARCH_RESULTS_MAX: int
+    
+    UTC_OFFSET: int
 
     def __post_init__(self):
         self.ENABLE_AUTH = self.ENABLE_AUTH == "true"
@@ -53,6 +55,7 @@ class Env:
         self.DEV = self.ENV == "development"
         self.PROD = self.ENV == "production"
         self.SEARCH_RESULTS_MAX = int(self.SEARCH_RESULTS_MAX)
+        self.UTC_OFFSET = int(self.UTC_OFFSET)
 
 
 def load_env(cls):
