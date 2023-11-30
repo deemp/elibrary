@@ -17,4 +17,6 @@
   DO_RELOAD = "true";
 
   SEARCH_RESULTS_MAX = "100";
+
+  UTC_OFFSET = "3";
 }
