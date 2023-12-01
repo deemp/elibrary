@@ -2,7 +2,7 @@
   inputs = {
     flakes.url = "github:deemp/flakes";
     pdfjs = {
-      url = "gitlab:elibrary/pdf.js/dist?host=gitlab.pg.innopolis.university";
+      url = "gitlab:elibrary/pdf.js?host=gitlab.pg.innopolis.university";
       flake = false;
     };
   };
@@ -36,9 +36,9 @@
           pdfjs = "${nix-filter {
             root = inputs.pdfjs.outPath;
             include = [
-              "build/generic"
+              "build/generic-legacy"
             ];
-          }}/build/generic";
+          }}/build/generic-legacy";
 
           packageBack = groups:
             let
@@ -225,8 +225,6 @@
                         pkgs.jq
                       ];
                       buildPhase = ''
-                        ${concatStringsSep "\n" (pkgs.lib.lists.init (pkgs.lib.lists.init (pkgs.lib.strings.splitString "\n" prev.buildPhase)))}
-
                         rm ./node_modules/.bin/node-pre-gyp
 
                         PACKAGES="$(\
