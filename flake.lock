@@ -2,11 +2,11 @@
   "nodes": {
     "flakes": {
       "locked": {
-        "lastModified": 1699750644,
-        "narHash": "sha256-4nEeoqdiV81OeNoPmZRFDNgq9JtJbv7T+2NByMGsRbA=",
+        "lastModified": 1701470765,
+        "narHash": "sha256-12Vxf78Ce+JRbYBL6YuzQEVWKMAhW2l9xuiN2LAtk68=",
         "owner": "deemp",
         "repo": "flakes",
-        "rev": "c88673cd742baf62cbb60ff446dbd17101fb9662",
+        "rev": "d1419c7bfd7f07826ab08d514662451e55a6e2fd",
         "type": "github"
       },
       "original": {
@@ -19,11 +19,11 @@
       "flake": false,
       "locked": {
         "host": "gitlab.pg.innopolis.university",
-        "lastModified": 1699907307,
-        "narHash": "sha256-8a9Yrj6QqkWIfa+0SgMbj+/WAyfMFtcYMaoCSmWVHuE=",
+        "lastModified": 1701461067,
+        "narHash": "sha256-0WmSJvWFiI/K6Iawrr78gLHRvnUSkB8t5Aytt+bKixw=",
         "owner": "elibrary",
         "repo": "pdf.js",
-        "rev": "d905be920e7ef9d14612002ee51dea7306fb1726",
+        "rev": "2a9d488735c9a31c42d76182da8e9996c288c650",
         "type": "gitlab"
       },
       "original": {
