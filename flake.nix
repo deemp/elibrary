@@ -2,7 +2,7 @@
   inputs = {
     flakes.url = "github:deemp/flakes";
     pdfjs = {
-      url = "gitlab:elibrary/pdf.js/dist?host=gitlab.pg.innopolis.university";
+      url = "gitlab:elibrary/pdf.js?host=gitlab.pg.innopolis.university";
       flake = false;
     };
   };
