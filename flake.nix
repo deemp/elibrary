@@ -215,7 +215,32 @@
                 packageFrontDependencies =
                   let
                     inherit (pkgs.appendOverlays [ inputs.slimlock.overlays.default ]) slimlock;
-                    packageLock = slimlock.buildPackageLock { src = ./front; };
+                    packageLock = (slimlock.buildPackageLock { src = ./front; }).overrideAttrs (final: prev: {
+                      nativeBuildInputs = prev.nativeBuildInputs or [ ] ++ [
+                        pkgs.nodePackages.node-pre-gyp
+                        pkgs.python3
+                        pkgs.pkg-config
+                        pkgs.poppler_utils
+                        pkgs.pangomm
+                        pkgs.jq
+                      ];
+                      buildPhase = ''
+                        ${concatStringsSep "\n" (pkgs.lib.lists.init (pkgs.lib.lists.init (pkgs.lib.strings.splitString "\n" prev.buildPhase)))}
+
+                        rm ./node_modules/.bin/node-pre-gyp
+
+                        PACKAGES="$(\
+                          cat package-lock.json \
+                            | jq -r '.packages 
+                              | keys_unsorted 
+                              | .[] 
+                              | select(length > 0 and . != "node_modules/@mapbox/node-pre-gyp") 
+                              | "./" + .'\
+                        )"
+
+                        npm rebuild --offline "$PACKAGES"
+                      '';
+                    });
                   in
                   pkgs.stdenv.mkDerivation {
                     name = "front-dependencies";
