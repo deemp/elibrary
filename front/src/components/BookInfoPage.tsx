@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
 import * as appbar from "./AppBar";
 import { searchLink } from "./SearchLink";
-import { useFAQ } from "./FAQ";
+import { useHelp } from "./Help";
 import { ReferencePanel } from "./ReferencePanel";
 import { buttonPadding, fontSize } from "../models/constants";
 import { Row } from "./Row";
@@ -31,7 +31,7 @@ interface Data {
 }
 
 export function BookInfoPage(props: PropsCommon) {
-  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
+  const { helpButton, helpDrawer } = useHelp(props.searchResultsMax);
   const { book, dimensions } = useLoaderData() as Data;
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
@@ -174,8 +174,13 @@ export function BookInfoPage(props: PropsCommon) {
       }
       nav={
         <appbar.AppBar
-          faqDrawer={faqDrawer}
-          leftChildren={[faqButton, reportLink(), searchLink, readLink(bookId)]}
+          helpDrawer={helpDrawer}
+          leftChildren={[
+            helpButton,
+            reportLink(),
+            searchLink,
+            readLink(bookId),
+          ]}
         />
       }
     />

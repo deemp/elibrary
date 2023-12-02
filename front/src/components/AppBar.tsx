@@ -73,10 +73,10 @@ export function AppBarElement({ text }: { text: string }) {
 const Ebsco = <AppBarElement text={"EBSCO EBOOK ARCHIVE"} />;
 
 export function AppBar({
-  faqDrawer,
+  helpDrawer,
   leftChildren,
 }: {
-  faqDrawer?: JSX.Element;
+  helpDrawer?: JSX.Element;
   leftChildren: JSX.Element[];
 }) {
   return (
@@ -105,13 +105,13 @@ export function AppBar({
             display={"flex"}
             justifyContent={"end"}
             alignItems={"center"}
-            textAlign={'right'}
+            textAlign={"right"}
           >
             {Ebsco}
           </Grid>
         </Grid>
       </Container>
-      {faqDrawer}
+      {helpDrawer}
     </>
   );
 }

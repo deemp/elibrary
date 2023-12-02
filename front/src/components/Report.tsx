@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Base } from "./Base";
 import { searchLink } from "./SearchLink";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { useFAQ } from "./FAQ";
+import { useHelp } from "./Help";
 import { AppBar } from "./AppBar";
 import { BookTable } from "./Table";
 import { bookPretty } from "../models/book";
@@ -58,7 +58,7 @@ const columns = (columnHelper: ColumnHelper<Book>) =>
 const url = `${import.meta.env.VITE_API_PREFIX}/report`;
 
 export function Report(props: PropsCommon) {
-  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
+  const { helpButton, helpDrawer } = useHelp(props.searchResultsMax);
   const [books, setBooks] = useState<Book[]>([]);
   const [totalReadsMonth, setTotalReadsMonth] = useState<number>(0);
   const [totalReadsYear, setTotalReadsYear] = useState<number>(0);
@@ -165,7 +165,10 @@ export function Report(props: PropsCommon) {
         </Container>
       }
       nav={
-        <AppBar faqDrawer={faqDrawer} leftChildren={[faqButton, searchLink]} />
+        <AppBar
+          helpDrawer={helpDrawer}
+          leftChildren={[helpButton, searchLink]}
+        />
       }
     />
   );

@@ -53,7 +53,7 @@ export const terms: Term[] = [
   },
 ];
 
-export function useFAQ(searchResultsMax: number) {
+export function useHelp(searchResultsMax: number) {
   const anchor = "right";
   const [state, setState] = useState(false);
 
@@ -72,8 +72,8 @@ export function useFAQ(searchResultsMax: number) {
       setState(open);
     };
 
-  const faqButton = (
-    <AppBarButton text={"FAQ"} onClick={toggleDrawer(true)}></AppBarButton>
+  const helpButton = (
+    <AppBarButton text={"Help"} onClick={toggleDrawer(true)}></AppBarButton>
   );
 
   const header = (text: string) => (
@@ -90,7 +90,7 @@ export function useFAQ(searchResultsMax: number) {
     </Grid>
   );
 
-  const faqDrawer = (
+  const helpDrawer = (
     <Drawer anchor={anchor} open={state} onClose={toggleDrawer(false)}>
       <Box
         sx={{ width: "60vw" }}
@@ -150,5 +150,5 @@ export function useFAQ(searchResultsMax: number) {
       </Box>
     </Drawer>
   );
-  return { faqButton, faqDrawer };
+  return { helpButton, helpDrawer };
 }

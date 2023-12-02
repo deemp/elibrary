@@ -39,7 +39,7 @@
 1. Go to the page `95`( of `272`).
 1. In the top of the page, click on `INFO`.
 1. Look at the book info.
-1. In the top of the page, click on `FAQ` to see meanings of terms used in the book info.
+1. In the top of the page, click on `HELP` to see meanings of terms used in the book info.
 1. In the `BIBLIOGRAPHIC INFORMATION` tab, click on `COPY`.
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
 1. Click on `BIBTEX`.

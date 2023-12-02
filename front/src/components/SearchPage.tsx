@@ -2,13 +2,13 @@ import { Base } from "./Base";
 import { Search } from "./Search";
 import { Box, Container } from "@mui/material";
 import { AppBar } from "./AppBar";
-import { useFAQ } from "./FAQ";
+import { useHelp } from "./Help";
 import { Props } from "./Search";
 import { reportLink } from "./ReportLink";
 import * as constants from "../models/constants";
 
 export function SearchPage(props: Props) {
-  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
+  const { helpButton, helpDrawer } = useHelp(props.searchResultsMax);
 
   const base = (
     <Base
@@ -27,8 +27,8 @@ export function SearchPage(props: Props) {
       }
       nav={
         <AppBar
-          faqDrawer={faqDrawer}
-          leftChildren={[faqButton, reportLink()]}
+          helpDrawer={helpDrawer}
+          leftChildren={[helpButton, reportLink()]}
         />
       }
     />
