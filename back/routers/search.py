@@ -32,6 +32,8 @@ class BookSearchResponse(SQLModel):
     publisher: str
     year: int
     isbn: Optional[int]
+    lc: str
+    bisac: str
 
 
 def getDict(books: List[BookSearch], attr1, attr2) -> DictOptions:
@@ -71,7 +73,10 @@ def select_books():
 @router.get("/search")
 def search_get() -> SearchGETResponse:
     with Session(engine) as session:
-        books = [BookSearch(*i) for i in session.exec(select_books()).all()]
+        books = [
+            BookSearch(*i)
+            for i in session.exec(select_books()).fetchmany(env.SEARCH_RESULTS_MAX)
+        ]
         bisac = getDict(books, "bisac", "lc")
         lc = getDict(books, "lc", "bisac")
         return SearchGETResponse(
