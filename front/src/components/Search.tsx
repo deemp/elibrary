@@ -13,6 +13,7 @@ import match from "autosuggest-highlight/match";
 import { CellContext, ColumnDef, ColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 import * as constants from "../models/constants";
+import { AppBarWithChildren } from "./AppBar";
 
 export interface GETResponse {
   bisac: MapStrings;
@@ -120,8 +121,7 @@ export interface Props {
   setBisac: Setter<string>;
   lc: string;
   setLc: Setter<string>;
-  searchResultsMax: number;
-  setSearchResultsMax: Setter<number>;
+  AppBar: AppBarWithChildren
 }
 
 function RowLink({ text, to }: { text: string; to: string }) {
@@ -214,8 +214,7 @@ export function Search({
   bisac,
   setBisac,
   lc,
-  setLc,
-  setSearchResultsMax,
+  setLc
 }: Props) {
   const [books, setBooks] = useState<List<Book>>(List([]));
   const [booksLoaded, setBooksLoaded] = useState<boolean>(true);
@@ -255,15 +254,13 @@ export function Search({
           filters: r.filters as Strings,
           lc: Map(r.lc) as MapStrings,
           bisac: Map(r.bisac) as MapStrings,
-          searchResultsMax: Number.parseInt(r.search_results_max),
         };
       })
-      .then((r: GETResponse) => {
+      .then((r) => {
         setFilterOptions(
           r.filters.map((filter) => bookPretty.get(filter) || "")
         );
         setBisacLcOptions({ bisac: r.bisac, lc: r.lc });
-        setSearchResultsMax(r.searchResultsMax);
       });
     // run once
   }, []);

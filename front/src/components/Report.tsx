@@ -2,8 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { Base } from "./Base";
 import { searchLink } from "./SearchLink";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { useHelp } from "./Help";
-import { AppBar } from "./AppBar";
 import { BookTable } from "./Table";
 import { bookPretty } from "../models/book";
 import { ColumnDef, ColumnHelper } from "@tanstack/react-table";
@@ -57,8 +55,7 @@ const columns = (columnHelper: ColumnHelper<Book>) =>
 
 const url = `${import.meta.env.VITE_API_PREFIX}/report`;
 
-export function Report(props: PropsCommon) {
-  const { helpButton, helpDrawer } = useHelp(props.searchResultsMax);
+export function Report({ AppBar }: PropsCommon) {
   const [books, setBooks] = useState<Book[]>([]);
   const [totalReadsMonth, setTotalReadsMonth] = useState<number>(0);
   const [totalReadsYear, setTotalReadsYear] = useState<number>(0);
@@ -164,12 +161,7 @@ export function Report(props: PropsCommon) {
           </Grid>
         </Container>
       }
-      nav={
-        <AppBar
-          helpDrawer={helpDrawer}
-          leftChildren={[helpButton, searchLink]}
-        />
-      }
+      nav={<AppBar leftChildren={[searchLink]} />}
     />
   );
 }

@@ -1,3 +1,3 @@
 export interface PropsCommon {
-    searchResultsMax: number
+    AppBar: (({ leftChildren }: { leftChildren: JSX.Element[] }) => JSX.Element)
 }

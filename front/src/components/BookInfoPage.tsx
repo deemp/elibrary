@@ -11,9 +11,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Book, bookPretty } from "../models/book";
-import * as appbar from "./AppBar";
 import { searchLink } from "./SearchLink";
-import { useHelp } from "./Help";
 import { ReferencePanel } from "./ReferencePanel";
 import { buttonPadding, fontSize } from "../models/constants";
 import { Row } from "./Row";
@@ -30,8 +28,7 @@ interface Data {
   };
 }
 
-export function BookInfoPage(props: PropsCommon) {
-  const { helpButton, helpDrawer } = useHelp(props.searchResultsMax);
+export function BookInfoPage({ AppBar }: PropsCommon) {
   const { book, dimensions } = useLoaderData() as Data;
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
@@ -173,15 +170,7 @@ export function BookInfoPage(props: PropsCommon) {
         </Container>
       }
       nav={
-        <appbar.AppBar
-          helpDrawer={helpDrawer}
-          leftChildren={[
-            helpButton,
-            reportLink(),
-            searchLink,
-            readLink(bookId),
-          ]}
-        />
+        <AppBar leftChildren={[reportLink(), searchLink, readLink(bookId)]} />
       }
     />
   );

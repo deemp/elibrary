@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchPage } from "./SearchPage.tsx";
 import { BookReadPage } from "./BookReadPage.tsx";
 import {
@@ -12,6 +12,9 @@ import { Props, RowFilter } from "./Search.tsx";
 import { List } from "immutable";
 import { Report } from "./Report.tsx";
 import { PropsCommon } from "../models/propsCommon.ts";
+import * as appBar from "./AppBar.tsx";
+
+const url = `${import.meta.env.VITE_API_PREFIX}/help`;
 
 export function Router() {
   const [filterCounter, setFilterCounter] = useState<number>(1);
@@ -25,6 +28,25 @@ export function Router() {
   const [lc, setLc] = useState<string>("");
   const [searchResultsMax, setSearchResultsMax] = useState<number>(0);
 
+  useEffect(() => {
+    fetch(url, {
+      method: "GET",
+      headers: new Headers({ "content-type": "application/json" }),
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        setSearchResultsMax(r.search_results_max);
+      });
+    // run once
+  }, []);
+
+  const AppBar = ({ leftChildren }: { leftChildren: JSX.Element[] }) =>
+    appBar.AppBar({ searchResultsMax, leftChildren });
+
+  const propsCommon: PropsCommon = {
+    AppBar,
+  };
+
   const props: Props = {
     emptyRowFilter,
     maxFilterCounter,
@@ -37,11 +59,8 @@ export function Router() {
     setBisac,
     lc,
     setLc,
-    searchResultsMax,
-    setSearchResultsMax,
+    AppBar,
   };
-
-  const propsCommon: PropsCommon = { searchResultsMax };
 
   const router = createBrowserRouter(
     [
