@@ -74,13 +74,13 @@ export function AppBarElement({ text }: { text: string }) {
 const Ebsco = <AppBarElement text={"EBSCO EBOOK ARCHIVE"} />;
 
 export function AppBar({
-  searchResultsMax,
+  content,
   leftChildren,
 }: {
-  searchResultsMax: number;
+  content: JSX.Element;
   leftChildren: JSX.Element[];
 }) {
-  const { helpButton, helpDrawer } = useHelp(searchResultsMax);
+  const { helpButton, helpDrawer } = useHelp(content);
   return (
     <>
       <Container maxWidth={"xl"}>

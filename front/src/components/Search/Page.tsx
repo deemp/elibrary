@@ -2,18 +2,20 @@ import {
   BookSearch as Book,
   bookPretty,
   bookPrettyInverse,
-} from "../models/book";
-import "../App.css";
-import { Autocomplete, Grid, TextField } from "@mui/material";
-import { BookTable } from "./Table";
+} from "../../models/book";
+import "../../App.css";
+import { Autocomplete, Box, Container, Grid, TextField } from "@mui/material";
+import { BookTable } from "../Table";
 import React, { useCallback, useEffect, useState } from "react";
 import { Map, List } from "immutable";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 import { CellContext, ColumnDef, ColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
-import * as constants from "../models/constants";
-import { AppBarWithChildren } from "./AppBar";
+import * as constants from "../../models/constants";
+import { AppBarWithChildren } from "../AppBar";
+import { Base } from "../Base";
+import { reportLink } from "../Report/Link";
 
 export interface GETResponse {
   bisac: MapStrings;
@@ -113,15 +115,15 @@ export interface Props {
   emptyRowFilter: RowFilter;
   maxFilterCounter: number;
   minFilterCounter: number;
-  filterCounter: number;
-  setFilterCounter: Setter<number>;
+  filterCounter: "" | number;
+  setFilterCounter: Setter<"" | number>;
   rowFilter: List<RowFilter>;
   setRowFilter: Setter<List<RowFilter>>;
   bisac: string;
   setBisac: Setter<string>;
   lc: string;
   setLc: Setter<string>;
-  AppBar: AppBarWithChildren
+  AppBar: AppBarWithChildren;
 }
 
 function RowLink({ text, to }: { text: string; to: string }) {
@@ -192,6 +194,14 @@ const columns = (columnHelper: ColumnHelper<Book>) =>
           id: "isbn",
           size: 130,
         },
+        {
+          id: "bisac",
+          size: 130,
+        },
+        {
+          id: "lc",
+          size: 130,
+        },
       ].map(({ id, size }) =>
         columnHelper.accessor(id as keyof Book, {
           header: () => columnPretty.get(id),
@@ -203,7 +213,7 @@ const columns = (columnHelper: ColumnHelper<Book>) =>
 
 const url = `${import.meta.env.VITE_API_PREFIX}/search`;
 
-export function Search({
+export function SearchPage({
   emptyRowFilter,
   maxFilterCounter,
   minFilterCounter,
@@ -214,7 +224,8 @@ export function Search({
   bisac,
   setBisac,
   lc,
-  setLc
+  setLc,
+  AppBar,
 }: Props) {
   const [books, setBooks] = useState<List<Book>>(List([]));
   const [booksLoaded, setBooksLoaded] = useState<boolean>(true);
@@ -350,136 +361,156 @@ export function Search({
     Array.from({ length: maxFilterCounter }, (_, idx) => (idx + 1).toString())
   );
   return (
-    <>
-      <Grid
-        container
-        rowSpacing={2}
-        marginTop={constants.heightAdaptive}
-        height={"100%"}
-      >
-        <Grid item xs={12}>
-          <Grid container rowSpacing={2}>
-            <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm>
-                  <Grid container columnSpacing={2}>
-                    <SearchField
-                      xs={6}
-                      label={bookPretty.get("bisac") || ""}
-                      value={bisac}
-                      options={bisacOptions}
-                      setter={setBisac}
-                    />
-                    <SearchField
-                      xs={6}
-                      label={bookPretty.get("lc") || ""}
-                      value={lc}
-                      options={lcOptions}
-                      setter={setLc}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item width={{ xs: "100%", sm: "12rem" }}>
-                  <Grid container>
-                    <SearchField
-                      xs={12}
-                      label={"Number of filters"}
-                      value={`${filterCounter}`}
-                      options={filtersCountOptions}
-                      setter={(value) => {
-                        const num = Number.parseInt(value as string);
-                        if (Number.isNaN(num)) {
-                          const f = rowFilter.map((_v) => emptyRowFilter);
-                          setFilterCounter(1);
-                          setRowFilter(f);
-                        } else {
-                          const filterCounterNew = Math.min(
-                            maxFilterCounter,
-                            Math.max(minFilterCounter, num)
-                          );
-                          setFilterCounter(filterCounterNew);
-                          setRowFilter(
-                            rowFilter.map((v, idx) =>
-                              idx >= filterCounterNew ? emptyRowFilter : v
-                            )
-                          );
-                        }
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container rowSpacing={2}>
-                {(() => {
-                  return rowFilter
-                    .slice(0, filterCounter)
-                    .map((filter, idx) => {
-                      return (
-                        <Grid item xs={12} key={idx}>
-                          <Grid container spacing={0}>
-                            <Grid item width={"7.5rem"}>
-                              <SearchField
-                                isLeft={true}
-                                label={"Filter by"}
-                                value={bookPretty.get(filter.filter) || ""}
-                                options={filterOptions}
-                                setter={(x) => {
-                                  const f = rowFilter.update(idx, (v) => {
-                                    if (v) {
-                                      return {
-                                        ...v,
-                                        filter:
-                                          bookPrettyInverse.get(x as string) ||
-                                          "",
-                                      };
-                                    }
-                                  });
-                                  setRowFilter(f);
-                                }}
-                              />
-                            </Grid>
-                            <Grid item xs>
-                              <SearchField
-                                isLeft={false}
-                                label={"Using text"}
-                                value={filter.filterInput}
-                                options={
-                                  rowFilterInputOptions.get(idx) || List([])
-                                }
-                                setter={(x) => {
-                                  const f = rowFilter.update(idx, (v) => {
-                                    if (v) {
-                                      return { ...v, filterInput: x as string };
-                                    }
-                                  });
-                                  setRowFilter(f);
-                                }}
-                              />
-                            </Grid>
-                          </Grid>
+    <Base
+      title="Search"
+      content={
+        <Container maxWidth="xl">
+          <Box
+            width={"100%"}
+            height={constants.contentHeightAdaptive}
+            sx={{ backgroundColor: "white" }}
+            marginTop={constants.heightAdaptive}
+          >
+            <Grid
+              container
+              rowSpacing={2}
+              marginTop={constants.heightAdaptive}
+              height={"100%"}
+            >
+              <Grid item xs={12}>
+                <Grid container rowSpacing={2}>
+                  <Grid item xs={12}>
+                    <Grid container direction={"row-reverse"} spacing={2}>
+                      <Grid item xs={12} sm>
+                        <Grid container columnSpacing={2}>
+                          <SearchField
+                            xs={6}
+                            label={bookPretty.get("bisac") || ""}
+                            value={bisac}
+                            options={bisacOptions}
+                            setter={setBisac}
+                          />
+                          <SearchField
+                            xs={6}
+                            label={bookPretty.get("lc") || ""}
+                            value={lc}
+                            options={lcOptions}
+                            setter={setLc}
+                          />
                         </Grid>
-                      );
-                    });
-                })()}
+                      </Grid>
+                      <Grid item width={{ xs: "100%", sm: "10rem" }}>
+                        <SearchField
+                          xs={12}
+                          label={"Filters count"}
+                          value={`${filterCounter}`}
+                          options={filtersCountOptions}
+                          setter={(value) => {
+                            const num = Number.parseInt(value as string);
+                            if (Number.isNaN(num)) {
+                              const f = rowFilter.map((_v) => emptyRowFilter);
+                              setFilterCounter("");
+                              setRowFilter(f);
+                            } else {
+                              const filterCounterNew = Math.min(
+                                maxFilterCounter,
+                                Math.max(minFilterCounter, num)
+                              );
+                              setFilterCounter(filterCounterNew);
+                              setRowFilter(
+                                rowFilter.map((v, idx) =>
+                                  idx >= filterCounterNew ? emptyRowFilter : v
+                                )
+                              );
+                            }
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container rowSpacing={2}>
+                      {(() => {
+                        return rowFilter
+                          .slice(0, filterCounter === "" ? 1 : filterCounter)
+                          .map((filter, idx) => {
+                            return (
+                              <Grid item xs={12} key={idx}>
+                                <Grid container spacing={0}>
+                                  <Grid item width={{ xs: "8rem", sm: "9rem" }}>
+                                    <SearchField
+                                      isLeft={true}
+                                      label={"Filter by"}
+                                      value={
+                                        bookPretty.get(filter.filter) || ""
+                                      }
+                                      options={filterOptions}
+                                      setter={(x) => {
+                                        const f = rowFilter.update(idx, (v) => {
+                                          if (v) {
+                                            return {
+                                              ...v,
+                                              filter:
+                                                bookPrettyInverse.get(
+                                                  x as string
+                                                ) || "",
+                                            };
+                                          }
+                                        });
+                                        setRowFilter(f);
+                                      }}
+                                    />
+                                  </Grid>
+                                  <Grid item xs>
+                                    <SearchField
+                                      isLeft={false}
+                                      label={"Using text"}
+                                      value={filter.filterInput}
+                                      options={
+                                        rowFilterInputOptions.get(idx) ||
+                                        List([])
+                                      }
+                                      setter={(x) => {
+                                        const f = rowFilter.update(idx, (v) => {
+                                          if (v) {
+                                            return {
+                                              ...v,
+                                              filterInput: x as string,
+                                            };
+                                          }
+                                        });
+                                        setRowFilter(f);
+                                      }}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Grid>
+                            );
+                          });
+                      })()}
+                    </Grid>
+                  </Grid>
+                </Grid>
               </Grid>
+              {((
+                height = (cnt: number) =>
+                  `calc(100% - ${filtersHeight(
+                    (filterCounter === "" ? 1 : filterCounter) + cnt
+                  )}px)`
+              ) => (
+                <Grid item xs={12} height={{ xs: height(2), sm: height(1) }}>
+                  <BookTable
+                    books={Array.from(books)}
+                    booksLoaded={booksLoaded}
+                    columns={columns}
+                  />
+                </Grid>
+              ))()}
             </Grid>
-          </Grid>
-        </Grid>
-        {((
-          height = (cnt: number) =>
-            `calc(100% - ${filtersHeight(filterCounter + cnt)}px)`
-        ) => (
-          <Grid item xs={12} height={{ xs: height(2), sm: height(1) }}>
-            <BookTable
-              books={Array.from(books)}
-              booksLoaded={booksLoaded}
-              columns={columns}
-            />
-          </Grid>
-        ))()}
-      </Grid>
-    </>
+          </Box>
+        </Container>
+      }
+      nav={<AppBar leftChildren={[reportLink()]} />}
+    />
   );
 }

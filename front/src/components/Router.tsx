@@ -1,28 +1,31 @@
 import { useEffect, useState } from "react";
-import { SearchPage } from "./SearchPage.tsx";
-import { BookReadPage } from "./BookReadPage.tsx";
+import { SearchPage } from "./Search/Page";
+import { BookReadPage } from "./Read/Page";
 import {
   Navigate,
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import { BookInfoPage } from "./BookInfoPage.tsx";
-import { bookLoader, fetchImage } from "./Responses.tsx";
-import { Props, RowFilter } from "./Search.tsx";
+import { BookInfoPage } from "./Info/Page";
+import { bookLoader, fetchImage } from "../models/communication";
+import { Props, RowFilter } from "./Search/Page";
 import { List } from "immutable";
-import { Report } from "./Report.tsx";
-import { PropsCommon } from "../models/propsCommon.ts";
-import * as appBar from "./AppBar.tsx";
+import { Report } from "./Report/Page";
+import * as appBar from "./AppBar";
+import * as searchHelp from "./Search/Help";
 
 const url = `${import.meta.env.VITE_API_PREFIX}/help`;
 
 export function Router() {
-  const [filterCounter, setFilterCounter] = useState<number>(1);
-  const minFilterCounter = 0;
+  const [filterCounter, setFilterCounter] = useState<"" | number>(1);
+  const minFilterCounter = 1;
   const maxFilterCounter = 5;
   const emptyRowFilter = { filter: "", filterInput: "" };
   const [rowFilter, setRowFilter] = useState<List<RowFilter>>(
-    List(Array.from({ length: maxFilterCounter }, () => emptyRowFilter))
+    List(Array.from({ length: maxFilterCounter }, () => emptyRowFilter)).update(
+      0,
+      (_v) => ({ filter: "title", filterInput: "" })
+    )
   );
   const [bisac, setBisac] = useState<string>("");
   const [lc, setLc] = useState<string>("");
@@ -40,13 +43,6 @@ export function Router() {
     // run once
   }, []);
 
-  const AppBar = ({ leftChildren }: { leftChildren: JSX.Element[] }) =>
-    appBar.AppBar({ searchResultsMax, leftChildren });
-
-  const propsCommon: PropsCommon = {
-    AppBar,
-  };
-
   const props: Props = {
     emptyRowFilter,
     maxFilterCounter,
@@ -59,7 +55,11 @@ export function Router() {
     setBisac,
     lc,
     setLc,
-    AppBar,
+    AppBar: (props) =>
+      appBar.AppBar({
+        ...props,
+        content: searchHelp.Content({ searchResultsMax }),
+      }),
   };
 
   const router = createBrowserRouter(
@@ -72,7 +72,7 @@ export function Router() {
       {
         path: "book/:id/read",
         loader: bookLoader,
-        element: <BookReadPage {...propsCommon} />,
+        element: <BookReadPage />,
         errorElement: <Navigate to={"/"} />,
       },
       {
@@ -82,12 +82,12 @@ export function Router() {
           const dimensions = await fetchImage(book.book_id);
           return { book, dimensions };
         },
-        element: <BookInfoPage {...propsCommon} />,
+        element: <BookInfoPage />,
         errorElement: <Navigate to={"/"} />,
       },
       {
         path: "/report",
-        element: <Report {...propsCommon} />,
+        element: <Report />,
         errorElement: <Navigate to={"/"} />,
       },
       {

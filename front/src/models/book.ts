@@ -1,3 +1,5 @@
+import { termsObject } from "./terms";
+
 export interface Book {
   bisac: string;
   lc: string;
@@ -24,25 +26,11 @@ export interface BookSearch {
   publisher: string;
   year: number;
   isbn: number;
+  bisac: string;
+  lc: string;
 }
 
-const rename: [string, string][] = [
-  ['bisac', 'Category'],
-  ['lc', 'Subject'],
-  ['publisher', 'Publisher'],
-  ['year', 'Year'],
-  ['book_id', 'Book ID'],
-  ['authors', 'Author(s)'],
-  ['title', 'Title'],
-  ['imprint_publisher', 'Imprint'],
-  ['isbn', 'ISBN'],
-  ['esbn', 'ESBN'],
-  // OCLC Control Number - https://www.wikidata.org/wiki/Property:P243
-  ['oclc', 'OCN'],
-  ['lcc', 'LCC'],
-  ['dewey', 'Dewey'],
-  ['format', 'Format'],
-]
+const rename: [string, string][] = Object.entries(termsObject).map(([key, value]) => [key, value.pretty])
 
 const renameInverse: [string, string][] = rename.map(([a, b]) => [b, a])
 
