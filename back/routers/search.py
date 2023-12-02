@@ -50,7 +50,6 @@ class SearchGETResponse(BaseModel):
     bisac: DictOptions
     lc: DictOptions
     filters: Strings
-    search_results_max: int
 
 
 filters = ["title", "authors", "publisher", "year", "isbn"]
@@ -79,7 +78,6 @@ def search_get() -> SearchGETResponse:
             bisac=bisac,
             lc=lc,
             filters=filters,
-            search_results_max=env.SEARCH_RESULTS_MAX,
         )
 
 
