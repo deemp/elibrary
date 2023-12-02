@@ -36,9 +36,9 @@
           pdfjs = "${nix-filter {
             root = inputs.pdfjs.outPath;
             include = [
-              "build/generic-legacy"
+              "build/minified-legacy"
             ];
-          }}/build/generic-legacy";
+          }}/build/minified-legacy";
 
           packageBack = groups:
             let
@@ -354,7 +354,6 @@
                   text = ''
                     ${getExe packages.writeDotenv}
                     ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
-                    ${prodCompose} down
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
                     ${prodCompose} up -dV
                     ${prodCompose} logs --follow ${prodServiceName}
@@ -371,7 +370,6 @@
                   text = ''
                     ${getExe packages.writeDotenv}
                     ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
-                    ${prodCompose} down ${prodServiceName}
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
                     ${prodCompose} up -dV ${prodServiceName}
                     ${prodCompose} logs --follow ${prodServiceName}
@@ -386,7 +384,6 @@
                 dev = {
                   text = ''
                     ${getExe packages.writeDotenv}
-                    ${devCompose} down ${devServiceName}
                     touch ${devBackEnv.DB_PATH} ${devBackEnv.DB_DUMP_PATH}
                     ${devCompose} up -V
                   '';
