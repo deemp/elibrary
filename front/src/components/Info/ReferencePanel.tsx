@@ -6,7 +6,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
-import { buttonPadding, fontSize } from "../models/constants";
+import { buttonPadding, fontSize } from "../../models/constants";
 import React from "react";
 
 export interface TabPanelProps {

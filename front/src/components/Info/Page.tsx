@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "react-router-dom";
-import { Base } from "./Base";
+import { Base } from "../Base";
 import {
   Box,
   Button,
@@ -10,17 +10,16 @@ import {
   Paper,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Book, bookPretty } from "../models/book";
-import * as appbar from "./AppBar";
-import { searchLink } from "./SearchLink";
-import { useFAQ } from "./FAQ";
+import { Book, bookPretty } from "../../models/book";
+import { searchLink } from "../Search/Link";
 import { ReferencePanel } from "./ReferencePanel";
-import { buttonPadding, fontSize } from "../models/constants";
-import { Row } from "./Row";
-import { reportLink } from "./ReportLink";
-import { readLink } from "./ReadLink";
-import * as constants from "../models/constants";
-import { PropsCommon } from "../models/propsCommon";
+import { buttonPadding, fontSize } from "../../models/constants";
+import { Row } from "../Row";
+import { reportLink } from "../Report/Link";
+import { readLink } from "../Read/Link";
+import * as constants from "../../models/constants";
+import { AppBar } from "../AppBar";
+import { Content } from "./Help";
 
 interface Data {
   book: Book;
@@ -30,8 +29,7 @@ interface Data {
   };
 }
 
-export function BookInfoPage(props: PropsCommon) {
-  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
+export function BookInfoPage() {
   const { book, dimensions } = useLoaderData() as Data;
   const [textReference, setTextReference] = useState<string>("");
   const [bibTexReference, setBibTexReference] = useState<string>("");
@@ -132,12 +130,12 @@ export function BookInfoPage(props: PropsCommon) {
                         "title",
                         "authors",
                         "publisher",
+                        "imprint_publisher",
                         "year",
                         "isbn",
                         "esbn",
                         "bisac",
                         "lc",
-                        "imprint_publisher",
                         "oclc",
                         "lcc",
                         "dewey",
@@ -173,9 +171,9 @@ export function BookInfoPage(props: PropsCommon) {
         </Container>
       }
       nav={
-        <appbar.AppBar
-          faqDrawer={faqDrawer}
-          leftChildren={[faqButton, reportLink(), searchLink, readLink(bookId)]}
+        <AppBar
+          leftChildren={[reportLink(), searchLink, readLink(bookId)]}
+          content={Content}
         />
       }
     />

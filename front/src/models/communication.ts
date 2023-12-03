@@ -1,5 +1,5 @@
 import { Params } from "react-router-dom";
-import { Book } from "../models/book"
+import { Book } from "./book"
 import { getImageSize } from 'react-image-size'
 
 export const emptyId = new Response(`Empty ID`, { status: 404 })

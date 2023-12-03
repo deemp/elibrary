@@ -1,4 +1,4 @@
-import { AppBarButton } from "./AppBar";
+import { AppBarButton } from "../AppBar";
 export const reportLink = (onClick?: () => void) =>
   AppBarButton({
     text: "report",

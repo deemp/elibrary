@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import * as constants from "../models/constants";
+import * as constants from "../../models/constants";
 
 export function BookReader({ bookId }: { bookId: number }) {
   const prefix = import.meta.env.VITE_API_PREFIX;

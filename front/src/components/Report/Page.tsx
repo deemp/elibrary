@@ -1,21 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import { Base } from "./Base";
-import { searchLink } from "./SearchLink";
+import { Base } from "../Base";
+import { searchLink } from "../Search/Link";
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { useFAQ } from "./FAQ";
-import { AppBar } from "./AppBar";
-import { BookTable } from "./Table";
-import { bookPretty } from "../models/book";
+import { BookTable } from "../Table";
+import { bookPretty } from "../../models/book";
 import { ColumnDef, ColumnHelper } from "@tanstack/react-table";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
-import * as constants from "../models/constants";
-import { PropsCommon } from "../models/propsCommon";
+import * as constants from "../../models/constants";
+import { AppBar } from "../AppBar";
+import { Content } from "./Help";
 
 interface Book {
-  book_id: number;
   title: string;
   read_count: number;
 }
@@ -36,10 +34,6 @@ const columnPretty = new Map([
 const columns = (columnHelper: ColumnHelper<Book>) =>
   [
     {
-      id: "book_id",
-      size: 100,
-    },
-    {
       id: "title",
       size: 200,
     },
@@ -57,8 +51,7 @@ const columns = (columnHelper: ColumnHelper<Book>) =>
 
 const url = `${import.meta.env.VITE_API_PREFIX}/report`;
 
-export function Report(props: PropsCommon) {
-  const { faqButton, faqDrawer } = useFAQ(props.searchResultsMax);
+export function Report() {
   const [books, setBooks] = useState<Book[]>([]);
   const [totalReadsMonth, setTotalReadsMonth] = useState<number>(0);
   const [totalReadsYear, setTotalReadsYear] = useState<number>(0);
@@ -164,9 +157,7 @@ export function Report(props: PropsCommon) {
           </Grid>
         </Container>
       }
-      nav={
-        <AppBar faqDrawer={faqDrawer} leftChildren={[faqButton, searchLink]} />
-      }
+      nav={<AppBar leftChildren={[searchLink]} content={Content} />}
     />
   );
 }

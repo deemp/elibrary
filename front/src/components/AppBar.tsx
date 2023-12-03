@@ -6,6 +6,7 @@ import {
 } from "../models/constants";
 import { Container, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useHelp } from "./Help";
 
 export const height = "80px";
 export const padding = "20px";
@@ -73,12 +74,13 @@ export function AppBarElement({ text }: { text: string }) {
 const Ebsco = <AppBarElement text={"EBSCO EBOOK ARCHIVE"} />;
 
 export function AppBar({
-  faqDrawer,
+  content,
   leftChildren,
 }: {
-  faqDrawer?: JSX.Element;
+  content: JSX.Element;
   leftChildren: JSX.Element[];
 }) {
+  const { helpButton, helpDrawer } = useHelp(content);
   return (
     <>
       <Container maxWidth={"xl"}>
@@ -91,7 +93,7 @@ export function AppBar({
           >
             <Grid
               container
-              children={leftChildren.map((x) => (
+              children={[helpButton].concat(leftChildren).map((x) => (
                 <Grid item display={"flex"} maxHeight={"auto"} height={"auto"}>
                   {x}
                 </Grid>
@@ -105,13 +107,19 @@ export function AppBar({
             display={"flex"}
             justifyContent={"end"}
             alignItems={"center"}
-            textAlign={'right'}
+            textAlign={"right"}
           >
             {Ebsco}
           </Grid>
         </Grid>
       </Container>
-      {faqDrawer}
+      {helpDrawer}
     </>
   );
 }
+
+export type AppBarWithChildren = ({
+  leftChildren,
+}: {
+  leftChildren: JSX.Element[];
+}) => JSX.Element;

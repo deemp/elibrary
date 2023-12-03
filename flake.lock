@@ -19,11 +19,11 @@
       "flake": false,
       "locked": {
         "host": "gitlab.pg.innopolis.university",
-        "lastModified": 1701474286,
-        "narHash": "sha256-UELzfqAvf8lievlxIplkak2ACdTXkfRnf5zcLXmYpK0=",
+        "lastModified": 1701565906,
+        "narHash": "sha256-ZKjXXnlJwtuRolWN9AqAZXvaJn0CSV7uYJhfarMe46g=",
         "owner": "elibrary",
         "repo": "pdf.js",
-        "rev": "d36468027161ac04a59eded419b171b7bf3842ac",
+        "rev": "b45b0411e16a244b2b505bf063261b00abd19b11",
         "type": "gitlab"
       },
       "original": {

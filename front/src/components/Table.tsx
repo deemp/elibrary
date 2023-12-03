@@ -31,11 +31,7 @@ export interface BookRow {
   title: string;
   // I
   isbn: number;
-  // J
-  esbn: number;
-  // N
-  format: string;
-
+  
   book_id: number;
 
   info: React.ReactElement;

@@ -1,4 +1,4 @@
-import { AppBarButton } from "./AppBar";
+import { AppBarButton } from "../AppBar";
 export const infoLink = (id: number) =>
   AppBarButton({
     text: "Info",
