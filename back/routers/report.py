@@ -1,9 +1,8 @@
 from collections import defaultdict
-from dataclasses import dataclass
 from datetime import datetime
 from typing import List
 from fastapi import APIRouter
-from sqlmodel import Session, select, func, text
+from sqlmodel import Session, select
 from pydantic import BaseModel
 from ..internal.models import Book, parse_read_count_key, read_count_key
 from ..internal.db import engine
@@ -51,11 +50,11 @@ async def report_page(request: ReportPOSTRequest, response: MaybeRedirect):
     with Session(engine) as session:
         books: List[BookReadCount] = [
             BookReadCount(
-                book_id=book[0],
-                title=book[1],
-                read_count=book[2],
+                book_id=book_id,
+                title=title,
+                read_count=read_count,
             )
-            for book in session.exec(
+            for (book_id, title, read_count) in session.exec(
                 select(Book.book_id, Book.title, Book.read_count).filter(
                     Book.read_count != {}
                 )

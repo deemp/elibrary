@@ -12,7 +12,7 @@ from .internal.import_catalog import import_catalog
 from .internal.extract_covers import extract_covers
 from .internal.otlp import PrometheusMiddleware, metrics, setting_otlp
 import logging
-from .internal.check import check
+from .internal.check import MaybeRedirect
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -90,8 +90,10 @@ app.include_router(search.router, prefix=prefix)
 app.include_router(report.router, prefix=prefix)
 
 
-@app.get("/{path:path}", dependencies=[check])
-async def catch_all():
+@app.get("/{path:path}")
+async def catch_all(response: MaybeRedirect):
+    if response:
+        return response
     return FileResponse(f"{env.FRONT_DIR}/index.html")
 
 

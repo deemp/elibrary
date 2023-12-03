@@ -356,6 +356,7 @@
                     ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
                     ${prodCompose} up -dV
+                    ${prodCompose} up -dV --force-recreate ${prodServiceName}
                     ${prodCompose} logs --follow ${prodServiceName}
                   '';
                   description =
@@ -371,7 +372,7 @@
                     ${getExe packages.writeDotenv}
                     ${if prodBackEnv.ENABLE_AUTH == "true" then exportEnv "source <(sops -d back/auth.enc.env)" else ""}
                     touch ${prodBackEnv.DB_PATH} ${prodBackEnv.DB_DUMP_PATH}
-                    ${prodCompose} up -dV ${prodServiceName}
+                    ${prodCompose} up -dV --force-recreate ${prodServiceName}
                     ${prodCompose} logs --follow ${prodServiceName}
                   '';
                   description =
@@ -385,7 +386,7 @@
                   text = ''
                     ${getExe packages.writeDotenv}
                     touch ${devBackEnv.DB_PATH} ${devBackEnv.DB_DUMP_PATH}
-                    ${devCompose} up -V
+                    ${devCompose} up -V --force-recreate
                   '';
                   description =
                     let
