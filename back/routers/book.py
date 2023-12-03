@@ -7,6 +7,7 @@ from ..internal.models import Book, read_count_key
 from ..internal.db import engine
 from .. import env
 from ..internal.check import MaybeRedirect
+import re
 
 router = APIRouter()
 
@@ -22,32 +23,23 @@ async def book_page(book_id: int, response: MaybeRedirect):
         return book
 
 
-@router.get("/book/{book_id}/read")
-async def read(book_id: int, response: MaybeRedirect):
-    if response:
-        return response
-
-    with Session(engine) as session:
-        book: Book = session.exec(select(Book).where(Book.book_id == book_id)).one()
-        time = datetime.utcnow() + timedelta(hours=env.UTC_OFFSET)
-        book.read_count = defaultdict(int, book.read_count)
-        book.read_count[read_count_key(time)] += 1
-        session.add(book)
-        session.commit()
-
-
-@router.get("/book/{book_id}/file")
-async def file_get(response: MaybeRedirect):
-    if response:
-        return response
-
-    return HTTPException(status_code=404, detail="Book not found")
-
-
 @router.post("/book/{book_id}/file")
 async def file_post(book_id: int, request: Request, response: MaybeRedirect):
     if response:
         return response
+
+    if (
+        (range := request.headers.get("range"))
+        and (start := re.search("bytes=(\d+)-\d+", range))
+        and int(start.group(1)) == 0
+    ):
+        with Session(engine) as session:
+            book: Book = session.exec(select(Book).where(Book.book_id == book_id)).one()
+            time = datetime.utcnow() + timedelta(hours=env.UTC_OFFSET)
+            book.read_count = defaultdict(int, book.read_count)
+            book.read_count[read_count_key(time)] += 1
+            session.add(book)
+            session.commit()
 
     return range_requests_response(
         request=request,
