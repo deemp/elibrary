@@ -24,7 +24,7 @@ export const Content = mkContent([
     mkBulletList([
       <Typography component={"p"}>
         Click on {bold("READ")}, {bold("READ THIS BOOK")}, or the book cover to
-        open the book viewer.
+        open the book reading page.
       </Typography>,
       <Typography component={"p"}>
         Click on the tab name in the reference panel to choose a reference
