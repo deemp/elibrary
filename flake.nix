@@ -36,9 +36,9 @@
           pdfjs = "${nix-filter {
             root = inputs.pdfjs.outPath;
             include = [
-              "build/minified-legacy"
+              "build/generic-legacy"
             ];
-          }}/build/minified-legacy";
+          }}/build/generic-legacy";
 
           packageBack = groups:
             let
