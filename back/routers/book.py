@@ -22,19 +22,32 @@ async def book_page(book_id: int, response: MaybeRedirect):
         return book
 
 
-@router.get("/book/{book_id}/file")
-async def file(book_id: int, request: Request, response: MaybeRedirect):
+@router.get("/book/{book_id}/read")
+async def read(book_id: int, response: MaybeRedirect):
     if response:
         return response
 
     with Session(engine) as session:
-        if request.headers.get("range") is None:
-            book: Book = session.exec(select(Book).where(Book.book_id == book_id)).one()
-            time = datetime.utcnow() + timedelta(hours=env.UTC_OFFSET)
-            book.read_count = defaultdict(int, book.read_count)
-            book.read_count[read_count_key(time)] += 1
-            session.add(book)
-            session.commit()
+        book: Book = session.exec(select(Book).where(Book.book_id == book_id)).one()
+        time = datetime.utcnow() + timedelta(hours=env.UTC_OFFSET)
+        book.read_count = defaultdict(int, book.read_count)
+        book.read_count[read_count_key(time)] += 1
+        session.add(book)
+        session.commit()
+
+
+@router.get("/book/{book_id}/file")
+async def file_get(response: MaybeRedirect):
+    if response:
+        return response
+
+    return HTTPException(status_code=404, detail="Book not found")
+
+
+@router.post("/book/{book_id}/file")
+async def file_post(book_id: int, request: Request, response: MaybeRedirect):
+    if response:
+        return response
 
     return range_requests_response(
         request=request,
