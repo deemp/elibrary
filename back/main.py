@@ -31,7 +31,7 @@ app = FastAPI(lifespan=lifespan)
 
 if env.PROD:
     origins = [
-        "https://test.library.innnopolis.university",
+        "https://ebsco.library.innnopolis.university",
         "https://sso.university.innopolis.ru",
     ]
 
