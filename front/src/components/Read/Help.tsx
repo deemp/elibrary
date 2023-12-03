@@ -1,5 +1,5 @@
 import { Box, ListItem, Typography } from "@mui/material";
-import { mkContent, sectionList } from "../Help";
+import { mkBulletList, mkContent, sectionList } from "../Help";
 import { Link } from "react-router-dom";
 import { color } from "../../models/constants";
 
@@ -8,7 +8,7 @@ export const Content = mkContent([
     sectionList("Limitations and mitigations"),
     <ListItem>
       <Box>
-        {[
+        {mkBulletList([
           <Typography component={"p"}>
             Due to an agreement with EBSCO, we don't provide easily downloadable
             PDFs.
@@ -47,7 +47,22 @@ export const Content = mkContent([
             }
             .
           </Typography>,
-        ]}
+          <Typography component={"p"}>
+            The book viewer supports major browsers and their versions (
+            <Link
+              to={
+                "https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#legacy-build"
+              }
+              style={{ color }}
+            >
+              link
+            </Link>
+            ).
+          </Typography>,
+          <Typography component={"p"}>
+            Please, update your browser in case of problems.
+          </Typography>,
+        ])}
       </Box>
     </ListItem>,
   ],

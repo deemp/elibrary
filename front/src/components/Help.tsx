@@ -108,6 +108,23 @@ export const bold = (text: string) => (
   </Typography>
 );
 
+export const mkBulletList = (elems: JSX.Element[]) => (
+  <List
+    sx={{
+      listStyleType: "disc",
+      paddingLeft: "1rem",
+      paddingBottom: 0,
+      "& .MuiListItem-root": {
+        display: "list-item",
+      },
+    }}
+  >
+    {elems.map((x) => (
+      <ListItem sx={{ paddingLeft: 0, paddingTop: 0 }}>{x}</ListItem>
+    ))}
+  </List>
+);
+
 export function useHelp(content: JSX.Element) {
   const anchor = "right";
   const [state, setState] = useState(false);
