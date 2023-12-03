@@ -5,7 +5,7 @@
 ## Features
 
 - Search books in an EBSCO e-book archive
-- Read the books in a browser
+- Read books in a browser
 - Use multiple filters
 - Get books information
 - Copy generated references
@@ -31,15 +31,13 @@
 ## A site walkthrough
 
 1. Go to <https://ebsco.library.innopolis.university>
-1. Click on `Filter by`.
-1. Select `Title`.
+1. Click on `HELP`. Each page has its own helpful information.
 1. Type `99` in the `Using text`.
-1. Click on the first suggestion under `Using text`.
+1. Click on the first suggestion under `Using text` (`99 Variations on a Proof`).
 1. In the results table, click on `Read`.
 1. Go to the page `95`( of `272`).
 1. In the top of the page, click on `INFO`.
 1. Look at the book info.
-1. In the top of the page, click on `HELP` to see meanings of terms used in the book info.
 1. In the `BIBLIOGRAPHIC INFORMATION` tab, click on `COPY`.
 1. (Optionally) paste the copied text somewhere to make sure it's correct.
 1. Click on `BIBTEX`.
