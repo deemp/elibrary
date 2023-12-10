@@ -85,7 +85,7 @@ export function Report() {
     <Base
       title="Report"
       content={
-        <Container maxWidth={"xl"}>
+        <Container maxWidth={constants.maxWidth}>
           <Grid
             container
             rowSpacing={2}

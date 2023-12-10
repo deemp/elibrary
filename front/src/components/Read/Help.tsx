@@ -1,7 +1,8 @@
-import { Box, ListItem, Typography } from "@mui/material";
+import { Box, ListItem } from "@mui/material";
 import { mkBulletList, mkContent, sectionList } from "../Help";
 import { Link } from "react-router-dom";
 import { color } from "../../models/constants";
+import { P } from "../P";
 
 export const Content = mkContent([
   [
@@ -9,15 +10,15 @@ export const Content = mkContent([
     <ListItem>
       <Box>
         {mkBulletList([
-          <Typography component={"p"}>
+          <P>
             Due to an agreement with EBSCO, we don't provide easily downloadable
             PDFs.
-          </Typography>,
-          <Typography component={"p"}>
+          </P>,
+          <P>
             Hence, this PDF viewer renders pages only as images and doesn't
             highlight search results.
-          </Typography>,
-          <Typography component={"p"}>
+          </P>,
+          <P>
             You can search PDFs on{" "}
             {
               <Link to={"https://libstc.cc/#/"} style={{ color }}>
@@ -46,9 +47,9 @@ export const Content = mkContent([
               </Link>
             }
             .
-          </Typography>,
-          <Typography component={"p"}>
-            The book viewer supports major browsers and their versions (
+          </P>,
+          <P>
+            The book viewer supports major browsers and some of their versions (
             <Link
               to={
                 "https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions#legacy-build"
@@ -58,10 +59,8 @@ export const Content = mkContent([
               link
             </Link>
             ).
-          </Typography>,
-          <Typography component={"p"}>
-            Please, update your browser in case of problems.
-          </Typography>,
+          </P>,
+          <P>Please, update your browser in case of problems.</P>,
         ])}
       </Box>
     </ListItem>,

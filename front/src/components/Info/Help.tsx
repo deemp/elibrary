@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import { Term, termsObject } from "../../models/terms";
 import {
   bold,
@@ -7,6 +6,7 @@ import {
   sectionTerms,
   sectionUsage,
 } from "../Help";
+import { P } from "../P";
 
 const terms: Term[] = [
   "isbn",
@@ -22,14 +22,14 @@ const terms: Term[] = [
 export const Content = mkContent([
   sectionUsage([
     mkBulletList([
-      <Typography component={"p"}>
+      <P>
         Click on {bold("READ")}, {bold("READ THIS BOOK")}, or the book cover to
         open the book reading page.
-      </Typography>,
-      <Typography component={"p"}>
-        Click on the tab name in the reference panel to choose a reference
+      </P>,
+      <P>
+        Click on a tab name in the reference panel to choose a reference
         format.
-      </Typography>,
+      </P>,
     ]),
   ]),
   sectionTerms(terms),

@@ -7,7 +7,7 @@ import {
   ListItem,
   List,
 } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 import { AppBarButton, AppBarElement } from "./AppBar";
 import { color } from "../models/constants";
 import * as constants from "../models/constants";
@@ -89,7 +89,9 @@ export const sectionTerms = (terms: Term[]) => [
 export const mkContent = (elems: any[]) => (
   <List>
     {intersperse(
-      <Divider component={"li"} variant="middle" />,
+      (idx) => (
+        <Divider component={"li"} variant="middle" key={`${idx}`} />
+      ),
       elems.concat([sectionSourceCode])
     )}
   </List>
@@ -98,7 +100,7 @@ export const mkContent = (elems: any[]) => (
 export const sectionUsage = (elems: JSX.Element[]) => [
   sectionList("Usage"),
   <ListItem>
-    <Box>{elems}</Box>
+    <Box>{elems.map((x, idx) => React.cloneElement(x, { key: `${idx}` }))}</Box>
   </ListItem>,
 ];
 
@@ -119,8 +121,10 @@ export const mkBulletList = (elems: JSX.Element[]) => (
       },
     }}
   >
-    {elems.map((x) => (
-      <ListItem sx={{ paddingLeft: 0, paddingTop: 0 }}>{x}</ListItem>
+    {elems.map((x, idx) => (
+      <ListItem sx={{ paddingLeft: 0, paddingTop: 0 }} key={`${idx}`}>
+        {x}
+      </ListItem>
     ))}
   </List>
 );

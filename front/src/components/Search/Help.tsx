@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import {
   bold,
   mkBulletList,
@@ -7,6 +6,7 @@ import {
   sectionUsage,
 } from "../Help";
 import { Term, termsObject } from "../../models/terms";
+import { P } from "../P";
 
 const terms: Term[] = ["isbn"].map(
   (x) => termsObject[x as keyof typeof termsObject]
@@ -16,29 +16,21 @@ export const Content = ({ searchResultsMax }: { searchResultsMax: number }) =>
   mkContent([
     sectionUsage([
       mkBulletList([
-        <Typography component={"p"}>
+        <P>
           Search books via {bold("Category")}, {bold("Subject")}, and other
           filters.
-        </Typography>,
-        <Typography component={"p"}>
+        </P>,
+        <P>
           Enter the number of filters in the {bold("Filters count")} field.
-        </Typography>,
-        <Typography component={"p"}>
-          Clear this field to reset filters.
-        </Typography>,
-        <Typography component={"p"}>
-          Enter a column name in the {bold("Filter by")} field.
-        </Typography>,
-        <Typography component={"p"}>
-          Enter some text in the {bold("Using text")} field.
-        </Typography>,
-        <Typography component={"p"}>
+        </P>,
+        <P>Clear this field to reset filters.</P>,
+        <P>Enter a column name in the {bold("Filter by")} field.</P>,
+        <P>Enter some text in the {bold("Using text")} field.</P>,
+        <P>
           All search results will have this text as a substring in the chosen
           column.
-        </Typography>,
-        <Typography component={"p"}>
-          There will be at most {bold(`${searchResultsMax}`)} results.
-        </Typography>,
+        </P>,
+        <P>There will be at most {bold(`${searchResultsMax}`)} results.</P>,
       ]),
     ]),
     sectionTerms(terms),

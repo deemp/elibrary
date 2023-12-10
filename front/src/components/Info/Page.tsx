@@ -68,7 +68,7 @@ export function BookInfoPage() {
     <Base
       title="Info"
       content={
-        <Container maxWidth="xl">
+        <Container maxWidth={constants.maxWidth}>
           <Box sx={{ minHeight: constants.contentHeightAdaptive }}>
             <Grid container rowSpacing={2} marginTop={constants.heightAdaptive}>
               <Grid item xs={12} display={"flex"} justifyContent={"center"}>
@@ -124,7 +124,7 @@ export function BookInfoPage() {
                       </Card>
                     </Link>
                   </Grid>
-                  <Grid item xs={12} sm>
+                  <Grid item sm={12} md>
                     <Grid container rowSpacing={1}>
                       {[
                         "title",

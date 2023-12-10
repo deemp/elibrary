@@ -1,9 +1,5 @@
 import { Box, Button } from "@mui/material";
-import {
-  buttonBackgroundColor,
-  fontSize,
-  lineHeight,
-} from "../models/constants";
+import * as constants from "../models/constants";
 import { Container, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useHelp } from "./Help";
@@ -13,9 +9,9 @@ export const padding = "20px";
 
 const sxBase = {
   color: "#ffffff",
-  fontSize,
+  fontSize: constants.fontSize,
   paddingY: { xs: 0, sm: "0.2rem" },
-  lineHeight,
+  lineHeight: constants.lineHeight,
   paddingX: "0px",
 };
 
@@ -33,11 +29,11 @@ export function AppBarButton({
   const sx = {
     ...sxBase,
     "&:hover": {
-      backgroundColor: buttonBackgroundColor,
+      backgroundColor: constants.buttonBackgroundColor,
     },
     width: {
-      xs: `calc(${text.length} * ${fontSize.xs} * 0.8)`,
-      sm: `calc(${text.length} * ${fontSize.sm} * 0.8)`,
+      xs: `calc(${text.length} * ${constants.fontSize.xs} * 0.8)`,
+      sm: `calc(${text.length} * ${constants.fontSize.sm} * 0.8)`,
     },
   };
   return (
@@ -83,7 +79,7 @@ export function AppBar({
   const { helpButton, helpDrawer } = useHelp(content);
   return (
     <>
-      <Container maxWidth={"xl"}>
+      <Container maxWidth={constants.maxWidth}>
         <Grid container>
           <Grid
             item
@@ -93,8 +89,8 @@ export function AppBar({
           >
             <Grid
               container
-              children={[helpButton].concat(leftChildren).map((x) => (
-                <Grid item display={"flex"} maxHeight={"auto"} height={"auto"}>
+              children={[helpButton].concat(leftChildren).map((x, idx) => (
+                <Grid item display={"flex"} maxHeight={"auto"} height={"auto"} key={`${idx}`}>
                   {x}
                 </Grid>
               ))}
