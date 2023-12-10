@@ -1,14 +1,11 @@
-import { Typography } from "@mui/material";
-import { bold, mkContent, sectionUsage } from "../Help";
+import { bold, mkBulletList, mkContent, sectionUsage } from "../Help";
+import { P } from "../P";
 
 export const Content = mkContent([
   sectionUsage([
-    <Typography component={"p"}>
-      Choose a month and a year to see statistics for that month.
-    </Typography>,
-    <p></p>,
-    <Typography component={"p"}>
-      The {bold("Read count")} is shown for the selected month.
-    </Typography>,
+    mkBulletList([
+      <P>Choose a month and a year to see statistics for that month.</P>,
+      <P>The {bold("Read count")} is shown for the selected month.</P>,
+    ]),
   ]),
 ]);
