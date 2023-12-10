@@ -365,7 +365,7 @@ export function SearchPage({
     <Base
       title="Search"
       content={
-        <Container maxWidth="xl">
+        <Container maxWidth={constants.maxWidth}>
           <Box
             width={"100%"}
             height={constants.contentHeightAdaptive}
@@ -437,8 +437,14 @@ export function SearchPage({
                           .map((filter, idx) => {
                             return (
                               <Grid item xs={12} key={idx}>
-                                <Grid container spacing={0}>
-                                  <Grid item width={{ xs: "8rem", sm: "9rem" }}>
+                                <Grid
+                                  container
+                                  columnSpacing={{ xs: 0, sm: 0 }}
+                                >
+                                  <Grid
+                                    item
+                                    width={{ xs: "8rem", sm: "10rem" }}
+                                  >
                                     <SearchField
                                       isLeft={true}
                                       label={"Filter by"}

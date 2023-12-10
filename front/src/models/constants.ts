@@ -16,3 +16,5 @@ export const contentHeightAdaptive = {
 }
 
 export const lineHeight = { xs: `calc(${fontSize.xs} * 1.2)`, sm: `calc(${fontSize.sm} * 1.2)` }
+
+export const maxWidth = "lg"
