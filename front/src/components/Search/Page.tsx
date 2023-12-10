@@ -177,7 +177,7 @@ const columns = (columnHelper: ColumnHelper<Book>) =>
       [
         {
           id: "title",
-          size: 300,
+          size: 310,
         },
         {
           id: "authors",
