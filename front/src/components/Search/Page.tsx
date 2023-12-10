@@ -59,17 +59,18 @@ function SearchField({
           <TextField
             {...params}
             label={label}
-            sx={
-              isLeft !== undefined
-                ? {
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: isLeft
-                        ? "6px 0px 0px 6px"
-                        : "0px 6px 6px 0px",
-                    },
-                  }
-                : {}
-            }
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                xs:
+                  isLeft !== undefined
+                    ? {
+                        borderRadius: isLeft
+                          ? "6px 0px 0px 6px"
+                          : "0px 6px 6px 0px",
+                      }
+                    : {},
+              },
+            }}
             size="small"
           />
         )}
