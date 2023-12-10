@@ -27,7 +27,7 @@ export const Content = mkContent([
         open the book reading page.
       </P>,
       <P>
-        Click on the tab name in the reference panel to choose a reference
+        Click on a tab name in the reference panel to choose a reference
         format.
       </P>,
     ]),
