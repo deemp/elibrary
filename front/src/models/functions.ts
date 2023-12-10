@@ -1,1 +1,1 @@
-export const intersperse = (x: any, arr: any[]) => arr.flatMap(e => [e, x]).slice(0, -1)
+export const intersperse = (x: ((idx: number) => any), arr: any[]) => arr.flatMap((e, idx) => [e, x(idx)]).slice(0, -1)

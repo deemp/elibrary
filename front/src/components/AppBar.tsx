@@ -93,8 +93,8 @@ export function AppBar({
           >
             <Grid
               container
-              children={[helpButton].concat(leftChildren).map((x) => (
-                <Grid item display={"flex"} maxHeight={"auto"} height={"auto"}>
+              children={[helpButton].concat(leftChildren).map((x, idx) => (
+                <Grid item display={"flex"} maxHeight={"auto"} height={"auto"} key={`${idx}`}>
                   {x}
                 </Grid>
               ))}
